@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WFG Financial Literacy Campaign | GX Builder Program</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #F0D080;
+    --navy: #0A1628;
+    --navy-mid: #142040;
+    --navy-light: #1E3060;
+    --cream: #FAF6EE;
+    --white: #FFFFFF;
+    --red: #C0392B;
+    --green: #1A6B47;
+    --green-light: #22A86B;
+    --slate: #8A9BB5;
+    --border: rgba(201,168,76,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #0D2050 100%);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; padding: 60px 24px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(201,168,76,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    padding: 8px 20px; border-radius: 2px;
+    margin-bottom: 32px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 7vw, 82px);
+    font-weight: 900; line-height: 1.05;
+    color: var(--white);
+    margin-bottom: 12px;
+    animation: fadeUp 0.9s 0.1s ease both;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-sub {
+    font-size: clamp(15px, 2.5vw, 20px);
+    color: var(--slate);
+    max-width: 680px;
+    line-height: 1.7;
+    margin: 16px auto 40px;
+    animation: fadeUp 1s 0.2s ease both;
+  }
+  .hero-pills {
+    display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+    margin-bottom: 48px;
+    animation: fadeUp 1s 0.3s ease both;
+  }
+  .pill {
+    background: rgba(201,168,76,0.12);
+    border: 1px solid var(--border);
+    color: var(--gold-light);
+    padding: 7px 16px; border-radius: 20px;
+    font-size: 13px; font-weight: 500;
+  }
+  .hero-stats {
+    display: flex; gap: 48px; flex-wrap: wrap; justify-content: center;
+    animation: fadeUp 1s 0.4s ease both;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px; font-weight: 900;
+    color: var(--gold); display: block;
+  }
+  .stat-label { font-size: 12px; color: var(--slate); letter-spacing: 1px; text-transform: uppercase; }
+
+  /* ── SECTIONS ── */
+  section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 12px; display: block;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4.5vw, 48px);
+    font-weight: 700; line-height: 1.15;
+    color: var(--white); margin-bottom: 16px;
+  }
+  h2 span { color: var(--gold); }
+  .lead { font-size: 17px; color: var(--slate); line-height: 1.75; max-width: 700px; margin-bottom: 48px; }
+  .divider {
+    width: 100%; border: none;
+    border-top: 1px solid rgba(201,168,76,0.15);
+    margin: 0;
+  }
+
+  /* ── MARKET CARDS ── */
+  .market-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px; margin-top: 40px;
+  }
+  .market-card {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 28px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .market-card:hover { transform: translateY(-4px); border-color: var(--gold); }
+  .market-icon {
+    width: 44px; height: 44px; border-radius: 8px;
+    background: rgba(201,168,76,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin-bottom: 16px;
+  }
+  .market-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; color: var(--white); margin-bottom: 8px;
+  }
+  .market-card p { font-size: 14px; color: var(--slate); line-height: 1.65; }
+  .market-card .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .market-card .tag {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #aab;
+    font-size: 11px; padding: 4px 10px; border-radius: 12px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── PIPELINE FLOW ── */
+  .pipeline { margin-top: 48px; }
+  .pipeline-step {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 0 24px;
+    margin-bottom: 0;
+    position: relative;
+  }
+  .pipeline-step:not(:last-child) .step-line::after {
+    content: '';
+    position: absolute;
+    left: 29px; top: 60px;
+    width: 2px; height: calc(100% + 0px);
+    background: linear-gradient(to bottom, var(--gold), rgba(201,168,76,0.1));
+  }
+  .step-line { position: relative; display: flex; flex-direction: column; align-items: center; }
+  .step-num {
+    width: 58px; height: 58px; border-radius: 50%;
+    background: var(--navy-mid);
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 16px; font-weight: 500; color: var(--gold);
+    flex-shrink: 0; z-index: 1;
+  }
+  .step-content {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 24px 28px;
+    margin-bottom: 20px;
+  }
+  .step-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; color: var(--white); margin-bottom: 6px;
+  }
+  .step-phase {
+    font-size: 11px; color: var(--gold);
+    font-family: 'DM Mono', monospace; letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 10px; display: block;
+  }
+  .step-content p { font-size: 14px; color: var(--slate); line-height: 1.7; margin-bottom: 12px; }
+  .step-bullets { list-style: none; }
+  .step-bullets li {
+    font-size: 13.5px; color: #c0cce0;
+    padding: 5px 0 5px 18px; position: relative; line-height: 1.5;
+  }
+  .step-bullets li::before {
+    content: '→'; position: absolute; left: 0;
+    color: var(--gold); font-size: 12px;
+  }
+
+  /* ── WORKSHOP FORMATS ── */
+  .format-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px; margin-top: 40px;
+  }
+  .format-card {
+    border-radius: 10px; padding: 30px;
+    border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .format-card.zoom { background: linear-gradient(135deg, #0E2244 0%, #0A1628 100%); }
+  .format-card.office { background: linear-gradient(135deg, #1A3020 0%, #0E2018 100%); }
+  .format-card.group { background: linear-gradient(135deg, #2A1A06 0%, #1A0E00 100%); }
+  .format-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; color: var(--white); margin-bottom: 8px;
+  }
+  .format-badge {
+    display: inline-block;
+    font-size: 10px; font-family: 'DM Mono', monospace;
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 3px;
+    margin-bottom: 16px;
+  }
+  .format-card.zoom .format-badge { background: rgba(30,80,200,0.3); color: #7FB3FF; border: 1px solid rgba(80,140,255,0.3); }
+  .format-card.office .format-badge { background: rgba(26,107,71,0.3); color: #6AFFB8; border: 1px solid rgba(40,180,100,0.3); }
+  .format-card.group .format-badge { background: rgba(180,120,20,0.25); color: var(--gold-light); border: 1px solid var(--border); }
+  .format-card p { font-size: 14px; color: var(--slate); line-height: 1.7; margin-bottom: 16px; }
+  .format-list { list-style: none; }
+  .format-list li {
+    font-size: 13px; color: #b0bfd0; padding: 4px 0;
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .format-list li::before { content: '✓'; color: var(--green-light); font-size: 12px; margin-top: 2px; flex-shrink: 0; }
+
+  /* ── GX FUNNEL ── */
+  .funnel-wrap { margin-top: 48px; }
+  .funnel-levels { display: flex; flex-direction: column; gap: 12px; }
+  .funnel-level {
+    border-radius: 8px; padding: 22px 28px;
+    border-left: 4px solid;
+    display: grid;
+    grid-template-columns: 180px 1fr auto;
+    gap: 16px; align-items: center;
+    background: var(--navy-mid);
+  }
+  .funnel-level.top { border-color: var(--slate); }
+  .funnel-level.mid { border-color: var(--gold); }
+  .funnel-level.bot { border-color: var(--green-light); }
+  .funnel-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 1px;
+  }
+  .funnel-level.top .funnel-label { color: var(--slate); }
+  .funnel-level.mid .funnel-label { color: var(--gold); }
+  .funnel-level.bot .funnel-label { color: var(--green-light); }
+  .funnel-desc { font-size: 14px; color: #99aec0; line-height: 1.6; }
+  .funnel-cta {
+    font-size: 12px; font-family: 'DM Mono', monospace;
+    color: var(--navy); font-weight: 600;
+    padding: 8px 16px; border-radius: 4px;
+    white-space: nowrap; text-align: center;
+  }
+  .funnel-level.top .funnel-cta { background: var(--slate); }
+  .funnel-level.mid .funnel-cta { background: var(--gold); }
+  .funnel-level.bot .funnel-cta { background: var(--green-light); }
+
+  /* ── SCRIPTS ── */
+  .script-block {
+    background: #080F1C;
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 32px;
+    margin-bottom: 24px; position: relative;
+  }
+  .script-block::before {
+    content: '"';
+    position: absolute; top: -14px; left: 24px;
+    font-family: 'Playfair Display', serif;
+    font-size: 72px; line-height: 1; color: var(--gold);
+    opacity: 0.3; pointer-events: none;
+  }
+  .script-who {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    font-family: 'DM Mono', monospace; color: var(--gold);
+    margin-bottom: 12px; display: block;
+  }
+  .script-block p { font-size: 15px; color: #d0dae8; line-height: 1.8; font-style: italic; }
+  .script-block strong { color: var(--white); font-style: normal; }
+
+  /* ── CURRICULUM TABLE ── */
+  .curriculum { margin-top: 40px; }
+  .curriculum-row {
+    display: grid;
+    grid-template-columns: 220px 1fr 120px;
+    gap: 12px; padding: 16px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    align-items: start;
+  }
+  .curriculum-row:first-child {
+    background: rgba(201,168,76,0.1);
+    border-radius: 6px 6px 0 0;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--gold);
+  }
+  .curriculum-row:not(:first-child):hover { background: rgba(255,255,255,0.03); }
+  .curriculum-topic { font-size: 14px; font-weight: 600; color: var(--white); }
+  .curriculum-desc { font-size: 13px; color: var(--slate); line-height: 1.6; }
+  .curriculum-level {
+    font-size: 11px; font-family: 'DM Mono', monospace;
+    padding: 4px 10px; border-radius: 12px; text-align: center;
+  }
+  .level-basic { background: rgba(100,140,200,0.2); color: #90B8FF; border: 1px solid rgba(100,160,255,0.2); }
+  .level-all { background: rgba(201,168,76,0.15); color: var(--gold-light); border: 1px solid var(--border); }
+  .level-pro { background: rgba(26,107,71,0.25); color: #6AFFB8; border: 1px solid rgba(40,180,100,0.2); }
+
+  /* ── CTA BANNER ── */
+  .cta-banner {
+    background: linear-gradient(135deg, var(--navy-mid), #1A3060);
+    border: 1px solid var(--gold);
+    border-radius: 12px; padding: 56px 48px;
+    text-align: center; margin: 80px 24px;
+    position: relative; overflow: hidden;
+  }
+  .cta-banner::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(201,168,76,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-banner h2 { margin-bottom: 16px; }
+  .cta-banner p { font-size: 17px; color: var(--slate); max-width: 580px; margin: 0 auto 32px; }
+  .btn-gold {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy); font-weight: 700;
+    font-size: 14px; letter-spacing: 1px; text-transform: uppercase;
+    padding: 16px 36px; border-radius: 4px; cursor: pointer;
+    border: none; font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #060E1A;
+    border-top: 1px solid var(--border);
+    padding: 40px 24px;
+    text-align: center;
+  }
+  footer p { font-size: 13px; color: var(--slate); line-height: 2; }
+  footer strong { color: var(--gold); }
+
+  /* ── ANIM ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .funnel-level { grid-template-columns: 1fr; }
+    .curriculum-row { grid-template-columns: 1fr; }
+    .curriculum-row:first-child { display: none; }
+    section { padding: 56px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════ HERO -->
+<div class="hero">
+  <div class="hero-badge">WFG · Super Building SMD · GX Campaign Program</div>
+  <h1>Financial Literacy<br><span>That Builds Futures</span></h1>
+  <p class="hero-sub">A full-scale campaign built on our community trust — from OR suites in surgery centers to Wilmington kitchens, Inglewood classrooms, and Long Beach compassion circles. One mission: funnel to GX1.</p>
+  <div class="hero-pills">
+    <span class="pill">🏥 Surgeons & Anesthesiologists</span>
+    <span class="pill">👶 Foster Youth</span>
+    <span class="pill">📍 Wilmington · Inglewood · Carson</span>
+    <span class="pill">🤝 DHS Providers · Church Pastors</span>
+    <span class="pill">🏆 LA County Elite Players</span>
+    <span class="pill">💼 GX Builder Path</span>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">5+</span><span class="stat-label">Market Segments</span></div>
+    <div class="stat"><span class="stat-num">3</span><span class="stat-label">Workshop Formats</span></div>
+    <div class="stat"><span class="stat-num">7</span><span class="stat-label">Pipeline Steps</span></div>
+    <div class="stat"><span class="stat-num">GX1</span><span class="stat-label">The Goal</span></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════════════ OUR MARKETS -->
+<section>
+  <span class="section-tag">01 — Our Influence Markets</span>
+  <h2>We Are Already in <span>Every Room</span></h2>
+  <p class="lead">We don't cold-call. We warm-activate. Every market below is one where we already have trust, access, and credibility — we just need to put a WFG conversation in the room.</p>
+
+  <div class="market-grid">
+
+    <div class="market-card">
+      <div class="market-icon">🏥</div>
+      <h3>OR Professionals</h3>
+      <p>Surgeons, anesthesiologists, and surgical staff earn high income but are often asset-rich and plan-poor. Long hours leave no time for financial planning. We walk in already known and trusted.</p>
+      <div class="tag-list">
+        <span class="tag">High Income</span>
+        <span class="tag">Time-Starved</span>
+        <span class="tag">OR Relationships</span>
+        <span class="tag">Student Debt</span>
+      </div>
+    </div>
+
+    <div class="market-card">
+      <div class="market-icon">🏘️</div>
+      <h3>Wilmington · Inglewood · Carson</h3>
+      <p>Families, teens, and kids we already serve through financial literacy outreach. These are trust-built relationships ready to convert to protection and wealth-building conversations.</p>
+      <div class="tag-list">
+        <span class="tag">Teens & Kids</span>
+        <span class="tag">Families</span>
+        <span class="tag">FL Workshops</span>
+        <span class="tag">Spanish Market</span>
+      </div>
+    </div>
+
+    <div class="market-card">
+      <div class="market-icon">🤝</div>
+      <h3>LA County Compassion Circles</h3>
+      <p>Long Beach area provider meetings — DHS caseworkers, church pastors, nonprofit leaders, social workers. These influencers each have 50–500 families behind them. One presentation = mass activation.</p>
+      <div class="tag-list">
+        <span class="tag">DHS Providers</span>
+        <span class="tag">Pastors</span>
+        <span class="tag">Nonprofits</span>
+        <span class="tag">Long Beach</span>
+      </div>
+    </div>
+
+    <div class="market-card">
+      <div class="market-icon">🏆</div>
+      <h3>Elite Athletes & Families</h3>
+      <p>LA County elite-level players and their families from compassion circle connections. Sudden income, no infrastructure. The perfect WFG story — protection first, then wealth.</p>
+      <div class="tag-list">
+        <span class="tag">Athletes</span>
+        <span class="tag">Player Families</span>
+        <span class="tag">LA County</span>
+        <span class="tag">Sudden Wealth</span>
+      </div>
+    </div>
+
+    <div class="market-card">
+      <div class="market-icon">💛</div>
+      <h3>Foster Youth & Alumni</h3>
+      <p>Youth aging out of foster care need financial literacy most and receive it least. We are already in those spaces. From learning about money to being introduced to building wealth — a natural next step.</p>
+      <div class="tag-list">
+        <span class="tag">Foster Alumni</span>
+        <span class="tag">Youth Support</span>
+        <span class="tag">Trauma-Informed</span>
+        <span class="tag">Life Skills</span>
+      </div>
+    </div>
+
+    <div class="market-card">
+      <div class="market-icon">⛪</div>
+      <h3>Faith Communities</h3>
+      <p>Church pastors who attend Long Beach provider meetings are already warm contacts. Sunday announcements, midweek workshops, and pastor-endorsed financial literacy nights open entire congregations.</p>
+      <div class="tag-list">
+        <span class="tag">Church Network</span>
+        <span class="tag">Community Trust</span>
+        <span class="tag">Group Events</span>
+        <span class="tag">All Ages</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════════════ THE PIPELINE -->
+<section>
+  <span class="section-tag">02 — The Campaign Pipeline</span>
+  <h2>From First Hello <span>to GX1</span></h2>
+  <p class="lead">Every interaction is a step. The goal is not to sell — it's to educate, elevate, and activate. Here is the full flow from initial conversation to GX completion.</p>
+
+  <div class="pipeline">
+
+    <div class="pipeline-step">
+      <div class="step-line"><div class="step-num">01</div></div>
+      <div class="step-content">
+        <span class="step-phase">Touch Point — Discovery</span>
+        <h3>The Warm Conversation</h3>
+        <p>Whether in the OR break room, at a DHS provider meeting, a church lobby, or after a financial literacy class with teens — this is where curiosity is sparked, not a pitch delivered.</p>
+        <ul class="step-bullets">
+          <li>Ask about their current financial situation — goals, concerns, what keeps them up at night</li>
+          <li>"What does retirement look like for you?" / "Do you have a plan or a product?"</li>
+          <li>"If you couldn't work tomorrow, how long would your family be okay?"</li>
+          <li>Listen 80%, talk 20%. Qualify interest. Book next step.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pipeline-step">
+      <div class="step-line"><div class="step-num">02</div></div>
+      <div class="step-content">
+        <span class="step-phase">Education — Value First</span>
+        <h3>Financial Literacy Workshop or 1-on-1</h3>
+        <p>Deliver value before asking for anything. This is our brand: we teach first. This is our credibility in the community and what separates us from every other financial rep they've met.</p>
+        <ul class="step-bullets">
+          <li>Offer a free 60-min workshop (virtual/Zoom or in-person/office) — no obligation</li>
+          <li>Topics: cash flow, debt elimination, protection gaps, wealth-building basics</li>
+          <li>For youth/teens: money habits, compound interest, credit, first job income</li>
+          <li>For OR professionals: debt payoff, income protection, tax-advantaged accounts</li>
+          <li>For foster youth: budgeting, banking basics, understanding insurance</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pipeline-step">
+      <div class="step-line"><div class="step-num">03</div></div>
+      <div class="step-content">
+        <span class="step-phase">Assessment — Learn Their World</span>
+        <h3>The Financial Needs Analysis (FNA)</h3>
+        <p>After the workshop, invite them to a complimentary financial review. This is where we go deep — and where we discover exactly what they need so we can prescribe the right solution.</p>
+        <ul class="step-bullets">
+          <li>Schedule via Zoom or office — 45–60 min dedicated session</li>
+          <li>Cover: income, expenses, protection, savings, debt, goals, timeline</li>
+          <li>Use WFG's FNA tool — present the "money triad" (earn, protect, grow)</li>
+          <li>Identify gaps: no life insurance, no IUL, no retirement plan, wrong beneficiaries</li>
+          <li>Do NOT present solutions yet — build the picture first</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pipeline-step">
+      <div class="step-line"><div class="step-num">04</div></div>
+      <div class="step-content">
+        <span class="step-phase">Presentation — What We Do</span>
+        <h3>The WFG Solution Presentation</h3>
+        <p>Now we show them what WFG does, what we provide, and how it maps to exactly what they told us. Not a generic pitch — a mirror of their needs.</p>
+        <ul class="step-bullets">
+          <li>WFG overview: independent, client-first, multi-carrier — not a captive agent</li>
+          <li>Show the product suite: Term · IUL · Annuities · LTC · Debt Elimination · College Planning</li>
+          <li>Present the "Financial House" concept — foundation = protection, growth = roof</li>
+          <li>Share relevant client story (similar profession/situation — anonymized)</li>
+          <li>Introduce the business opportunity — briefly, authentically: "Have you ever thought about what you'd do if you could add income while helping people?"</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pipeline-step">
+      <div class="step-line"><div class="step-num">05</div></div>
+      <div class="step-content">
+        <span class="step-phase">Decision — Client Path</span>
+        <h3>Application or Follow-Up</h3>
+        <p>After the presentation, close with clarity. Some say yes now, most need one follow-up. Either path is win — we are building trust and a referral engine either way.</p>
+        <ul class="step-bullets">
+          <li>If ready: run the app together in the meeting (life insurance, IUL, etc.)</li>
+          <li>If not ready: schedule a 2nd meeting — bring a senior teammate or upline for credibility</li>
+          <li>Always ask for 3 referrals: "Who else in your circle is like you — busy, successful, unplanned?"</li>
+          <li>For OR professionals: leverage colleague referrals — one surgeon knows 20 more</li>
+          <li>Log in CRM. Set 30/60/90 day follow-up calendar</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pipeline-step">
+      <div class="step-line"><div class="step-num">06</div></div>
+      <div class="step-content">
+        <span class="step-phase">Opportunity — Business Path</span>
+        <h3>The WFG Business Conversation</h3>
+        <p>For those who show entrepreneurial interest during the financial literacy sessions, provider meetings, or FNA — introduce the WFG opportunity as a natural extension of the education mission.</p>
+        <ul class="step-bullets">
+          <li>"We actually train people just like you to do what I do — help families while building income"</li>
+          <li>Share your story and your upline's story — real numbers, real timelines</li>
+          <li>Invite to a Business Opportunity Meeting (BOM) — virtual or in-office</li>
+          <li>Target: DHS providers, nurses, faith leaders, teachers — they already trust people</li>
+          <li>Foster youth alumni and community youth: plant the seed early, license when 18+</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pipeline-step">
+      <div class="step-line"><div class="step-num">07</div></div>
+      <div class="step-content">
+        <span class="step-phase">Activation — GX Builder</span>
+        <h3>Recruiting to GX1 Promotion</h3>
+        <p>Every client is a potential recruit. Every recruit is a path to GX. Track your builders, support their first clients, and celebrate their first promotions. GX1 is a team achievement — not just yours.</p>
+        <ul class="step-bullets">
+          <li>Set clear GX promotion goals with each new associate: recruits + premium targets</li>
+          <li>Run weekly accountability calls — virtual or in-office</li>
+          <li>Use the 3-way call structure to help new associates close their warm market</li>
+          <li>Bring new recruits to compassion circle / provider meetings as observers</li>
+          <li>Celebrate every milestone publicly — social media, team meetings, community shoutouts</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════════════ WORKSHOP FORMATS -->
+<section>
+  <span class="section-tag">03 — Delivery Formats</span>
+  <h2>How We <span>Show Up</span></h2>
+  <p class="lead">We meet people where they are — in their breakroom, on their lunch Zoom, in church fellowship halls, and in our office. Every format is designed to educate and activate.</p>
+
+  <div class="format-grid">
+
+    <div class="format-card zoom">
+      <span class="format-badge">Virtual — Zoom</span>
+      <h3>Zoom Workshops & 1-on-1s</h3>
+      <p>Best for busy professionals (surgeons, anesthesiologists), out-of-area contacts, and anyone who won't drive in. Low barrier, high reach.</p>
+      <ul class="format-list">
+        <li>60-min group Financial Literacy Workshops — slides + Q&A</li>
+        <li>45-min private FNA appointments — Zoom + screen share</li>
+        <li>Weekly financial education series (recurring Zoom link)</li>
+        <li>Foster youth and teen sessions — recorded for replay</li>
+        <li>Pastor/provider pre-meeting: 15-min intro presentation</li>
+      </ul>
+    </div>
+
+    <div class="format-card office">
+      <span class="format-badge">In-Person — Office</span>
+      <h3>Office 1-on-1 & Small Group</h3>
+      <p>For serious prospects ready to sit down. Higher conversion rate. Professional environment builds trust and credibility, especially for larger policy conversations.</p>
+      <ul class="format-list">
+        <li>Private FNA and solution presentation — 60–90 min</li>
+        <li>Couples / family financial review sessions</li>
+        <li>BOM — Business Opportunity Meeting for new recruits</li>
+        <li>Licensed associate training sessions</li>
+        <li>3-way sits with senior SMD for high-value clients</li>
+      </ul>
+    </div>
+
+    <div class="format-card group">
+      <span class="format-badge">Community — Events</span>
+      <h3>Community Workshops & Partnerships</h3>
+      <p>Our strongest differentiator. We go to them — community centers, churches, schools, provider meetings. This is where the WFG mission lives in LA County.</p>
+      <ul class="format-list">
+        <li>Financial literacy nights at Wilmington, Inglewood, Carson community venues</li>
+        <li>Youth & teen workshops at schools, community centers, foster orgs</li>
+        <li>Provider/compassion circle educational sessions — Long Beach</li>
+        <li>Church financial stewardship workshop series (Sunday or midweek)</li>
+        <li>OR professional lunch-and-learn at surgery centers</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════════════ CONVERSATION SCRIPTS -->
+<section>
+  <span class="section-tag">04 — Conversation Scripts</span>
+  <h2>What to Say, <span>Word for Word</span></h2>
+  <p class="lead">Authenticity wins — but having a framework keeps you sharp. Use these as a guide, not a script. The goal is to listen, connect, and book the next step.</p>
+
+  <div class="script-block">
+    <span class="script-who">OR Professional — Break Room / Hallway</span>
+    <p>"Hey, quick question — I know we're both slammed but I've been doing financial workshops for physicians in the area. A lot of surgeons I talk to are making great money but haven't had time to set up a real plan. <strong>Not selling anything</strong> — I literally just do free financial reviews. Would you ever want to grab 45 minutes? I'll come to you, or we can do it on Zoom on your schedule."</p>
+  </div>
+
+  <div class="script-block">
+    <span class="script-who">DHS Provider / Pastor — Compassion Circle Meeting</span>
+    <p>"I love what you're doing for these families. One thing we've been helping with is financial literacy — everything from teaching kids about money to helping families get protected and start building. <strong>We do free workshops, totally no-pressure.</strong> Would it make sense for me to do a short presentation at one of your meetings or through your network? The community could really benefit."</p>
+  </div>
+
+  <div class="script-block">
+    <span class="script-who">Foster Youth / Teen — After Financial Literacy Class</span>
+    <p>"You asked a really smart question today about investing. I do this full-time — helping people understand money and build a plan. <strong>Your generation has a huge advantage if you start now.</strong> Would you be down to do a deeper dive — either with your guardian or just for yourself? I'll bring the pizza if we do it in person." <em>[Smiles and energy matter here most.]</em></p>
+  </div>
+
+  <div class="script-block">
+    <span class="script-who">Elite Athlete / Player Family — Event or Introduction</span>
+    <p>"Congratulations on everything — that's amazing. I work with a lot of young people in your situation and honestly, the ones who win long-term are the ones who built a financial plan early — not just a signing bonus. <strong>No rush, no pressure</strong>, but if you'd ever want to sit down and just map out a picture of where you are and where you want to be, I do that for free. Who's handling your financial plan right now?"</p>
+  </div>
+
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════════════ CURRICULUM -->
+<section>
+  <span class="section-tag">05 — Workshop Curriculum</span>
+  <h2>What We <span>Teach</span></h2>
+  <p class="lead">Every workshop is tailored to the audience. Below is our master topic library — mix and match for each market segment and session length.</p>
+
+  <div class="curriculum">
+    <div class="curriculum-row">
+      <div>Topic</div>
+      <div>Description</div>
+      <div>Audience</div>
+    </div>
+    <div class="curriculum-row">
+      <div class="curriculum-topic">Money Mindset 101</div>
+      <div class="curriculum-desc">Breaking the paycheck-to-paycheck cycle. How wealthy people think about money vs. everyone else. The money triad: earn, protect, grow.</div>
+      <div><span class="curriculum-level level-all">All Ages</span></div>
+    </div>
+    <div class="curriculum-row">
+      <div class="curriculum-topic">Compound Interest & Time</div>
+      <div class="curriculum-desc">Why starting at 18 vs. 38 changes everything. Visual demonstrations. Rule of 72. The cost of waiting. Perfect for youth and teens.</div>
+      <div><span class="curriculum-level level-basic">Youth/Teens</span></div>
+    </div>
+    <div class="curriculum-row">
+      <div class="curriculum-topic">Debt Elimination Strategy</div>
+      <div class="curriculum-desc">Debt stacking vs. snowball. Understanding interest rates. How to pay off $50K in debt in 5 years. Especially powerful for OR professionals with student loans.</div>
+      <div><span class="curriculum-level level-all">All Clients</span></div>
+    </div>
+    <div class="curriculum-row">
+      <div class="curriculum-topic">Life Insurance Basics</div>
+      <div class="curriculum-desc">Term vs. permanent. Why group insurance from your job isn't enough. How IUL works. The income replacement calculation. Protection gap analysis.</div>
+      <div><span class="curriculum-level level-all">All Clients</span></div>
+    </div>
+    <div class="curriculum-row">
+      <div class="curriculum-topic">IUL — Building Tax-Free Wealth</div>
+      <div class="curriculum-desc">How indexed universal life builds cash value. Tax-free retirement income. Downside protection. Perfect fit for high-income professionals.</div>
+      <div><span class="curriculum-level level-pro">Professionals</span></div>
+    </div>
+    <div class="curriculum-row">
+      <div class="curriculum-topic">Retirement Income Planning</div>
+      <div class="curriculum-desc">Social Security myths. 401k limitations. Building multiple income streams for retirement. The difference between a "plan" and a "product."</div>
+      <div><span class="curriculum-level level-pro">Adults 30+</span></div>
+    </div>
+    <div class="curriculum-row">
+      <div class="curriculum-topic">Banking & Budgeting Basics</div>
+      <div class="curriculum-desc">Opening a bank account, credit scores, avoiding payday loans, building an emergency fund. Essential for foster youth and financial newcomers.</div>
+      <div><span class="curriculum-level level-basic">Youth/Foster</span></div>
+    </div>
+    <div class="curriculum-row">
+      <div class="curriculum-topic">Financial Stewardship (Faith)</div>
+      <div class="curriculum-desc">Biblical/values-based money principles. Tithing and giving while building wealth. Generational wealth as a legacy. Tailored for faith community audiences.</div>
+      <div><span class="curriculum-level level-all">Faith Groups</span></div>
+    </div>
+    <div class="curriculum-row">
+      <div class="curriculum-topic">The Financial Plan vs. The Accident</div>
+      <div class="curriculum-desc">What happens to your family if you don't plan. Real case studies. The emotional side of financial literacy. Closes naturally into an FNA invitation.</div>
+      <div><span class="curriculum-level level-all">All Clients</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════════════ GX FUNNEL -->
+<section>
+  <span class="section-tag">06 — The GX Funnel</span>
+  <h2>Every Conversation <span>Funnels to GX1</span></h2>
+  <p class="lead">The financial literacy campaign isn't just community service — it's a systematic pipeline. Every workshop, every FNA, every referral is moving someone toward becoming a client or a licensed builder on your team.</p>
+
+  <div class="funnel-wrap">
+    <div class="funnel-levels">
+
+      <div class="funnel-level top">
+        <div class="funnel-label">AWARENESS LAYER<br>Community Impact</div>
+        <div class="funnel-desc">Workshops, provider meetings, church events, youth sessions. 100s of people. No ask. Pure value. Build name recognition and trust in the community. Everyone here is a future warm market.</div>
+        <div class="funnel-cta">FL Workshop</div>
+      </div>
+
+      <div class="funnel-level mid">
+        <div class="funnel-label">ENGAGEMENT LAYER<br>Qualified Prospects</div>
+        <div class="funnel-desc">Those who raise their hand, ask questions, or come back. Schedule the FNA. Zoom or office. 1-on-1. Learn their situation. Show them the financial picture. These are your active pipeline contacts.</div>
+        <div class="funnel-cta">FNA Session</div>
+      </div>
+
+      <div class="funnel-level bot">
+        <div class="funnel-label">CONVERSION LAYER<br>GX Builders & Clients</div>
+        <div class="funnel-desc">Client: solution presentation → application → placed policy → referral ask → repeat. Associate: BOM → licensed → first client → first recruit → promoted → GX milestone. Every placed policy and every new licensed associate tracks toward your GX1 promotion.</div>
+        <div class="funnel-cta">GX Activation</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════════════ WEEKLY RHYTHM -->
+<section>
+  <span class="section-tag">07 — Weekly Campaign Rhythm</span>
+  <h2>Your <span>Weekly Schedule</span></h2>
+  <p class="lead">Consistency is the campaign. Build the weekly rhythm and run it like a system. Adjust for community events, hospital access, and provider meeting schedules.</p>
+
+  <div class="market-grid">
+    <div class="market-card">
+      <div class="market-icon">📅</div>
+      <h3>Monday</h3>
+      <p>Team accountability call. Review last week's pipeline. Set the week's FNA and workshop appointments. Confirm all Zoom links and office sessions.</p>
+    </div>
+    <div class="market-card">
+      <div class="market-icon">🏥</div>
+      <h3>Tuesday / Wednesday</h3>
+      <p>OR professional outreach. Visit surgery center contacts. Drop off resource cards. Schedule lunch-and-learns. OR break room conversations.</p>
+    </div>
+    <div class="market-card">
+      <div class="market-icon">💻</div>
+      <h3>Wednesday Evening</h3>
+      <p>Standing Zoom Financial Literacy Workshop — open to all markets. Rotating topics from curriculum. Record for sharing. Invite referrals to attend live.</p>
+    </div>
+    <div class="market-card">
+      <div class="market-icon">📍</div>
+      <h3>Thursday</h3>
+      <p>In-office 1-on-1 FNA days. Back-to-back appointments. High conversion environment. Junior associates observe senior FNAs. 3-way sits as needed.</p>
+    </div>
+    <div class="market-card">
+      <div class="market-icon">⛪</div>
+      <h3>Friday / Saturday</h3>
+      <p>Community events — Wilmington, Inglewood, Carson, Long Beach. Church workshops, provider meetings, youth financial literacy sessions, foster org events.</p>
+    </div>
+    <div class="market-card">
+      <div class="market-icon">📊</div>
+      <h3>Sunday</h3>
+      <p>Pipeline review. Update CRM. Follow-up messages to this week's new contacts. Plan next week's outreach. Celebrate wins on social media / team group chat.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ CTA -->
+<div style="max-width:1100px;margin:0 auto;">
+  <div class="cta-banner">
+    <span class="section-tag" style="display:block;margin-bottom:12px;">The Goal Is Clear</span>
+    <h2>Build the Community.<br><span>Build the Team. Hit GX1.</span></h2>
+    <p>We are not just selling insurance. We are the financial literacy movement in South LA. We are the trusted voice in surgery centers, compassion circles, youth rooms, and church lobbies. Every conversation, every workshop, every FNA is a step toward GX1 — and toward generational change for the communities we serve.</p>
+    <button class="btn-gold">Start the Campaign This Week</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ FOOTER -->
+<footer>
+  <p><strong>WFG Financial Literacy Campaign — GX Builder Program</strong><br>
+  Super Building SMD · Serving Wilmington · Inglewood · Carson · Long Beach · LA County<br>
+  OR Professionals · Foster Youth · Faith Communities · DHS Providers · Elite Athletes<br>
+  <span style="color:var(--gold);font-family:'DM Mono',monospace;font-size:12px;">BUILT TO FUNNEL. BUILT TO GX.</span></p>
+</footer>
+
+</body>
+</html>
