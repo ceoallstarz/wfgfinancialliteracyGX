@@ -1,0 +1,508 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.wrap{padding:1.5rem 0;font-family:var(--font-sans)}
+.sec{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:.75rem;margin-top:1.75rem}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:.875rem}
+.cl-green{border-left:3px solid #1D9E75;border-radius:0 12px 12px 0}
+.cl-blue{border-left:3px solid #378ADD;border-radius:0 12px 12px 0}
+.cl-amber{border-left:3px solid #EF9F27;border-radius:0 12px 12px 0}
+.cl-purple{border-left:3px solid #7F77DD;border-radius:0 12px 12px 0}
+.cl-coral{border-left:3px solid #D85A30;border-radius:0 12px 12px 0}
+.cl-teal{border-left:3px solid #1D9E75;border-radius:0 12px 12px 0}
+h2{font-size:18px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+h3{font-size:15px;font-weight:500;color:var(--color-text-primary);margin-bottom:.5rem}
+h4{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:.375rem}
+p{font-size:13.5px;color:var(--color-text-secondary);line-height:1.65;margin-bottom:.5rem}
+p:last-child{margin-bottom:0}
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;margin-right:6px}
+.bg{background:#E1F5EE;color:#085041}
+.bb{background:#E6F1FB;color:#0C447C}
+.ba{background:#FAEEDA;color:#633806}
+.bp{background:#EEEDFE;color:#3C3489}
+.bc{background:#FAECE7;color:#712B13}
+.bt{background:#E1F5EE;color:#085041}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.mc{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.875rem 1rem}
+.ml{font-size:11px;color:var(--color-text-tertiary);margin-bottom:3px}
+.mv{font-size:20px;font-weight:500;color:var(--color-text-primary)}
+.ms{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.step{display:flex;gap:10px;margin-bottom:.625rem;align-items:flex-start}
+.sn{min-width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;flex-shrink:0;margin-top:2px}
+.sng{background:#E1F5EE;color:#085041}
+.snb{background:#E6F1FB;color:#0C447C}
+.sna{background:#FAEEDA;color:#633806}
+.snp{background:#EEEDFE;color:#3C3489}
+.snc{background:#FAECE7;color:#712B13}
+.st{font-size:13.5px;color:var(--color-text-secondary);line-height:1.6}
+.st strong{color:var(--color-text-primary);font-weight:500}
+.divider{height:0.5px;background:var(--color-border-tertiary);margin:1.5rem 0}
+.qblock{border-left:2px solid var(--color-border-secondary);padding:8px 12px;margin:.625rem 0;background:var(--color-background-secondary);border-radius:0 8px 8px 0}
+.qt{font-size:13px;font-style:italic;color:var(--color-text-primary);line-height:1.6}
+.qattr{font-size:11px;color:var(--color-text-tertiary);margin-top:4px}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin:2px 3px 2px 0}
+.tg{background:#E1F5EE;color:#085041}
+.tb{background:#E6F1FB;color:#0C447C}
+.ta{background:#FAEEDA;color:#633806}
+.tp{background:#EEEDFE;color:#3C3489}
+.mindset-row{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.mindset-row:last-child{border-bottom:none}
+.mi{font-size:18px;color:#1D9E75;flex-shrink:0;width:28px;text-align:center;margin-top:2px}
+.mtext h4{margin-bottom:2px}
+.mtext p{font-size:13px;margin-bottom:0}
+.nav-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.25rem}
+.pill{font-size:12px;padding:5px 14px;border:0.5px solid var(--color-border-secondary);border-radius:20px;background:var(--color-background-secondary);color:var(--color-text-secondary);cursor:pointer}
+.pill.active{background:#1D9E75;border-color:#1D9E75;color:#fff}
+.phase-section{display:none}
+.phase-section.visible{display:block}
+.progress-bar{height:4px;background:var(--color-border-tertiary);border-radius:2px;margin:8px 0 4px}
+.progress-fill{height:4px;border-radius:2px;background:#1D9E75}
+.team-viz{display:flex;flex-wrap:wrap;gap:8px;margin:.75rem 0}
+.person-dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;border:0.5px solid var(--color-border-tertiary)}
+.pd-you{background:#1D9E75;color:#fff;border-color:#1D9E75}
+.pd-gx{background:#E1F5EE;color:#085041}
+.pd-new{background:var(--color-background-secondary);color:var(--color-text-tertiary)}
+.pd-label{font-size:10px;text-align:center;color:var(--color-text-tertiary);margin-top:2px}
+.person-unit{display:flex;flex-direction:column;align-items:center;width:40px}
+.truth-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem 1rem;margin-bottom:.5rem}
+.truth-num{font-size:24px;font-weight:500;color:#1D9E75}
+.truth-text{font-size:13px;color:var(--color-text-secondary);line-height:1.5;margin-top:2px}
+.ask-btn{font-size:12px;padding:6px 14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);color:var(--color-text-primary);cursor:pointer;margin-top:8px;display:inline-block}
+.ask-btn:hover{background:var(--color-background-tertiary)}
+.phase-header{display:flex;align-items:center;gap:10px;margin-bottom:.875rem}
+.connector{display:flex;align-items:center;gap:4px;margin:.375rem 0;font-size:12px;color:var(--color-text-tertiary)}
+.connector-line{flex:1;height:0.5px;background:var(--color-border-tertiary)}
+</style>
+
+<div class="wrap">
+<h2 class="sr-only">GX full educator guide — mindset and duplication from zero to 9 people</h2>
+
+<h2 style="margin-bottom:4px">GX educator + duplicator guide</h2>
+<p style="margin-bottom:1.25rem;font-size:14px">The full why, mindset, and step-by-step for going from zero to 9 people doing GX1 every month — built for SMDs training their team.</p>
+
+<div class="nav-pills" id="nav">
+  <div class="pill active" onclick="showPhase('why')">Why GX</div>
+  <div class="pill" onclick="showPhase('mindset')">Mindset</div>
+  <div class="pill" onclick="showPhase('m1')">Month 1–2</div>
+  <div class="pill" onclick="showPhase('m3')">Month 3</div>
+  <div class="pill" onclick="showPhase('m45')">Month 4–5</div>
+  <div class="pill" onclick="showPhase('m6')">Month 6</div>
+  <div class="pill" onclick="showPhase('dup')">Duplication</div>
+  <div class="pill" onclick="showPhase('smd')">SMD system</div>
+</div>
+
+<div id="why" class="phase-section visible">
+  <div class="sec">Why GX exists — the real reason</div>
+  <div class="card cl-green">
+    <h3>The problem GX was built to solve</h3>
+    <p>Before GX, every person on your team was chasing a different goal. One person wanted their MD title. Another was running for SMD. Someone else was chasing a ring. That meant as their SMD, you were managing three different scorecards, three different timelines, three different conversations every time you called them.</p>
+    <p>And here's what Alicia saw in the data: people would run hard for a promotion — 30, 60 days of intensity — then completely stop. The promotion was a sprint. Business is a marathon. The moment they got the title, the urgency disappeared.</p>
+    <div class="qblock">
+      <div class="qt">"My dad hates promotions not because titles are bad, but because they make people run one time. A business doesn't run on when you're excited. McDonald's doesn't have 'SMD McDonald's.' They just make money every day."</div>
+      <div class="qattr">— Alicia Nguyen, SEVC</div>
+    </div>
+    <p>GX solves this by giving everyone — regardless of title, regardless of how long they've been in — one shared language, one shared scoreboard, one shared monthly standard. You're not managing their promotion. You're running the same race as them.</p>
+  </div>
+
+  <div class="sec">What GX actually does for your team</div>
+  <div class="grid3" style="margin-bottom:1rem">
+    <div class="truth-card"><div class="truth-num">1</div><div class="truth-text">Same standard for everyone — TA, MD, SMD. No hierarchy of goals.</div></div>
+    <div class="truth-card"><div class="truth-num">2</div><div class="truth-text">Monthly reset forces action every 30 days, not just during "runs."</div></div>
+    <div class="truth-card"><div class="truth-num">3</div><div class="truth-text">Double factor: 3 people trying = 6+ recruits in your baseshop, even if only 1 hits it.</div></div>
+  </div>
+  <div class="grid3" style="margin-bottom:1rem">
+    <div class="truth-card"><div class="truth-num">4</div><div class="truth-text">Points + recruits in one target keeps both production and building happening simultaneously.</div></div>
+    <div class="truth-card"><div class="truth-num">5</div><div class="truth-text">Flexible counting — combine months, catch up, go deep or wide. No sandbagging needed.</div></div>
+    <div class="truth-card"><div class="truth-num">6</div><div class="truth-text">Promotions still happen — organically, from doing GX consistently. You stop chasing titles and start building a real business.</div></div>
+  </div>
+
+  <div class="sec">The income proof</div>
+  <div class="card">
+    <h3 style="margin-bottom:.75rem">What consistent GX in your baseshop actually earns</h3>
+    <div class="grid2" style="gap:8px;margin-bottom:.75rem">
+      <div class="mc"><div class="ml">1 GX in base / month</div><div class="mv">~$100K</div><div class="ms">per year</div></div>
+      <div class="mc"><div class="ml">3 GX in base / month</div><div class="mv">~$300K</div><div class="ms">per year</div></div>
+      <div class="mc"><div class="ml">6 GX in base / month</div><div class="mv">~$500K+</div><div class="ms">per year</div></div>
+      <div class="mc"><div class="ml">9 GX in base / month</div><div class="mv">~$900K</div><div class="ms">per year trajectory</div></div>
+    </div>
+    <p style="font-size:12px;color:var(--color-text-tertiary)">Based on Alicia Nguyen's real team data across MD and SMD contracts. Requires consistency — one month doesn't count.</p>
+  </div>
+  <button class="ask-btn" onclick="sendPrompt('Can you explain the double factor in GX and how it builds my baseshop recruiting numbers even when not everyone hits GX1?')">Explain the double factor ↗</button>
+</div>
+
+<div id="mindset" class="phase-section">
+  <div class="sec">The mindset shift — before anything else</div>
+  <div class="card cl-teal">
+    <h3>This is the hardest part. Get this right first.</h3>
+    <p>Most people who fail at GX don't fail because they lack skill. They fail because they carry the wrong operating system into the program. Here are the five mindset shifts that separate people who hit GX every month from those who try once and stop.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:.75rem">
+    <div class="mindset-row">
+      <div class="mi"><i class="ti ti-refresh" aria-hidden="true"></i></div>
+      <div class="mtext">
+        <h4>From promotion-driven to system-driven</h4>
+        <p>Stop thinking "I need to hit SMD." Start thinking "I need to run 3/15K this month." Every promotion you want — MD, SMD, EMD, CEO — comes naturally when you're consistent at GX. The promotion is a byproduct, not the target. When you chase the title, you sprint then stop. When you run the system, you build a real business.</p>
+      </div>
+    </div>
+    <div class="mindset-row">
+      <div class="mi"><i class="ti ti-calendar" aria-hidden="true"></i></div>
+      <div class="mtext">
+        <h4>From event-based to habit-based</h4>
+        <p>Your energy cannot be your engine. Some days you're fired up. Some days you're not. The business doesn't care. McDonald's doesn't have an off-day. Your job is to build recruiting habits so strong that you do the work whether you feel like it or not. Three recruits per month is one per week. That's a manageable target you can hit on your worst week.</p>
+      </div>
+    </div>
+    <div class="mindset-row">
+      <div class="mi"><i class="ti ti-users" aria-hidden="true"></i></div>
+      <div class="mtext">
+        <h4>From managing people to running your own race</h4>
+        <p>Stop spending your energy on why people aren't doing what they said. The answer is always the same: go recruit more. If three people say no to GX, recruit three more and ask them. You're not looking for everyone to say yes — you're looking for the ones who will. Stop focusing on who isn't running and start recruiting until you find who is.</p>
+        <div class="qblock">
+          <div class="qt">"Why do you always focus on the people that don't do it? Can you just keep recruiting until you find someone that wants to run with you?"</div>
+          <div class="qattr">— Alicia Nguyen</div>
+        </div>
+      </div>
+    </div>
+    <div class="mindset-row">
+      <div class="mi"><i class="ti ti-heart" aria-hidden="true"></i></div>
+      <div class="mtext">
+        <h4>From fear of rejection to volume thinking</h4>
+        <p>When you book one appointment and get a no, it feels like your world ended. When you book ten appointments and get two nos, you feel momentum from the eight follow-ups. The math of this business rewards volume. Lillian doesn't pick and choose who she talks to. She talks to everyone. She doesn't assume. She doesn't prejudge. She lets the numbers work for her.</p>
+      </div>
+    </div>
+    <div class="mindset-row">
+      <div class="mi"><i class="ti ti-trending-up" aria-hidden="true"></i></div>
+      <div class="mtext">
+        <h4>From "I missed it" to "I'm still running"</h4>
+        <p>Brad Hamada had 4 recruits in a full year — then became one of the most explosive builders in the hierarchy. Phoebe tried for nearly a year before hitting her first GX1. Kevin missed consistently for years. The data shows clearly: the only people who never get there are the ones who stop trying. Alicia's rule is simple — every time you miss, next month you go again. The muscle grows with reps, not with wins.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">The obsession framework — from Lillian Umera, GX5</div>
+  <div class="card cl-coral">
+    <p>Lillian has a full-time healthcare job, two kids, and hit GX5 faster than almost anyone. Her framework isn't complicated. It's five areas of obsession practiced every single day:</p>
+    <div class="step" style="margin-top:.625rem"><div class="sn snc">1</div><div class="st"><strong>Obsessed with prospecting.</strong> She goes out and meets people every day. Not when she feels like it. Every day. She doesn't pick or choose — she talks to everyone because she genuinely doesn't know who needs this.</div></div>
+    <div class="step"><div class="sn snc">2</div><div class="st"><strong>Obsessed with follow-up.</strong> She goes back months later to people who said no — with full energy, no grudge, fresh perspective. Circumstances change. Her follow-up list never dies.</div></div>
+    <div class="step"><div class="sn snc">3</div><div class="st"><strong>Obsessed with recruiting and taprooting.</strong> The moment someone says yes, she contacts her SMD immediately and introduces the new person. Same day. Same week. That same month's taproot is what builds legs — and legs are what build GX.</div></div>
+    <div class="step"><div class="sn snc">4</div><div class="st"><strong>Obsessed with Fast Start School.</strong> Getting new recruits into Fast Start school as fast as possible is her #1 priority after someone joins. She went from 1–2 people at Fast Start to 5–6 at a time because of this habit.</div></div>
+    <div class="step"><div class="sn snc">5</div><div class="st"><strong>Obsessed with SMD communication.</strong> She texts her SMD morning and afternoon. "What's next? What can I do?" She never waits to be managed — she initiates.</div></div>
+  </div>
+</div>
+
+<div id="m1" class="phase-section">
+  <div class="sec">Months 1–2 — build yourself first</div>
+  <div class="card cl-green">
+    <div class="phase-header">
+      <span class="badge bg">Phase 1</span>
+      <span style="font-size:13px;color:var(--color-text-secondary)">You are the proof of concept</span>
+    </div>
+    <h3>Why you must go first</h3>
+    <p>Here's the truth about duplication: you cannot teach what you haven't done. If you're trying to get your team running GX while you haven't hit it yourself, you have no authority in that conversation. No credibility. They can feel it.</p>
+    <p>When you hit GX1 personally and then say "I did it, here's how, let's do it together" — that's a completely different energy. That's leadership by example. That's what makes people believe it's possible for them.</p>
+    <div class="qblock">
+      <div class="qt">"As a full-time SMD, if you cannot hit 3/15K, then what are you doing every day? You should wake up thinking about who you're going to recruit today."</div>
+      <div class="qattr">— Alicia Nguyen (to full-time SMDs in her hierarchy)</div>
+    </div>
+  </div>
+
+  <div class="sec">What you actually do — month 1</div>
+  <div class="card">
+    <h3>The month 1 playbook</h3>
+    <div class="step"><div class="sn sng">1</div><div class="st"><strong>Build your list immediately.</strong> Before you do anything else, write down 25–30 names. Not your best leads — everyone. College friends, coworkers, neighbors, former colleagues, family friends. The list is your inventory. Without it, you have no business.</div></div>
+    <div class="step"><div class="sn sng">2</div><div class="st"><strong>Contact 10 people every day.</strong> Not just text — call. The phone is the engine. If you're doing calls, things happen. If you're just messaging, things crawl. Aim for 3–5 booked appointments per week from those 10 contacts.</div></div>
+    <div class="step"><div class="sn sng">3</div><div class="st"><strong>Run a BPM or VGO every week.</strong> Your Saturday morning is a super VPM. Every week. This is where your prospects see the presentation, your new recruits edify you, and your team gets in front of fired-up leadership. Never skip it.</div></div>
+    <div class="step"><div class="sn sng">4</div><div class="st"><strong>Recruit 3, taproot at least 1 same month.</strong> The moment someone joins, introduce them to your upline immediately. Help them get their first client or recruit that same month. This is what creates a leg — and a leg is what drives your GX points.</div></div>
+    <div class="step"><div class="sn sng">5</div><div class="st"><strong>Submit 15K+ points.</strong> Don't worry too much about points chasing — when you taproot your recruits and they join-own-share, points follow naturally. Focus on people. Points are the byproduct of people getting started.</div></div>
+    <div class="step"><div class="sn sng">6</div><div class="st"><strong>Get yourself to Fast Start School.</strong> If you haven't been recently, go. And qualify every single recruit you bring in to attend too. Fast Start school is the launchpad — it dramatically increases the speed at which new people get their first result.</div></div>
+  </div>
+
+  <div class="sec">What you actually do — month 2</div>
+  <div class="card">
+    <h3>Month 2: you're now GX2 if you hit it again</h3>
+    <div class="step"><div class="sn sng">1</div><div class="st"><strong>Hit GX1 again personally.</strong> Do not stop recruiting while you start coaching. The moment you stop personal recruiting, your team loses its pace-setter. You need to be running alongside them, not behind a desk managing them.</div></div>
+    <div class="step"><div class="sn sng">2</div><div class="st"><strong>Introduce GX language to everyone on your team.</strong> In every conversation with every recruit, the question is: "Are you running GX with me this month? Here's what it means — 3 recruits, 15K points. I'll help you get there." Not a lecture. One sentence. Ask the question.</div></div>
+    <div class="step"><div class="sn sng">3</div><div class="st"><strong>Find your first willing GX partner.</strong> Out of everyone you've recruited so far, one person is going to say yes when you ask them to run GX. That person gets your full attention this month. Help them recruit their 3. Make 3-way calls. Show up to their VGO. Be in the trenches with them.</div></div>
+    <div class="step"><div class="sn sng">4</div><div class="st"><strong>Post your own numbers daily.</strong> In your team group chat, every day, post: calls made, appointments booked, recruits. You are setting the culture. When they see their SMD posting daily, some of them will start posting too. That's how accountability spreads — not through mandates, through modeling.</div></div>
+  </div>
+
+  <div class="sec">The team picture — end of month 2</div>
+  <div class="team-viz">
+    <div class="person-unit"><div class="person-dot pd-you">YOU</div><div class="pd-label">GX2</div></div>
+    <div class="person-unit"><div class="person-dot pd-gx">R1</div><div class="pd-label">trying</div></div>
+    <div class="person-unit"><div class="person-dot pd-new">R2</div><div class="pd-label">new</div></div>
+    <div class="person-unit"><div class="person-dot pd-new">R3</div><div class="pd-label">new</div></div>
+  </div>
+  <p style="font-size:12px;color:var(--color-text-tertiary)">You're GX2. One recruit is actively trying for GX. Others are new. This is normal and exactly on track.</p>
+</div>
+
+<div id="m3" class="phase-section">
+  <div class="sec">Month 3 — 3 people doing GX1</div>
+  <div class="card cl-blue">
+    <div class="phase-header">
+      <span class="badge bb">Phase 2</span>
+      <span style="font-size:13px;color:var(--color-text-secondary)">You + 2 others</span>
+    </div>
+    <h3>Why 3 matters — the tipping point</h3>
+    <p>Three people doing GX1 is not just a number. It's the proof that the system is duplicatable. Once you have three people who have personally hit GX1, you now have three people who can teach others how to do it. That's when GX stops being your program and starts being the team's program.</p>
+    <p>It also changes the energy in every team call. Instead of you explaining what GX is, you have two other people sharing their experience of hitting it. Peer testimony is ten times more powerful than SMD instruction.</p>
+  </div>
+
+  <div class="sec">The month-start ritual — do this on day 1 of every month</div>
+  <div class="card">
+    <h3>The 10-minute launch call</h3>
+    <p>On the first business day of every month, book a 10-minute call with every person in your base. Not a group call — individual. The agenda is always the same:</p>
+    <div class="step" style="margin-top:.625rem"><div class="sn snb">1</div><div class="st"><strong>"Who are you planning to call this week?"</strong> Don't accept "I'll figure it out." If they have names, great. If not, open their phone with them and identify 5 people right now.</div></div>
+    <div class="step"><div class="sn snb">2</div><div class="st"><strong>Make live calls together.</strong> Right there on the spot, do a 3-way call to one of their contacts while you're on the phone. Nothing teaches like doing. Nothing builds confidence like making the call and having it go well.</div></div>
+    <div class="step"><div class="sn snb">3</div><div class="st"><strong>Set their GX declaration for the month.</strong> "Tell me exactly how many recruits you're committing to this month." Get a number. Write it down. You'll come back to it weekly.</div></div>
+    <div class="step"><div class="sn snb">4</div><div class="st"><strong>Confirm their Fast Start and BPM schedule.</strong> Are they attending this Saturday's VPM? Are their recruits attending? Are any of them qualified for Fast Start school?</div></div>
+  </div>
+
+  <div class="sec">The accountability system that actually works</div>
+  <div class="card">
+    <h3>Daily numbers — the culture you're building</h3>
+    <div class="step"><div class="sn snb">1</div><div class="st"><strong>Daily team post in your group chat:</strong> Every person in your base posts their numbers each evening — calls made, appointments booked, recruits. Not as surveillance. As team culture. When everyone sees each other's numbers, something shifts: people want to contribute to the board.</div></div>
+    <div class="step"><div class="sn snb">2</div><div class="st"><strong>You respond to every post.</strong> Not a long coaching session — just acknowledgment. "Let's go." "Who's the recruit? Get me on a 3-way." "Two more appointments this week and you're there." Being seen matters more than you know.</div></div>
+    <div class="step"><div class="sn snb">3</div><div class="st"><strong>Mid-month check: who's close to GX?</strong> Around day 15, look at everyone's numbers. If someone has 2 recruits, you get personally involved. You make calls with them. You show up to their VGO. You find their third recruit with them. This is the difference between an SMD and a manager.</div></div>
+    <div class="step"><div class="sn snb">4</div><div class="st"><strong>End-of-month recognition:</strong> Anyone who hits GX1 gets recognized publicly — in the group chat, on the weekly call, on Telegram. By name. With context. "Sarah hit GX1 this month — her first. She made calls every single day this week to close it." Recognition repeated becomes culture.</div></div>
+  </div>
+
+  <div class="sec">What to say when someone misses</div>
+  <div class="card">
+    <div class="qblock">
+      <div class="qt">"That's okay. You tried. The muscle takes time. Look at your numbers — you had 2 recruits. That means next month we just need to find one more. What would your life look like if you did this consistently for 12 months straight? That's what we're building. Let's go again."</div>
+      <div class="qattr">— How to respond when your team doesn't hit GX</div>
+    </div>
+    <p>The worst thing you can do when someone misses is make them feel ashamed. The second worst is making it feel optional. Hold the standard warmly. Celebrate the attempt. Redirect immediately to next month.</p>
+  </div>
+
+  <div class="sec">End of month 3 — team picture</div>
+  <div class="team-viz">
+    <div class="person-unit"><div class="person-dot pd-you">YOU</div><div class="pd-label">GX3</div></div>
+    <div class="person-unit"><div class="person-dot pd-gx">P1</div><div class="pd-label">GX1</div></div>
+    <div class="person-unit"><div class="person-dot pd-gx">P2</div><div class="pd-label">GX1</div></div>
+    <div class="person-unit"><div class="person-dot pd-new">R4</div><div class="pd-label">new</div></div>
+    <div class="person-unit"><div class="person-dot pd-new">R5</div><div class="pd-label">new</div></div>
+    <div class="person-unit"><div class="person-dot pd-new">R6</div><div class="pd-label">new</div></div>
+  </div>
+  <p style="font-size:12px;color:var(--color-text-tertiary)">3 people on GX1 this month (you + 2). Your baseshop via double factor likely shows 10–12 recruits total.</p>
+</div>
+
+<div id="m45" class="phase-section">
+  <div class="sec">Months 4–5 — teaching duplication</div>
+  <div class="card cl-amber">
+    <div class="phase-header">
+      <span class="badge ba">Phase 3</span>
+      <span style="font-size:13px;color:var(--color-text-secondary)">Your GX people now recruit their 3</span>
+    </div>
+    <h3>The shift that makes everything compound</h3>
+    <p>This is where most SMDs make a critical mistake: they stop recruiting personally and start "managing" their team. The moment you do that, growth stalls. Your job in months 4 and 5 is to do two things at the same time — run your own GX and teach your existing GX people how to run GX with their recruits.</p>
+    <p>Think of it this way: you have 3 people doing GX1. If each of those 3 people recruits 3 new people and helps 1 of them hit GX1, you now have 6 people doing GX. That's the multiplication. And it only works if your GX people know how to teach the same thing you taught them.</p>
+  </div>
+
+  <div class="sec">What to teach your GX1 people to do with their recruits</div>
+  <div class="card">
+    <h3>Passing down the system exactly</h3>
+    <div class="step"><div class="sn sna">1</div><div class="st"><strong>Teach them the month-start call.</strong> Your GX1 people should now be doing the same 10-minute calls with their base that you do with yours. "Who are you calling this week? Let's make a call together right now." You model it with them, they replicate it with their recruits.</div></div>
+    <div class="step"><div class="sn sna">2</div><div class="st"><strong>Teach them how to run a VGO.</strong> Every new recruit your GX1 person brings in needs a Virtual Grand Opening within their first 2 weeks. Teach your GX1 people to schedule it, build the guest list, edify their new recruit, and close the room. You join the first few. Then they run it themselves.</div></div>
+    <div class="step"><div class="sn sna">3</div><div class="st"><strong>Teach them the taproot conversation.</strong> The day someone joins their team, they should be on a 3-way call with that new recruit and you. "Hey, I want to introduce you to my SMD." That introduction builds trust, establishes the system, and massively increases the new recruit's likelihood of staying active.</div></div>
+    <div class="step"><div class="sn sna">4</div><div class="st"><strong>Teach them to recognize their people.</strong> When one of their recruits hits a milestone — first appointment, first client, first GX1 attempt — they should be calling it out in the team chat. Culture is built one recognition at a time.</div></div>
+  </div>
+
+  <div class="sec">The double factor math — why your baseshop explodes</div>
+  <div class="card">
+    <h3>Why effort always exceeds the scoreboard</h3>
+    <p>For every person on your team who actually hits GX1, there are at least 2 more who ran for it but were short. Maybe they got 2 recruits. Maybe they had 12K points. Those "misses" still add recruiting and production volume to your baseshop. That's the double factor.</p>
+    <div class="grid2" style="gap:8px;margin:.75rem 0">
+      <div class="mc"><div class="ml">3 GX qualifiers</div><div class="mv" style="font-size:16px;margin-top:2px">~6 running</div><div class="ms">in your base this month</div></div>
+      <div class="mc"><div class="ml">Baseshop recruits</div><div class="mv" style="font-size:16px;margin-top:2px">12–18</div><div class="ms">even if 3 hit GX</div></div>
+    </div>
+    <p>This is how double-digit recruiting happens without forcing it. You're not chasing 10 recruits — you're building a GX culture where 6+ people are actively recruiting every month, and the collective effort produces double-digit numbers naturally.</p>
+  </div>
+
+  <div class="sec">End of month 5 — team picture</div>
+  <div class="team-viz">
+    <div class="person-unit"><div class="person-dot pd-you">YOU</div><div class="pd-label">GX5</div></div>
+    <div class="person-unit"><div class="person-dot pd-gx">P1</div><div class="pd-label">GX3</div></div>
+    <div class="person-unit"><div class="person-dot pd-gx">P2</div><div class="pd-label">GX3</div></div>
+    <div class="person-unit"><div class="person-dot pd-gx">P3</div><div class="pd-label">GX1</div></div>
+    <div class="person-unit"><div class="person-dot pd-gx">P4</div><div class="pd-label">GX1</div></div>
+    <div class="person-unit"><div class="person-dot pd-gx">P5</div><div class="pd-label">GX1</div></div>
+    <div class="person-unit"><div class="person-dot pd-new">R+</div><div class="pd-label">trying</div></div>
+    <div class="person-unit"><div class="person-dot pd-new">R+</div><div class="pd-label">new</div></div>
+  </div>
+  <p style="font-size:12px;color:var(--color-text-tertiary)">6 people on GX1. Several more trying. Your baseshop is starting to look predictable.</p>
+</div>
+
+<div id="m6" class="phase-section">
+  <div class="sec">Month 6 — 9 people doing GX1</div>
+  <div class="card cl-purple">
+    <div class="phase-header">
+      <span class="badge bp">Phase 4</span>
+      <span style="font-size:13px;color:var(--color-text-secondary)">Your baseshop is a GX machine</span>
+    </div>
+    <h3>What 9 GX people actually means</h3>
+    <p>Nine people consistently hitting GX1 is not a team anymore. It's a system. It's a culture. The difference is that when you have a team, you're motivating people. When you have a system, the system motivates the people — and you're just making sure the system keeps running.</p>
+    <p>At this point, your job as SMD changes. You're no longer the primary recruiter for everyone. You're the pace-setter, the recognizer, the connector, and the trainer of trainers. Your GX veterans — the people who have been doing this for 4–5 months — are now capable of bringing new people all the way to GX1 without you in every conversation.</p>
+  </div>
+
+  <div class="sec">The 9-person team structure</div>
+  <div class="card">
+    <div class="step"><div class="sn snp">1</div><div class="st"><strong>You (GX6+).</strong> Still running GX personally every month. Never stopped. The team sees this and it matters every single time.</div></div>
+    <div class="step"><div class="sn snp">2</div><div class="st"><strong>2 GX veterans (from month 1–2).</strong> These are your most experienced GX runners. By now they understand the system deeply enough to explain it to new people. They're becoming trainers. Invest in developing them as leaders.</div></div>
+    <div class="step"><div class="sn snp">3</div><div class="st"><strong>3 mid-level GX runners (from month 3–4).</strong> Consistent for 2–3 months. They've hit it, missed it, come back. They're building the muscle. Their recruit base is growing. Some of their recruits are now running for GX themselves.</div></div>
+    <div class="step"><div class="sn snp">4</div><div class="st"><strong>3 new GX1 qualifiers (first time this month).</strong> Someone who just hit GX1 for the first time is the most powerful person in your next team call. Let them speak. Let them share exactly what they did. Fresh testimony creates belief faster than any training.</div></div>
+  </div>
+
+  <div class="sec">What to do with your first-time GX1 qualifiers</div>
+  <div class="card">
+    <h3>First-time GX1 is a cultural moment — treat it that way</h3>
+    <div class="step"><div class="sn snp">1</div><div class="st"><strong>Recognize them publicly and specifically.</strong> Don't just say "congrats." Say: "Maria hit GX1 this month — her first. She had 2 recruits by week 2 and spent week 3 helping one of them get their first client to close the points. She did not quit when it got hard at day 20." That story is what others model.</div></div>
+    <div class="step"><div class="sn snp">2</div><div class="st"><strong>Ask them to speak on the next team call.</strong> Two minutes. What did you do? What was hard? What made the difference? Peer voice from a brand-new GX qualifier is the best recruiting tool you have for people still on the fence.</div></div>
+    <div class="step"><div class="sn snp">3</div><div class="st"><strong>Immediately challenge them for month 7.</strong> "You just proved you can do it once. Now let's make it twice. Same system. Who are three people you're calling this week?" Don't let the momentum of month 6 stop at the celebration.</div></div>
+  </div>
+
+  <div class="sec">The month 6 team picture</div>
+  <div class="team-viz">
+    <div class="person-unit"><div class="person-dot pd-you">YOU</div><div class="pd-label">GX6</div></div>
+    <div class="person-unit"><div class="person-dot pd-gx">V1</div><div class="pd-label">veteran</div></div>
+    <div class="person-unit"><div class="person-dot pd-gx">V2</div><div class="pd-label">veteran</div></div>
+    <div class="person-unit"><div class="person-dot pd-gx">M1</div><div class="pd-label">mid</div></div>
+    <div class="person-unit"><div class="person-dot pd-gx">M2</div><div class="pd-label">mid</div></div>
+    <div class="person-unit"><div class="person-dot pd-gx">M3</div><div class="pd-label">mid</div></div>
+    <div class="person-unit"><div class="person-dot pd-gx">N1</div><div class="pd-label">1st GX</div></div>
+    <div class="person-unit"><div class="person-dot pd-gx">N2</div><div class="pd-label">1st GX</div></div>
+    <div class="person-unit"><div class="person-dot pd-gx">N3</div><div class="pd-label">1st GX</div></div>
+    <div class="person-unit"><div class="person-dot pd-new">+</div><div class="pd-label">running</div></div>
+  </div>
+  <div style="margin-top:.75rem">
+    <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+    <p style="font-size:12px;color:var(--color-text-tertiary)">9 GX qualifiers. Double factor: ~18+ baseshop recruits. Income trajectory: $900K+/year from baseshop alone.</p>
+  </div>
+</div>
+
+<div id="dup" class="phase-section">
+  <div class="sec">The duplication principle — why GX spreads</div>
+  <div class="card cl-teal">
+    <h3>Duplication is not about copying. It's about simplicity.</h3>
+    <p>Something duplicates when a normal person — not a superstar, not a natural salesperson, not someone with a massive warm market — can look at it and say "I can do that." 3 recruits and 15,000 points per month is that thing. It's specific enough to be a real target. Simple enough that anyone can explain it in 30 seconds.</p>
+    <div class="qblock">
+      <div class="qt">"Is it normal for one person to recruit 100,000 people a year? No. But what makes it doable is a system. Normal people can build a business through a predictable system."</div>
+      <div class="qattr">— Alicia Nguyen</div>
+    </div>
+  </div>
+
+  <div class="sec">The 4 laws of GX duplication</div>
+  <div class="card">
+    <div class="mindset-row">
+      <div class="mi"><i class="ti ti-eye" aria-hidden="true"></i></div>
+      <div class="mtext">
+        <h4>Law 1 — you must do it before you can teach it</h4>
+        <p>You cannot duplicate what you haven't mastered. If you've never hit GX1 personally, your conversation about GX with your team will always feel theoretical. Once you've hit it, you have a real story. "Here's exactly what I did. Week 1 I called these people. Week 2 someone said yes. Week 3 I taprooted them." That specificity is what creates belief.</p>
+      </div>
+    </div>
+    <div class="mindset-row">
+      <div class="mi"><i class="ti ti-copy" aria-hidden="true"></i></div>
+      <div class="mtext">
+        <h4>Law 2 — teach the behavior, not just the result</h4>
+        <p>Most SMDs teach their team to "get GX1." But the people who consistently hit it are taught to "make 10 calls a day, book 3 appointments a week, taproot within the same month." Behavior is what you duplicate. Results follow. When your team knows the specific daily actions, they don't need motivation — they have a checklist.</p>
+      </div>
+    </div>
+    <div class="mindset-row">
+      <div class="mi"><i class="ti ti-microphone" aria-hidden="true"></i></div>
+      <div class="mtext">
+        <h4>Law 3 — peer testimony outperforms SMD instruction</h4>
+        <p>When you stand up on a team call and explain GX, people respect you but think "you're the SMD, of course you can do it." When someone at the same level as your newest recruit stands up and says "I hit GX1 last month — here's what I did" — that's a different conversation. Build a culture where your GX qualifiers always share their story immediately after hitting it.</p>
+      </div>
+    </div>
+    <div class="mindset-row">
+      <div class="mi"><i class="ti ti-arrow-right" aria-hidden="true"></i></div>
+      <div class="mtext">
+        <h4>Law 4 — the system must be simpler one level down</h4>
+        <p>When you teach your GX1 people how to develop their team, give them a simpler version of what you do. Not 10 things — 3 things. "Call your base on day 1 of the month. Make 3-way calls. Recognize publicly." The more layers the system has, the harder it is to pass down. Simplicity is what survives four levels deep.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">The conversation that creates GX partners</div>
+  <div class="card">
+    <h3>How to ask someone to run GX with you</h3>
+    <p>This conversation works after a BPM or after someone has just joined. It should take about 90 seconds:</p>
+    <div class="qblock">
+      <div class="qt">"I want to share something with you. I'm running a program called GX this month. The goal is simple — 3 recruits and 15,000 points. I've been doing it every month and it's changed how I think about this business. I'm looking for 2 or 3 people to run it with me — people I can support, make 3-way calls with, and celebrate wins with. You in?"</div>
+    </div>
+    <p style="margin-top:.5rem">If they say yes: "Perfect. Here's what we do this week..." and immediately get into the month-start call rhythm. If they say no: that's fine. Recruit 3 more people and ask again. The conversation doesn't change — you just find the person who says yes.</p>
+  </div>
+</div>
+
+<div id="smd" class="phase-section">
+  <div class="sec">The SMD operating system — what you do every week</div>
+  <div class="card cl-blue">
+    <h3>Your job is not to motivate people. Your job is to run the system.</h3>
+    <p>Motivated people come and go. Systematized teams keep running. The difference between an SMD who builds and one who stalls is whether they have a repeatable weekly operating rhythm that runs regardless of their mood, their team's mood, or what's happening in the world.</p>
+  </div>
+
+  <div class="sec">Weekly operating rhythm</div>
+  <div class="card">
+    <h3>Every week, the same structure</h3>
+    <div class="step"><div class="sn snb">Mon</div><div class="st"><strong>Individual check-ins.</strong> Quick text or call to each base member. "How many calls did you make last week? Who are you talking to this week?" Not a coaching session — a pulse check. 5 minutes per person.</div></div>
+    <div class="step"><div class="sn snb">Wed</div><div class="st"><strong>3-way call sessions.</strong> Block 2 hours where you're available to jump on 3-way calls with your team members. This is where you add the most value — showing up in their conversations, helping them close, helping them handle objections.</div></div>
+    <div class="step"><div class="sn snb">Sat</div><div class="st"><strong>Super BPM/VGO.</strong> Every Saturday without exception. Everyone's newest prospect plugs into this presentation. Your team edifies each other. GX qualifiers from the week get recognized. New recruits see the community they're joining.</div></div>
+    <div class="step"><div class="sn snb">EOM</div><div class="st"><strong>End-of-month recognition.</strong> Public, specific, story-based recognition for every GX qualifier. Post in group chat, announce on the team call, send to Telegram. Make it a moment. People repeat what gets recognized.</div></div>
+    <div class="step"><div class="sn snb">Day 1</div><div class="st"><strong>Month-start calls.</strong> First business day of every month — 10-minute individual call with every base member. Set their GX declaration. Make live calls. Lock in their weekly targets.</div></div>
+  </div>
+
+  <div class="sec">What to talk about — and what not to</div>
+  <div class="card">
+    <div class="grid2" style="gap:10px">
+      <div>
+        <h4 style="color:#085041;margin-bottom:.5rem"><i class="ti ti-check" style="font-size:14px;margin-right:4px" aria-hidden="true"></i> Always talk about</h4>
+        <div class="step" style="margin-bottom:.4rem"><div class="sn sng" style="font-size:9px">Y</div><div class="st" style="font-size:13px">Who are you recruiting this week?</div></div>
+        <div class="step" style="margin-bottom:.4rem"><div class="sn sng" style="font-size:9px">Y</div><div class="st" style="font-size:13px">Where are you on your 3 recruits?</div></div>
+        <div class="step" style="margin-bottom:.4rem"><div class="sn sng" style="font-size:9px">Y</div><div class="st" style="font-size:13px">Who is close to GX — how can I help?</div></div>
+        <div class="step" style="margin-bottom:.4rem"><div class="sn sng" style="font-size:9px">Y</div><div class="st" style="font-size:13px">Have you taprooted your new recruit yet?</div></div>
+        <div class="step" style="margin-bottom:.4rem"><div class="sn sng" style="font-size:9px">Y</div><div class="st" style="font-size:13px">Who qualified for Fast Start this month?</div></div>
+      </div>
+      <div>
+        <h4 style="color:#712B13;margin-bottom:.5rem"><i class="ti ti-x" style="font-size:14px;margin-right:4px" aria-hidden="true"></i> Stop talking about</h4>
+        <div class="step" style="margin-bottom:.4rem"><div class="sn snc" style="font-size:9px">N</div><div class="st" style="font-size:13px">Why didn't they do what they said?</div></div>
+        <div class="step" style="margin-bottom:.4rem"><div class="sn snc" style="font-size:9px">N</div><div class="st" style="font-size:13px">Managing one empty leg for months</div></div>
+        <div class="step" style="margin-bottom:.4rem"><div class="sn snc" style="font-size:9px">N</div><div class="st" style="font-size:13px">Chasing people who don't want to run</div></div>
+        <div class="step" style="margin-bottom:.4rem"><div class="sn snc" style="font-size:9px">N</div><div class="st" style="font-size:13px">Stopping your own recruiting to coach</div></div>
+        <div class="step" style="margin-bottom:.4rem"><div class="sn snc" style="font-size:9px">N</div><div class="st" style="font-size:13px">Products, IL, compliance in team calls</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">The rule when your team isn't running</div>
+  <div class="card">
+    <h3>You can't change people — but you can change your people</h3>
+    <p>If after two months someone still isn't trying for GX — not missing it, not trying — they are showing you what they want right now. That's okay. But your energy belongs with the people who are running. Stop trying to push people who aren't moving and instead go recruit someone new who is hungry.</p>
+    <div class="qblock">
+      <div class="qt">"You can't change your people, but you can change your people. Go recruit someone who wants it."</div>
+      <div class="qattr">— Team Revolution leadership</div>
+    </div>
+    <p>This is not giving up on people. It's understanding that your energy spent recruiting three new hungry people will always outperform your energy spent trying to re-motivate one reluctant person. Keep the door open. Go find the people who are ready.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+  <button class="ask-btn" onclick="sendPrompt('Build me a weekly GX team tracking sheet I can use with my base every month.')">Build team tracker ↗</button>
+  <button class="ask-btn" onclick="sendPrompt('Write me the exact month-start call script I use with every base member on day 1 of each month to set their GX declaration.')">Month-start call script ↗</button>
+  <button class="ask-btn" onclick="sendPrompt('What do I say to recognize a team member publicly when they hit GX1 for the first time?')">GX recognition script ↗</button>
+  <button class="ask-btn" onclick="sendPrompt('What are the most common reasons people miss GX1 and exactly what I should do to help them hit it next month?')">Why people miss GX — and fixes ↗</button>
+</div>
+</div>
+
+<script>
+function showPhase(id){
+  document.querySelectorAll('.phase-section').forEach(s=>s.classList.remove('visible'));
+  document.getElementById(id).classList.add('visible');
+  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+  const map={why:0,mindset:1,m1:2,m3:3,m45:4,m6:5,dup:6,smd:7};
+  document.querySelectorAll('.pill')[map[id]].classList.add('active');
+}
+</script>
