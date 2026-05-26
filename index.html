@@ -11,7 +11,7 @@
 <link href="slick/slick-theme.css" rel="stylesheet"/>
 <link href="magnific-popup/magnific-popup.css" rel="stylesheet"/>
 <link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&amp;family=Cormorant+Garamond:ital,wght@1,300;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&amp;family=Cormorant+Garamond:ital,wght@1,300;1,400&amp;family=Raleway:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="css/tooplate-infinite-loop.css" rel="stylesheet">
 <!--
 Tooplate 2117 Infinite Loop
@@ -347,26 +347,51 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);fon
   border-radius:20px;
 }
 
-/* Mission HQ Header */
-#tmNav{
-  position:sticky;
+/* Navbar — transparent until scroll, matching Infinite Loop */
+#tmNav, .tm-navbar {
+  position:absolute;
   top:0;
+  left:0;
+  right:0;
   z-index:1200;
-  backdrop-filter:blur(14px);
-  background:rgba(10,14,22,.82);
-  border-bottom:1px solid rgba(255,255,255,.06);
-  transition:all .25s ease;
+  background:transparent;
+  border-bottom:none;
+  transition: background .3s ease, border-color .3s ease, color .3s ease;
 }
-
+/* On scroll: white bar with blue/dark text — exact Infinite Loop behavior */
+#tmNav.scroll, .tm-navbar.scroll {
+  position: fixed !important;
+  top: 0 !important;
+  background: #fff !important;
+  border-bottom: 1px solid #e0e4ea !important;
+  backdrop-filter: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+#tmNav.scroll .navbar-brand,
+.tm-navbar.scroll .navbar-brand {
+  color: #2c5282 !important;
+}
+#tmNav.scroll .nav-link,
+.tm-navbar.scroll .nav-link {
+  color: #333 !important;
+}
+#tmNav.scroll .nav-item.active .nav-link,
+#tmNav.scroll .nav-link:hover,
+.tm-navbar.scroll .nav-item.active .nav-link,
+.tm-navbar.scroll .nav-link:hover {
+  color: #2c5282 !important;
+  background: rgba(44,82,130,.1);
+  border-radius: 4px;
+}
 #tmNav .navbar-brand{
   letter-spacing:-.02em;
   font-weight:700;
+  font-family: 'Raleway', sans-serif;
 }
-
 #tmNav .nav-link{
-  transition:all .2s ease;
+  transition: all .2s ease;
+  font-family: 'Raleway', sans-serif;
 }
-
 #tmNav .nav-link:hover{
   opacity:.92;
   transform:translateY(-1px);
@@ -446,12 +471,12 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);fon
 </nav>
 <div class="text-center tm-hero-text-container">
 <div class="tm-hero-text-container-inner">
-
-<p class="tm-hero-subtitle">
-              <br><br><br><br><br> 
-              <br/><br><br><br><br><br><br><br><br>Faith, Family, Leadership, Legacy
-              <br>No Famliy Left Behind
-            </p>
+    <h2 class="tm-hero-title">Hyperion Legacy Builders</h2>
+    <p class="tm-hero-subtitle">
+      Revolution Financial Management
+      <br>Faith, Family, Leadership, Legacy
+      <br>No Family Left Behind
+    </p>
 </div>
 </div>
 <div class="tm-next tm-intro-next">
@@ -524,36 +549,36 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);fon
 <div class="container tm-testimonials-content">
 <div class="row">
 <div class="col-lg-12 tm-content-box">
-<h2 class="text-white text-center mb-4 tm-section-title">Testimonials</h2>
+<h2 class="text-white text-center mb-4 tm-section-title">What We Say</h2>
 <p class="mx-auto tm-section-desc text-center">
-                Nulla dictum sem non eros euismod, eu placerat tortor lobortis. Suspendisse id velit eu libero pellentesque interdum. Etiam quis congue eros.
+                Real stories from families who took the first step and built something that lasts.
               </p>
 <div class="mx-auto tm-gallery-container tm-gallery-container-2">
 <div class="tm-testimonials-carousel">
 <figure class="tm-testimonial-item">
 <img alt="Image" class="img-fluid mx-auto" src="img/testimonial-img-01.jpg"/>
-<blockquote>This background image includes a semi-transparent overlay layer. This section also has a parallax image effect.</blockquote>
-<figcaption>Catherine Win (Designer)</figcaption>
+<blockquote>"I didn't even know I could afford life insurance. Nobody ever sat down with me and explained it. After one meeting, I had a plan — and for the first time in years I stopped losing sleep over what would happen to my family if something happened to me."</blockquote>
+<figcaption>Maria T. (Client, Los Angeles)</figcaption>
 </figure>
 <figure class="tm-testimonial-item">
 <img alt="Image" class="img-fluid mx-auto" src="img/testimonial-img-02.jpg"/>
-<blockquote>Testimonial section comes with carousel items. You can use Infinite Loop HTML CSS template for your websites.</blockquote>
-<figcaption>Dual Rocker (CEO)</figcaption>
+<blockquote>"The traditional financial industry wasn't built for people like us. Revolution showed us how to stop bleeding money to debt and start building wealth — on our income, in our neighborhood. It changed everything."</blockquote>
+<figcaption>James &amp; Carmen R. (Clients, Torrance)</figcaption>
 </figure>
 <figure class="tm-testimonial-item">
 <img alt="Image" class="img-fluid mx-auto" src="img/testimonial-img-03.jpg"/>
-<blockquote>Nulla finibus ligula nec tortor convallis tincidunt. Interdum et malesuada fames ac ante ipsum primis in faucibus.</blockquote>
-<figcaption>Sandar Soft (Marketing)</figcaption>
+<blockquote>"I came in skeptical. Left with a real financial game plan — college savings for my kids, a life insurance policy, and a retirement strategy. All in one meeting. And it cost me nothing out of pocket to have that conversation."</blockquote>
+<figcaption>David K. (Client, Compton)</figcaption>
 </figure>
 <figure class="tm-testimonial-item">
 <img alt="Image" class="img-fluid mx-auto" src="img/testimonial-img-04.jpg"/>
-<blockquote>Curabitur rutrum pharetra lobortis. Pellentesque vehicula, velit quis eleifend fermentum, erat arcu aliquet neque.</blockquote>
-<figcaption>Oliva Htoo (Designer)</figcaption>
+<blockquote>"I joined the business part-time while working full-time. Within six months I replaced my income. This isn't a job — it's a mission. Helping families get protected while building something real for my own family."</blockquote>
+<figcaption>Priscilla M. (Associate, Hyperion Legacy Builders)</figcaption>
 </figure>
 <figure class="tm-testimonial-item">
 <img alt="Image" class="img-fluid mx-auto" src="img/testimonial-img-02.jpg"/>
-<blockquote>Integer sit amet risus et erat imperdiet finibus. Nam lacus nunc, vulputate id ex eget, euismod auctor augue.</blockquote>
-<figcaption>Jacob Joker (CTO)</figcaption>
+<blockquote>"What I love most is that we don't sell one product. We look at the whole picture — insurance, savings, debt, retirement — and find what's actually right for the family. That's rare. That's what I wish someone had done for my parents."</blockquote>
+<figcaption>Anthony L. (Associate, Revolution Financial)</figcaption>
 </figure>
 </div>
 </div>
@@ -568,7 +593,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);fon
 <div class="text-center col-12">
 <h2 class="tm-text-primary tm-section-title mb-4">Gallery</h2>
 <p class="mx-auto tm-section-desc">
-                Praesent sed pharetra lorem, blandit convallis mi. Aenean ornare elit ac metus lacinia, sed iaculis nibh semper. Pellentesque est urna, lobortis eu arcu a, aliquet tristique urna.
+                Moments from our events, community gatherings, and the families we serve — building a movement one meeting at a time.
               </p>
 </div>
 </div>
@@ -653,7 +678,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);fon
 <div class="text-center col-12">
 <h2 class="tm-section-title mb-4">Contact Us</h2>
 <p class="mb-5">
-                  Proin enim orci, tincidunt quis suscipit in, placerat nec est. Vestibulum posuere faucibus posuere. Quisque aliquam velit eget leo blandit egestas. Nulla id posuere felis, quis tristique nulla.
+                  Ready to take the first step? Whether you want a free financial plan, have questions about our mission, or want to learn about joining the business — we'd love to hear from you. No pressure, no pitch. Just a conversation.
                 </p><br/>
 </div>
 <div class="col-sm-12 col-md-6">
@@ -1319,6 +1344,7 @@ Meanwhile, a hungry, humble, coachable person can explode in this business.</p><
 <button class="nav-pill" onclick="csShowTab('reconnect')">3-Call System</button>
 <button class="nav-pill" onclick="csShowTab('hesitancy')">Hesitancy</button>
 <button class="nav-pill" onclick="csShowTab('compare')">Warm vs Cold</button>
+<button class="nav-pill" onclick="csShowTab('bpminvite')">GX BPM Invite</button>
 </div>
 <div class="content">
 <!-- ===== TAB: QUICK SCRIPTS ===== -->
@@ -1701,6 +1727,175 @@ Meanwhile, a hungry, humble, coachable person can explode in this business.</p><
 <div class="coach-item">Your listening and tonality ARE the script. The words are just scaffolding.</div>
 </div>
 </div>
+
+<!-- ===== TAB: GX BPM INVITE ===== -->
+<div class="tab-panel" id="cs-bpminvite">
+
+<style>
+.wrap{padding:1.5rem}
+.bpm-hdr-title{font-size:18px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.bpm-hdr-sub{font-size:13px;color:var(--color-text-secondary);margin-bottom:1.25rem}
+.bpm-sec{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;color:var(--color-text-secondary);margin:1.25rem 0 0.5rem}
+.bpm-sec:first-of-type{margin-top:0}
+.bpm-card{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.1rem 1.25rem;margin-bottom:0.85rem;background:var(--color-background-primary)}
+.bpm-tip{background:#E1F5EE;border-radius:var(--border-radius-md);padding:0.55rem 0.9rem;font-size:12px;color:#085041;line-height:1.6;margin:6px 0}
+.bpm-warn{background:#FAEEDA;border-radius:var(--border-radius-md);padding:0.55rem 0.9rem;font-size:12px;color:#633806;line-height:1.6;margin:6px 0}
+.bpm-line{display:flex;align-items:flex-start;gap:12px;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.bpm-line:last-child{border-bottom:none}
+.bpm-who{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;min-width:48px;padding-top:2px;flex-shrink:0}
+.bpm-you{color:#0C447C}
+.bpm-them{color:#712B13}
+.bpm-said{font-size:14px;line-height:1.65;color:var(--color-text-primary);flex:1;font-style:italic}
+.bpm-said.bpm-them-said{color:var(--color-text-secondary)}
+.bpm-coach{font-size:12px;color:var(--color-text-secondary);line-height:1.55;padding:4px 0 2px 60px}
+.bpm-phase-lbl{font-size:11px;font-weight:500;color:var(--color-text-secondary);padding:6px 0 2px;text-transform:uppercase;letter-spacing:0.05em}
+.bpm-divider{height:0.5px;background:var(--color-border-tertiary);margin:8px 0}
+.bpm-obj-block{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);overflow:hidden;margin-bottom:7px}
+.bpm-obj-hdr{display:flex;align-items:center;justify-content:space-between;padding:0.6rem 0.85rem;cursor:pointer;background:var(--color-background-secondary)}
+.bpm-obj-hdr:hover{background:var(--color-background-primary)}
+.bpm-obj-hdr-text{font-size:13px;color:var(--color-text-primary);font-style:italic}
+.bpm-obj-body{display:none;padding:0.65rem 0.85rem;border-top:0.5px solid var(--color-border-tertiary);font-size:13px;color:var(--color-text-secondary);line-height:1.65;font-style:italic}
+.bpm-obj-body.open{display:block}
+.bpm-chev{font-size:13px;color:var(--color-text-secondary);transition:transform 0.18s}
+.bpm-vm-box{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:1.1rem 1.25rem;margin-bottom:0.85rem}
+.bpm-vm-lbl{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;color:var(--color-text-secondary);margin-bottom:8px}
+.bpm-vm-text{font-size:15px;line-height:1.75;color:var(--color-text-primary);font-style:italic}
+.bpm-text-box{background:#E6F1FB;border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:0.85rem}
+.bpm-text-lbl{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;color:#0C447C;margin-bottom:8px}
+.bpm-text-text{font-size:15px;line-height:1.75;color:#0C447C;font-style:italic}
+.bpm-why-row{display:flex;align-items:flex-start;gap:10px;padding:5px 0;font-size:13px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.bpm-why-row:last-child{border-bottom:none}
+.bpm-why-body{flex:1;line-height:1.55;color:var(--color-text-primary)}
+</style>
+
+<div class="wrap">
+
+<div class="bpm-hdr-title">One script. One voicemail. Every person.</div>
+<div class="bpm-hdr-sub">Flexible enough to fit any relationship · Built on Trustworthy Selling principles</div>
+
+<div class="bpm-sec">The call — full script</div>
+<div class="bpm-card">
+
+  <div class="bpm-phase-lbl">Open — always personal first</div>
+  <div class="bpm-line">
+    <span class="bpm-who bpm-you">You</span>
+    <div>
+      <div class="bpm-said">"Hey [Name]! It's [you] — how are you doing?"</div>
+    </div>
+  </div>
+  <div class="bpm-coach">Let them talk for 30–60 seconds. Actually listen. This isn't filler — it's trust being built in real time.</div>
+
+  <div class="bpm-divider"></div>
+  <div class="bpm-phase-lbl">Bridge — personal hook</div>
+  <div class="bpm-line">
+    <span class="bpm-who bpm-you">You</span>
+    <div>
+      <div class="bpm-said">"Hey, I'm actually really glad I caught you. I was thinking about you and I wanted to personally reach out — I have something going on this week and you were one of the first people I thought of."</div>
+    </div>
+  </div>
+  <div class="bpm-coach">"You were one of the first people I thought of" — this is the seed. It's personal, not mass. Mean it when you say it. Trustworthy Selling: people buy from people they trust, and trust starts with feeling seen.</div>
+
+  <div class="bpm-divider"></div>
+  <div class="bpm-phase-lbl">The ask — clear and confident</div>
+  <div class="bpm-line">
+    <span class="bpm-who bpm-you">You</span>
+    <div>
+      <div class="bpm-said">"My team is hosting a free Zoom session this week — Thursday at 6PM or Saturday at 9AM Pacific. It covers financial topics most people were never taught. Really practical stuff on money, protecting yourself and your family, and planning for the future. Most people who come walk away saying they wish they'd learned this sooner. I'd love for you to be there. Which works better for you — Thursday or Saturday?"</div>
+    </div>
+  </div>
+  <div class="bpm-coach">Then stop talking. The silence belongs to them. Don't fill it — that's where most people lose the yes.</div>
+
+  <div class="bpm-divider"></div>
+  <div class="bpm-phase-lbl">They say yes</div>
+  <div class="bpm-line">
+    <span class="bpm-who bpm-them">Them</span>
+    <span class="bpm-said bpm-them-said">"Sure, I can do Saturday."</span>
+  </div>
+  <div class="bpm-line">
+    <span class="bpm-who bpm-you">You</span>
+    <div>
+      <div class="bpm-said">"Perfect. I'm sending you the link right now. I'm really glad you're coming — I think you're going to get a lot out of it."</div>
+    </div>
+  </div>
+  <div class="bpm-coach">Warm, short, confident. Send the link within 5 minutes while they're still engaged. Don't add more — you already have the yes.</div>
+
+</div>
+
+<div class="bpm-sec">Objections — tap to reveal your response</div>
+
+<div class="bpm-obj-block">
+  <div class="bpm-obj-hdr" onclick="bpmTog(this)"><span class="bpm-obj-hdr-text">"What is it exactly?"</span><span class="bpm-chev">▾</span></div>
+  <div class="bpm-obj-body">"It's a free educational session on financial stuff — things like how to protect your income, how to think about money, and how to plan for the future. Practical, no fluff. Most people come in skeptical and leave saying they wish they'd done it sooner. It's only 45 minutes — Thursday or Saturday?"</div>
+</div>
+
+<div class="bpm-obj-block">
+  <div class="bpm-obj-hdr" onclick="bpmTog(this)"><span class="bpm-obj-hdr-text">"Is this a sales thing / MLM?"</span><span class="bpm-chev">▾</span></div>
+  <div class="bpm-obj-body">"I get why you'd ask that — and I respect it. No, it's genuinely educational. There's no pitch during the session. Come and form your own opinion — it's 45 minutes free on Zoom. I wouldn't call you personally if I didn't think it was worth your time."</div>
+</div>
+
+<div class="bpm-obj-block">
+  <div class="bpm-obj-hdr" onclick="bpmTog(this)"><span class="bpm-obj-hdr-text">"I'm really busy right now."</span><span class="bpm-chev">▾</span></div>
+  <div class="bpm-obj-body">"I hear you — it's only 45 minutes and it's on Zoom so you don't have to go anywhere. Thursday at 6 or Saturday at 9 — which is the less crazy one for you?"</div>
+</div>
+
+<div class="bpm-obj-block">
+  <div class="bpm-obj-hdr" onclick="bpmTog(this)"><span class="bpm-obj-hdr-text">"Can you just send me the info?"</span><span class="bpm-chev">▾</span></div>
+  <div class="bpm-obj-body">"Of course — but honestly reading about it doesn't do it justice. It's one of those things you have to experience. Can I just send you the Zoom link and you block 45 minutes Thursday or Saturday? If it's not for you, no hard feelings at all."</div>
+</div>
+
+<div class="bpm-obj-block">
+  <div class="bpm-obj-hdr" onclick="bpmTog(this)"><span class="bpm-obj-hdr-text">"Let me think about it."</span><span class="bpm-chev">▾</span></div>
+  <div class="bpm-obj-body">"Totally — let me send you the link now and you can decide closer to the time. Thursday at 6 or Saturday at 9 — which one should I put you down for tentatively?"</div>
+</div>
+
+<div class="bpm-obj-block">
+  <div class="bpm-obj-hdr" onclick="bpmTog(this)"><span class="bpm-obj-hdr-text">"I'm not really into financial stuff."</span><span class="bpm-chev">▾</span></div>
+  <div class="bpm-obj-body">"Most people feel that way — honestly because it was never explained in a way that made sense. That's kind of the whole point of this session. It's not complicated or dry. I think it'd surprise you. Just 45 minutes — Thursday or Saturday?"</div>
+</div>
+
+<div class="bpm-divider" style="margin:1.25rem 0"></div>
+
+<div class="bpm-sec">The voicemail — 18 seconds</div>
+<div class="bpm-vm-box">
+  <div class="bpm-vm-lbl">Leave this if no answer</div>
+  <div class="bpm-vm-text">"Hey [Name], it's [you]. I was thinking about you and wanted to personally reach out — I have something going on this week I think you'd genuinely get a lot out of. Nothing heavy. Give me a call back when you get a sec, or I'll shoot you a text."</div>
+</div>
+<div class="bpm-tip">Keep it under 20 seconds. The goal of the voicemail is a callback or permission to text — not to explain the event. Never pitch on a voicemail.</div>
+
+<div class="bpm-sec">Text to send immediately after the voicemail</div>
+<div class="bpm-text-box">
+  <div class="bpm-text-lbl">Send within 2 minutes of the voicemail</div>
+  <div class="bpm-text-text">"Hey [Name] — just left you a voicemail. Short version: my team is hosting a free Zoom on financial education this Thursday at 6PM or Saturday at 9AM Pacific. Thought of you personally. Want me to send the link?"</div>
+</div>
+<div class="bpm-tip">Voicemail + text together converts far better than either alone. They see your name twice in two minutes — that's presence without pressure.</div>
+
+<div class="bpm-divider" style="margin:1.25rem 0"></div>
+
+<div class="bpm-sec">Why this script works — Trustworthy Selling principles</div>
+<div class="bpm-card">
+  <div class="bpm-why-row"><span style="font-size:15px;color:#1D9E75;margin-top:1px;flex-shrink:0">✓</span><div class="bpm-why-body"><strong style="font-weight:500">Plants the seed first.</strong> "You were one of the first people I thought of" sets the entire tone before any ask is made.</div></div>
+  <div class="bpm-why-row"><span style="font-size:15px;color:#1D9E75;margin-top:1px;flex-shrink:0">✓</span><div class="bpm-why-body"><strong style="font-weight:500">Leads with their benefit, not your excitement.</strong> "Financial topics most people were never taught" creates curiosity about what they're missing — not what you're selling.</div></div>
+  <div class="bpm-why-row"><span style="font-size:15px;color:#1D9E75;margin-top:1px;flex-shrink:0">✓</span><div class="bpm-why-body"><strong style="font-weight:500">Social proof without pressure.</strong> "Most people walk away saying they wish they'd learned this sooner" — others vouch so you don't have to oversell.</div></div>
+  <div class="bpm-why-row"><span style="font-size:15px;color:#1D9E75;margin-top:1px;flex-shrink:0">✓</span><div class="bpm-why-body"><strong style="font-weight:500">Binary close.</strong> "Thursday or Saturday?" is always easier to say yes to than "when are you free?" It assumes they're coming and gives them a simple choice.</div></div>
+  <div class="bpm-why-row"><span style="font-size:15px;color:#1D9E75;margin-top:1px;flex-shrink:0">✓</span><div class="bpm-why-body"><strong style="font-weight:500">Zero pre-apology.</strong> No "it might not be for you," no "I know you're busy." Conviction that you're offering something valuable is felt through the phone.</div></div>
+  <div class="bpm-why-row"><span style="font-size:15px;color:#1D9E75;margin-top:1px;flex-shrink:0">✓</span><div class="bpm-why-body"><strong style="font-weight:500">No "business opportunity" language.</strong> The goal of this call is to get them in the room. The event builds the trust. Trustworthy Selling: get the meeting first, everything else follows.</div></div>
+</div>
+
+<div class="bpm-warn"><strong style="font-weight:500">One thing to do before every call:</strong> Remind yourself — "I am calling because I genuinely believe this will help this person." That belief is audible. Consistency theory: your internal thoughts have to match your behavior. The reps who produce on the phone aren't better talkers — they believe more.</div>
+
+</div>
+
+<script>
+function bpmTog(hdr){
+  const b = hdr.nextElementSibling;
+  const c = hdr.querySelector('.bpm-chev');
+  const open = b.classList.contains('open');
+  b.classList.toggle('open', !open);
+  c.style.transform = open ? '' : 'rotate(180deg)';
+}
+</script>
+
+</div><!-- end cs-bpminvite -->
 </div><!-- end .content -->
 <script>
   function csShowTab(name) {
@@ -1708,7 +1903,7 @@ Meanwhile, a hungry, humble, coachable person can explode in this business.</p><
     document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
     document.getElementById('cs-' + name).classList.add('active');
     const pills = document.querySelectorAll('.nav-pill');
-    const map = { quick:0, reconnect:1, hesitancy:2, compare:3 };
+    const map = { quick:0, reconnect:1, hesitancy:2, compare:3, bpminvite:4 };
     if (map[name] !== undefined) pills[map[name]].classList.add('active');
   }
 
@@ -9693,11 +9888,11 @@ button.secondary-btn:hover { background: var(--off-white); }
   }
   .chevron.open { transform: rotate(180deg); }
 
-  .script-body {
+  .script-card .script-body {
     display: none;
     padding: 14px 15px;
   }
-  .script-body.open { display: block; }
+  .script-card .script-body.open { display: block; }
 
   /* SCRIPT TEXT */
   .script-text {
@@ -9951,17 +10146,131 @@ button.secondary-btn:hover { background: var(--off-white); }
 /* GX phase tabs */
 .gx-phase { display: none; }
 .gx-phase.active { display: block; }
-/* Force white background on main page — override index 10 body rule */
-body { background: #222 !important; color: #333 !important; }
+/* ── Infinite Loop color scheme ── */
+/* Remove dark override — let tooplate-infinite-loop.css handle body */
+body { background: #fff !important; color: #444 !important; }
 #whatwedo { background: #fff; }
 #whatwedo h2, #whatwedo p, #whatwedo .tm-intro-text { color: inherit; }
-/* Fix hero image to cover full viewport width */
+
+/* Match Infinite Loop teal/green primary palette */
+:root {
+  --green: #0d685e;
+  --green-light: #e6f4f2;
+  --green-dark: #094d45;
+  --blue: #0d685e;
+  --blue-light: #e6f4f2;
+  --amber: #c97a1e;
+  --amber-light: #fef3e2;
+  --purple: #0d685e;
+  --purple-light: #e6f4f2;
+}
+/* Sidebar uses Infinite Loop dark nav tone */
+.sidebar {
+  background: linear-gradient(180deg, #0a1a18 0%, #0d2420 100%) !important;
+}
+.nav-item.active {
+  background: linear-gradient(90deg, rgba(13,104,94,.35), rgba(13,104,94,.15)) !important;
+  box-shadow: inset 0 0 0 1px rgba(13,104,94,.35) !important;
+}
+/* Hero badge green pulse */
+.hero-badge { background: rgba(13,104,94,.18); border-color: rgba(13,104,94,.4); color: #0d685e; }
+.hero-badge span { background: #0d685e; }
+.hero h1 em { color: #0d685e; }
+.hero-stat-num { color: #0d685e; }
+/* Section number accent */
+.section-num { color: #0d685e; }
+/* Progress / income fills */
+.progress-fill, .income-fill { background: #0d685e; }
+/* Checklist */
+.chk:hover { border-color: #0d685e; }
+.chk.done { background: #0d685e; border-color: #0d685e; }
+/* Tab active */
+.tab-btn.active { color: #0d685e; border-bottom-color: #0d685e; }
+.sticky-nav a.active { color: #0d685e; border-bottom-color: #0d685e; }
+/* Truth card number */
+.truth-num { color: #0d685e; }
+/* Timeline dots */
+.tl-green { background: #0d685e; }
+/* Step circles */
+.step-green { background: #e6f4f2; color: #094d45; }
+/* Badges */
+.badge-green { background: #e6f4f2; color: #094d45; }
+.badge-blue { background: #e6f4f2; color: #0d685e; }
+.badge-purple { background: #e6f4f2; color: #094d45; }
+/* Card accents */
+.card-accent-green { border-left-color: #0d685e; }
+.card-accent-blue { border-left-color: #0d685e; }
+/* Logo box */
+.logo-box { background: #0d685e; }
+/* type-btn active */
+.type-btn.active { background: #0d685e; border-color: #0d685e; }
+
+/* ── Infinite Loop font: Raleway throughout the page ── */
+body, p, li, td, input, textarea, select, button {
+  font-family: 'Raleway', sans-serif;
+}
+h1, h2, h3, h4, h5, h6,
+.tm-section-title,
+.tm-hero-title {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+}
+.tm-intro-text,
+.tm-section-desc {
+  font-family: 'Raleway', sans-serif;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+.tm-text-primary {
+  color: #0d685e;
+}
+#whatwedo .tm-section-title {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  color: #0d685e;
+}
+/* Hero parallax — let JS control background-position, do NOT override it with !important */
 #infinite {
-  background-size: cover !important;
-  background-position: center center !important;
+  background-size: cover;
   width: 100vw !important;
   max-width: 100vw !important;
   margin-left: calc(-50vw + 50%) !important;
+  overflow: hidden;
+}
+/* Testimonials + Contact parallax — background-attachment:fixed set by JS, must not be blocked */
+#testimonials,
+#contact {
+  background-size: cover !important;
+}
+
+/* ── GX PROGRAM: fix embedded layout ── */
+/* The shell/sidebar/main trio was built as a standalone full-page layout.
+   When embedded inside a .tab, the fixed sidebar escapes the container.
+   We scope overrides to .gx-smd-embed so nothing else is affected. */
+.gx-smd-embed .shell {
+  display: flex;
+  min-height: 0;
+  width: 100%;
+  position: relative;
+}
+.gx-smd-embed .sidebar {
+  position: sticky !important;
+  top: 0 !important;
+  height: calc(100vh - 60px) !important;
+  left: auto !important;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+.gx-smd-embed .main {
+  margin-left: 0 !important;
+  padding-top: 0 !important;
+  min-width: 0;
+  flex: 1;
+}
+.gx-smd-embed .sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
 </style>
 <script>
