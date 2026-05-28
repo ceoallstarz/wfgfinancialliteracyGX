@@ -554,8 +554,8 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);fon
 <div class="tm-testimonials-carousel">
 <figure class="tm-testimonial-item">
 <img alt="Image" class="img-fluid mx-auto" src="img/testimonial-img-01.jpg"/>
-<blockquote>"I didn't even know I could afford life insurance. Nobody ever sat down with me and explained it. After one meeting, I had a plan — and for the first time in years I stopped losing sleep over what would happen to my family if something happened to me."</blockquote>
-<figcaption>Maria T. (Client, Los Angeles)</figcaption>
+<blockquote>"A Financial Professional and entrepreneur based in Torrance, California, who helps individuals and families build financial awareness, reduce debt, and create long-term financial stability through education and practical financial strategies. She is a former home health and hospice nurse with a strong background in patient care and healthcare program development, including work in congestive heart failure program design and physician group expansion. Today, she brings that same compassion, discipline, and service mindset into the financial industry, where she is passionate about empowering families to make informed financial decisions and create stronger futures. She is also a devoted wife and mother of three who values faith, family, and living a meaningful, impact-driven life while enjoying travel, hiking, snowboarding, and time with her loved ones."</blockquote>
+<figcaption>Mitchelle Pacleb. (Senior Marketing Director, Torrance, CA)</figcaption>
 </figure>
 <figure class="tm-testimonial-item">
 <img alt="Image" class="img-fluid mx-auto" src="img/testimonial-img-02.jpg"/>
@@ -1742,9 +1742,9 @@ Meanwhile, a hungry, humble, coachable person can explode in this business.</p><
 .lk-line{display:flex;align-items:flex-start;gap:10px;margin:4px 0}
 .lk-who{font-size:11px;font-weight:500;min-width:48px;padding-top:2px;flex-shrink:0;text-transform:uppercase;letter-spacing:0.04em}
 .lk-you-c{color:#0C447C}.lk-them-c{color:#712B13}
-.lk-said{font-size:14px;line-height:1.8;color:#085041;flex:1;font-style:italic}
+.lk-said{font-size:14px;line-height:1.8;color:#085041;flex:1;font-style:italic;font-weight:700}
 .lk-said-them{color:#1D9E75}
-.lk-coach{font-size:12px;color:#1D9E75;line-height:1.5;padding:2px 0 6px 58px;font-style:normal}
+.lk-coach{font-size:12px;color:#1D9E75;line-height:1.5;padding:2px 0 6px 58px;font-style:normal;font-weight:600;text-transform:uppercase;letter-spacing:0.04em}
 .lk-divider{height:0.5px;background:#9FE1CB;margin:10px 0}
 .lk-obj-block{border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:7px}
 .lk-obj-hdr{display:flex;align-items:center;justify-content:space-between;padding:0.6rem 0.85rem;cursor:pointer;background:#f9fafb}
@@ -1769,7 +1769,7 @@ Meanwhile, a hungry, humble, coachable person can explode in this business.</p><
 <div class="lk-sec">Final script — locked</div>
 
 <div class="lk-final">
-  <div class="lk-final-label">✓ Approved · Trustworthy Selling · Honest · 30 calls/week ready</div>
+  <div class="lk-final-label"><strong✓ Approved · Trustworthy Selling · Honest · 30 calls/week ready</div>
 
   <div class="lk-phase">Open</div>
   <div class="lk-line">
@@ -1790,9 +1790,9 @@ Meanwhile, a hungry, humble, coachable person can explode in this business.</p><
   <div class="lk-phase">The ask</div>
   <div class="lk-line">
     <span class="lk-who lk-you-c">You</span>
-    <span class="lk-said">"My team is hosting a free Zoom this week — Thursday at 6PM or Saturday at 9AM Pacific. It covers three things most financial advisors never bother to explain to everyday families — Risk Mitigation, Tax Efficiency, and Generational Wealth. When I went through this myself, I walked away thinking — why didn't anyone show me this sooner. I think you'll feel the same way. I genuinely want you there. Which works better — Thursday or Saturday?"</span>
+    <span class="lk-said">New Associate: "I'm partnering with my company on a free Zoom event this week."  — Thursday at 6PM or Saturday at 9AM Pacific. It covers three things most financial advisors never bother to explain to everyday families — Risk Mitigation, Tax Efficiency, and Generational Wealth. When I went through this myself, I walked away thinking — why didn't anyone show me this sooner. I think you'll feel the same way. I genuinely want you there. Which works better — Thursday or Saturday?"</span>
   </div>
-  <div class="lk-coach">Then stop. Full stop. The silence belongs to them. Filling it is where most people lose the yes.</div>
+  <div class="lk-coach">Then stop. Full stop. The silence belongs to them. Filling it is where most people lose the yes. <strong>For Experienced Associate: "My team is hosting a free Zoom this week</div>
 
   <div class="lk-divider"></div>
   <div class="lk-phase">They say yes</div>
@@ -1847,7 +1847,7 @@ Meanwhile, a hungry, humble, coachable person can explode in this business.</p><
 <div class="lk-sec">Text immediately after voicemail</div>
 <div class="lk-text-box">
   <div class="lk-text-label">Send within 2 minutes</div>
-  <div class="lk-text-text">"Hey [Name] — just left you a voicemail. My team is hosting a free Zoom on Risk Mitigation, Tax Efficiency, and Generational Wealth — Thursday at 6PM or Saturday at 9AM Pacific. Thought of you personally. Want me to send the link?"</div>
+  <div class="lk-text-text">"Hey [Name] — just left you a voicemail. New Associate: "I'm partnering with my company on a free Zoom event this weekon..." Experienced Associate: "My team is hosting a free Zoom" ...on Risk Mitigation, Tax Efficiency, and Generational Wealth — Thursday at 6PM or Saturday at 9AM Pacific. Thought of you personally. Want me to send the link?"</div>
 </div>
 
 <div class="lk-sec">The three rules that never change</div>
@@ -1875,12 +1875,15 @@ function lkTog(hdr){
 </div><!-- end .content -->
 <script>
   function csShowTab(name) {
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
+    var csContainer = document.getElementById('tab-contact');
+    if (csContainer) {
+      csContainer.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      csContainer.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
+    }
     document.getElementById('cs-' + name).classList.add('active');
-    const pills = document.querySelectorAll('.nav-pill');
+    const pills = csContainer ? csContainer.querySelectorAll('.nav-pill') : document.querySelectorAll('.nav-pill');
     const map = { bpminvite:0, quick:1, reconnect:2, hesitancy:3, compare:4 };
-    if (map[name] !== undefined) pills[map[name]].classList.add('active');
+    if (map[name] !== undefined && pills[map[name]]) pills[map[name]].classList.add('active');
   }
 
   function csToggleCard(header) {
@@ -4447,7 +4450,6 @@ sections.forEach(s=>obs.observe(s));
 </div>
 </div>
 </div>
-</div>
 <div class="sub-section" id="sub-res-flipchart">
 <!-- This sub-section is not used — button opens Drive directly. Kept as fallback. -->
 </div>
@@ -4705,6 +4707,7 @@ sections.forEach(s=>obs.observe(s));
 <h3 style="margin-bottom:6px">Business Plan PDF</h3>
 <p style="margin-bottom:14px;font-size:14px;color:var(--gray)">Full business plan document. Open to view or download.</p>
 <a class="cta-btn" href="https://drive.google.com/file/d/1do-lxUJ0JsNcqemmONsDXsygycekfv60/view?usp=sharing" rel="noopener noreferrer" target="_blank">📄 Open Business Plan →</a>
+</div>
 </div>
 </div>
 <!-- ==================== LICENSING ==================== -->
@@ -7623,7 +7626,13 @@ function showTab(id, btn) {
   // Show Resources header only when clicking the Resources nav button directly
   if (id === 'resources') tabEl.classList.add('show-header');
   var clip = document.querySelector('.hero-clip');
-  if (clip) clip.classList.add('collapsed');
+  if (clip) {
+    if (id === 'overview') {
+      clip.classList.remove('collapsed');
+    } else {
+      clip.classList.add('collapsed');
+    }
+  }
   window.scrollTo(0, 0);
 }
 
