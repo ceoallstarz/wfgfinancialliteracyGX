@@ -554,8 +554,8 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);fon
 <div class="tm-testimonials-carousel">
 <figure class="tm-testimonial-item">
 <img alt="Image" class="img-fluid mx-auto" src="img/testimonial-img-01.jpg"/>
-<blockquote>"A Financial Professional and entrepreneur based in Torrance, California, who helps individuals and families build financial awareness, reduce debt, and create long-term financial stability through education and practical financial strategies. She is a former home health and hospice nurse with a strong background in patient care and healthcare program development, including work in congestive heart failure program design and physician group expansion. Today, she brings that same compassion, discipline, and service mindset into the financial industry, where she is passionate about empowering families to make informed financial decisions and create stronger futures. She is also a devoted wife and mother of three who values faith, family, and living a meaningful, impact-driven life while enjoying travel, hiking, snowboarding, and time with her loved ones."</blockquote>
-<figcaption>Mitchelle Pacleb. (Senior Marketing Director, Torrance, CA)</figcaption>
+<blockquote>"I didn't even know I could afford life insurance. Nobody ever sat down with me and explained it. After one meeting, I had a plan — and for the first time in years I stopped losing sleep over what would happen to my family if something happened to me."</blockquote>
+<figcaption>Maria T. (Client, Los Angeles)</figcaption>
 </figure>
 <figure class="tm-testimonial-item">
 <img alt="Image" class="img-fluid mx-auto" src="img/testimonial-img-02.jpg"/>
@@ -1337,15 +1337,15 @@ Meanwhile, a hungry, humble, coachable person can explode in this business.</p><
 <p>Step 2 — Lead with curiosity, care, and connection</p>
 </div>
 <div class="main-nav">
-<button class="nav-pill active" onclick="csShowTab('bpminvite')">GX BPM Invite</button>
-<button class="nav-pill" onclick="csShowTab('quick')">Quick Scripts</button>
+<button class="nav-pill active" onclick="csShowTab('quick')">Quick Scripts</button>
 <button class="nav-pill" onclick="csShowTab('reconnect')">3-Call System</button>
 <button class="nav-pill" onclick="csShowTab('hesitancy')">Hesitancy</button>
 <button class="nav-pill" onclick="csShowTab('compare')">Warm vs Cold</button>
+<button class="nav-pill" onclick="csShowTab('bpminvite')">GX BPM Invite</button>
 </div>
 <div class="content">
 <!-- ===== TAB: QUICK SCRIPTS ===== -->
-<div class="tab-panel" id="cs-quick">
+<div class="tab-panel active" id="cs-quick">
 <div class="quick-key">
 <div class="qk-icon">🎯</div>
 <div class="qk-text"><strong>The goal is only the meeting.</strong> Never pitch. Lead with curiosity and care. NEPQ = questions that make people feel understood.</div>
@@ -1726,164 +1726,126 @@ Meanwhile, a hungry, humble, coachable person can explode in this business.</p><
 </div>
 
 <!-- ===== TAB: GX BPM INVITE ===== -->
-<div class="tab-panel active" id="cs-bpminvite">
+<div class="tab-panel" id="cs-bpminvite">
 
-<style>
-.lk-wrap{padding:1.5rem}
-.lk-sec{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);margin:1.1rem 0 0.5rem}
-.lk-sec:first-child{margin-top:0}
-.lk-tip{background:#E1F5EE;border-radius:8px;padding:0.6rem 0.9rem;font-size:12px;color:#085041;line-height:1.6;margin:6px 0}
-.lk-warn{background:#FAEEDA;border-radius:8px;padding:0.6rem 0.9rem;font-size:12px;color:#633806;line-height:1.6;margin:6px 0}
-.lk-card{border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem;margin-bottom:0.85rem;background:#fff}
-.lk-final{background:#E1F5EE;border:2px solid #1D9E75;border-radius:12px;padding:1.25rem 1.4rem;margin-bottom:1rem}
-.lk-final-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:#1D9E75;margin-bottom:12px}
-.lk-phase{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;color:#1D9E75;margin:14px 0 4px}
-.lk-phase:first-of-type{margin-top:0}
-.lk-line{display:flex;align-items:flex-start;gap:10px;margin:4px 0}
-.lk-who{font-size:11px;font-weight:500;min-width:48px;padding-top:2px;flex-shrink:0;text-transform:uppercase;letter-spacing:0.04em}
-.lk-you-c{color:#0C447C}.lk-them-c{color:#712B13}
-.lk-said{font-size:14px;line-height:1.8;color:#085041;flex:1;font-style:italic;font-weight:700}
-.lk-said-them{color:#1D9E75}
-.lk-coach{font-size:12px;color:#1D9E75;line-height:1.5;padding:2px 0 6px 58px;font-style:normal;font-weight:600;text-transform:uppercase;letter-spacing:0.04em}
-.lk-divider{height:0.5px;background:#9FE1CB;margin:10px 0}
-.lk-obj-block{border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:7px}
-.lk-obj-hdr{display:flex;align-items:center;justify-content:space-between;padding:0.6rem 0.85rem;cursor:pointer;background:#f9fafb}
-.lk-obj-hdr:hover{background:#fff}
-.lk-obj-hdr-text{font-size:13px;color:var(--text);font-style:italic;flex:1;padding-right:8px}
-.lk-obj-body{display:none;padding:0.65rem 0.85rem;border-top:1px solid var(--border);font-size:13px;color:var(--text-2);line-height:1.7;font-style:italic}
-.lk-obj-body.open{display:block}
-.lk-chev{font-size:13px;color:var(--text-3);transition:transform 0.18s;flex-shrink:0}
-.lk-row{display:flex;align-items:flex-start;gap:10px;padding:6px 0;font-size:13px;border-bottom:1px solid var(--border)}
-.lk-row:last-child{border-bottom:none}
-.lk-row-body{flex:1;line-height:1.55;color:var(--text)}
-.lk-vm-box{background:#f9fafb;border-radius:12px;padding:1rem 1.2rem;margin-bottom:0.85rem}
-.lk-vm-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);margin-bottom:8px}
-.lk-vm-text{font-size:14px;line-height:1.8;color:var(--text);font-style:italic}
-.lk-text-box{background:#E6F1FB;border-radius:12px;padding:1rem 1.2rem;margin-bottom:0.85rem}
-.lk-text-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;color:#0C447C;margin-bottom:8px}
-.lk-text-text{font-size:14px;line-height:1.8;color:#0C447C;font-style:italic}
-</style>
+<div class="quick-key">
+  <div class="qk-icon">📞</div>
+  <div class="qk-text"><strong>One script. One voicemail. Every person.</strong> Flexible enough to fit any relationship · Built on Trustworthy Selling principles. The goal of the call is always the same — get them to the BPM.</div>
+</div>
 
-<div class="lk-wrap">
-
-<div class="lk-sec">Final script — locked</div>
-
-<div class="lk-final">
-  <div class="lk-final-label"><strong✓ Approved · Trustworthy Selling · Honest · 30 calls/week ready</div>
-
-  <div class="lk-phase">Open</div>
-  <div class="lk-line">
-    <span class="lk-who lk-you-c">You</span>
-    <span class="lk-said">"Hey [Name]! It's [you] — how are you doing?"</span>
+<!-- Full Call Script -->
+<div class="script-card">
+  <div class="script-card-header" onclick="csToggleCard(this)">
+    <div class="card-icon icon-navy">📋</div>
+    <div class="script-card-meta">
+      <div class="script-card-label">Full Call Script · Open → Ask → Close</div>
+      <div class="script-card-title">GX BPM Invite — Complete Script</div>
+    </div>
+    <span class="chevron">▾</span>
   </div>
-  <div class="lk-coach">Let them talk 30–60 seconds. Actually listen. Trust is built here — before a single word about the event.</div>
+  <div class="script-body">
+    <div class="script-divider">Open — always personal first</div>
+    <div class="script-text">"Hey [Name]! It's [you] — how are you doing?"<br><br><em>Let them talk for 30–60 seconds. Actually listen. This isn't filler — it's trust being built in real time.</em></div>
 
-  <div class="lk-divider"></div>
-  <div class="lk-phase">Bridge</div>
-  <div class="lk-line">
-    <span class="lk-who lk-you-c">You</span>
-    <span class="lk-said">"Hey, I'm actually really glad I caught you. Your name came to mind and I wanted to reach out personally."</span>
+    <div class="script-divider">Bridge — personal hook</div>
+    <div class="script-text">"Hey, I'm actually really glad I caught you. I was thinking about you and I wanted to personally reach out — I have something going on this week and <strong>you were one of the first people I thought of.</strong>"<br><br><em>"You were one of the first people I thought of" — it's personal, not mass. Mean it when you say it.</em></div>
+
+    <div class="script-divider">The ask — clear and confident</div>
+    <div class="script-text">"My team is hosting a free Zoom session this week — <strong>Thursday at 6PM or Saturday at 9AM Pacific.</strong> It covers financial topics most people were never taught. Really practical stuff on money, protecting yourself and your family, and planning for the future.<br><br>Most people who come walk away saying they wish they'd learned this sooner. <strong>I'd love for you to be there. Which works better for you — Thursday or Saturday?"</strong><br><br><em>Then stop talking. The silence belongs to them. Don't fill it — that's where most people lose the yes.</em></div>
+
+    <div class="script-divider">They say yes</div>
+    <div class="script-text"><em>Them: "Sure, I can do Saturday."</em><br><br>"Perfect. I'm sending you the link right now. I'm really glad you're coming — I think you're going to get a lot out of it."<br><br><em>Send the link within 5 minutes while they're still engaged. Don't add more — you already have the yes.</em></div>
+
+    <div class="tip-box"><span class="tip-icon">💡</span> Trustworthy Selling: people buy from people they trust. Trust starts with feeling seen — not sold to.</div>
   </div>
-  <div class="lk-coach">Mean it. For close contacts: "I was thinking about you." For everyone else: "Your name came to mind." Both honest. Both personal.</div>
+</div>
 
-  <div class="lk-divider"></div>
-  <div class="lk-phase">The ask</div>
-  <div class="lk-line">
-    <span class="lk-who lk-you-c">You</span>
-    <span class="lk-said">New Associate: "I'm partnering with my company on a free Zoom event this week."  — Thursday at 6PM or Saturday at 9AM Pacific. It covers three things most financial advisors never bother to explain to everyday families — Risk Mitigation, Tax Efficiency, and Generational Wealth. When I went through this myself, I walked away thinking — why didn't anyone show me this sooner. I think you'll feel the same way. I genuinely want you there. Which works better — Thursday or Saturday?"</span>
+<!-- Objections -->
+<div class="script-card">
+  <div class="script-card-header" onclick="csToggleCard(this)">
+    <div class="card-icon icon-gold">🛡️</div>
+    <div class="script-card-meta">
+      <div class="script-card-label">Objection Handling · Tap to expand each</div>
+      <div class="script-card-title">Common Objections — What to Say</div>
+    </div>
+    <span class="chevron">▾</span>
   </div>
-  <div class="lk-coach">Then stop. Full stop. The silence belongs to them. Filling it is where most people lose the yes. <strong>For Experienced Associate: "My team is hosting a free Zoom this week</div>
+  <div class="script-body">
 
-  <div class="lk-divider"></div>
-  <div class="lk-phase">They say yes</div>
-  <div class="lk-line">
-    <span class="lk-who lk-them-c">Them</span>
-    <span class="lk-said lk-said-them">"Sure, I can do Saturday."</span>
+    <div class="script-divider">"What is it exactly?"</div>
+    <div class="script-text">"It's a free educational session on financial stuff — things like how to protect your income, how to think about money, and how to plan for the future. Practical, no fluff. Most people come in skeptical and leave saying they wish they'd done it sooner. It's only 45 minutes — <strong>Thursday or Saturday?"</strong></div>
+
+    <div class="script-divider">"Is this a sales thing / MLM?"</div>
+    <div class="script-text">"I get why you'd ask that — and I respect it. No, it's genuinely educational. There's no pitch during the session. Come and form your own opinion — it's 45 minutes free on Zoom. <strong>I wouldn't call you personally if I didn't think it was worth your time.</strong>"</div>
+
+    <div class="script-divider">"I'm really busy right now."</div>
+    <div class="script-text">"I hear you — it's only 45 minutes and it's on Zoom so you don't have to go anywhere. <strong>Thursday at 6 or Saturday at 9 — which is the less crazy one for you?"</strong></div>
+
+    <div class="script-divider">"Can you just send me the info?"</div>
+    <div class="script-text">"Of course — but honestly reading about it doesn't do it justice. It's one of those things you have to experience. Can I just send you the Zoom link and you block 45 minutes Thursday or Saturday? <strong>If it's not for you, no hard feelings at all.</strong>"</div>
+
+    <div class="script-divider">"Let me think about it."</div>
+    <div class="script-text">"Totally — let me send you the link now and you can decide closer to the time. <strong>Thursday at 6 or Saturday at 9 — which one should I put you down for tentatively?"</strong></div>
+
+    <div class="script-divider">"I'm not really into financial stuff."</div>
+    <div class="script-text">"Most people feel that way — honestly because it was never explained in a way that made sense. That's kind of the whole point of this session. It's not complicated or dry. <strong>I think it'd surprise you. Just 45 minutes — Thursday or Saturday?"</strong></div>
+
+    <div class="tip-box"><span class="tip-icon">💡</span> Every objection ends with a binary close — Thursday or Saturday. Never ask "when are you free?" Give them two choices and assume they're coming.</div>
   </div>
-  <div class="lk-line" style="margin-top:6px">
-    <span class="lk-who lk-you-c">You</span>
-    <span class="lk-said">"Perfect. What's your email? I'm sending you the link right now. I'm really glad you're coming — I think you're going to get a lot out of it."</span>
+</div>
+
+<!-- Voicemail + Text -->
+<div class="script-card">
+  <div class="script-card-header" onclick="csToggleCard(this)">
+    <div class="card-icon icon-green">📱</div>
+    <div class="script-card-meta">
+      <div class="script-card-label">No Answer · Voicemail + Follow-Up Text</div>
+      <div class="script-card-title">The Voicemail — 18 Seconds</div>
+    </div>
+    <span class="chevron">▾</span>
   </div>
-  <div class="lk-coach">Warm. Settled. Short. Send the link within 5 minutes. Don't add more — you already have the yes.</div>
+  <div class="script-body">
+    <div class="script-divider">Leave this if no answer</div>
+    <div class="script-text">"Hey [Name], it's [you]. I was thinking about you and wanted to personally reach out — I have something going on this week <strong>I think you'd genuinely get a lot out of.</strong> Nothing heavy. Give me a call back when you get a sec, or I'll shoot you a text."</div>
+    <div class="tip-box"><span class="tip-icon">💡</span> Keep it under 20 seconds. The goal of the voicemail is a callback or permission to text — not to explain the event. Never pitch on a voicemail.</div>
+
+    <div class="script-divider">Send within 2 minutes of the voicemail</div>
+    <div class="script-text">"Hey [Name] — just left you a voicemail. Short version: my team is hosting a <strong>free Zoom on financial education this Thursday at 6PM or Saturday at 9AM Pacific.</strong> Thought of you personally. Want me to send the link?"</div>
+    <div class="tip-box"><span class="tip-icon">💡</span> Voicemail + text together converts far better than either alone. They see your name twice in two minutes — presence without pressure.</div>
+  </div>
 </div>
 
-<div class="lk-sec">Objections — tap to reveal</div>
-
-<div class="lk-obj-block">
-  <div class="lk-obj-hdr" onclick="lkTog(this)"><span class="lk-obj-hdr-text">"What is it exactly?"</span><span class="lk-chev">▾</span></div>
-  <div class="lk-obj-body">"It's a free educational session — covers how to protect your income, keep more of what you earn from taxes, and build something that actually passes down to your family. Things most people were never taught. It's 45 minutes on Zoom. Thursday or Saturday?"</div>
+<!-- Why It Works -->
+<div class="script-card">
+  <div class="script-card-header" onclick="csToggleCard(this)">
+    <div class="card-icon icon-gold">⚙️</div>
+    <div class="script-card-meta">
+      <div class="script-card-label">Trustworthy Selling Principles</div>
+      <div class="script-card-title">Why This Script Works</div>
+    </div>
+    <span class="chevron">▾</span>
+  </div>
+  <div class="script-body">
+    <div class="alt-script"><div class="alt-label">✓ Plants the seed first</div>"You were one of the first people I thought of" sets the entire tone before any ask is made.</div>
+    <div class="alt-script"><div class="alt-label">✓ Leads with their benefit</div>"Financial topics most people were never taught" creates curiosity about what they're missing — not what you're selling.</div>
+    <div class="alt-script"><div class="alt-label">✓ Social proof without pressure</div>"Most people walk away saying they wish they'd learned this sooner" — others vouch so you don't have to oversell.</div>
+    <div class="alt-script"><div class="alt-label">✓ Binary close</div>"Thursday or Saturday?" is always easier to say yes to than "when are you free?" It assumes they're coming and gives them a simple choice.</div>
+    <div class="alt-script"><div class="alt-label">✓ Zero pre-apology</div>No "it might not be for you," no "I know you're busy." Conviction that you're offering something valuable is felt through the phone.</div>
+    <div class="alt-script"><div class="alt-label">✓ No "business opportunity" language</div>The goal of this call is to get them in the room. The event builds the trust. Get the meeting first — everything else follows.</div>
+    <div class="tip-box"><span class="tip-icon">🔑</span> <strong>Before every call:</strong> Remind yourself — "I am calling because I genuinely believe this will help this person." That belief is audible. The reps who produce on the phone aren't better talkers — they believe more.</div>
+  </div>
 </div>
-<div class="lk-obj-block">
-  <div class="lk-obj-hdr" onclick="lkTog(this)"><span class="lk-obj-hdr-text">"Is there a business side to this?"</span><span class="lk-chev">▾</span></div>
-  <div class="lk-obj-body">"Yes — and I'll tell you everything about that after the session if you're interested. The education itself stands completely on its own. Come and see for yourself. Thursday or Saturday?"</div>
-</div>
-<div class="lk-obj-block">
-  <div class="lk-obj-hdr" onclick="lkTog(this)"><span class="lk-obj-hdr-text">"Is this MLM?"</span><span class="lk-chev">▾</span></div>
-  <div class="lk-obj-body">"I get why you'd ask. No — we're licensed financial professionals with Revolution Financial Management, a Transamerica company. Been around since the 1800s, over $700 billion in assets. Come and form your own opinion — it's 45 minutes, it's free, and I wouldn't call you personally if I didn't think it was worth your time. Thursday or Saturday?"</div>
-</div>
-<div class="lk-obj-block">
-  <div class="lk-obj-hdr" onclick="lkTog(this)"><span class="lk-obj-hdr-text">"I'm really busy."</span><span class="lk-chev">▾</span></div>
-  <div class="lk-obj-body">"I hear you — it's only 45 minutes on Zoom, you don't have to go anywhere. Thursday at 6 or Saturday at 9 — which is the less crazy one for you?"</div>
-</div>
-<div class="lk-obj-block">
-  <div class="lk-obj-hdr" onclick="lkTog(this)"><span class="lk-obj-hdr-text">"Just send me the info."</span><span class="lk-chev">▾</span></div>
-  <div class="lk-obj-body">"I'll send you the link — but honestly it doesn't do it justice on paper. It's one of those things you have to experience. Can I put you down for Thursday or Saturday and you decide closer to the time?"</div>
-</div>
-<div class="lk-obj-block">
-  <div class="lk-obj-hdr" onclick="lkTog(this)"><span class="lk-obj-hdr-text">"I can't afford financial services."</span><span class="lk-chev">▾</span></div>
-  <div class="lk-obj-body">"That's exactly why I thought of you — it's completely free. No fee to sit down with us, ever. The families who need this most are the ones the traditional industry ignores. That's who we built this for. Thursday or Saturday?"</div>
-</div>
-<div class="lk-obj-block">
-  <div class="lk-obj-hdr" onclick="lkTog(this)"><span class="lk-obj-hdr-text">"Let me think about it."</span><span class="lk-chev">▾</span></div>
-  <div class="lk-obj-body">"Of course — let me send you the link now and you decide closer to the time. Thursday at 6 or Saturday at 9 — which should I put you down for tentatively?"</div>
-</div>
-
-<div class="lk-sec">If no answer — voicemail</div>
-<div class="lk-vm-box">
-  <div class="lk-vm-label">Leave this · under 20 seconds</div>
-  <div class="lk-vm-text">"Hey [Name], it's [you]. Your name came to mind and I wanted to reach out personally about something I think you'd genuinely get a lot out of. Nothing heavy. Give me a call back when you get a sec — or I'll shoot you a text."</div>
-</div>
-
-<div class="lk-sec">Text immediately after voicemail</div>
-<div class="lk-text-box">
-  <div class="lk-text-label">Send within 2 minutes</div>
-  <div class="lk-text-text">"Hey [Name] — just left you a voicemail. New Associate: "I'm partnering with my company on a free Zoom event this weekon..." Experienced Associate: "My team is hosting a free Zoom" ...on Risk Mitigation, Tax Efficiency, and Generational Wealth — Thursday at 6PM or Saturday at 9AM Pacific. Thought of you personally. Want me to send the link?"</div>
-</div>
-
-<div class="lk-sec">The three rules that never change</div>
-<div class="lk-card">
-  <div class="lk-row"><span style="font-size:15px;color:#1D9E75;margin-top:1px;flex-shrink:0">✓</span><div class="lk-row-body"><strong style="font-weight:600">Listen before you ask.</strong> The 30–60 seconds in the open is not filler. It's where trust is built. Every word of the ask lands harder because of it.</div></div>
-  <div class="lk-row"><span style="font-size:15px;color:#1D9E75;margin-top:1px;flex-shrink:0">✓</span><div class="lk-row-body"><strong style="font-weight:600">Stop after "Thursday or Saturday?"</strong> Every word after the close costs you a yes. The silence is theirs — let them use it.</div></div>
-  <div class="lk-row"><span style="font-size:15px;color:#1D9E75;margin-top:1px;flex-shrink:0">✓</span><div class="lk-row-body"><strong style="font-weight:600">Answer "is there a business side?" directly.</strong> Always. Every time. Transparency is your competitive advantage. No one in this industry does it — you will.</div></div>
-</div>
-
-<div class="lk-warn"><strong style="font-weight:600">Before your first week of 30 calls:</strong> attend the session yourself if you haven't. Your honest reaction — "I walked away thinking why didn't anyone show me this sooner" — is in the script because it's yours. Make sure it's true before you say it.</div>
-
-</div>
-
-<script>
-function lkTog(hdr){
-  var b=hdr.nextElementSibling;
-  var c=hdr.querySelector('.lk-chev');
-  var open=b.classList.contains('open');
-  b.classList.toggle('open',!open);
-  c.style.transform=open?'':'rotate(180deg)';
-}
-</script>
 
 </div><!-- end cs-bpminvite -->
 </div><!-- end .content -->
 <script>
   function csShowTab(name) {
-    var csContainer = document.getElementById('tab-contact');
-    if (csContainer) {
-      csContainer.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      csContainer.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
-    }
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
     document.getElementById('cs-' + name).classList.add('active');
-    const pills = csContainer ? csContainer.querySelectorAll('.nav-pill') : document.querySelectorAll('.nav-pill');
-    const map = { bpminvite:0, quick:1, reconnect:2, hesitancy:3, compare:4 };
-    if (map[name] !== undefined && pills[map[name]]) pills[map[name]].classList.add('active');
+    const pills = document.querySelectorAll('.nav-pill');
+    const map = { quick:0, reconnect:1, hesitancy:2, compare:3, bpminvite:4 };
+    if (map[name] !== undefined) pills[map[name]].classList.add('active');
   }
 
   function csToggleCard(header) {
@@ -4450,6 +4412,7 @@ sections.forEach(s=>obs.observe(s));
 </div>
 </div>
 </div>
+</div>
 <div class="sub-section" id="sub-res-flipchart">
 <!-- This sub-section is not used — button opens Drive directly. Kept as fallback. -->
 </div>
@@ -4707,7 +4670,6 @@ sections.forEach(s=>obs.observe(s));
 <h3 style="margin-bottom:6px">Business Plan PDF</h3>
 <p style="margin-bottom:14px;font-size:14px;color:var(--gray)">Full business plan document. Open to view or download.</p>
 <a class="cta-btn" href="https://drive.google.com/file/d/1do-lxUJ0JsNcqemmONsDXsygycekfv60/view?usp=sharing" rel="noopener noreferrer" target="_blank">📄 Open Business Plan →</a>
-</div>
 </div>
 </div>
 <!-- ==================== LICENSING ==================== -->
@@ -7626,13 +7588,7 @@ function showTab(id, btn) {
   // Show Resources header only when clicking the Resources nav button directly
   if (id === 'resources') tabEl.classList.add('show-header');
   var clip = document.querySelector('.hero-clip');
-  if (clip) {
-    if (id === 'overview') {
-      clip.classList.remove('collapsed');
-    } else {
-      clip.classList.add('collapsed');
-    }
-  }
+  if (clip) clip.classList.add('collapsed');
   window.scrollTo(0, 0);
 }
 
