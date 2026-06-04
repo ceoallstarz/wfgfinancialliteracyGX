@@ -981,6 +981,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);fon
 <button class="nav-btn" onclick="showResourceDirect('res-new',this)">📄 New Associate</button>
 <button class="nav-btn" onclick="showResourceDirect('res-fast',this)">🚀 Fast Start</button>
 <button class="nav-btn" onclick="showTab('list',this)">📋 Build the List</button>
+<button class="nav-btn" onclick="showTab('referral',this)">🤝 Referral Mastery</button>
 <button class="nav-btn" onclick="showTab('contact',this)">📞 Contact Scripts</button>
 <button class="nav-btn" onclick="showTab('appt',this)">📅 Lock Appointments</button>
 <button class="nav-btn" id="rfm-flipchart-nav-btn" onclick="openRFMFlipChart()">📊 RFM Flip Chart</button>
@@ -1329,6 +1330,424 @@ Meanwhile, a hungry, humble, coachable person can explode in this business.</p><
 <div class="card card-green" style="margin-top:4px"><div class="badge badge-green">The 72-hour rule</div><h3>Move fast, don't convince</h3><p>If someone hasn't taken one step within 72 hours of expressing interest — the energy is fading. Don't spend more than 3 follow-ups trying to resurrect it. Move to the next name.</p></div>
 </div>
 </div>
+</div>
+<!-- ==================== REFERRAL MASTERY ====================  -->
+<div class="tab" id="tab-referral">
+<style>
+/* ── RFM Referral Mastery — scoped styles ── */
+#tab-referral .rm-wrap{padding:1rem 0;max-width:760px}
+#tab-referral .rm-header{background:linear-gradient(135deg,#0C447C,#185FA5);border-radius:12px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;color:#fff}
+#tab-referral .rm-header h1{font-size:22px;font-weight:600;letter-spacing:-0.3px;margin-bottom:4px;color:#fff;display:flex;align-items:center;gap:8px}
+#tab-referral .rm-header p{font-size:13px;opacity:0.75;color:#fff}
+#tab-referral .phase-nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem}
+#tab-referral .phase-btn{border:1px solid #d1d5db;background:#fff;color:#6b7280;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px;font-family:'Raleway',sans-serif}
+#tab-referral .phase-btn:hover{background:#f9fafb}
+#tab-referral .phase-btn.active{background:#185FA5;border-color:#185FA5;color:#fff}
+#tab-referral .rm-panel{display:none}
+#tab-referral .rm-panel.active{display:block}
+#tab-referral .rm-section-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:1.25rem;margin-bottom:1rem}
+#tab-referral .rm-section-card h2{font-size:15px;font-weight:600;color:#111827;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+#tab-referral .rm-section-card h2 i{font-size:17px;color:#185FA5}
+#tab-referral .rm-script-block{background:#f9fafb;border-left:3px solid #185FA5;padding:10px 14px;margin:8px 0;font-size:13px;color:#111827;line-height:1.65;border-radius:0 6px 6px 0}
+#tab-referral .rm-script-block.alt{border-left-color:#0F6E56}
+#tab-referral .rm-script-block.warn{border-left-color:#BA7517}
+#tab-referral .rm-tag{display:inline-block;font-size:11px;font-weight:500;padding:2px 8px;border-radius:6px;margin-right:4px;margin-bottom:4px}
+#tab-referral .rm-tag-client{background:#E6F1FB;color:#0C447C}
+#tab-referral .rm-tag-recruit{background:#E1F5EE;color:#085041}
+#tab-referral .rm-tag-follow{background:#FAEEDA;color:#633806}
+#tab-referral .rm-tag-ts{background:#EEEDFE;color:#3C3489}
+#tab-referral .rm-rule-row{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid #e5e7eb;font-size:13px}
+#tab-referral .rm-rule-row:last-child{border-bottom:none}
+#tab-referral .rm-rule-num{min-width:22px;height:22px;border-radius:50%;background:#185FA5;color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-top:1px;flex-shrink:0}
+#tab-referral .rm-rule-text{color:#111827;line-height:1.6}
+#tab-referral .rm-rule-text em{color:#6b7280;font-style:normal;font-size:12px;display:block;margin-top:2px}
+#tab-referral .rm-flow-steps{display:flex;flex-direction:column;gap:0}
+#tab-referral .rm-flow-step{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #e5e7eb}
+#tab-referral .rm-flow-step:last-child{border-bottom:none}
+#tab-referral .rm-step-dot{min-width:30px;height:30px;border-radius:50%;background:#E6F1FB;border:1px solid #B5D4F4;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:#0C447C;margin-top:1px}
+#tab-referral .rm-step-body h3{font-size:13px;font-weight:600;color:#111827;margin-bottom:3px}
+#tab-referral .rm-step-body p{font-size:12px;color:#6b7280;line-height:1.55}
+#tab-referral .rm-ts-badge{display:inline-flex;align-items:center;gap:4px;background:#EEEDFE;border:1px solid #AFA9EC;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:500;color:#3C3489;margin-bottom:8px}
+#tab-referral .rm-ask-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-top:8px}
+#tab-referral .rm-ask-card{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:10px 12px}
+#tab-referral .rm-ask-card .ask-num{font-size:10px;font-weight:600;color:#185FA5;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+#tab-referral .rm-ask-card p{font-size:12px;color:#111827;line-height:1.55}
+#tab-referral .rm-objection-item{padding:8px 0;border-bottom:1px solid #e5e7eb}
+#tab-referral .rm-objection-item:last-child{border-bottom:none}
+#tab-referral .rm-obj-q{font-size:12px;font-weight:600;color:#BA7517;margin-bottom:4px}
+#tab-referral .rm-obj-a{font-size:12px;color:#111827;line-height:1.55}
+#tab-referral .rm-copy-btn{display:inline-flex;align-items:center;gap:4px;background:transparent;border:1px solid #d1d5db;border-radius:6px;padding:3px 9px;font-size:11px;cursor:pointer;color:#6b7280;margin-top:6px;transition:all .15s;font-family:'Raleway',sans-serif}
+#tab-referral .rm-copy-btn:hover{background:#f9fafb}
+#tab-referral .rm-metrics-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1rem}
+#tab-referral .rm-metric-card{background:#f9fafb;border-radius:8px;padding:10px 12px}
+#tab-referral .rm-metric-card .mlabel{font-size:11px;color:#6b7280;margin-bottom:3px}
+#tab-referral .rm-metric-card .mval{font-size:20px;font-weight:600;color:#111827}
+#tab-referral .rm-tracker-list{display:flex;flex-direction:column;gap:6px}
+#tab-referral .rm-tracker-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid #e5e7eb;border-radius:8px;background:#fff}
+#tab-referral .rm-tracker-item input[type=checkbox]{width:16px;height:16px;accent-color:#185FA5;cursor:pointer}
+#tab-referral .rm-tracker-item label{font-size:13px;color:#111827;cursor:pointer;flex:1}
+#tab-referral .rm-tracker-item .tchip{font-size:10px;font-weight:500;padding:2px 6px;border-radius:6px}
+#tab-referral .rm-progress-bar{height:5px;background:#f9fafb;border-radius:3px;margin:8px 0;overflow:hidden;border:1px solid #e5e7eb}
+#tab-referral .rm-progress-fill{height:5px;background:#185FA5;border-radius:3px;transition:width .4s ease}
+</style>
+
+<div class="top-bar">
+  <h1>🤝 Referral Mastery System</h1>
+  <p>Trustworthy Selling framework · All scripts · Every touch point</p>
+</div>
+
+<div class="rm-wrap" style="padding:24px">
+
+  <div class="rm-header">
+    <h1><i class="ti ti-users" aria-hidden="true"></i>Referral Mastery System — RFM</h1>
+    <p>Trustworthy Selling framework · All scripts · Every touch point</p>
+  </div>
+
+  <div class="phase-nav">
+    <button class="phase-btn active" onclick="rmShowPanel('pre',this)"><i class="ti ti-player-play" aria-hidden="true"></i>Pre-Frame</button>
+    <button class="phase-btn" onclick="rmShowPanel('ask',this)"><i class="ti ti-hand-finger" aria-hidden="true"></i>The Ask</button>
+    <button class="phase-btn" onclick="rmShowPanel('call',this)"><i class="ti ti-phone" aria-hidden="true"></i>Calling Scripts</button>
+    <button class="phase-btn" onclick="rmShowPanel('obj',this)"><i class="ti ti-shield" aria-hidden="true"></i>Objections</button>
+    <button class="phase-btn" onclick="rmShowPanel('text3way',this)"><i class="ti ti-message-2" aria-hidden="true"></i>3-Way Texts</button>
+    <button class="phase-btn" onclick="rmShowPanel('tracker',this)"><i class="ti ti-checklist" aria-hidden="true"></i>Tracker</button>
+  </div>
+
+  <div id="rm-panel-pre" class="rm-panel active">
+    <div class="rm-section-card">
+      <h2><i class="ti ti-message-dots" aria-hidden="true"></i>Trustworthy selling principle</h2>
+      <div class="rm-ts-badge"><i class="ti ti-award" aria-hidden="true"></i>TS core — trust before transaction</div>
+      <div class="rm-rule-row">
+        <div class="rm-rule-num">1</div>
+        <div class="rm-rule-text">Pre-frame at the very start — before content, before pitch.<em>Set expectations early so referrals feel like a natural next step, not a surprise ask.</em></div>
+      </div>
+      <div class="rm-rule-row">
+        <div class="rm-rule-num">2</div>
+        <div class="rm-rule-text">Use D.E.T.E. to build context — Dream, Excited, Take Away, Edification.<em>The introduction is 90% of the work. Set the stage or the close won't land.</em></div>
+      </div>
+      <div class="rm-rule-row">
+        <div class="rm-rule-num">3</div>
+        <div class="rm-rule-text">Frame 3 lenses: they might need it, they might want to build it, they might refer you.<em>Never make the referral ask feel one-sided or transactional.</em></div>
+      </div>
+    </div>
+
+    <div class="rm-section-card">
+      <h2><i class="ti ti-clipboard-text" aria-hidden="true"></i>Step 1 opening — pre-frame script</h2>
+      <div class="rm-script-block">
+        "Today I'll give you an overview of who we are and what we do. As I go through this, maybe you can look at it three ways:<br><br>
+        1. Some of these ideas might help your family — feel free to ask questions anytime.<br>
+        2. We're in a big expansion right now and always looking for sharp people.<br>
+        3. Our business grows on word of mouth. I want you to feel so good about what we do that you'd want to refer people."
+      </div>
+      <button class="rm-copy-btn" onclick="rmCopyText(this,'Step 1 pre-frame')"><i class="ti ti-copy" aria-hidden="true"></i>Copy script</button>
+    </div>
+
+    <div class="rm-section-card">
+      <h2><i class="ti ti-heart" aria-hidden="true"></i>During the presentation — seed referrals</h2>
+      <div class="rm-script-block alt">"Don't you think more people need to know this information?"</div>
+      <div class="rm-script-block alt">"How many people do you know who are dealing with this exact situation?"</div>
+      <div class="rm-script-block alt">"If I could show you how to get higher returns, minimize taxes, and guarantee you won't lose money — how many people do you think would want to know that?"</div>
+    </div>
+
+    <div class="rm-section-card">
+      <h2><i class="ti ti-clock" aria-hidden="true"></i>After info-gather — plant the seed</h2>
+      <div class="rm-script-block">
+        "Like I mentioned, we don't do traditional marketing. We look for introductions to good people from good people like you. When I come back, if you could think of 5–10 people we could get in front of, that would be great. Does that sound fair?"
+      </div>
+      <div class="rm-script-block warn">
+        If still hesitant: "Have you felt comfortable with the way I've handled myself with you tonight? I can guarantee you one thing — I will treat every person you introduce me to with the exact same respect I've treated you. Does that sound good?"
+      </div>
+    </div>
+  </div>
+
+  <div id="rm-panel-ask" class="rm-panel">
+    <div class="rm-section-card">
+      <h2><i class="ti ti-target" aria-hidden="true"></i>The 3-way ask — always use all three</h2>
+      <div class="rm-ts-badge"><i class="ti ti-award" aria-hidden="true"></i>TS core — value before ask</div>
+      <p style="font-size:12px;color:#6b7280;margin-bottom:10px">Never ask only once, never ask only one way. Three angles = three different referral pools.</p>
+      <div class="rm-ask-grid">
+        <div class="rm-ask-card">
+          <div class="ask-num"><span class="rm-tag rm-tag-client">client</span> Ask 1</div>
+          <p>"As you think about your own circle—friends, family, or coworkers—does anyone come to mind who might benefit from having a better understanding of how money works or getting some financial clarity?"</p>
+        </div>
+        <div class="rm-ask-card">
+          <div class="ask-num"><span class="rm-tag rm-tag-recruit">recruit</span> Ask 2</div>
+          <p>"We’re in a season of growth right now. Out of curiosity, as you think about people in your life—friends, coworkers, or family—who do you feel would benefit from having an additional way to create income or maybe explore something more flexible?”</p>
+        </div>
+        <div class="rm-ask-card">
+          <div class="ask-num"><span class="rm-tag rm-tag-follow">referral outlets</span> Ask 3</div>
+          <p>"Who do you know—accountants, mortgage brokers, or salespeople—that we could potentially refer business to, while also helping anyone in your circle who needs financial education?"</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rm-section-card">
+      <h2><i class="ti ti-list-check" aria-hidden="true"></i>After completing the plan — ask again</h2>
+      <div class="rm-script-block">
+        "Isn't this great? Now that you've seen the work we do for families, I'd love to brainstorm who you know that could use the same education."
+      </div>
+      <p style="font-size:12px;color:#6b7280;margin-top:8px">Then run all three Ask angles again. The emotion is highest right after the close — that's your window.</p>
+    </div>
+
+    <div class="rm-section-card">
+      <h2><i class="ti ti-users-group" aria-hidden="true"></i>Helping them think of names — memory jogger</h2>
+      <div class="rm-flow-steps">
+        <div class="rm-flow-step">
+          <div class="rm-step-dot"><i class="ti ti-building" aria-hidden="true" style="font-size:14px"></i></div>
+          <div class="rm-step-body"><h3>Work connections</h3><p>Co-workers, old co-workers, managers, people they admire professionally</p></div>
+        </div>
+        <div class="rm-flow-step">
+          <div class="rm-step-dot"><i class="ti ti-school" aria-hidden="true" style="font-size:14px"></i></div>
+          <div class="rm-step-body"><h3>School &amp; community</h3><p>College friends, childhood friends, neighbors, school parents</p></div>
+        </div>
+        <div class="rm-flow-step">
+          <div class="rm-step-dot"><i class="ti ti-pray" aria-hidden="true" style="font-size:14px"></i></div>
+          <div class="rm-step-body"><h3>Faith &amp; organizations</h3><p>Church, men's/women's groups, civic orgs, volunteer networks</p></div>
+        </div>
+        <div class="rm-flow-step">
+          <div class="rm-step-dot"><i class="ti ti-heart" aria-hidden="true" style="font-size:14px"></i></div>
+          <div class="rm-step-body"><h3>Family circle</h3><p>Siblings, cousins, in-laws, close family friends who care about their future</p></div>
+        </div>
+        <div class="rm-flow-step">
+          <div class="rm-step-dot"><i class="ti ti-briefcase" aria-hidden="true" style="font-size:14px"></i></div>
+          <div class="rm-step-body"><h3>People they pay</h3><p>Realtor, accountant, lawyer, barber/stylist, personal trainer, gardener</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rm-section-card">
+      <h2><i class="ti ti-user-check" aria-hidden="true"></i>Qualifying the list</h2>
+      <div class="rm-rule-row">
+        <div class="rm-rule-num">?</div>
+        <div class="rm-rule-text">"Tell me a little about [name] — what do they do?"<em>Know the 3 good qualities before you call</em></div>
+      </div>
+      <div class="rm-rule-row">
+        <div class="rm-rule-num">?</div>
+        <div class="rm-rule-text">"Do you think they're happy where they are, or would they be open to something new?"</div>
+      </div>
+      <div class="rm-rule-row">
+        <div class="rm-rule-num">?</div>
+        <div class="rm-rule-text">"Would you mind giving them a heads-up that I'll be calling? If you can text them today, it'll make the conversation much warmer."</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="rm-panel-call" class="rm-panel">
+    <div class="rm-section-card">
+      <h2><i class="ti ti-phone-call" aria-hidden="true"></i>Client referral call</h2>
+      <span class="rm-tag rm-tag-client">client prospect</span>
+      <div class="rm-script-block">
+        “Hi [Name], this is [Your Name] with Revolution Financial Management. Real quick—I hope I’m not catching you at a bad time? The reason I’m calling is [Referrer] asked me to reach out. We recently went over some financial concepts they found really valuable, and they mentioned you specifically as someone they wanted me to connect with. Did they mention I might be calling you?”
+      </div>
+      <div class="rm-script-block alt">
+        If YES “Perfect. I’m not sure yet if there’s anything I can actually help you with, but I did promise I’d at least connect and share what we went over. Would you be open to a quick 20–30 minute conversation sometime this week or next just to see if it’s even relevant for you?”
+      </div>
+      <div class="rm-script-block warn">
+        If NO “No problem at all. Either way, they thought highly enough of you to bring you up, so I figured I’d just introduce myself real quick and see if it made sense to connect. Same question—would you be open to a quick 20–30 minute conversation this week or next just to see if anything we covered could be useful for you?”
+      </div>
+      <button class="rm-copy-btn" onclick="rmCopyText(this,'Client referral call')"><i class="ti ti-copy" aria-hidden="true"></i>Copy script</button>
+    </div>
+
+    <div class="rm-section-card">
+      <h2><i class="ti ti-star" aria-hidden="true"></i>3 good qualities — recruit referral call</h2>
+      <span class="rm-tag rm-tag-recruit">recruit prospect</span>
+      <div class="rm-script-block">
+        "Hi [name], this is [your name]. I'm a supervisor over at Revolution Financial Management. I was actually referred to you by [referrer]. Do you know [referrer]?<br><br>
+        I was speaking with them and told them we're expanding and I was describing the kind of person I'm looking for — and they brought up your name. They said some great things about you. They said you were [quality 1], [quality 2], and [quality 3]. Does that sound like you?<br><br>
+        'Sure, I guess so.'<br><br>
+        Obviously, I don't know you personally yet, so I was curious enough to reach out and learn a little more about your background. What is it that you do?"(Let them talk. Be genuinely interested.) <br><br> Discovery Phase<br>
+You:<br>
+"How long have you been doing that?"<br>
+"What do you enjoy most about it?"<br>
+"What do you find most challenging about it?"<br>
+"Do you see yourself doing that long-term, or are you open to exploring other opportunities if the right one came along?"
+(Listen. Let them tell you where they are in life.)
+<br><br>
+Transition<br>
+You:<br>
+"The reason I wanted to connect is that we're growing throughout the US, and we're always looking for people with strong leadership, people skills, and a good reputation.
+I don't know yet whether our firm would be a fit for you or whether you'd even have interest. That's honestly what I'd like to find out.
+Would you be open to spending about 30-45 minutes seeing what we do and then deciding if it's worth another conversation?"
+
+<br><br>
+If Interested<br>
+You:<br>
+"Perfect.
+The purpose isn't for you to make any decisions. It's simply for you to learn who we are, how we help families, and how our business model works.
+Then you can decide whether it's something worth exploring further."
+<br><br>
+Scheduling<br>
+
+You:<br>
+"What tends to work better for you—weekday evenings or weekends?"
+(Let them answer.)
+
+You:<br>
+"I have _____ at _____ or _____ at _____. Which works better?"
+<br><br>
+Confirmation<br>
+You:<br>
+"Excellent.
+We'll be meeting at our office across from Del Amo Mall or on Zoom. You'll get a chance to meet some of our, learn about the company, and ask any questions you have.
+Then afterward, if it looks like there might be a mutual fit, we can schedule a more personal conversation to learn more about your goals and what you're looking for."
+        
+      </div>
+      <button class="rm-copy-btn" onclick="rmCopyText(this,'3 good qualities recruit call')"><i class="ti ti-copy" aria-hidden="true"></i>Copy script</button>
+    </div>
+
+    <div class="rm-section-card">
+      <h2><i class="ti ti-question-mark" aria-hidden="true"></i>What if they ask "what is it?"</h2>
+      <div class="rm-script-block">
+        If they ask: “What is it?”<br>
+“Good question. It’s about 30 minutes or so. We walk through a few simple financial concepts around how families can better understand, organize, and improve how they’re using and saving money. Nothing salesy—it’s really more educational than anything. I just told [referrer] I’d connect with you and see if it even made sense for us to sit down.”**
+      </div>
+      <div class="rm-script-block alt">
+        Slightly deeper version (if you want more clarity)<br>
+**“It’s an educational conversation around money—things like how money flows in a household, ways people build savings and protection, and a few strategies most people were never really taught. Honestly, I just found it helpful myself, which is why I mentioned you.”**
+      </div>
+      <div class="rm-script-block warn">
+        If they say: “Can you just send me info?”<br> Instead of blocking and pushing, go softer and reframe: “I could, but it honestly doesn’t translate well over text or email—it’s more visual and conversational. If it’s helpful, we can just do 20–30 minutes and I’ll walk you through it. If not, no worries at all. What usually works better for you—weekday evenings or weekends?”**
+      </div>
+    </div>
+
+    <div class="rm-section-card">
+      <h2><i class="ti ti-user-star" aria-hidden="true"></i>Client referral notice — what to tell them to say</h2>
+      <div class="rm-script-block">
+        “Hey [Friend’s Name], I just sat down with a friend of mine and learned a few concepts about how money works that I honestly wish I had known earlier. It was all educational—no pressure—and it made me think of you, so I told him/her it might be worth sharing with you as well. If nothing else, I think you’d find it interesting. Just be open to a quick call when they reach out over the next couple of days.”**
+<br><br>Even shorter (text-friendly)<br> “Hey [Friend’s Name], I just went over some financial concepts with a friend of mine that I wish I knew sooner. It made me think of you. Nothing salesy—just educational. Be open to a quick call when they reach out over the next couple of days.”**
+      </div>
+      <button class="rm-copy-btn" onclick="rmCopyText(this,'Client referral notice')"><i class="ti ti-copy" aria-hidden="true"></i>Copy script</button>
+    </div>
+  </div>
+
+  <div id="rm-panel-obj" class="rm-panel">
+    <div class="rm-section-card">
+      <h2><i class="ti ti-shield-check" aria-hidden="true"></i>Referral objections — Trustworthy Selling responses</h2>
+      <div class="rm-ts-badge"><i class="ti ti-award" aria-hidden="true"></i>TS core — acknowledge, reframe, invite</div>
+      <div class="rm-objection-item">
+        <div class="rm-obj-q">"I don't know if they'd be interested."</div>
+        <div class="rm-obj-a">“That’s totally okay. We’re not really trying to convince anyone of anything—it’s more just sharing useful financial education. Worst case, it’s not for them. Best case, they hear something helpful they can use. Out of curiosity, is there anyone in your circle who generally likes learning about money or improving their finances?”</div>
+      </div>
+      <div class="rm-objection-item">
+        <div class="rm-obj-q">"I want to think about it first."</div>
+        <div class="rm-obj-a">“Absolutely, no rush. While it’s fresh—when we were talking, did anyone immediately come to mind, even just briefly?”</div>
+      </div>
+      <div class="rm-objection-item">
+        <div class="rm-obj-q">"I don't want to bother my friends."</div>
+        <div class="rm-obj-a">“I understand, and I respect that. Let me ask you this—how have you felt about your experience with me so far? Comfortable with how we’ve worked together?”
+<br>(pause)<br> **“The reason I ask is because we keep everything very low-key and educational. No pressure, no expectations, and if it’s not a fit, it’s not a fit. 
+So it’s really just sharing something helpful—not putting anyone on the spot.”</div>
+      </div>
+      <div class="rm-objection-item">
+        <div class="rm-obj-q">"They already have a financial advisor."</div>
+        <div class="rm-obj-a">"That's actually great — I'm not there to replace anyone. I'm there to look at areas their current advisor may not have covered, or just do a comparison. At worst, they confirm they're in good shape. At best, we find something better. Either way, they win."</div>
+      </div>
+      <div class="rm-objection-item">
+        <div class="rm-obj-q">"I'm too busy right now."</div>
+        <div class="rm-obj-a">“I get it, sounds like a lot’s going on. Just so I don’t miss it—who in your life would you most want to make sure is financially informed or taken care of?”</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="rm-panel-text3way" class="rm-panel">
+    <div class="rm-section-card">
+      <h2><i class="ti ti-message-2" aria-hidden="true"></i>3-way client referral text</h2>
+      <span class="rm-tag rm-tag-client">client</span>
+      <div class="rm-script-block">
+        "Hey [Referral Name], I'd like to introduce you to my friend, [Your Name]. I've really appreciated the guidance and perspective they've given me around finances and planning for the future. What I like most is that they take an educational, no-pressure approach and genuinely focus on helping people make informed decisions. <br>
+        [Your Name], this is my friend [Referral Name]. [He/She] is a great person and works in [industry/occupation]. I'll let you two connect!"
+      </div>
+      <button class="rm-copy-btn" onclick="rmCopyText(this,'3-way client text')"><i class="ti ti-copy" aria-hidden="true"></i>Copy</button>
+    </div>
+
+    <div class="rm-section-card">
+      <h2><i class="ti ti-message-2" aria-hidden="true"></i>3-way recruiting text</h2>
+      <span class="rm-tag rm-tag-recruit">recruit</span>
+      <div class="rm-script-block">
+        "Hey [prospect name], I want to introduce you to my mentor, [SMD name]. He/she is highly respected in our industry and is helping people like me transition into an incredible business. He/she is amazing, has a big heart, and loves helping others — also extremely busy, so if he/she reaches out, be sure to answer!<br><br>
+        [SMD name], this is my good friend [prospect name], the one I was telling you about. [Edify briefly.] I'll let you two take it from here."
+      </div>
+      <button class="rm-copy-btn" onclick="rmCopyText(this,'3-way recruit text')"><i class="ti ti-copy" aria-hidden="true"></i>Copy</button>
+    </div>
+
+    <div class="rm-section-card">
+      <h2><i class="ti ti-arrow-guide" aria-hidden="true"></i>3-way flow — timing rules</h2>
+      <div class="rm-rule-row">
+        <div class="rm-rule-num">1</div>
+        <div class="rm-rule-text">Client sends the intro text within 24 hours of your meeting.<em>Emotion is highest right after the appointment. Don't let it cool.</em></div>
+      </div>
+      <div class="rm-rule-row">
+        <div class="rm-rule-num">2</div>
+        <div class="rm-rule-text">You follow up by phone within 48 hours of the intro text.<em>Strike while the referral is still warm from the heads-up.</em></div>
+      </div>
+      <div class="rm-rule-row">
+        <div class="rm-rule-num">3</div>
+        <div class="rm-rule-text">If the referral didn't get a heads-up: "No problem, I'm sure they've been busy." Never throw Joe under the bus.<em>Maintain your positioning. You're the professional.</em></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="rm-panel-tracker" class="rm-panel">
+    <div class="rm-metrics-row">
+      <div class="rm-metric-card"><div class="mlabel">Referrals collected</div><div class="mval" id="rm-m-collected">0</div></div>
+      <div class="rm-metric-card"><div class="mlabel">Calls made</div><div class="mval" id="rm-m-calls">0</div></div>
+      <div class="rm-metric-card"><div class="mlabel">Apts booked</div><div class="mval" id="rm-m-apts">0</div></div>
+    </div>
+
+    <div class="rm-section-card">
+      <h2><i class="ti ti-checklist" aria-hidden="true"></i>Daily referral checklist</h2>
+      <div>
+        <div class="rm-progress-bar"><div class="rm-progress-fill" id="rm-prog-fill" style="width:0%"></div></div>
+        <p style="font-size:11px;color:#6b7280;margin-bottom:10px" id="rm-prog-text">0 / 8 complete</p>
+      </div>
+      <div class="rm-tracker-list" id="rm-checklist">
+        <div class="rm-tracker-item"><input type="checkbox" id="rm-c1" onchange="rmUpdateTracker()"><label for="rm-c1">Pre-framed referrals at start of appointment</label><span class="tchip rm-tag rm-tag-client">pre-frame</span></div>
+        <div class="rm-tracker-item"><input type="checkbox" id="rm-c2" onchange="rmUpdateTracker()"><label for="rm-c2">Seeded referral language during presentation</label><span class="tchip rm-tag rm-tag-client">during</span></div>
+        <div class="rm-tracker-item"><input type="checkbox" id="rm-c3" onchange="rmUpdateTracker()"><label for="rm-c3">Asked for referrals 3 ways after info-gather</label><span class="tchip rm-tag rm-tag-ts">3-ask</span></div>
+        <div class="rm-tracker-item"><input type="checkbox" id="rm-c4" onchange="rmUpdateTracker()"><label for="rm-c4">Asked again after completing plan/paperwork</label><span class="tchip rm-tag rm-tag-client">post-close</span></div>
+        <div class="rm-tracker-item"><input type="checkbox" id="rm-c5" onchange="rmUpdateTracker()"><label for="rm-c5">Got referral names + qualified each one</label><span class="tchip rm-tag rm-tag-follow">qualify</span></div>
+        <div class="rm-tracker-item"><input type="checkbox" id="rm-c6" onchange="rmUpdateTracker()"><label for="rm-c6">Asked client to send 3-way intro text today</label><span class="tchip rm-tag rm-tag-recruit">3-way</span></div>
+        <div class="rm-tracker-item"><input type="checkbox" id="rm-c7" onchange="rmUpdateTracker()"><label for="rm-c7">Called at least one referral within 48 hours</label><span class="tchip rm-tag rm-tag-follow">follow-up</span></div>
+        <div class="rm-tracker-item"><input type="checkbox" id="rm-c8" onchange="rmUpdateTracker()"><label for="rm-c8">Booked appointment from referral call</label><span class="tchip rm-tag rm-tag-client">booked</span></div>
+      </div>
+    </div>
+
+    <div class="rm-section-card">
+      <h2><i class="ti ti-users" aria-hidden="true"></i>Getting names from your team</h2>
+      <div class="rm-script-block">
+        "Hey [teammate], I really want to help you get your promotion this month. Who would you most want me to call for you? Who are the top 5 you haven't reached out to yet? Let's brainstorm together — who would you love to be in business with?"
+      </div>
+    </div>
+  </div>
+
+</div><!-- end rm-wrap -->
+
+<script>
+function rmShowPanel(id,btn){
+  document.querySelectorAll('#tab-referral .rm-panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('#tab-referral .phase-btn').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('rm-panel-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function rmCopyText(btn,label){
+  var card=btn.closest('.rm-section-card');
+  var scripts=card.querySelectorAll('.rm-script-block');
+  var text=Array.from(scripts).map(function(s){return s.innerText.trim();}).join('\n\n');
+  navigator.clipboard.writeText(text).then(function(){
+    btn.innerHTML='<i class="ti ti-check" aria-hidden="true"></i>Copied!';
+    setTimeout(function(){btn.innerHTML='<i class="ti ti-copy" aria-hidden="true"></i>Copy script';},1800);
+  });
+}
+function rmUpdateTracker(){
+  var boxes=document.querySelectorAll('#rm-checklist input[type=checkbox]');
+  var done=Array.from(boxes).filter(function(b){return b.checked;}).length;
+  var total=boxes.length;
+  document.getElementById('rm-prog-fill').style.width=Math.round(done/total*100)+'%';
+  document.getElementById('rm-prog-text').textContent=done+' / '+total+' complete';
+  document.getElementById('rm-m-collected').textContent=document.getElementById('rm-c5').checked?'✓':'0';
+  document.getElementById('rm-m-calls').textContent=document.getElementById('rm-c7').checked?'✓':'0';
+  document.getElementById('rm-m-apts').textContent=document.getElementById('rm-c8').checked?'✓':'0';
+}
+</script>
 </div>
 <!-- ==================== CONTACT SCRIPTS ====================  -->
 <div class="tab" id="tab-contact">
@@ -7660,7 +8079,7 @@ document.addEventListener('keydown',function(e){
 <script>
 // ===== SEARCH INDEX — built from live DOM so nothing is ever missed =====
 const TAB_LABELS = {
-  overview: 'Mission HQ', list: 'Build the List', contact: 'Contact Scripts',
+  overview: 'Mission HQ', list: 'Build the List', referral: 'Referral Mastery', contact: 'Contact Scripts',
   appt: 'Lock Appointments', close: 'Close & Partner', objections: 'Objections',
   timeline: 'SMD→EMD Path', profiles: 'Recruit Profiles', training: 'Training',
   glossary: 'Terms & Identity', licensing: 'Licensing', resources: 'Resources'
