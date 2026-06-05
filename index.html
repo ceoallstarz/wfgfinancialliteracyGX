@@ -448,6 +448,9 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);fon
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
 <ul class="navbar-nav ml-auto">
 <li class="nav-item">
+<a class="nav-link tm-nav-link" href="#" onclick="openSystem();return false;" style="color:#f0c040;font-weight:700;">⚙ System</a>
+</li>
+<li class="nav-item">
 <a class="nav-link tm-nav-link" href="#infinite">Home</a>
 </li>
 <li class="nav-item">
@@ -461,9 +464,6 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);fon
 </li>
 <li class="nav-item">
 <a class="nav-link tm-nav-link" href="#contact">Contact</a>
-</li>
-<li class="nav-item">
-<a class="nav-link tm-nav-link" href="#" onclick="openSystem();return false;" style="color:#f0c040;font-weight:700;">⚙ System</a>
 </li>
 </ul>
 </div>
@@ -1335,10 +1335,10 @@ Meanwhile, a hungry, humble, coachable person can explode in this business.</p><
 <div class="tab" id="tab-referral">
 <style>
 /* ── RFM Referral Mastery — scoped styles ── */
-#tab-referral .rm-wrap{padding:1rem 0;max-width:760px}
-#tab-referral .rm-header{background:linear-gradient(135deg,#0C447C,#185FA5);border-radius:12px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;color:#fff}
-#tab-referral .rm-header h1{font-size:22px;font-weight:600;letter-spacing:-0.3px;margin-bottom:4px;color:#fff;display:flex;align-items:center;gap:8px}
-#tab-referral .rm-header p{font-size:13px;opacity:0.75;color:#fff}
+#tab-referral .rm-wrap{padding:1rem 0;max-width:100%;width:100%}
+#tab-referral .rm-header{background:linear-gradient(135deg,#0C447C,#185FA5);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;color:#fff;overflow:hidden}
+#tab-referral .rm-header h1{font-size:clamp(14px,2.2vw,20px);font-weight:600;letter-spacing:-0.2px;margin-bottom:4px;color:#fff;display:flex;align-items:center;gap:8px;flex-wrap:wrap;line-height:1.3;word-break:break-word}
+#tab-referral .rm-header p{font-size:12px;opacity:0.75;color:#fff;line-height:1.5}
 #tab-referral .phase-nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem}
 #tab-referral .phase-btn{border:1px solid #d1d5db;background:#fff;color:#6b7280;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px;font-family:'Raleway',sans-serif}
 #tab-referral .phase-btn:hover{background:#f9fafb}
@@ -1396,7 +1396,7 @@ Meanwhile, a hungry, humble, coachable person can explode in this business.</p><
   <p>Trustworthy Selling framework · All scripts · Every touch point</p>
 </div>
 
-<div class="rm-wrap" style="padding:24px">
+<div class="rm-wrap" style="padding:20px 24px">
 
   <div class="rm-header">
     <h1><i class="ti ti-users" aria-hidden="true"></i>Referral Mastery System — RFM</h1>
@@ -1767,28 +1767,28 @@ function rmUpdateTracker(){
 <!-- ===== TAB: QUICK SCRIPTS ===== -->
 <div class="tab-panel active" id="cs-callguide">
 <style>
-/* ── CSS var bridge for Hyperion Call Guide ── */
+/* ── Hyperion Call Guide — 3-Call System visual language ── */
 #cs-callguide {
-  --color-background-primary:#ffffff;
-  --color-background-secondary:#f9fafb;
-  --color-text-primary:#111827;
-  --color-text-secondary:#6b7280;
-  --color-border-tertiary:#e5e7eb;
-  --color-border-secondary:#d1d5db;
-  --border-radius-lg:10px;
-  --border-radius-md:7px;
-  --font-sans:'Raleway',sans-serif;
+  --hcg-navy:#0f2540;
+  --hcg-gold:#c9a84c;
+  --hcg-gold-light:#f0d080;
+  --hcg-gold-pale:#fdf6e3;
+  --hcg-cream:#f9f6f0;
+  --hcg-white:#ffffff;
+  --hcg-gray:#7a8593;
+  --hcg-border:#e2e6ea;
   padding:0;
   position:relative;
   overflow:hidden;
+  background:var(--hcg-navy);
 }
-/* scope sticky bars inside panel */
+/* sticky positioning */
 #cs-callguide .topbar,
 #cs-callguide .stage-bar,
 #cs-callguide .nav-bar { position:sticky; }
-#cs-callguide .topbar { top:0; }
-#cs-callguide .stage-bar { top:41px; }
-#cs-callguide .nav-bar { top:83px; }
+#cs-callguide .topbar { top:0; z-index:50; }
+#cs-callguide .stage-bar { top:57px; z-index:40; }
+#cs-callguide .nav-bar { top:108px; z-index:39; }
 #cs-callguide .float-btn { position:sticky; float:right; }
 </style>
 
@@ -1802,6 +1802,10 @@ function rmUpdateTracker(){
   <i class="ti ti-phone" style="font-size:20px;color:var(--color-text-secondary)" aria-hidden="true"></i>
 </div>
 
+<div class="hcg-banner">
+  <span>📋</span>
+  <span><strong>Trustworthy Selling.</strong> Build connection first — never pitch before trust is earned. Use curiosity, care, and consistency.</span>
+</div>
 <div class="stage-bar" id="hcg-stage-bar">
   <button class="stage-btn on" onclick="hcgSetStage(0,this)">New (week 1–2)</button>
   <button class="stage-btn" onclick="hcgSetStage(1,this)">Growing (week 3–4)</button>
@@ -10435,63 +10439,89 @@ button.secondary-btn:hover { background: var(--off-white); }
 
 /* ── CONTACT SCRIPTS (embedded) ─────────────────── */
 
-/* ── Hyperion Call Guide component styles (scoped to #cs-callguide) ── */
-#cs-callguide .topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);z-index:50}
-#cs-callguide .topbar-title{font-size:15px;font-weight:500;color:var(--color-text-primary)}
-#cs-callguide .topbar-sub{font-size:11px;color:var(--color-text-secondary)}
-#cs-callguide .stage-bar{display:flex;gap:6px;padding:10px 16px;border-bottom:0.5px solid var(--color-border-tertiary);overflow-x:auto;background:var(--color-background-primary);z-index:40}
-#cs-callguide .stage-btn{font-size:12px;font-weight:500;padding:5px 12px;border-radius:100px;border:0.5px solid var(--color-border-secondary);cursor:pointer;white-space:nowrap;background:var(--color-background-primary);color:var(--color-text-secondary);transition:all 0.15s}
-#cs-callguide .stage-btn.on{background:#E1F5EE;border-color:#1D9E75;color:#085041}
-#cs-callguide .nav-bar{display:flex;gap:0;border-bottom:0.5px solid var(--color-border-tertiary);overflow-x:auto;padding:0 16px;background:var(--color-background-primary);z-index:39}
-#cs-callguide .nav-btn{font-size:12px;padding:8px 12px;cursor:pointer;color:var(--color-text-secondary);border-bottom:2px solid transparent;white-space:nowrap;background:transparent;font-family:inherit}
-#cs-callguide .nav-btn.on{color:var(--color-text-primary);font-weight:500;border-bottom-color:var(--color-text-primary)}
-#cs-callguide .pane{display:none;padding:14px 16px 80px}
+/* ── Hyperion Call Guide — 3-Call System visual language (scoped) ── */
+/* Topbar: dark navy */
+#cs-callguide .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 12px;border-bottom:1px solid rgba(255,255,255,0.08);background:var(--hcg-navy);z-index:50}
+#cs-callguide .topbar-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--hcg-gold-light);letter-spacing:.04em;text-transform:uppercase}
+#cs-callguide .topbar-sub{color:rgba(255,255,255,0.45);font-size:11px;margin-top:2px}
+/* Stage bar: dark navy, gold active pills */
+#cs-callguide .stage-bar{display:flex;gap:8px;padding:10px 16px 12px;overflow-x:auto;scrollbar-width:none;background:var(--hcg-navy);border-bottom:none;z-index:40}
+#cs-callguide .stage-bar::-webkit-scrollbar{display:none}
+#cs-callguide .stage-btn{flex-shrink:0;padding:8px 14px;border-radius:24px;border:1.5px solid rgba(255,255,255,0.18);font-size:12px;font-weight:600;cursor:pointer;background:transparent;color:rgba(255,255,255,0.55);transition:all 0.18s;font-family:'DM Sans',sans-serif;white-space:nowrap}
+#cs-callguide .stage-btn.on{background:var(--hcg-gold);color:var(--hcg-navy);border-color:var(--hcg-gold);font-weight:700}
+/* Nav bar: dark navy, pill-style */
+#cs-callguide .nav-bar{display:flex;gap:6px;padding:0 16px 10px;overflow-x:auto;scrollbar-width:none;background:var(--hcg-navy);border-bottom:none;z-index:39}
+#cs-callguide .nav-bar::-webkit-scrollbar{display:none}
+#cs-callguide .nav-btn{flex-shrink:0;padding:6px 13px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.12);font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:rgba(255,255,255,0.45);transition:all 0.18s;font-family:'DM Sans',sans-serif;white-space:nowrap}
+#cs-callguide .nav-btn.on{background:rgba(255,255,255,0.12);color:var(--hcg-white);border-color:rgba(255,255,255,0.3);font-weight:700}
+/* Pane: cream content area with rounded top */
+#cs-callguide .pane{display:none;background:var(--hcg-cream);border-radius:20px 20px 0 0;padding:16px 14px 80px;min-height:calc(100vh - 170px)}
 #cs-callguide .pane.on{display:block}
-#cs-callguide .phase-lbl{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.07em;color:var(--color-text-secondary);padding:10px 0 4px;margin-top:2px}
-#cs-callguide .phase-lbl:first-child{padding-top:0}
-#cs-callguide .script-line{display:flex;gap:8px;margin:3px 0}
-#cs-callguide .who{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.05em;min-width:36px;padding-top:3px;flex-shrink:0}
-#cs-callguide .you{color:#0C447C}
-#cs-callguide .them{color:#712B13}
-#cs-callguide .said{font-size:14px;line-height:1.7;color:var(--color-text-primary);flex:1;font-style:italic}
-#cs-callguide .said-them{color:var(--color-text-secondary)}
-#cs-callguide .coach-note{font-size:11px;color:var(--color-text-secondary);line-height:1.5;padding:2px 0 6px 44px}
-#cs-callguide .divider-g{height:0.5px;background:#9FE1CB;margin:8px 0}
-#cs-callguide .card{border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:14px;margin-bottom:10px;background:var(--color-background-primary);box-shadow:none !important;transform:none !important}
-#cs-callguide .card.green{border:1.5px solid #1D9E75 !important;background:#E1F5EE !important}
-#cs-callguide .card.blue{border:1.5px solid #378ADD !important;background:#E6F1FB !important}
-#cs-callguide .card-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px;display:flex;align-items:center;gap:7px;font-family:inherit}
-#cs-callguide .tip{background:#E1F5EE;border-radius:7px;padding:8px 12px;font-size:12px;color:#085041;line-height:1.6;margin:6px 0}
-#cs-callguide .warn{background:#FAEEDA;border-radius:7px;padding:8px 12px;font-size:12px;color:#633806;line-height:1.6;margin:6px 0}
-#cs-callguide .sec{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.07em;color:var(--color-text-secondary);margin:14px 0 6px}
+/* Stage header inside pane */
+#cs-callguide .hcg-step-header{display:flex;align-items:flex-start;gap:12px;background:var(--hcg-navy);border-radius:14px;padding:14px;margin-bottom:16px}
+#cs-callguide .hcg-step-badge{width:34px;height:34px;border-radius:50%;font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--hcg-navy)}
+#cs-callguide .hcg-step-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--hcg-white)}
+#cs-callguide .hcg-step-sub{font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px}
+/* Phase dividers */
+#cs-callguide .phase-lbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--hcg-gray);border-bottom:1px solid var(--hcg-border);padding-bottom:6px;margin:12px 0 8px}
+#cs-callguide .phase-lbl:first-of-type{margin-top:0}
+/* Dark navy script boxes */
+#cs-callguide .hcg-sbox{background:var(--hcg-navy);border-radius:10px;padding:13px 14px;color:rgba(255,255,255,0.92);font-size:14px;line-height:1.75;margin-bottom:6px;font-style:italic}
+#cs-callguide .hcg-sbox-them{background:#1a2f4a;border-left:3px solid rgba(201,168,76,0.35)}
+#cs-callguide .hcg-sbox em{color:rgba(255,255,255,0.45);font-size:12px}
+#cs-callguide .hcg-who{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:4px}
+#cs-callguide .hcg-who-you{color:var(--hcg-gold)}
+#cs-callguide .hcg-who-them{color:rgba(255,255,255,0.45)}
+#cs-callguide .coach-note{font-size:11.5px;color:#5a6475;line-height:1.5;padding:3px 2px 10px;font-style:italic}
+/* Tips and warnings */
+#cs-callguide .tip{background:var(--hcg-gold-pale);border-left:3px solid var(--hcg-gold);border-radius:0 8px 8px 0;padding:8px 12px;font-size:12px;color:#6b4c0a;line-height:1.6;margin:6px 0 12px}
+#cs-callguide .warn{background:var(--hcg-gold-pale);border-left:3px solid var(--hcg-gold);border-radius:0 8px 8px 0;padding:8px 12px;font-size:12px;color:#6b4c0a;line-height:1.6;margin:6px 0 12px}
+/* Sec labels */
+#cs-callguide .sec{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--hcg-gray);margin:16px 0 7px;border-bottom:1px solid var(--hcg-border);padding-bottom:5px}
 #cs-callguide .sec:first-child{margin-top:0}
-#cs-callguide .obj{border:0.5px solid var(--color-border-tertiary);border-radius:7px;overflow:hidden;margin-bottom:6px}
-#cs-callguide .obj-hdr{display:flex;align-items:center;justify-content:space-between;padding:11px 13px;cursor:pointer;background:var(--color-background-secondary);transition:background 0.12s}
-#cs-callguide .obj-hdr:hover{background:var(--color-background-primary)}
-#cs-callguide .obj-hdr.urgent{background:#FCEBEB}
-#cs-callguide .obj-q{font-size:13px;color:var(--color-text-primary);font-style:italic;flex:1;line-height:1.4}
-#cs-callguide .obj-q.urgent{color:#791F1F}
-#cs-callguide .chev{font-size:13px;color:var(--color-text-secondary);transition:transform 0.18s;flex-shrink:0}
-#cs-callguide .obj-body{display:none;padding:11px 13px;border-top:0.5px solid var(--color-border-tertiary);font-size:13px;color:var(--color-text-secondary);line-height:1.7;font-style:italic}
-#cs-callguide .obj-body.open{display:block}
-#cs-callguide .obj-tip{font-size:11px;color:#085041;background:#E1F5EE;border-radius:7px;padding:6px 10px;margin-top:7px;font-style:normal;line-height:1.5}
-#cs-callguide .mrow{display:flex;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px;align-items:flex-start}
+/* Alt / mentor card */
+#cs-callguide .hcg-alt-card{background:var(--hcg-white);border:1px solid var(--hcg-border);border-radius:12px;padding:12px 14px;margin:10px 0}
+#cs-callguide .hcg-alt-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--hcg-navy);margin-bottom:8px}
+/* Old .card used in mindset / rules / evolution */
+#cs-callguide .card{background:var(--hcg-white);border:1px solid var(--hcg-border);border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:0 1px 4px rgba(15,37,64,0.06);transform:none !important}
+#cs-callguide .card.green{background:var(--hcg-gold-pale);border-color:var(--hcg-gold) !important}
+#cs-callguide .card.blue{background:#eef3fa;border-color:#7cacd4 !important}
+#cs-callguide .card-title{font-size:13px;font-weight:600;color:var(--hcg-navy);margin-bottom:8px;display:flex;align-items:center;gap:7px}
+/* Mindset rows */
+#cs-callguide .mrow{display:flex;gap:11px;padding:10px 0;border-bottom:1px solid var(--hcg-border);align-items:flex-start}
 #cs-callguide .mrow:last-child{border-bottom:none}
-#cs-callguide .mrow-body{flex:1;line-height:1.55;color:var(--color-text-primary)}
-#cs-callguide .mnum{width:22px;height:22px;border-radius:50%;background:#E6F1FB;color:#0C447C;font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-#cs-callguide .vm-box{background:var(--color-background-secondary);border-radius:10px;padding:12px 14px;margin-bottom:10px}
-#cs-callguide .vm-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.07em;color:var(--color-text-secondary);margin-bottom:7px;display:flex;align-items:center;justify-content:space-between}
-#cs-callguide .vm-time{font-size:10px;font-weight:500;padding:2px 7px;border-radius:100px;background:#E6F1FB;color:#0C447C}
-#cs-callguide .vm-text{font-size:14px;line-height:1.8;color:var(--color-text-primary);font-style:italic}
-#cs-callguide .text-box{background:#E6F1FB;border-radius:10px;padding:12px 14px;margin-bottom:10px}
-#cs-callguide .text-lbl{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.07em;color:#0C447C;margin-bottom:7px}
-#cs-callguide .text-txt{font-size:14px;line-height:1.8;color:#0C447C;font-style:italic}
+#cs-callguide .mrow-body{flex:1;line-height:1.55;color:var(--hcg-navy);font-size:13px}
+#cs-callguide .mnum{width:26px;height:26px;border-radius:50%;background:var(--hcg-navy);color:var(--hcg-gold-light);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
 #cs-callguide .sdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:1px;display:inline-block}
-#cs-callguide .float-btn{display:block;margin:12px 16px 0;background:#E24B4A;color:white;border:none;border-radius:100px;padding:10px 18px;font-size:13px;font-weight:500;cursor:pointer;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,0.15);font-family:inherit}
+/* Objections */
+#cs-callguide .obj{background:var(--hcg-white);border:1px solid var(--hcg-border);border-radius:10px;overflow:hidden;margin-bottom:7px;box-shadow:0 1px 4px rgba(15,37,64,0.05)}
+#cs-callguide .obj-hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;cursor:pointer;background:var(--hcg-white);transition:background 0.12s}
+#cs-callguide .obj-hdr:hover{background:#f4f6f8}
+#cs-callguide .obj-hdr.urgent{background:#fdf0f0}
+#cs-callguide .obj-q{font-size:13px;color:var(--hcg-navy);font-style:italic;flex:1;line-height:1.4;font-weight:500}
+#cs-callguide .obj-q.urgent{color:#8b1a1a}
+#cs-callguide .chev{font-size:13px;color:var(--hcg-gray);transition:transform 0.18s;flex-shrink:0}
+#cs-callguide .obj-body{display:none;padding:12px 14px;border-top:1px solid var(--hcg-border);font-size:13px;color:#333;line-height:1.75}
+#cs-callguide .obj-body.open{display:block}
+#cs-callguide .obj-tip{font-size:11px;color:#6b4c0a;background:var(--hcg-gold-pale);border-radius:6px;padding:6px 10px;margin-top:8px;line-height:1.5}
+/* Quick tags */
 #cs-callguide .qbar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-#cs-callguide .qtag{font-size:11px;padding:3px 10px;border-radius:100px;border:0.5px solid var(--color-border-secondary);cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary)}
-#cs-callguide .qtag:hover{background:var(--color-background-secondary)}
-#cs-callguide .qtag.urgent{border-color:#E24B4A;color:#791F1F;background:#FCEBEB}
+#cs-callguide .qtag{font-size:11px;padding:4px 11px;border-radius:100px;border:1.5px solid var(--hcg-border);cursor:pointer;background:var(--hcg-white);color:var(--hcg-navy);font-weight:500}
+#cs-callguide .qtag:hover{background:#f0f2f5}
+#cs-callguide .qtag.urgent{border-color:#e24b4a;color:#8b1a1a;background:#fdf0f0}
+/* VM / text boxes */
+#cs-callguide .vm-box{background:var(--hcg-navy);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+#cs-callguide .vm-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.45);margin-bottom:7px;display:flex;align-items:center;justify-content:space-between}
+#cs-callguide .vm-time{font-size:10px;font-weight:600;padding:2px 8px;border-radius:100px;background:rgba(201,168,76,0.25);color:var(--hcg-gold-light)}
+#cs-callguide .vm-text{font-size:14px;line-height:1.8;color:rgba(255,255,255,0.9);font-style:italic}
+#cs-callguide .text-box{background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+#cs-callguide .text-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--hcg-gold);margin-bottom:7px}
+#cs-callguide .text-txt{font-size:14px;line-height:1.8;color:var(--hcg-navy);font-style:italic}
+/* Float button */
+#cs-callguide .float-btn{display:block;margin:12px 16px 0;background:#e24b4a;color:white;border:none;border-radius:100px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,0.2);font-family:'DM Sans',sans-serif}
+/* Quick-key banner */
+#cs-callguide .hcg-banner{background:var(--hcg-navy);border-left:3px solid var(--hcg-gold);padding:10px 16px;display:flex;align-items:flex-start;gap:10px;color:rgba(255,255,255,0.85);font-size:12.5px;line-height:1.5}
+#cs-callguide .hcg-banner strong{color:var(--hcg-gold-light)}
 
 
   :root {
