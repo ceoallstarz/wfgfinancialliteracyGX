@@ -919,7 +919,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);fon
 <div style="font-size:32px;margin-bottom:12px;">🔒</div>
 <h3 style="color:#0c1d30;font-size:20px;font-weight:700;margin-bottom:6px;">System Access</h3>
 <p style="color:#6b7280;font-size:14px;margin-bottom:24px;">Enter your access code to continue.</p>
-<input id="pw-input" placeholder="Access code" style="width:100%;padding:12px 16px;border:2px solid #e5e7eb;border-radius:8px;font-size:16px;outline:none;text-align:center;letter-spacing:.2em;margin-bottom:8px;" type="password"/>
+<input id="pw-input" placeholder="Enter access code" style="width:100%;padding:12px 16px;border:2px solid #e5e7eb;border-radius:8px;font-size:16px;outline:none;text-align:center;letter-spacing:.2em;margin-bottom:8px;" type="password"/>
 <p id="pw-error" style="display:none;color:#c0392b;font-size:13px;margin-bottom:8px;">Incorrect code. Try again.</p>
 <button onclick="submitPW()" style="width:100%;padding:12px;background:#0c1d30;color:#c9a84c;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;letter-spacing:.05em;">Enter</button>
 <button onclick="document.getElementById('pw-modal').style.display='none'" style="width:100%;padding:10px;background:transparent;color:#9ca3af;border:none;font-size:13px;cursor:pointer;margin-top:8px;">Cancel</button>
@@ -929,8 +929,8 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);fon
 <!-- ═══ SYSTEM MODAL ═══ -->
 <div id="system-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:99999;background:#0c1d30;overflow-y:auto;">
 <div style="position:sticky;top:0;z-index:100;background:#0c1d30;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #c9a84c;">
-<span style="color:#c9a84c;font-weight:700;font-size:16px;letter-spacing:.1em;">⚙ RFM SYSTEM — HYPERION</span>
-<button onclick="closeSystem()" style="background:#c9a84c;color:#0c1d30;border:none;padding:8px 18px;font-weight:700;font-size:14px;border-radius:6px;cursor:pointer;">✕ Close</button>
+<span style="color:#c9a84c;font-weight:700;font-size:16px;letter-spacing:.1em;">⚙ RFM SYSTEM — HYPERION</span><span class="role-badge" id="role-badge-new">🟡 New Associate</span><span class="role-badge" id="role-badge-exp">🟢 Experienced</span>
+<button onclick="switchRole()" style="background:transparent;color:rgba(201,168,76,.7);border:1px solid rgba(201,168,76,.3);padding:6px 14px;font-weight:600;font-size:12px;border-radius:6px;cursor:pointer;margin-right:8px;">⇄ Switch Role</button><button onclick="closeSystem()" style="background:#c9a84c;color:#0c1d30;border:none;padding:8px 18px;font-weight:700;font-size:14px;border-radius:6px;cursor:pointer;">✕ Close</button>
 </div>
 <div class="idx10-wrap">
 <div class="page-shell">
@@ -975,24 +975,21 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);fon
 </header>
 </div><!-- end hero-clip -->
 <!-- NAV -->
-<nav class="nav-wrapper">
-<div class="nav-inner">
-<button class="nav-btn active" onclick="showTab('overview',this)">🎯 Mission HQ</button>
-<button class="nav-btn" onclick="showResourceDirect('res-new',this)">📄 New Associate</button>
-<button class="nav-btn" onclick="showResourceDirect('res-fast',this)">🚀 Fast Start</button>
-<button class="nav-btn" onclick="showTab('list',this)">📋 Build the List</button>
-<button class="nav-btn" onclick="showTab('referral',this)">🤝 Referral Mastery</button>
-<button class="nav-btn" onclick="showTab('contact',this)">📞 Contact Scripts</button>
-<button class="nav-btn" onclick="showTab('appt',this)">📅 Lock Appointments</button>
-<button class="nav-btn" id="rfm-flipchart-nav-btn" onclick="openRFMFlipChart()">📊 RFM Flip Chart</button>
-<button class="nav-btn" onclick="showTab('close',this)">🤝 Close &amp; Partner</button>
-<button class="nav-btn" onclick="showTab('objections',this)">🛡️ Objections</button>
-<button class="nav-btn" onclick="showTab('gxprogram',this)">⚡ GX Program</button>
-<button class="nav-btn" onclick="showTab('timeline',this)">📈 SMD→EMD Path</button>
-<button class="nav-btn" onclick="showTab('training',this)">🎓 Training</button>
-<button class="nav-btn" onclick="showTab('glossary',this)">📖 Terms &amp; Identity</button>
-<button class="nav-btn" onclick="showTab('licensing',this)">🪪 Licensing</button>
-<button class="nav-btn" onclick="showTab('resources',this)">📂 Resources</button>
+<nav class="nav-wrapper" id="main-nav-wrapper">
+<!-- PAGE-LEVEL NAV: 8 pages -->
+<div class="nav-inner" id="page-nav">
+<button class="nav-btn active" onclick="showPage('p1',this)" data-page="p1" data-roles="all">🎯 Mission HQ</button>
+<button class="nav-btn" onclick="showPage('p2',this)" data-page="p2" data-roles="all">🚀 Fast Start Onboarding</button>
+<button class="nav-btn" onclick="showPage('p3',this)" data-page="p3" data-roles="all">📋 Prospecting</button>
+<button class="nav-btn" onclick="showPage('p4',this)" data-page="p4" data-roles="all">📞 Contact Scripts</button>
+<button class="nav-btn" onclick="showPage('p5',this)" data-page="p5" data-roles="all">🛡️ Objections</button>
+<button class="nav-btn" onclick="showPage('p6',this)" data-page="p6" data-roles="all">🎞 Presentations</button>
+<button class="nav-btn" onclick="showPage('p7',this)" data-page="p7" data-roles="experienced">🤝 Closing / Helping a Family</button>
+<button class="nav-btn" onclick="showPage('p8',this)" data-page="p8" data-roles="all">💡 Identity Shift</button>
+</div>
+<!-- SUB-NAV: shown when active page has multiple sections -->
+<div id="sub-nav-bar" style="display:none; border-top:1px solid var(--border-gold); background:rgba(250,248,244,0.97); padding:0 var(--pad); overflow-x:auto;">
+<div id="sub-nav-inner" style="display:flex; max-width:var(--max-w); margin:0 auto;"></div>
 </div>
 </nav>
 <main class="main" style="background:var(--cream);color:var(--navy)">
@@ -4214,16 +4211,16 @@ sections.forEach(s=>obs.observe(s));
 <div class="sub-tab-row">
 <button class="sub-tab active" onclick="showSub('res-contacts')">📧 Key Contacts</button>
 <button class="sub-tab" onclick="showSub('res-helpfamily')">🤝 Help a Family</button>
-<button class="sub-tab" onclick="showSub('res-ltc')">🏥 LTC Campaign</button>
-<button class="sub-tab" onclick="window.open('https://drive.google.com/file/d/1oM-DYBdqFZzKZktk4lGuSnkh_0_ymnjw/view','_blank')">📋 Step 1-2-4 Flip Chart</button>
-<button class="sub-tab" onclick="window.open('https://docs.google.com/presentation/d/e/2PACX-1vQfKeNNPtCp-orAB9zUNzYQcQvf0JhLBJS9HEtORPdrHZdCkSLSx6nTa9Uewrea39GgnGf7FJotH9gs/pub?start=false&amp;loop=false&amp;delayms=3000','_blank')">🖥️ BPM Slides</button>
-<button class="sub-tab" onclick="showSub('res-bpm-slides')">📊 BPM Presentation</button>
-<button class="sub-tab" onclick="showSub('res-bpm')">🎤 Zoom Script</button>
-<button class="sub-tab" onclick="showSub('res-prospecting')">🎯 Prospecting Program</button>
-<button class="sub-tab" onclick="showSub('res-pitch')">💼 Approach Guide</button>
-<button class="sub-tab" onclick="showSub('res-bizplan')">📋 Business Plan</button>
-<button class="sub-tab" onclick="showSub('res-trustworthy')">🤝 Trustworthy Selling</button>
-<button class="sub-tab" onclick="showSub('res-bigthinking')">🧠 Big Thinking Field Guide</button>
+<button class="sub-tab" onclick="showSub('res-ltc')" data-roles="experienced">🏥 LTC Campaign</button>
+<button class="sub-tab" onclick="window.open('https://drive.google.com/file/d/1oM-DYBdqFZzKZktk4lGuSnkh_0_ymnjw/view','_blank')" data-roles="experienced">📋 Step 1-2-4 Flip Chart</button>
+<button class="sub-tab" onclick="window.open('https://docs.google.com/presentation/d/e/2PACX-1vQfKeNNPtCp-orAB9zUNzYQcQvf0JhLBJS9HEtORPdrHZdCkSLSx6nTa9Uewrea39GgnGf7FJotH9gs/pub?start=false&amp;loop=false&amp;delayms=3000','_blank')" data-roles="experienced">🖥️ BPM Slides</button>
+<button class="sub-tab" onclick="showSub('res-bpm-slides')" data-roles="experienced">📊 BPM Presentation</button>
+<button class="sub-tab" onclick="showSub('res-bpm')" data-roles="experienced">🎤 Zoom Script</button>
+<button class="sub-tab" onclick="showSub('res-prospecting')" data-roles="experienced">🎯 Prospecting Program</button>
+<button class="sub-tab" onclick="showSub('res-pitch')" data-roles="experienced">💼 Approach Guide</button>
+<button class="sub-tab" onclick="showSub('res-bizplan')" data-roles="experienced">📋 Business Plan</button>
+<button class="sub-tab" onclick="showSub('res-trustworthy')" data-roles="all">🤝 Trustworthy Selling</button>
+<button class="sub-tab" onclick="showSub('res-bigthinking')" data-roles="all">🧠 Big Thinking Field Guide</button>
 </div>
 <!-- ===== NEW ASSOCIATE ===== -->
 <div class="sub-section active" id="sub-res-new">
@@ -10757,7 +10754,7 @@ function showResourceDirect(subId, btn) {
   tabEl.classList.add('active');
   tabEl.classList.remove('show-header');
   if (btn) btn.classList.add('active');
-  showSub(subId);
+  showSub(subId, null);
   var clip = document.querySelector('.hero-clip');
   if (clip) clip.classList.add('collapsed');
   window.scrollTo(0, 0);
@@ -10813,11 +10810,13 @@ function showRPSub(id, btn) {
   if (btn) btn.classList.add('active');
 }
 
-function showSub(id) {
+function showSub(id, triggerEl) {
   document.querySelectorAll('.sub-section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
-  document.getElementById('sub-' + id).classList.add('active');
-  event.target.classList.add('active');
+  var el = document.getElementById('sub-' + id);
+  if(el) el.classList.add('active');
+  if(triggerEl) triggerEl.classList.add('active');
+  else if(typeof event !== 'undefined' && event && event.target) event.target.classList.add('active');
 }
 
 function showProspTab(id, btn) {
@@ -12070,6 +12069,165 @@ function resetTimer(){clearInterval(tInt);tRun=false;tSec=0;document.getElementB
 </div>
 </div>
 <script>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  HYPERION 8-PAGE NAVIGATION SYSTEM
+// ═══════════════════════════════════════════════════════
+var HYPERION_PAGES = {
+  p1: {
+    label: 'Mission HQ', roles: 'all',
+    sections: [
+      { label: '🎯 Mission HQ', roles: 'all',
+        fn: function(){ showTab('overview', null); } }
+    ]
+  },
+  p2: {
+    label: 'Fast Start Onboarding', roles: 'all',
+    sections: [
+      { label: '📄 New Associate',    roles: 'all',        fn: function(){ showResourceDirect('res-new', null); } },
+      { label: '🚀 Fast Start',       roles: 'all',        fn: function(){ showResourceDirect('res-fast', null); } },
+      { label: '🪪 Licensing',        roles: 'all',        fn: function(){ showTab('licensing', null); } },
+      { label: '📧 Key Contacts',     roles: 'all',        fn: function(){ showResourceDirect('res-contacts', null); } },
+      { label: '⚡ GX Program',       roles: 'experienced', fn: function(){ showTab('gxprogram', null); } },
+      { label: '📈 SMD→EMD Path',     roles: 'experienced', fn: function(){ showTab('timeline', null); } },
+      { label: '📋 Business Plan',    roles: 'experienced', fn: function(){ showResourceDirect('res-bizplan', null); } }
+    ]
+  },
+  p3: {
+    label: 'Prospecting', roles: 'all',
+    sections: [
+      { label: '📋 Build the List',      roles: 'all',        fn: function(){ showTab('list', null); } },
+      { label: '📅 Lock Appointments',   roles: 'experienced', fn: function(){ showTab('appt', null); } },
+      { label: '🎯 Prospecting Program', roles: 'experienced', fn: function(){ showResourceDirect('res-prospecting', null); } },
+      { label: '💼 Approach Guide',      roles: 'experienced', fn: function(){ showResourceDirect('res-pitch', null); } },
+      { label: '🤝 Referral Mastery',    roles: 'experienced', fn: function(){ showTab('referral', null); } }
+    ]
+  },
+  p4: {
+    label: 'Contact Scripts', roles: 'all',
+    sections: [
+      { label: '📞 Contact Scripts', roles: 'all', fn: function(){ showTab('contact', null); } }
+    ]
+  },
+  p5: {
+    label: 'Objections', roles: 'all',
+    sections: [
+      { label: '🛡️ Objections', roles: 'all', fn: function(){ showTab('objections', null); } }
+    ]
+  },
+  p6: {
+    label: 'Presentations', roles: 'all',
+    sections: [
+      { label: '📊 RFM Flip Chart',       roles: 'all',        fn: function(){ openRFMFlipChart(); } },
+      { label: '🖥️ BPM Slides ↗',         roles: 'experienced', fn: function(){ window.open('https://docs.google.com/presentation/d/e/2PACX-1vQfKeNNPtCp-orAB9zUNzYQcQvf0JhLBJS9HEtORPdrHZdCkSLSx6nTa9Uewrea39GgnGf7FJotH9gs/pub?start=false&loop=false&delayms=3000','_blank'); } },
+      { label: '📊 BPM Presentation',     roles: 'experienced', fn: function(){ showResourceDirect('res-bpm-slides', null); } },
+      { label: '🎤 Zoom Script',          roles: 'experienced', fn: function(){ showResourceDirect('res-bpm', null); } },
+      { label: '📋 Step 1-2-4 Flip Chart ↗', roles: 'experienced', fn: function(){ window.open('https://drive.google.com/file/d/1oM-DYBdqFZzKZktk4lGuSnkh_0_ymnjw/view','_blank'); } }
+    ]
+  },
+  p7: {
+    label: 'Closing / Helping a Family', roles: 'experienced',
+    sections: [
+      { label: '🤝 Close & Partner',    roles: 'experienced', fn: function(){ showTab('close', null); } },
+      { label: '👨‍👩‍👧 Help a Family',     roles: 'experienced', fn: function(){ showResourceDirect('res-helpfamily', null); } },
+      { label: '🏥 LTC Campaign',       roles: 'experienced', fn: function(){ showResourceDirect('res-ltc', null); } }
+    ]
+  },
+  p8: {
+    label: 'Identity Shift', roles: 'all',
+    sections: [
+      { label: '🎓 Training',               roles: 'all', fn: function(){ showTab('training', null); } },
+      { label: '📖 Terms & Identity',       roles: 'all', fn: function(){ showTab('glossary', null); } },
+      { label: '🧠 Big Thinking Guide',     roles: 'all', fn: function(){ showResourceDirect('res-bigthinking', null); } },
+      { label: '🤝 Trustworthy Selling',    roles: 'all', fn: function(){ showResourceDirect('res-trustworthy', null); } }
+    ]
+  }
+};
+
+var hyperionCurrentPage = 'p1';
+var hyperionCurrentSection = 0;
+
+function getRole(){
+  return sessionStorage.getItem('hyperion_role') || 'experienced';
+}
+
+function showPage(pageId, btn){
+  var role = getRole();
+  var page = HYPERION_PAGES[pageId];
+  if(!page) return;
+
+  // Update page-level nav active state
+  document.querySelectorAll('#page-nav .nav-btn').forEach(function(b){ b.classList.remove('active'); });
+  if(btn) btn.classList.add('active');
+  hyperionCurrentPage = pageId;
+
+  // Build sub-nav
+  var subBar   = document.getElementById('sub-nav-bar');
+  var subInner = document.getElementById('sub-nav-inner');
+  var sections = page.sections.filter(function(s){
+    return role === 'experienced' || s.roles === 'all';
+  });
+
+  if(sections.length <= 1){
+    subBar.style.display = 'none';
+  } else {
+    subBar.style.display = 'block';
+    subInner.innerHTML = '';
+    sections.forEach(function(sec, i){
+      var b = document.createElement('button');
+      b.className = 'nav-btn sub-page-btn' + (i === 0 ? ' active' : '');
+      b.style.cssText = 'font-size:11.5px;padding:8px 10px;';
+      b.textContent = sec.label;
+      b.onclick = (function(s, btn2, idx, pageBtn){ return function(){
+        subInner.querySelectorAll('.sub-page-btn').forEach(function(x){ x.classList.remove('active'); });
+        btn2.classList.add('active');
+        hyperionCurrentSection = idx;
+        s.fn();
+        // Restore page-level active after showTab clears it
+        document.querySelectorAll('#page-nav .nav-btn').forEach(function(x){ x.classList.remove('active'); });
+        if(pageBtn) pageBtn.classList.add('active');
+        btn2.classList.add('active');
+      }; })(sec, b, i, btn);
+      subInner.appendChild(b);
+    });
+  }
+
+  // Show first available section — then restore page nav active state
+  hyperionCurrentSection = 0;
+  if(sections.length > 0){
+    sections[0].fn();
+    // showTab clears all .nav-btn actives — restore ours
+    document.querySelectorAll('#page-nav .nav-btn').forEach(function(b){ b.classList.remove('active'); });
+    if(btn) btn.classList.add('active');
+  }
+}
+
+// Override applyRole to also apply to page nav buttons
+var _originalApplyRole = window.applyRole || function(){};
+window.applyRole = function(role){
+  _originalApplyRole(role);
+  // Hide page nav buttons the role can't see
+  document.querySelectorAll('#page-nav .nav-btn[data-roles="experienced"]').forEach(function(b){
+    b.style.display = (role === 'new_associate') ? 'none' : '';
+  });
+  // Re-render current page's sub-nav with role filter
+  var activePgBtn = document.querySelector('#page-nav .nav-btn.active');
+  if(activePgBtn) showPage(activePgBtn.getAttribute('data-page'), activePgBtn);
+};
+
+// Called by applyRole when system modal opens
+window.hyperionInit = function(){
+  var r = sessionStorage.getItem('hyperion_role') || 'experienced';
+  // Hide experienced-only pages for new associate
+  document.querySelectorAll('#page-nav .nav-btn[data-roles="experienced"]').forEach(function(b){
+    b.style.display = (r === 'new_associate') ? 'none' : '';
+  });
+  var startBtn = document.querySelector('#page-nav .nav-btn[data-page="p1"]');
+  showPage('p1', startBtn);
+};
+</script>
+
 // Reddit Objection Module — defined in <head> so always available
 window.rm_showPanel = function(id, btn) {
   var wrap = (btn && btn.closest) ? btn.closest('.rm-wrap') : document.querySelector('.rm-wrap');
@@ -13515,6 +13673,48 @@ h1, h2, h3, h4, h5, h6,
   top: 0;
   z-index: 50;
 }
+
+/* ══════════════════════════════════════════════════════
+   ROLE-BASED VISIBILITY  
+   new_associate = LEGACY password | experienced = 1437
+   ══════════════════════════════════════════════════════ */
+#system-modal[data-role="new_associate"] .nav-btn[data-roles="experienced"] {
+  display: none !important;
+}
+/* New associate badge in top bar */
+#system-modal[data-role="new_associate"] #role-badge-new { display: inline-flex; }
+#system-modal[data-role="experienced"]   #role-badge-exp { display: inline-flex; }
+#role-badge-new, #role-badge-exp { display: none; }
+.role-badge {
+  font-size: 11px; font-weight: 600; padding: 3px 10px;
+  border-radius: 20px; margin-left: 10px;
+  letter-spacing: .05em; align-items: center; gap: 5px;
+}
+#role-badge-new { background: rgba(201,168,76,.18); color: var(--gold); border: 1px solid rgba(201,168,76,.35); }
+#role-badge-exp { background: rgba(13,104,94,.18); color: #4ADE80; border: 1px solid rgba(13,104,94,.35); }
+
+/* Resources sub-tab visibility for new associates */
+#system-modal[data-role="new_associate"] .sub-tab[data-roles="experienced"] {
+  display: none !important;
+}
+
+/* ── Sub-page nav buttons ─── */
+.sub-page-btn {
+  padding: 8px 12px !important;
+  font-size: 11.5px !important;
+  color: var(--gray-700);
+  border-bottom: 2px solid transparent;
+  border-top: none; border-left: none; border-right: none;
+  white-space: nowrap;
+  background: transparent;
+}
+.sub-page-btn.active {
+  color: var(--navy) !important;
+  border-bottom-color: var(--gold) !important;
+  font-weight: 600 !important;
+  background: rgba(201,168,76,0.05) !important;
+}
+.sub-page-btn:hover { background: rgba(12,29,48,0.03) !important; color: var(--navy-mid) !important; }
 </style>
 <script>
 function showGXPhase(id, btn) {
@@ -13526,22 +13726,33 @@ function showGXPhase(id, btn) {
 }
 
 function openSystem(){
+  // If already authenticated this session, skip password
+  var existingRole = sessionStorage.getItem('hyperion_role');
+  if(existingRole){
+    window.location.href = 'system/mission-hq.html';
+    return;
+  }
   document.getElementById('pw-modal').style.display='flex';
   setTimeout(function(){ document.getElementById('pw-input').focus(); }, 100);
 }
 function submitPW(){
-  var v = document.getElementById('pw-input').value;
-  if(v === '1437'){
+  var v = document.getElementById('pw-input').value.trim().toUpperCase();
+  if(v === '1437' || v === 'LEGACY'){
+    var role = (v === 'LEGACY') ? 'new_associate' : 'experienced';
+    sessionStorage.setItem('hyperion_role', role);
     document.getElementById('pw-modal').style.display='none';
     document.getElementById('pw-input').value='';
     document.getElementById('pw-error').style.display='none';
-    document.getElementById('system-modal').style.display='block';
-    document.body.style.overflow='hidden';
+    window.location.href = 'system/mission-hq.html';
   } else {
     document.getElementById('pw-error').style.display='block';
     document.getElementById('pw-input').value='';
     document.getElementById('pw-input').focus();
   }
+}
+function applyRole(role){
+  document.getElementById('system-modal').setAttribute('data-role', role);
+  if(typeof window.hyperionInit === 'function') window.hyperionInit();
 }
 document.addEventListener('keydown',function(e){
   if(e.key==='Enter' && document.getElementById('pw-modal').style.display==='flex') submitPW();
@@ -13549,6 +13760,13 @@ document.addEventListener('keydown',function(e){
 function closeSystem(){
   document.getElementById('system-modal').style.display='none';
   document.body.style.overflow='';
+}
+function switchRole(){
+  sessionStorage.removeItem('hyperion_role');
+  document.getElementById('system-modal').style.display='none';
+  document.getElementById('system-modal').removeAttribute('data-role');
+  document.body.style.overflow='';
+  setTimeout(function(){ openSystem(); }, 150);
 }
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSystem();});
 </script>
