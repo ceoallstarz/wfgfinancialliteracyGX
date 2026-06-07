@@ -2,28 +2,28 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Objections — Hyperion Legacy Builders</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Objections — Hyperion</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
-
-<script>
-(function(){
-  var role = sessionStorage.getItem('hyperion_role');
-  if(!role){ window.location.href='../index.html'; return; }
-  
-  document.documentElement.setAttribute('data-role', role);
-  // Hide experienced-only nav links for new associates
-  document.addEventListener('DOMContentLoaded', function(){
-    if(role === 'new_associate'){
-      document.querySelectorAll('.sys-nav-link[data-roles="experienced"]').forEach(function(el){
-        el.style.display = 'none';
-      });
-    }
-  });
-})();
-</script>
 <style>
-
+html,body{margin:0;padding:0;overflow-y:auto!important;overflow-x:hidden;height:auto!important;background:#080f1e;font-family:'DM Sans',system-ui,sans-serif;}
+#sys-topbar{background:#0c1d30;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #c9a84c;position:sticky;top:0;z-index:99999;}
+#sys-topbar .brand{color:#c9a84c;font-weight:700;font-size:14px;letter-spacing:.08em;}
+#sys-topbar .actions{display:flex;gap:8px;align-items:center;}
+#sys-topbar a,#sys-topbar button{background:transparent;color:rgba(201,168,76,.8);border:1px solid rgba(201,168,76,.3);padding:5px 13px;font-size:11px;font-weight:600;border-radius:6px;cursor:pointer;text-decoration:none;font-family:inherit;}
+#sys-topbar a:hover,#sys-topbar button:hover{background:rgba(201,168,76,.15);color:#c9a84c;}
+.role-chip{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;border:1px solid;}
+.chip-new{background:rgba(201,168,76,.15);color:#c9a84c;border-color:rgba(201,168,76,.4);}
+.chip-exp{background:rgba(26,150,100,.15);color:#4ade80;border-color:rgba(26,150,100,.4);}
+#sys-nav{background:#faf8f4;border-bottom:1px solid rgba(201,168,76,.3);overflow-x:auto;position:sticky;top:52px;z-index:99998;}
+#sys-nav-inner{display:flex;max-width:1200px;margin:0 auto;padding:0 16px;}
+#sys-nav a{display:inline-block;padding:11px 9px;font-size:11px;font-weight:500;color:#4b5563;text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;}
+#sys-nav a:hover{color:#0c1d30;}
+#sys-nav a.active{color:#0c1d30;border-bottom-color:#c9a84c;font-weight:700;}
+#sys-content{max-width:1200px;margin:0 auto;padding:28px 20px 80px;}
+.tab{display:block!important;}
+</style>
+<style>
 /* GX SMD Resource Embedded Styles */
 :root {
   --header-height: 72px;
@@ -2377,86 +2377,194 @@ h1, h2, h3, h4, h5, h6,
   background: rgba(201,168,76,0.05) !important;
 }
 .sub-page-btn:hover { background: rgba(12,29,48,0.03) !important; color: var(--navy-mid) !important; }
-
-/* ── System page shell ── */
-body { margin:0; background:var(--cream,#faf8f4); color:var(--navy,#0c1d30); font-family:'Inter',system-ui,sans-serif; }
-.sys-topbar {
-  background:var(--navy,#0c1d30);
-  padding:10px 24px;
-  display:flex; align-items:center; justify-content:space-between;
-  border-bottom:2px solid var(--gold,#c9a84c);
-  position:sticky; top:0; z-index:200;
-}
-.sys-topbar-brand { color:var(--gold,#c9a84c); font-weight:700; font-size:15px; letter-spacing:.08em; }
-.sys-topbar-actions { display:flex; gap:10px; align-items:center; }
-.sys-topbar-btn {
-  background:transparent; color:rgba(201,168,76,.75);
-  border:1px solid rgba(201,168,76,.3); padding:6px 14px;
-  font-size:12px; font-weight:600; border-radius:6px; cursor:pointer;
-  text-decoration:none; font-family:inherit;
-}
-.sys-topbar-btn:hover { background:rgba(201,168,76,.1); }
-.role-chip {
-  font-size:11px; font-weight:600; padding:3px 10px; border-radius:20px;
-  letter-spacing:.04em;
-}
-.role-chip-new { background:rgba(201,168,76,.18); color:var(--gold,#c9a84c); border:1px solid rgba(201,168,76,.3); }
-.role-chip-exp { background:rgba(26,150,100,.18); color:#4ADE80; border:1px solid rgba(26,150,100,.3); }
-.sys-nav-wrapper {
-  background:rgba(250,248,244,.97);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(201,168,76,.25);
-  overflow-x:auto; position:sticky; top:52px; z-index:100;
-}
-.sys-nav-inner {
-  display:flex; max-width:1200px; margin:0 auto; padding:0 24px;
-}
-.sys-nav-link {
-  display:inline-block; padding:11px 10px; font-size:11.5px; font-weight:500;
-  color:#374151; text-decoration:none; border-bottom:2px solid transparent;
-  white-space:nowrap; transition:all .15s;
-}
-.sys-nav-link:hover { color:var(--navy,#0c1d30); background:rgba(12,29,48,.03); }
-.sys-page-content { max-width:1200px; margin:0 auto; padding:32px 24px 80px; }
-/* Fix tab display in standalone pages */
-.tab { display:block !important; }
-.sub-section { display:none; }
-.sub-section.active { display:block; }
-.rp-section { display:none; }
-.rp-section.active { display:block; }
 </style>
+<style>
+html,body{overflow-y:auto!important;height:auto!important;}
+.obj-a{display:none!important;padding:14px 18px!important;color:#374151!important;font-size:13.5px!important;line-height:1.8!important;white-space:pre-line!important;background:#f9f9f7!important;border-left:3px solid #c9a84c!important;margin:0!important;}
+.obj-a.open{display:block!important;}
+.obj-q{cursor:pointer!important;display:flex!important;justify-content:space-between!important;align-items:center!important;}
+.arrow{font-size:18px!important;color:#c9a84c!important;transition:transform .2s!important;display:inline-block!important;}
+.obj-q.open .arrow{transform:rotate(180deg)!important;}
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+/* ═══ DARK LUXURY THEME — HYPERION ═══ */
+html, body {
+  background: #080f1e !important;
+  color: rgba(255,255,255,.85) !important;
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+}
+
+/* TOPBAR */
+#sys-topbar {
+  background: rgba(8,15,30,.98) !important;
+  border-bottom: 1px solid rgba(201,168,76,.2) !important;
+  backdrop-filter: blur(12px);
+}
+#sys-topbar .brand { color: #c9a84c !important; }
+#sys-topbar a, #sys-topbar button {
+  color: rgba(201,168,76,.7) !important;
+  border-color: rgba(201,168,76,.25) !important;
+}
+#sys-topbar a:hover, #sys-topbar button:hover {
+  color: #c9a84c !important;
+  background: rgba(201,168,76,.08) !important;
+}
+
+/* NAV */
+#sys-nav {
+  background: rgba(8,15,30,.95) !important;
+  border-bottom: 1px solid rgba(201,168,76,.12) !important;
+}
+#sys-nav a { color: rgba(255,255,255,.4) !important; }
+#sys-nav a:hover { color: rgba(255,255,255,.75) !important; }
+#sys-nav a.active { color: #c9a84c !important; border-bottom-color: #c9a84c !important; }
+
+/* CONTENT */
+#sys-content { background: transparent !important; }
+
+/* SUB PILLS */
+.sub-pills {
+  background: rgba(8,15,30,.95) !important;
+  border-bottom: 1px solid rgba(201,168,76,.12) !important;
+  position: sticky !important;
+  top: 104px !important;
+  z-index: 100 !important;
+  padding: 14px 20px !important;
+  margin: 0 -20px 20px !important;
+}
+.sub-pill {
+  color: rgba(255,255,255,.5) !important;
+  border-color: rgba(201,168,76,.2) !important;
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+}
+.sub-pill:hover { background: rgba(201,168,76,.07) !important; color: #c9a84c !important; }
+.sub-pill.active {
+  background: rgba(201,168,76,.15) !important;
+  color: #c9a84c !important;
+  border-color: rgba(201,168,76,.4) !important;
+}
+.sub-pill.exp-only { display: inline-block; }
+
+/* CARDS */
+.card {
+  background: #0c1528 !important;
+  border-color: rgba(255,255,255,.07) !important;
+  color: rgba(255,255,255,.8) !important;
+}
+.card-navy { background: #0a1020 !important; border-color: rgba(201,168,76,.15) !important; }
+.card-gold { background: rgba(201,168,76,.07) !important; border-color: rgba(201,168,76,.2) !important; }
+.card-green { background: rgba(26,100,68,.15) !important; border-color: rgba(26,100,68,.3) !important; }
+
+/* HEADINGS */
+h1, h2, h3, h4 { color: #fff !important; font-family: 'Cormorant Garamond', Georgia, serif !important; }
+.section-title, .eyebrow { color: #c9a84c !important; }
+.section-header h2 { color: #fff !important; font-family: 'Cormorant Garamond', Georgia, serif !important; font-size: clamp(24px,3vw,36px) !important; }
+
+/* BODY TEXT */
+p { color: rgba(255,255,255,.65) !important; }
+.card p { color: rgba(255,255,255,.65) !important; }
+.card strong { color: rgba(255,255,255,.9) !important; }
+
+/* BADGES */
+.badge { font-family: 'DM Sans', system-ui !important; }
+.badge-gold { background: rgba(201,168,76,.15) !important; color: #c9a84c !important; }
+.badge-navy { background: rgba(255,255,255,.08) !important; color: rgba(255,255,255,.7) !important; }
+.badge-green { background: rgba(26,100,68,.2) !important; color: #4ade80 !important; }
+.badge-red { background: rgba(192,57,43,.2) !important; color: #f87171 !important; }
+
+/* STEP LISTS */
+.step-list .step-item .step-body h4 { color: #fff !important; }
+.step-list .step-item .step-body p { color: rgba(255,255,255,.6) !important; }
+.step-num { background: rgba(201,168,76,.15) !important; color: #c9a84c !important; border-color: rgba(201,168,76,.3) !important; }
+.step-num.gold { background: #c9a84c !important; color: #080f1e !important; }
+
+/* WARN CHIPS / SIGNAL CHIPS */
+.warn-chip { background: rgba(255,255,255,.04) !important; border-color: rgba(255,255,255,.08) !important; }
+.signal-chip { background: rgba(255,255,255,.04) !important; border-color: rgba(255,255,255,.06) !important; color: rgba(255,255,255,.7) !important; }
+
+/* TABS */
+.tab-btn { background: rgba(255,255,255,.04) !important; border-color: rgba(255,255,255,.1) !important; color: rgba(255,255,255,.5) !important; font-family: 'DM Sans', system-ui !important; }
+.tab-btn.active { background: #c9a84c !important; color: #080f1e !important; border-color: #c9a84c !important; }
+.tab-btn:hover:not(.active) { background: rgba(201,168,76,.08) !important; color: rgba(255,255,255,.8) !important; }
+
+/* METRIC BOXES */
+.metric-box { background: #0c1528 !important; border-color: rgba(201,168,76,.15) !important; }
+.metric-box .num { color: #c9a84c !important; font-family: 'Cormorant Garamond', serif !important; }
+.metric-box .lbl { color: rgba(255,255,255,.5) !important; font-family: 'DM Sans', system-ui !important; }
+
+/* FORMS / INPUTS */
+input, textarea, select { background: rgba(255,255,255,.06) !important; border-color: rgba(255,255,255,.12) !important; color: #fff !important; font-family: 'DM Sans', system-ui !important; }
+
+/* LINKS */
+.cta-btn { background: rgba(201,168,76,.1) !important; border-color: rgba(201,168,76,.3) !important; color: #c9a84c !important; }
+.cta-btn:hover { background: rgba(201,168,76,.2) !important; }
+
+/* OBJECTION ITEMS */
+.obj-item { background: #0c1528 !important; border-color: rgba(255,255,255,.07) !important; }
+.obj-q { color: rgba(255,255,255,.85) !important; }
+.obj-a { background: rgba(255,255,255,.03) !important; color: rgba(255,255,255,.7) !important; border-color: rgba(201,168,76,.15) !important; }
+
+/* GRID CARDS */
+.grid2 > .card, .grid3 > .card { background: #0c1528 !important; }
+
+/* TAGS */
+.tag { background: rgba(255,255,255,.07) !important; color: rgba(255,255,255,.6) !important; border: 1px solid rgba(255,255,255,.1) !important; }
+.tag-gold { background: rgba(201,168,76,.12) !important; color: #c9a84c !important; border-color: rgba(201,168,76,.2) !important; }
+.tag-navy { background: rgba(255,255,255,.06) !important; color: rgba(255,255,255,.7) !important; }
+
+/* SECTION HEADERS */
+.section-header p { color: rgba(255,255,255,.55) !important; }
+
+/* HIDE WHITE CHECKBOX ARTIFACTS */
+.esg-check-box, .chk-box { display: none !important; }
+
+/* NAV PILLS in contact scripts etc */
+.nav-pill, .npill { color: rgba(255,255,255,.5) !important; border-color: rgba(201,168,76,.2) !important; font-family: 'DM Sans', system-ui !important; }
+.nav-pill.active, .npill.act { background: rgba(201,168,76,.15) !important; color: #c9a84c !important; border-color: rgba(201,168,76,.4) !important; }
+
+/* SCORE / MISC */
+.primary-btn { background: #c9a84c !important; color: #080f1e !important; border: none !important; }
+.secondary-btn { background: rgba(255,255,255,.08) !important; color: rgba(255,255,255,.7) !important; border-color: rgba(255,255,255,.12) !important; }
+
+/* OVERRIDE WHITE FROM SHARED CSS */
+:root {
+  --bg: #080f1e !important;
+  --bg2: #0c1528 !important;
+  --surface: #0f1d38 !important;
+  --white: #fff !important;
+  --off-white: #0c1528 !important;
+  --gray-50: #0a1020 !important;
+  --text: rgba(255,255,255,.85) !important;
+  --text-2: rgba(255,255,255,.65) !important;
+  --text-3: rgba(255,255,255,.4) !important;
+  --border: rgba(255,255,255,.08) !important;
+}
+</style>
+
 </head>
 <body>
-
-<!-- TOP BAR -->
-<div class="sys-topbar">
-  <span class="sys-topbar-brand">⚙ RFM SYSTEM — HYPERION</span>
-  <div class="sys-topbar-actions">
-    <span class="role-chip role-chip-new" id="chip-new" style="display:none">🟡 New Associate</span>
-    <span class="role-chip role-chip-exp" id="chip-exp" style="display:none">🟢 Experienced</span>
-    <a href="../index.html" class="sys-topbar-btn" onclick="sessionStorage.removeItem('hyperion_role');return true;">⇄ Switch Role</a>
-    <a href="../index.html" class="sys-topbar-btn">✕ Exit</a>
+<div id="sys-topbar">
+  <span class="brand">&#9881; RFM SYSTEM &#8212; HYPERION</span>
+  <div class="actions">
+    <span class="role-chip chip-new" id="chip-new" style="display:none">🟡 New Associate</span>
+    <span class="role-chip chip-exp" id="chip-exp" style="display:none">🟢 Experienced</span>
+    <button onclick="swOpen()">&#8644; Switch Role</button>
+    <a href="../index.html">&#10005; Exit</a>
   </div>
 </div>
-
-<!-- PAGE NAV -->
-<div class="sys-nav-wrapper">
-  <div class="sys-nav-inner">
-<a href="mission-hq.html" class="sys-nav-link" data-roles="all">🎯 Mission HQ</a>
-<a href="fast-start-onboarding.html" class="sys-nav-link" data-roles="all">🚀 Fast Start Onboarding</a>
-<a href="prospecting.html" class="sys-nav-link" data-roles="all">📋 Prospecting</a>
-<a href="contact-scripts.html" class="sys-nav-link" data-roles="all">📞 Contact Scripts</a>
-<a href="objections.html" class="sys-nav-link" style="border-bottom:2px solid var(--gold);color:var(--navy);font-weight:600;" data-roles="all">🛡️ Objections</a>
-<a href="presentations.html" class="sys-nav-link" data-roles="all">🎞 Presentations</a>
-<a href="closing.html" class="sys-nav-link" data-roles="experienced">🤝 Closing / Helping a Family</a>
-<a href="identity-shift.html" class="sys-nav-link" data-roles="all">💡 Identity Shift</a>
-
-  </div>
-</div>
-
-<!-- CONTENT -->
-<div class="sys-page-content">
-<div class="tab" id="tab-objections">
+<div id="sys-nav"><div id="sys-nav-inner"><a href="mission-hq.html" data-roles="all">🎯 Mission HQ</a>
+<a href="fast-start-onboarding.html" data-roles="all">🚀 Fast Start Onboarding</a>
+<a href="prospecting.html" data-roles="all">📋 Prospecting</a>
+<a href="contact-scripts.html" data-roles="all">📞 Contact Scripts</a>
+<a href="objections.html" class="active" data-roles="all">🛡️ Objections</a>
+<a href="presentations.html" data-roles="all">🎞 Presentations</a>
+<a href="closing.html" data-roles="experienced">🤝 Closing / Helping Family</a>
+<a href="identity-shift.html" data-roles="all">💡 Identity Shift</a>
+</div></div>
+<div id="sys-content"><div class="tab" id="tab-objections">
 <div class="section-header">
 <div class="eyebrow">Handle with care</div>
 <h2>Objection Handling</h2>
@@ -2873,19 +2981,355 @@ body { margin:0; background:var(--cream,#faf8f4); color:var(--navy,#0c1d30); fon
 </div>
 </div>
 </div>
-</div>
-</div>
-
-
-
+</div></div>
 
 <script>
-// Show role chip
-(function(){
-  var r = sessionStorage.getItem('hyperion_role');
-  if(r === 'new_associate') document.getElementById('chip-new').style.display='inline-flex';
-  else document.getElementById('chip-exp').style.display='inline-flex';
+// Objections data + renderer
+// ===== OBJECTIONS =====
+const objections = [
+  { q: '"I don\'t have time for this." / "I\'m too busy with my job."', a: 'Good — we work around life, not instead of it. The only question is whether what you\'re doing now is going to give you more time, income, and flexibility. Is it?' },
+  { q: '"Is this a pyramid scheme?"', a: '"Great question — and a fair one. Pyramid schemes are illegal. We\'re licensed in all 50 states, regulated federally by FINRA, and backed by Aegon — a company that\'s been around since the 1800s with hundreds of billions in assets. Nationwide, Pacific Life, and Transamerica wouldn\'t partner with us if that were true. Think Keller Williams or State Farm — independent agents, operating under a larger licensed organization. That\'s us. What made you ask? I want to make sure I\'m addressing what\'s really behind it."' },
+  { q: '"I just Google WFG and all I see is negative / scam results"', a: '"I love that you\'re doing your research — that tells me you\'re a serious person and you take your finances seriously. Let me make that research more useful, because if you just Google us, you\'re going to end up on Reddit or a forum, and honestly, anyone can post anything there. We have 95,000 licensed agents and not every experience is the same. Here\'s where I\'d actually point you. Pull up bbb.org — Better Business Bureau — and search World Financial Group Johns Creek, GA. A+ rating. That\'s not bought, that\'s earned. Then bookmark aegon.com — nearly 200 years old, managing hundreds of billions ofdollars globally. Also tfaconnect.com — that\'s Transamerica, one of our main carriers. And worldfinancialgroup.com — our brokerage directly. What I\'d love to do is set up a second conversation — and I want you to come in ready to interview us. Bring every question, everything that concerned you, anything you saw. We\'ll go through it all. And then if you feel good, I\'ll have a few questions to see if it\'s a mutual fit. Sound fair?"' },
+  { q: '"I\'m not a salesperson."', a: '"Good news — neither am I, really. We\'re a professional financial educators. We don\'t sell anything — we sit down with families, understand their situation, and help them design a plan. Most of our best people were teachers, nurses, coaches — people who care about others. That\'s the skillset here."' },
+  { q: '"I need to think about it."', a: '"Of course — this is a real decision. Can I ask what specifically you\'re thinking through? Is it the time, the investment, the uncertainty of income? Because I want to make sure I answer the right question for you, not just leave you hanging."' },
+  { q: '"I already have a financial advisor."', a: '"That\'s great — honestly, that means you already value this kind of work. Can I ask — are they helping you build income, or just managing what you already have? What we do isn’t meant to replace anything you’re already doing. From what I’ve seen, we typically complement what’s already working for someone like you. Would it make sense for us to get together so you can see if there’s anything here that might be helpful? If you like what you see, great. If not, no problem."' },
+  { q: '"I want to do research."', a: '"Good — you should. Here\'s where to look: BBB.org — search World Financial Group in Johns Creek, GA. A+ rating. Aegon.com — our parent company. Been around since the 1800\'s with hundreds of billions in assets. Transamerica.com — one of our primary carriers. Worldfinancialgroup.com — our brokerage directly. Avoid forming opinions from Reddit — anyone can post anything. The regulated sources tell the real story. When you\'ve had a chance to look, let\'s get back together. Come in like you\'re interviewing us — bring every question, every concern. We\'ll go through all of it. And if everything checks out, I\'ll have a few questions for you too, to make sure it\'s a good fit on both sides. Does that sound fair?"' },
+  { q: '"My spouse isn\'t on board."', a: '"I completely respect that. Can I ask — what\'s their top 2 main concerns? I\'d love to address it directly. Would it be okay if we got them on a quick call or even brought them to one of our events? Most spouses become the biggest supporters once they see the full picture."' },
+  { q: '"I\'ll just do a Roth or Back Door Roth."', a: 'Love it — a Roth is a great foundation. A few things worth knowing before you stop there though.\n\nAre you familiar with the pro-rata rule? If you have any pre-tax IRA money, your backdoor Roth conversion may not be as clean as you think — could trigger an unexpected tax bill.\n\nAlso — $7,000 a year. That\'s the ceiling. If you\'re serious about building a meaningful tax-free retirement income, that cap hits fast.\n\nAn IUL has no contribution limits, no RMDs, no market losses, and the same tax-free treatment on the way out. Wealthy people don\'t use it instead of a Roth — they use it because $7,000 a year isn\'t enough.\n\nThe question is whether it is for you. Is it?' },
+  { q: '"I don\'t need IUL life insurance."', a: 'That\'s the most common misconception about an IUL — people hear \'life insurance\' and tune out. But the death benefit is almost secondary to how most people actually use it.\n\nThink of it less as life insurance and more as a tax-free retirement account with a death benefit attached. The wealthy use it because it has no contribution limits, no RMDs, no market losses, and every dollar coming out in retirement is tax-free.\n\nThe death benefit is just a bonus — it\'s what makes the tax treatment possible.\n\nSo the real question isn\'t whether you need life insurance. It\'s whether you want another tax-free bucket with no ceiling and no downside risk. Do you?' },  { q: '"Candy Company, you\'re compensation is too low"', a: '"The financial services industry is full of traps — traditional companies that cap your growth and hand all the real money to a handful of regional managers, general agencies that just train their own competition until agents leave to open a shop at the other end of the strip mall, and now more than ever, candy companies flooding your phone promising flashy numbers designed to lure you away from something real. They know exactly how to make their offer look better, but just like candy, it\'s colorful on the outside and hollow — or worse, poisonous — on the inside. When a competitor claims to pay 133%, 152%, or 175%, the first question you ask is "133% of what?" — because they\'re quoting points, not your actual contract, and when you convert their numbers to a true 100% table, WFG wins every single time, because nobody can make 100 cents become 130 cents. Then look at their spread structure — most candy companies flank you all the way up to executive level, meaning every time someone on your team gets promoted you lose that override, while WFG\'s generational overrides above SMD are permanent, unchangeable, and you can even override someone with a higher title than you. Most of these companies also have one or two product carriers — one recruiting your people right now just had their only IUL carrier give them a 90-day cancellation notice for unethical behavior — while WFG has 189 providers, 379+ products, a full broker-dealer, and 25+ years of never missing a payout, with $1.37 billion paid to the field in 2023 alone. A higher contract number means nothing if it\'s on a smaller pizza, with a temporary structure, from a company that might not exist next year."'},
+  { q: '"I don\'t need an IUL."', a: 'That\'s possible — not everyone does. Help me understand, what\'s your current plan for tax-free retirement income? Do you have a pension, maxed-out 401k, or another tax-free vehicle in place?\n\nBecause here\'s what I see with a lot of people — they have pre-tax money stacked up in 401ks and IRAs, which is great, but every dollar coming out in retirement gets taxed as ordinary income. An IUL is just a separate tax-free bucket — no RMDs, no contribution limits tied to income, downside protection, and a death benefit on top.\n\nWealthy people don\'t use it because they have to. They use it because they\'ve maxed everything else and still want more tax-free growth.\n\nIf your current strategy already covers all of that — you\'re probably right, you don\'t need it. If there\'s any gap, it\'s worth at least understanding what you might be leaving on the table. So which is it?' },
+  { q: '"I don\'t need life insurance."', a: 'That\'s possible — not everyone does. Help me understand, what makes you feel that way? Is it that you have enough assets to self-insure, no dependents relying on your income, or something else?\n\nBecause life insurance means different things at different stages. For some people it\'s pure protection — replacing income if something happened. For others it\'s a tax-free retirement vehicle, estate planning, or leaving a legacy.\n\nIf you\'re fully covered on all of that — you\'re probably right. But if there\'s any gap in what happens to the people who depend on you, or how your wealth transfers, it\'s a conversation to know for sure. Which is it?' }
+];
+(function() {
+  var objList = document.getElementById('obj-list');
+  if (!objList) { console.warn('obj-list not found'); return; }
+  objList.innerHTML = '';
+  objections.forEach(function(obj, i) {
+    var item = document.createElement('div');
+    item.className = 'obj-item';
+    var q = document.createElement('div');
+    q.className = 'obj-q';
+    q.id = 'oq' + i;
+    q.innerHTML = obj.q + '<span class="arrow">&#10549;</span>';
+    q.onclick = (function(idx){ return function(){ toggleObj(idx); }; })(i);
+    var a = document.createElement('div');
+    a.className = 'obj-a';
+    a.id = 'oa' + i;
+    a.textContent = obj.a;
+    item.appendChild(q);
+    item.appendChild(a);
+    objList.appendChild(item);
+  });
+})();
+
+function toggleObj(i) {
+  var a = document.getElementById('oa' + i);
+  var q = document.getElementById('oq' + i);
+  var isOpen = (a.style.display === 'block');
+  document.querySelectorAll('.obj-a').forEach(function(el) { el.style.display = ''; el.classList.remove('open'); });
+  document.querySelectorAll('.obj-q').forEach(function(el) { el.classList.remove('open'); });
+  if (!isOpen) { a.style.display = 'block'; a.classList.add('open'); q.classList.add('open'); }
+}
+
+// Reddit module — expose as both window.rm_* AND plain globals
+window.rm_showPanel = function(id, btn) {
+  var wrap = (btn && btn.closest) ? btn.closest('.rm-wrap') : document.querySelector('.rm-wrap');
+  if (!wrap) return;
+  wrap.querySelectorAll('.rm-panel').forEach(function(p){p.classList.remove('active');});
+  wrap.querySelectorAll('.rm-tab').forEach(function(b){b.classList.remove('active');});
+  var panel = wrap.querySelector('#panel-'+id);
+  if (panel) panel.classList.add('active');
+  if (btn) btn.classList.add('active');
+};
+window.rm_toggleObj = function(header) {
+  var wrap = (header && header.closest) ? header.closest('.rm-wrap') : document.querySelector('.rm-wrap');
+  if (!wrap) return;
+  var body = header.nextElementSibling;
+  var chev = header.querySelector('.rm-chevron');
+  var isOpen = body.classList.contains('open');
+  wrap.querySelectorAll('.obj-bdy').forEach(function(b){b.classList.remove('open');});
+  wrap.querySelectorAll('.rm-chevron').forEach(function(c){c.classList.remove('open');});
+  if (!isOpen) { body.classList.add('open'); if(chev) chev.classList.add('open'); }
+};
+window.rm_revealCoach = function(id) {
+  var el = document.getElementById(id);
+  if (el) el.classList.toggle('open');
+};
+window.rm_toggleCheck = function(el) {
+  el.classList.toggle('done');
+  el.innerHTML = el.classList.contains('done') ? '✓' : '';
+};
+// Plain global aliases so onclick="rm_showPanel(...)" works
+var rm_showPanel  = window.rm_showPanel;
+var rm_toggleObj  = window.rm_toggleObj;
+var rm_revealCoach= window.rm_revealCoach;
+var rm_toggleCheck= window.rm_toggleCheck;
+
+// Role + nav chips
+(function() {
+  var r = sessionStorage.getItem('hyperion_role') || 'experienced';
+  var cn = document.getElementById('chip-new');
+  var ce = document.getElementById('chip-exp');
+  if (r === 'new_associate') { if(cn) cn.style.display = 'inline-block'; }
+  else { if(ce) ce.style.display = 'inline-block'; }
+  if (r === 'new_associate') {
+    document.querySelectorAll('#sys-nav a[data-roles="experienced"]').forEach(function(a){ a.style.display='none'; });
+  }
 })();
 </script>
+
+<!-- SWITCH ROLE MODAL -->
+<div id="sw-overlay" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(8,15,30,.85);backdrop-filter:blur(6px);align-items:center;justify-content:center;" onclick="swClose(event)">
+  <div id="sw-box" style="background:#0c1d30;border:1px solid rgba(201,168,76,.3);border-radius:16px;padding:36px 32px;width:100%;max-width:360px;box-shadow:0 24px 60px rgba(0,0,0,.5);position:relative;">
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c9a84c,transparent);border-radius:16px 16px 0 0;"></div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(201,168,76,.6);margin-bottom:10px;">Hyperion System</div>
+    <div style="font-size:20px;font-weight:800;color:#fff;margin-bottom:6px;">Switch Role</div>
+    <div style="font-size:13px;color:rgba(255,255,255,.4);margin-bottom:24px;line-height:1.5;">Enter your access code to switch roles.</div>
+    <input id="sw-input" type="password" placeholder="Enter access code" autocomplete="off"
+      style="width:100%;padding:13px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.25);border-radius:10px;color:#fff;font-size:15px;font-family:inherit;outline:none;letter-spacing:.1em;margin-bottom:8px;"
+      onkeydown="if(event.key==='Enter')swSubmit()"/>
+    <div id="sw-err" style="display:none;font-size:12px;color:#e05555;margin-bottom:10px;padding:8px 12px;background:rgba(224,85,85,.1);border-radius:6px;">⚠ Incorrect code. Try again.</div>
+    <button onclick="swSubmit()" style="width:100%;padding:13px;background:#c9a84c;color:#0c1d30;border:none;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:.04em;transition:background .2s;">Confirm Switch</button>
+    <button onclick="swClose()" style="width:100%;padding:10px;background:transparent;color:rgba(255,255,255,.3);border:none;border-radius:10px;font-size:13px;cursor:pointer;font-family:inherit;margin-top:6px;">Cancel</button>
+  </div>
+</div>
+<script>
+function swOpen(){
+  var ov=document.getElementById('sw-overlay');
+  ov.style.display='flex';
+  var inp=document.getElementById('sw-input');
+  inp.value='';
+  document.getElementById('sw-err').style.display='none';
+  setTimeout(function(){inp.focus();},100);
+}
+function swClose(e){
+  if(!e||e.target===document.getElementById('sw-overlay'))
+    document.getElementById('sw-overlay').style.display='none';
+}
+function swSubmit(){
+  var val=document.getElementById('sw-input').value.trim().toUpperCase();
+  var err=document.getElementById('sw-err');
+  if(val==='LEGACY'){
+    sessionStorage.setItem('hyperion_role','new_associate');
+    location.reload();
+  } else if(val==='1437'){
+    sessionStorage.setItem('hyperion_role','experienced');
+    location.reload();
+  } else {
+    err.style.display='block';
+    var box=document.getElementById('sw-box');
+    box.style.animation='none';
+    setTimeout(function(){
+      box.style.animation='swShake .35s ease';
+    },10);
+    document.getElementById('sw-input').value='';
+    document.getElementById('sw-input').focus();
+  }
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape') document.getElementById('sw-overlay').style.display='none';
+});
+</script>
+<style>
+@keyframes swShake{0%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}100%{transform:translateX(0)}}
+#sw-input:focus{border-color:rgba(201,168,76,.6);background:rgba(255,255,255,.07);}
+</style>
+
+<style>
+/* ═══ CONTRAST FIX — force dark on ALL white/light backgrounds ═══ */
+/* Override inline white backgrounds */
+.card, .card *, .warn-chip, .signal-chip, .step-item,
+.qualify-item, .contact-item, .resource-item,
+[style*="background:#fff"], [style*="background: #fff"],
+[style*="background:#ffffff"], [style*="background:white"],
+[style*="background:var(--white)"], [style*="background:var(--off-white)"],
+[style*="background:var(--bg)"], [style*="background:var(--surface)"],
+[style*="background:#faf"], [style*="background:#f9f"],
+[style*="background:#f4f"], [style*="background:#f0f"],
+[style*="background:#eff"], [style*="background:rgba(255,255,255"] {
+  color: rgba(255,255,255,.8) !important;
+}
+
+/* Force card backgrounds dark */
+.card { background: #0c1528 !important; }
+.card-accent-green, .card-accent-blue, .card-accent-amber,
+.card-accent-purple, .card-accent-coral, .card-accent-coral,
+.card-green, .card-navy, .card-gold {
+  background: #0c1528 !important;
+}
+
+/* Warn chips */
+.warn-chip { background: rgba(255,255,255,.04) !important; }
+.warn-chip span, .warn-chip div { color: rgba(255,255,255,.8) !important; }
+.warn-icon { background: rgba(201,168,76,.2) !important; color: #c9a84c !important; }
+
+/* Step items */
+.step-item .step-body h4 { color: #fff !important; }
+.step-item .step-body p { color: rgba(255,255,255,.7) !important; }
+
+/* EMA / contact cards */
+.contact-card, .resource-card, .qualify-list, .qualify-item {
+  background: rgba(255,255,255,.04) !important;
+  color: rgba(255,255,255,.8) !important;
+}
+.qualify-item { border-color: rgba(255,255,255,.08) !important; }
+
+/* Grid cards */
+.grid2 .card, .grid3 .card, .grid4 .card { background: #0c1528 !important; }
+
+/* All headings in cards */
+.card h3, .card h4, .card h5 { color: #fff !important; }
+.card p, .card li, .card span { color: rgba(255,255,255,.7) !important; }
+.card strong { color: rgba(255,255,255,.9) !important; }
+.card a { color: #c9a84c !important; }
+
+/* Key contacts / email links */
+.cta-btn {
+  background: rgba(201,168,76,.12) !important;
+  color: #c9a84c !important;
+  border: 1px solid rgba(201,168,76,.3) !important;
+}
+
+/* Score / metric cards */
+.metric-card, .metric-box {
+  background: #0c1528 !important;
+  border-color: rgba(201,168,76,.15) !important;
+}
+.metric-value, .metric-label, .metric-sub { color: rgba(255,255,255,.7) !important; }
+.metric-value { color: #c9a84c !important; font-weight: 700 !important; }
+
+/* Signal chips */
+.signal-chip {
+  background: rgba(255,255,255,.04) !important;
+  border: 1px solid rgba(255,255,255,.07) !important;
+  color: rgba(255,255,255,.75) !important;
+}
+
+/* Badge colors */
+.badge-gold { background: rgba(201,168,76,.15) !important; color: #e8c97a !important; }
+.badge-navy { background: rgba(255,255,255,.08) !important; color: rgba(255,255,255,.8) !important; }
+.badge-green { background: rgba(26,100,68,.25) !important; color: #4ade80 !important; }
+
+/* Truth cards, qualify items */
+.truth-card { background: #0c1528 !important; color: rgba(255,255,255,.8) !important; }
+.truth-num { background: rgba(201,168,76,.15) !important; color: #c9a84c !important; }
+
+/* Income rows / bars */
+.income-label { color: rgba(255,255,255,.75) !important; }
+.income-bar { background: rgba(255,255,255,.08) !important; }
+.income-val { color: #c9a84c !important; }
+
+/* Tags */
+.tag, .tag-navy, .tag-gold {
+  color: rgba(255,255,255,.7) !important;
+  background: rgba(255,255,255,.06) !important;
+  border: 1px solid rgba(255,255,255,.1) !important;
+}
+.tag-gold { background: rgba(201,168,76,.12) !important; color: #c9a84c !important; border-color: rgba(201,168,76,.2) !important; }
+
+/* Week blocks, day cells */
+.week-block .card { background: #0a1020 !important; }
+.day-cell { background: #0c1528 !important; border-color: rgba(255,255,255,.07) !important; color: rgba(255,255,255,.7) !important; }
+.day-cell.active { border-color: #c9a84c !important; background: rgba(201,168,76,.08) !important; }
+
+/* Checklist items */
+.checklist-item, .esg-check-item {
+  background: #0c1528 !important;
+  border-color: rgba(255,255,255,.07) !important;
+  color: rgba(255,255,255,.8) !important;
+}
+.esg-check-item.esg-done { background: rgba(26,100,68,.15) !important; }
+
+/* Nav pills / tab navs */
+.tab-nav { border-color: rgba(255,255,255,.08) !important; }
+
+/* RFM flip chart close */
+.rfm-close-btn { background: #c9a84c !important; color: #080f1e !important; }
+
+/* Section headers */
+.section-header h2 { color: #fff !important; }
+.section-header p { color: rgba(255,255,255,.55) !important; }
+.eyebrow { color: #c9a84c !important; }
+
+/* Fix any remaining white inline backgrounds via universal override */
+* { transition: none !important; }
+</style>
+
+<style>
+/* KEY CONTACTS - target inline background:var(--white) */
+[style*="background:var(--white)"] {
+  background: #0c1528 !important;
+  color: rgba(255,255,255,.85) !important;
+  border-color: rgba(255,255,255,.08) !important;
+}
+[style*="background:var(--navy-subtle)"] { background: rgba(201,168,76,.12) !important; }
+[style*="background:var(--gold-pale)"] { background: rgba(201,168,76,.08) !important; }
+[style*="background:var(--green-light)"] { background: rgba(26,100,68,.15) !important; }
+[style*="background:var(--off-white)"] { background: #0a1020 !important; }
+[style*="background:var(--cream)"] { background: #0a1020 !important; }
+[style*="background:var(--surface)"] { background: #0c1528 !important; }
+[style*="background:var(--gray-50)"] { background: #0a1020 !important; }
+[style*="background:var(--bg)"] { background: #080f1e !important; }
+[style*="background:#fff"], [style*="background: #fff"],
+[style*="background:#ffffff"], [style*="background:#FFFFFF"] {
+  background: #0c1528 !important;
+}
+[style*="background:white"] { background: #0c1528 !important; }
+
+/* All inline text colors on var(--text) */
+[style*="color:var(--text)"] { color: rgba(255,255,255,.85) !important; }
+[style*="color:var(--gray)"] { color: rgba(255,255,255,.55) !important; }
+[style*="color:var(--navy)"] { color: rgba(255,255,255,.85) !important; }
+[style*="color:var(--text-2)"] { color: rgba(255,255,255,.7) !important; }
+[style*="color:var(--text-3)"] { color: rgba(255,255,255,.5) !important; }
+[style*="color:var(--gray-500)"] { color: rgba(255,255,255,.5) !important; }
+[style*="color:var(--gray-700)"] { color: rgba(255,255,255,.7) !important; }
+
+/* GX inner section backgrounds */
+.gxp-body { background: #080f1e !important; }
+.gxp-card { background: #0c1528 !important; border-color: rgba(255,255,255,.07) !important; }
+.gxp-card h3 { color: #fff !important; }
+.gxp-card p { color: rgba(255,255,255,.7) !important; }
+.section { background: transparent !important; }
+[id*="why"] > *, [id*="mindset"] > *, [id*="m12"] > *, [id*="m3"] > * {
+  background: transparent !important;
+}
+.gxp-sec { background: #080f1e !important; }
+.gxp-month-body { background: #080f1e !important; }
+.gxp-quote p { color: rgba(255,255,255,.8) !important; }
+.gxp-quote-attr { color: rgba(255,255,255,.4) !important; }
+.gxp-warn { background: rgba(192,57,43,.12) !important; color: rgba(255,255,255,.8) !important; }
+.gxp-step .gxp-stept { color: rgba(255,255,255,.75) !important; }
+.gxp-truth { background: #0c1528 !important; }
+.gxp-truth p { color: rgba(255,255,255,.7) !important; }
+
+/* GX iframe-style content from original gx CSS */
+.main { background: transparent !important; }
+.card { background: #0c1528 !important; }
+.card .quote-text { color: rgba(255,255,255,.75) !important; }
+.card .quote-attr { color: rgba(255,255,255,.4) !important; }
+.card .step-text { color: rgba(255,255,255,.7) !important; }
+.card-accent-green, .card-accent-blue, .card-accent-amber,
+.card-accent-purple, .card-accent-coral { background: #0c1528 !important; }
+.income-row { border-color: rgba(255,255,255,.07) !important; }
+.income-bar { background: rgba(255,255,255,.08) !important; }
+.grid2 .card, .grid2 > div { background: #0c1528 !important; }
+.grid3 .card, .grid3 > div { background: #0c1528 !important; }
+.truth-card { background: #0c1528 !important; }
+
+/* Objections */
+.obj-item { background: #0c1528 !important; }
+.obj-q { color: rgba(255,255,255,.9) !important; background: #0c1528 !important; }
+.obj-a { background: #0a1020 !important; color: rgba(255,255,255,.75) !important; border-color: rgba(201,168,76,.15) !important; }
+.obj-a.open { display: block !important; }
+
+/* RFM / RM module */
+.rm-wrap { background: #080f1e !important; }
+.rm-panel { background: #0c1528 !important; color: rgba(255,255,255,.8) !important; }
+.rm-panel * { color: rgba(255,255,255,.75) !important; }
+
+/* Contact item icons */
+[style*="background:var(--navy-subtle)"] { background: rgba(201,168,76,.1) !important; }
+</style>
 </body>
 </html>

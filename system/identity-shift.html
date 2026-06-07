@@ -2,28 +2,32 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Identity Shift — Hyperion Legacy Builders</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Identity Shift — Hyperion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
-
-<script>
-(function(){
-  var role = sessionStorage.getItem('hyperion_role');
-  if(!role){ window.location.href='../index.html'; return; }
-  
-  document.documentElement.setAttribute('data-role', role);
-  // Hide experienced-only nav links for new associates
-  document.addEventListener('DOMContentLoaded', function(){
-    if(role === 'new_associate'){
-      document.querySelectorAll('.sys-nav-link[data-roles="experienced"]').forEach(function(el){
-        el.style.display = 'none';
-      });
-    }
-  });
-})();
-</script>
+<style>html,body{margin:0;padding:0;overflow-y:auto!important;overflow-x:hidden;height:auto!important;background:#080f1e;font-family:'Inter',system-ui,sans-serif;}
+#sys-topbar{background:#0c1d30;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #c9a84c;position:sticky;top:0;z-index:99999;}
+#sys-topbar .brand{color:#c9a84c;font-weight:700;font-size:14px;letter-spacing:.08em;}
+#sys-topbar .actions{display:flex;gap:8px;align-items:center;}
+#sys-topbar a,#sys-topbar button{background:transparent;color:rgba(201,168,76,.8);border:1px solid rgba(201,168,76,.3);padding:5px 13px;font-size:11px;font-weight:600;border-radius:6px;cursor:pointer;text-decoration:none;font-family:inherit;}
+#sys-topbar a:hover,#sys-topbar button:hover{background:rgba(201,168,76,.15);color:#c9a84c;}
+.role-chip{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;border:1px solid;}
+.chip-new{background:rgba(201,168,76,.15);color:#c9a84c;border-color:rgba(201,168,76,.4);}
+.chip-exp{background:rgba(26,150,100,.15);color:#4ade80;border-color:rgba(26,150,100,.4);}
+#sys-nav{background:rgba(8,15,30,.98);border-bottom:1px solid rgba(201,168,76,.15);overflow-x:auto;position:sticky;top:52px;z-index:99998;}
+#sys-nav-inner{display:flex;max-width:1200px;margin:0 auto;padding:0 16px;}
+#sys-nav a{display:inline-block;padding:11px 9px;font-size:11px;font-weight:500;color:rgba(255,255,255,.4);text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;}
+#sys-nav a:hover{color:#0c1d30;}
+#sys-nav a.active{color:#c9a84c;border-bottom-color:#c9a84c;font-weight:700;}
+#sys-content{max-width:1200px;margin:0 auto;padding:0;background:transparent;}
+.sub-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:0;padding:20px 24px;border-bottom:1px solid rgba(201,168,76,.12);background:rgba(8,15,30,.95);position:sticky;top:104px;z-index:100;}
+.sub-pill{padding:7px 14px;border:1px solid rgba(201,168,76,.2);border-radius:20px;background:transparent;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;color:rgba(255,255,255,.5);}
+.sub-pill.active{background:rgba(201,168,76,.15);color:#c9a84c;border-color:rgba(201,168,76,.4);}
+.pg-sec{display:none;background:transparent;}.pg-sec.active{display:block;}
+.tab,.sub-section{display:block!important;}</style>
 <style>
-
 /* GX SMD Resource Embedded Styles */
 :root {
   --header-height: 72px;
@@ -2377,154 +2381,272 @@ h1, h2, h3, h4, h5, h6,
   background: rgba(201,168,76,0.05) !important;
 }
 .sub-page-btn:hover { background: rgba(12,29,48,0.03) !important; color: var(--navy-mid) !important; }
-
-/* ── System page shell ── */
-body { margin:0; background:var(--cream,#faf8f4); color:var(--navy,#0c1d30); font-family:'Inter',system-ui,sans-serif; }
-.sys-topbar {
-  background:var(--navy,#0c1d30);
-  padding:10px 24px;
-  display:flex; align-items:center; justify-content:space-between;
-  border-bottom:2px solid var(--gold,#c9a84c);
-  position:sticky; top:0; z-index:200;
-}
-.sys-topbar-brand { color:var(--gold,#c9a84c); font-weight:700; font-size:15px; letter-spacing:.08em; }
-.sys-topbar-actions { display:flex; gap:10px; align-items:center; }
-.sys-topbar-btn {
-  background:transparent; color:rgba(201,168,76,.75);
-  border:1px solid rgba(201,168,76,.3); padding:6px 14px;
-  font-size:12px; font-weight:600; border-radius:6px; cursor:pointer;
-  text-decoration:none; font-family:inherit;
-}
-.sys-topbar-btn:hover { background:rgba(201,168,76,.1); }
-.role-chip {
-  font-size:11px; font-weight:600; padding:3px 10px; border-radius:20px;
-  letter-spacing:.04em;
-}
-.role-chip-new { background:rgba(201,168,76,.18); color:var(--gold,#c9a84c); border:1px solid rgba(201,168,76,.3); }
-.role-chip-exp { background:rgba(26,150,100,.18); color:#4ADE80; border:1px solid rgba(26,150,100,.3); }
-.sys-nav-wrapper {
-  background:rgba(250,248,244,.97);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(201,168,76,.25);
-  overflow-x:auto; position:sticky; top:52px; z-index:100;
-}
-.sys-nav-inner {
-  display:flex; max-width:1200px; margin:0 auto; padding:0 24px;
-}
-.sys-nav-link {
-  display:inline-block; padding:11px 10px; font-size:11.5px; font-weight:500;
-  color:#374151; text-decoration:none; border-bottom:2px solid transparent;
-  white-space:nowrap; transition:all .15s;
-}
-.sys-nav-link:hover { color:var(--navy,#0c1d30); background:rgba(12,29,48,.03); }
-.sys-page-content { max-width:1200px; margin:0 auto; padding:32px 24px 80px; }
-/* Fix tab display in standalone pages */
-.tab { display:block !important; }
-.sub-section { display:none; }
-.sub-section.active { display:block; }
-.rp-section { display:none; }
-.rp-section.active { display:block; }
 </style>
+<style>html,body{overflow-y:auto!important;height:auto!important;}.pg-sec{display:none;background:transparent;}.pg-sec.active{display:block;}.tab,.sub-section{display:block!important;}</style>
+<style>
+/* Force dark context for Terms & Identity */
+#sys-content { background: transparent !important; }
+.pg-sec#s-ter { margin: 0 !important; border-radius: 0 !important; }
+</style>
+<style>
+.ti-wrap{--n:#080f1e;--n1:#0c1528;--g:#c9a84c;--gl:#e8c97a;}
+.ti-pillar{background:var(--n1) !important;}
+#glossary-list{background:var(--n1) !important;}
+</style><style>
+#glossary-list .gl-item{padding:14px 0 !important;border-bottom:1px solid rgba(255,255,255,.06) !important;border-radius:0 !important;background:transparent !important;}
+#glossary-list .gl-term{font-size:13px !important;font-weight:600 !important;color:#ffffff !important;font-family:'DM Sans',system-ui,sans-serif !important;margin-bottom:4px !important;display:block;}
+#glossary-list .gl-def{font-size:13px !important;color:rgba(255,255,255,.72) !important;line-height:1.65 !important;font-family:'DM Sans',system-ui,sans-serif !important;}
+#glossary-list .gl-tags{display:none !important;}
+/* If glossary renders plain divs */
+#glossary-list > div{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+#glossary-list > div:last-child{border-bottom:none;}
+</style>
+<style>
+#glossary-list [class*="term"], #glossary-list [class*="gl-t"],
+#glossary-list > div > *:first-child, #glossary-list .gl-term {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+.ti-pillar { gap: 12px !important; }
+.ti-pillar-n { font-size: 18px !important; width: 20px !important; opacity: .6; }
+</style>
+<style>
+.gloss-item { padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+.gloss-item:last-child { border-bottom: none; }
+.gloss-term { font-size: 13px !important; font-weight: 700 !important; color: #ffffff !important; margin-bottom: 4px; font-family: 'DM Sans', system-ui, sans-serif !important; }
+.gloss-def { font-size: 13px !important; color: rgba(255,255,255,.7) !important; line-height: 1.65 !important; font-family: 'DM Sans', system-ui, sans-serif !important; }
+</style>
+<style>.esg-check-box,.chk-box{display:none!important;}</style>
 </head>
 <body>
-
-<!-- TOP BAR -->
-<div class="sys-topbar">
-  <span class="sys-topbar-brand">⚙ RFM SYSTEM — HYPERION</span>
-  <div class="sys-topbar-actions">
-    <span class="role-chip role-chip-new" id="chip-new" style="display:none">🟡 New Associate</span>
-    <span class="role-chip role-chip-exp" id="chip-exp" style="display:none">🟢 Experienced</span>
-    <a href="../index.html" class="sys-topbar-btn" onclick="sessionStorage.removeItem('hyperion_role');return true;">⇄ Switch Role</a>
-    <a href="../index.html" class="sys-topbar-btn">✕ Exit</a>
+<div id="sys-topbar">
+  <span class="brand">⚙ RFM SYSTEM — HYPERION</span>
+  <div class="actions">
+    <span class="role-chip chip-new" id="chip-new" style="display:none">🟡 New Associate</span>
+    <span class="role-chip chip-exp" id="chip-exp" style="display:none">🟢 Experienced</span>
+    <button onclick="swOpen()">⇄ Switch Role</button>
+    <a href="../index.html">✕ Exit</a>
   </div>
 </div>
+<div id="sys-nav"><div id="sys-nav-inner">
+<a href="mission-hq.html" data-roles="all">🎯 Mission HQ</a>
+<a href="fast-start-onboarding.html" data-roles="all">🚀 Fast Start Onboarding</a>
+<a href="prospecting.html" data-roles="all">📋 Prospecting</a>
+<a href="contact-scripts.html" data-roles="all">📞 Contact Scripts</a>
+<a href="objections.html" data-roles="all">🛡️ Objections</a>
+<a href="presentations.html" data-roles="all">🎞 Presentations</a>
+<a href="closing.html" data-roles="experienced">🤝 Closing / Helping Family</a>
+<a href="identity-shift.html" class="active" data-roles="all">💡 Identity Shift</a>
+</div></div>
+<div id="sys-content">
+<div class="sub-pills">
+    <button class="sub-pill active" onclick="showSec('s-ter',this)">📖 Terms & Identity</button>
+  <button class="sub-pill" onclick="showSec('s-big',this)">🧠 Big Thinking Guide</button>
+  <button class="sub-pill exp-only" onclick="showSec('s-tru',this)">🤝 Trustworthy Selling</button>
+  </div>
 
-<!-- PAGE NAV -->
-<div class="sys-nav-wrapper">
-  <div class="sys-nav-inner">
-<a href="mission-hq.html" class="sys-nav-link" data-roles="all">🎯 Mission HQ</a>
-<a href="fast-start-onboarding.html" class="sys-nav-link" data-roles="all">🚀 Fast Start Onboarding</a>
-<a href="prospecting.html" class="sys-nav-link" data-roles="all">📋 Prospecting</a>
-<a href="contact-scripts.html" class="sys-nav-link" data-roles="all">📞 Contact Scripts</a>
-<a href="objections.html" class="sys-nav-link" data-roles="all">🛡️ Objections</a>
-<a href="presentations.html" class="sys-nav-link" data-roles="all">🎞 Presentations</a>
-<a href="closing.html" class="sys-nav-link" data-roles="experienced">🤝 Closing / Helping a Family</a>
-<a href="identity-shift.html" class="sys-nav-link" style="border-bottom:2px solid var(--gold);color:var(--navy);font-weight:600;" data-roles="all">💡 Identity Shift</a>
+<div class="pg-sec active" id="s-ter" style="display:block;background:transparent;">
+
+<style>
+/* ── Terms & Identity — Mission HQ style ── */
+.ti-wrap{font-family:'Cormorant Garamond',Georgia,serif;color:#fff;background:#080f1e;}
+.ti-wrap .ti-hero,.ti-wrap .ti-body{font-family:'Cormorant Garamond',Georgia,serif;}
+.ti-wrap .ti-hero-eye,.ti-wrap .ti-hero-sub,.ti-wrap .ti-pillar-h,.ti-wrap .ti-pillar-p,.ti-wrap .ti-lang-head,.ti-wrap .ti-lang-item,.ti-wrap .ti-sec-eye,.ti-wrap .ti-gloss-term,.ti-wrap .ti-gloss-def,.ti-wrap .ti-tag,.ti-wrap .ti-rule+*{font-family:'DM Sans','Segoe UI',system-ui,sans-serif !important;}
+.ti-wrap *{box-sizing:border-box;}
+.ti-hero{background:linear-gradient(135deg,#080f1e 0%,#0c1528 60%,#0f1d38 100%);padding:60px 40px 48px;position:relative;overflow:hidden;border-bottom:1px solid rgba(201,168,76,.12);}
+.ti-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c9a84c 40%,#e8c97a 60%,transparent);}
+.ti-hero-eye{font-family:'DM Sans','Segoe UI',system-ui,sans-serif;font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(201,168,76,.6);margin-bottom:16px;}
+.ti-hero-title{font-size:clamp(36px,5vw,60px);font-weight:700;line-height:1.08;color:#fff;margin-bottom:14px;letter-spacing:-.01em;}
+.ti-hero-title span{color:#c9a84c;font-style:italic;}
+.ti-hero-sub{font-family:'DM Sans','Segoe UI',system-ui,sans-serif;font-size:15px;color:rgba(255,255,255,.45);line-height:1.7;max-width:580px;font-weight:300;}
+.ti-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;}
+.ti-tag{font-family:'DM Sans','Segoe UI',system-ui,sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 14px;border-radius:20px;border:1px solid rgba(201,168,76,.25);color:rgba(201,168,76,.8);background:rgba(201,168,76,.06);}
+.ti-body{padding:40px;}
+.ti-sec-eye{font-family:'DM Sans','Segoe UI',system-ui,sans-serif;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(201,168,76,.55);margin-bottom:10px;}
+.ti-sec-title{font-size:clamp(24px,3vw,36px);font-weight:700;color:#fff;margin-bottom:6px;line-height:1.15;}
+.ti-sec-title em{color:#c9a84c;font-style:italic;}
+.ti-rule{width:40px;height:2px;background:#c9a84c;margin-bottom:28px;}
+.ti-section{margin-bottom:56px;}
+
+/* Pillar cards */
+.ti-pillar{display:flex;gap:14px;padding:18px 20px;background:#0c1528;border:1px solid rgba(255,255,255,.06);border-radius:12px;margin-bottom:10px;transition:border-color .2s;min-width:0;}
+.ti-pillar:hover{border-color:rgba(201,168,76,.2);}
+.ti-pillar>div{min-width:0;flex:1;}
+.ti-pillar-n{font-size:20px;font-weight:700;color:rgba(201,168,76,.45);line-height:1.2;flex-shrink:0;width:24px;text-align:center;padding-top:4px;font-size:22px !important;}
+.ti-pillar-h{font-family:'DM Sans','Segoe UI',system-ui,sans-serif;font-size:14px;font-weight:700;color:#e8c97a;margin-bottom:5px;word-wrap:break-word;}
+.ti-pillar-p{font-family:'DM Sans','Segoe UI',system-ui,sans-serif;font-size:13px;color:rgba(255,255,255,.72);line-height:1.65;word-wrap:break-word;overflow-wrap:break-word;}
+.ti-pillar-p strong{color:rgba(255,255,255,.8);}
+
+/* Declaration block */
+.ti-decl{background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(201,168,76,.03));border:1px solid rgba(201,168,76,.2);border-radius:14px;padding:36px 40px;margin-bottom:32px;position:relative;overflow:hidden;}
+.ti-decl::before{content:'"'';position:absolute;top:-10px;left:20px;font-family:'Cormorant Garamond',serif;font-size:120px;color:rgba(201,168,76,.06);line-height:1;pointer-events:none;}
+.ti-decl-text{font-size:clamp(18px,2.2vw,24px);font-style:italic;color:#fff;line-height:1.65;position:relative;z-index:1;}
+.ti-decl-text em{color:#c9a84c;font-style:normal;}
+
+/* Language comparison */
+.ti-lang{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid rgba(201,168,76,.15);border-radius:14px;overflow:hidden;margin-bottom:12px;width:100%;}
+.ti-lang-col{padding:24px 28px;}
+.ti-lang-no{background:rgba(255,255,255,.02);border-right:1px solid rgba(201,168,76,.1);}
+.ti-lang-yes{background:rgba(201,168,76,.04);}
+.ti-lang-head{font-family:'DM Sans','Segoe UI',system-ui,sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.06);}
+.ti-lang-no .ti-lang-head{color:rgba(192,57,43,.8);}
+.ti-lang-yes .ti-lang-head{color:#c9a84c;}
+.ti-lang-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:11px;font-family:'DM Sans','Segoe UI',system-ui,sans-serif;font-size:13px;line-height:1.5;}
+.ti-lang-no .ti-lang-item{color:rgba(255,255,255,.4);}
+.ti-lang-yes .ti-lang-item{color:rgba(255,255,255,.8);}
+.ti-lang-ic{flex-shrink:0;margin-top:1px;}
+
+/* Glossary */
+.ti-gloss-item{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.05);display:flex;gap:16px;align-items:baseline;cursor:pointer;}
+.ti-gloss-item:last-child{border-bottom:none;}
+.ti-gloss-term{font-family:'DM Sans','Segoe UI',system-ui,sans-serif;font-size:13px;font-weight:600;color:#ffffff;min-width:180px;flex-shrink:0;}
+.ti-gloss-def{font-family:'DM Sans','Segoe UI',system-ui,sans-serif;font-size:13px;color:rgba(255,255,255,.72);line-height:1.65;}
+@media(max-width:640px){.ti-lang{grid-template-columns:1fr 1fr;}.ti-lang-no{border-right:none;border-bottom:1px solid rgba(201,168,76,.1)}.ti-gloss-item{flex-direction:column;gap:4px;}.ti-gloss-term{min-width:auto;}}
+</style>
+
+<div class="ti-wrap">
+
+  <!-- HERO -->
+  <div class="ti-hero">
+    <div class="ti-hero-eye">Identity Shift · Revolution Financial Management</div>
+    <h1 class="ti-hero-title">Who You Are <span>Now</span></h1>
+    <p class="ti-hero-sub">You are not a salesperson. You are a financial professional, educator, and wealth advocate. How you speak, how you think, and how you carry yourself in every room defines your impact.</p>
+    <div class="ti-tags">
+      <span class="ti-tag" style="font-family:'DM Sans',system-ui,sans-serif;">Financial Professional</span>
+      <span class="ti-tag">Wealth Educator</span>
+      <span class="ti-tag">Mission Leader</span>
+      <span class="ti-tag">Business Builder</span>
+      <span class="ti-tag">Legacy Creator</span>
+    </div>
+  </div>
+
+  <div class="ti-body">
+
+    <!-- ── DECLARATION ── -->
+    <div class="ti-section">
+      <div class="ti-sec-eye">High-Identity Declaration</div>
+      <div class="ti-rule"></div>
+      <div class="ti-decl">
+        <p class="ti-decl-text">"I am a financial professional, educator, and wealth advocate. I help families stop being victimized by financial ignorance and start building generational security. Every conversation I have is a <em>service</em>, not a pitch. The money follows the mission. Always."</p>
+      </div>
+    </div>
+
+    <!-- ── 7 PILLARS ── -->
+    <div class="ti-section">
+      <div class="ti-sec-eye">The 7 High-Identity Pillars</div>
+      <div class="ti-sec-title">The Mindset of a <em>Financial Professional</em></div>
+      <div class="ti-rule"></div>
+
+      <div style="display:flex;flex-direction:column;gap:10px;">
+
+        <div style="background:#0c1528;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:20px 24px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <span style="font-size:10px;font-weight:800;letter-spacing:.14em;color:rgba(201,168,76,.5);text-transform:uppercase;font-family:'DM Sans',system-ui;">01</span>
+            <span style="flex:1;height:1px;background:rgba(201,168,76,.12);"></span>
+          </div>
+          <div style="font-size:15px;font-weight:700;color:#e8c97a;margin-bottom:7px;font-family:'DM Sans',system-ui;">Mission over commission</div>
+          <div style="font-size:13px;color:rgba(255,255,255,.75);line-height:1.7;font-family:'DM Sans',system-ui;">I do not wake up chasing transactions. I wake up to create impact. Over 330 million people live in America — roughly 70% are financially unprepared for retirement, emergencies, or unexpected loss of income. <strong style="color:#fff;">The need is massive. The money follows the mission. Always.</strong></div>
+        </div>
+
+        <div style="background:#0c1528;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:20px 24px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <span style="font-size:10px;font-weight:800;letter-spacing:.14em;color:rgba(201,168,76,.5);text-transform:uppercase;font-family:'DM Sans',system-ui;">02</span>
+            <span style="flex:1;height:1px;background:rgba(201,168,76,.12);"></span>
+          </div>
+          <div style="font-size:15px;font-weight:700;color:#e8c97a;margin-bottom:7px;font-family:'DM Sans',system-ui;">Trusted authority, not a salesperson</div>
+          <div style="font-size:13px;color:rgba(255,255,255,.75);line-height:1.7;font-family:'DM Sans',system-ui;">I don't "pitch" people. I lead conversations with curiosity, professionalism, and value. <strong style="color:#fff;">I think like a doctor: diagnose before prescribing, ask before telling, understand before advising.</strong> People are tired of being sold. My posture is calm because I know I bring value.</div>
+        </div>
+
+        <div style="background:#0c1528;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:20px 24px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <span style="font-size:10px;font-weight:800;letter-spacing:.14em;color:rgba(201,168,76,.5);text-transform:uppercase;font-family:'DM Sans',system-ui;">03</span>
+            <span style="flex:1;height:1px;background:rgba(201,168,76,.12);"></span>
+          </div>
+          <div style="font-size:15px;font-weight:700;color:#e8c97a;margin-bottom:7px;font-family:'DM Sans',system-ui;">Think like an owner</div>
+          <div style="font-size:13px;color:rgba(255,255,255,.75);line-height:1.7;font-family:'DM Sans',system-ui;">I am not just building income — I am building ownership. <strong style="color:#fff;">Owners create systems, culture, leadership, vision, and legacy.</strong> Employees trade time for money. Builders create leverage through people and systems. I am building an enterprise, not a side hustle.</div>
+        </div>
+
+        <div style="background:#0c1528;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:20px 24px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <span style="font-size:10px;font-weight:800;letter-spacing:.14em;color:rgba(201,168,76,.5);text-transform:uppercase;font-family:'DM Sans',system-ui;">04</span>
+            <span style="flex:1;height:1px;background:rgba(201,168,76,.12);"></span>
+          </div>
+          <div style="font-size:15px;font-weight:700;color:#e8c97a;margin-bottom:7px;font-family:'DM Sans',system-ui;">Builder of people</div>
+          <div style="font-size:13px;color:rgba(255,255,255,.75);line-height:1.7;font-family:'DM Sans',system-ui;">My real business is not products. My real business is people. <strong style="color:#fff;">I help individuals discover they are capable of more than their current circumstances suggest.</strong> The product is the vehicle. The transformation is the mission.</div>
+        </div>
+
+        <div style="background:#0c1528;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:20px 24px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <span style="font-size:10px;font-weight:800;letter-spacing:.14em;color:rgba(201,168,76,.5);text-transform:uppercase;font-family:'DM Sans',system-ui;">05</span>
+            <span style="flex:1;height:1px;background:rgba(201,168,76,.12);"></span>
+          </div>
+          <div style="font-size:15px;font-weight:700;color:#e8c97a;margin-bottom:7px;font-family:'DM Sans',system-ui;">Student of the craft</div>
+          <div style="font-size:13px;color:rgba(255,255,255,.75);line-height:1.7;font-family:'DM Sans',system-ui;">I study financial literacy, leadership, and human connection the way a doctor studies medicine. <strong style="color:#fff;">I am always learning.</strong> The families I serve deserve a professional who treats this work as a calling — not a hobby.</div>
+        </div>
+
+        <div style="background:#0c1528;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:20px 24px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <span style="font-size:10px;font-weight:800;letter-spacing:.14em;color:rgba(201,168,76,.5);text-transform:uppercase;font-family:'DM Sans',system-ui;">06</span>
+            <span style="flex:1;height:1px;background:rgba(201,168,76,.12);"></span>
+          </div>
+          <div style="font-size:15px;font-weight:700;color:#e8c97a;margin-bottom:7px;font-family:'DM Sans',system-ui;">Community steward</div>
+          <div style="font-size:13px;color:rgba(255,255,255,.75);line-height:1.7;font-family:'DM Sans',system-ui;">I was planted in this community for a reason. Every family I protect, every leader I develop, <strong style="color:#fff;">every dollar of generational wealth created ripples forward — far beyond what I can see.</strong> This work is stewardship.</div>
+        </div>
+
+        <div style="background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(201,168,76,.04));border:1px solid rgba(201,168,76,.25);border-radius:12px;padding:20px 24px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <span style="font-size:10px;font-weight:800;letter-spacing:.14em;color:#c9a84c;text-transform:uppercase;font-family:'DM Sans',system-ui;">07</span>
+            <span style="flex:1;height:1px;background:rgba(201,168,76,.25);"></span>
+          </div>
+          <div style="font-size:15px;font-weight:700;color:#e8c97a;margin-bottom:7px;font-family:'DM Sans',system-ui;">Faith-led, mission-driven</div>
+          <div style="font-size:13px;color:rgba(255,255,255,.82);line-height:1.7;font-family:'DM Sans',system-ui;">I show up with integrity, in season and out of season. <strong style="color:#fff;">The discipline I bring to this mission is an act of service.</strong> No family left behind is not a slogan. It is a covenant.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── LANGUAGE GUIDE ── -->
+    <div class="ti-section">
+      <div class="ti-sec-eye">Elevated Language Guide</div>
+      <div class="ti-sec-title">Say <em>This</em>, Not That</div>
+      <div class="ti-rule"></div>
+      <div class="ti-lang">
+        <div class="ti-lang-col ti-lang-no">
+          <div class="ti-lang-head">❌ Stop Saying</div>
+          <div class="ti-lang-item"><span class="ti-lang-ic">—</span>"I sell insurance"</div>
+          <div class="ti-lang-item"><span class="ti-lang-ic">—</span>"It's like a pyramid"</div>
+          <div class="ti-lang-item"><span class="ti-lang-ic">—</span>"Can I pitch you something?"</div>
+          <div class="ti-lang-item"><span class="ti-lang-ic">—</span>"I want to show you an opportunity"</div>
+          <div class="ti-lang-item"><span class="ti-lang-ic">—</span>"It doesn't cost much"</div>
+          <div class="ti-lang-item"><span class="ti-lang-ic">—</span>"I just started"</div>
+          <div class="ti-lang-item"><span class="ti-lang-ic">—</span>"It's not for everyone"</div>
+        </div>
+        <div class="ti-lang-col ti-lang-yes">
+          <div class="ti-lang-head">✓ Say Instead</div>
+          <div class="ti-lang-item"><span class="ti-lang-ic" style="color:#c9a84c">✦</span>"I help families build financial security"</div>
+          <div class="ti-lang-item"><span class="ti-lang-ic" style="color:#c9a84c">✦</span>"It's a field force model, like Keller Williams"</div>
+          <div class="ti-lang-item"><span class="ti-lang-ic" style="color:#c9a84c">✦</span>"I want to ask you a few questions"</div>
+          <div class="ti-lang-item"><span class="ti-lang-ic" style="color:#c9a84c">✦</span>"I want to share something that changed my family"</div>
+          <div class="ti-lang-item"><span class="ti-lang-ic" style="color:#c9a84c">✦</span>"The value here is significant"</div>
+          <div class="ti-lang-item"><span class="ti-lang-ic" style="color:#c9a84c">✦</span>"I'm newly licensed and backed by an incredible team"</div>
+          <div class="ti-lang-item"><span class="ti-lang-ic" style="color:#c9a84c">✦</span>"Most people who look at this wish they had sooner"</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── VOCABULARY ── -->
+    <div class="ti-section" style="margin-bottom:0;">
+      <div class="ti-sec-eye">Essential Terms — Know These Cold</div>
+      <div class="ti-sec-title">Financial Professional <em>Vocabulary</em></div>
+      <div class="ti-rule"></div>
+      <div style="background:#0c1528;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:4px 24px;" id="glossary-list"></div>
+    </div>
 
   </div>
 </div>
-
-<!-- CONTENT -->
-<div class="sys-page-content">
-
-<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--border,rgba(12,29,48,.09));">
-  <button class="page-subbtn active" onclick="showSection('s-train',this)">🎓 Training</button>
-  <button class="page-subbtn" onclick="showSection('s-terms',this)">📖 Terms & Identity</button>
-  <button class="page-subbtn" onclick="showSection('s-bigthink',this)">🧠 Big Thinking Guide</button>
-  <button class="page-subbtn" onclick="showSection('s-trust',this)">🤝 Trustworthy Selling</button>
 </div>
-<div id="s-train" class="page-section active"><div class="tab" id="tab-training">
-<div class="section-header">
-<div class="eyebrow">30-day onboarding</div>
-<h2>Training Program — Zero to Field-Ready</h2>
-<p>Built for Hyperion and every new associate. Sequential, simple, and tested. Complete each phase before moving forward.</p>
-</div>
-<div id="training-cards"></div>
-</div></div>
-<div id="s-terms" class="page-section"><div class="tab" id="tab-glossary">
-<div class="section-header">
-<div class="eyebrow">Know your craft</div>
-<h2>Terms, Language &amp; Financial Identity</h2>
-<p>How you speak shapes how you're perceived. Speak like a financial professional. Think like a mission leader.</p>
-</div>
-<div class="card card-navy" style="margin-bottom:14px">
-<div class="badge badge-navy">Identity shift</div>
-<h3>Who You Are Now</h3>
-<p>You are not a salesperson. You are a <strong>financial professional, educator, and wealth advocate</strong>. You help families stop being victimized by financial ignorance and start building generational security. Every conversation is a service, not a pitch.</p>
-<div style="margin-top:14px">
-<span class="tag tag-navy">Financial professional</span><span class="tag tag-navy">Wealth educator</span><span class="tag tag-navy">Mission leader</span><span class="tag tag-navy">Business builder</span><span class="tag tag-navy">Legacy creator</span>
-</div>
-</div>
-<div class="card card-gold" style="margin-bottom:14px">
-<div class="badge badge-gold">The 7 High-Identity Pillars</div>
-<h3>The mindset of a financial professional, business owner, and agency builder</h3>
-<ul class="step-list" style="margin-top:14px">
-<li class="step-item"><div class="step-num">1</div><div class="step-body"><h4>Mission over commission</h4><p>I do not wake up chasing transactions. I wake up to create impact.</p><p>Over 330 million people live in America, and roughly 70% of families are financially unprepared for retirement, emergencies, inflation, or unexpected loss of income. Most people were never taught how money truly works. That means the need is massive.</p><p>I am not here to pressure people. I am here to educate, protect, and empower families. The money follows the mission. Always.</p></div></li>
-<li class="step-item"><div class="step-num">2</div><div class="step-body"><h4>Trusted authority, not a salesperson</h4><p>I do not "pitch" people. I lead conversations with curiosity, professionalism, and value. I think like a doctor: diagnose before prescribing, ask before telling, understand before advising.</p><p>People are tired of being sold. They are looking for someone they can trust. My posture is calm because I know I bring value.</p></div></li>
-<li class="step-item"><div class="step-num">3</div><div class="step-body"><h4>Think like an owner</h4><p>Most people dream about owning a business, having freedom, controlling their schedule, building something for their family, and escaping the paycheck-to-paycheck cycle. Very few ever get the vehicle or mentorship to do it.</p><p>I understand I am not just building income. I am building ownership. Owners create systems, culture, leadership, vision, duplication, and legacy. Employees trade time for money. Builders create leverage through people and systems. I am building an enterprise, not a side hustle.</p></div></li>
-<li class="step-item"><div class="step-num">4</div><div class="step-body"><h4>Builder of people</h4><p>My real business is not products. My real business is people. I help people become more confident, more financially educated, better communicators, stronger leaders, and bigger thinkers.</p><p>Production creates income. People development creates legacy. The strongest organizations are built by leaders who genuinely care about helping others grow.</p></div></li>
-<li class="step-item"><div class="step-num">5</div><div class="step-body"><h4>Abundance thinking</h4><p>There is no shortage of opportunity. There are millions of families who still need help and millions of people who want additional income, time freedom, flexibility, ownership, purpose, a meaningful business, and a way to create generational change.</p><p>I never operate from desperation. Every conversation is practice. Every connection matters. Every seed has potential. I do not need every person to say yes. I only need to continue planting seeds consistently.</p></div></li>
-<li class="step-item"><div class="step-num">6</div><div class="step-body"><h4>Detachment from outcome</h4><p>Pressure repels people. Confidence attracts people. My job is not to force outcomes. My job is to open doors, build relationships, create belief, inspire possibility, and present opportunity professionally.</p><p>I stay emotionally neutral whether someone says yes or no. A "no" does not lower my value. A "yes" does not define my identity. I operate with confidence because my identity is bigger than any single outcome.</p></div></li>
-<li class="step-item"><div class="step-num">7</div><div class="step-body"><h4>Become someone worth following</h4><p>People follow growth. People follow vision. People follow conviction. I continuously invest into my leadership, communication, mindset, finances, health, family, faith, and business skills.</p><p>My life should reflect the message I share. My personal brand is not built through hype. It is built through consistency, integrity, service, and growth over time.</p></div></li>
-</ul>
-<div class="card card-navy" style="margin-top:16px;margin-bottom:0;color:#fff">
-<div class="badge badge-gold">High-Identity Declaration</div>
-<p style="margin-top:10px;line-height:1.7;color:#fff">I am not "trying" to build a business. I am a financial professional, a business owner, an agency builder, a leader of people, a creator of opportunity, a culture builder, a visionary, a steward of trust, and a legacy builder.</p>
-<p style="line-height:1.7;color:#fff">I do not chase people. I attract alignment through conviction and value. I understand the market is massive, the need is real, and the opportunity is bigger than fear.</p>
-<p style="line-height:1.7;color:#fff">I am building freedom, leadership, ownership, impact, and generational change. And I will continue becoming the kind of person people trust, follow, and grow with.</p>
-</div>
-</div>
-<div class="card">
-<div class="badge badge-gold">Say this, not that</div>
-<h3>Elevated Language Guide</h3>
-<div class="say-grid" style="margin-top:14px">
-<div class="say-col no">
-<span class="say-label">❌ Don't say</span>
-<p>"I sell insurance"<br/>"It's like a pyramid"<br/>"Can I pitch you something?"<br/>"I want to show you an opportunity"<br/>"It doesn't cost much"</p>
-</div>
-<div class="say-col yes">
-<span class="say-label">✅ Say instead</span>
-<p>"I help families build financial security"<br/>"It's a field force model, like Keller Williams"<br/>"I want to ask you a few questions"<br/>"I want to share something that changed my family"<br/>"The value here is significant"</p>
-</div>
-</div>
-</div>
-<div class="card">
-<div class="badge badge-navy">Essential terms — know these cold</div>
-<h3>Financial Professional Vocabulary</h3>
-<div id="glossary-list" style="margin-top:14px"></div>
-</div>
-</div></div>
-<div id="s-bigthink" class="page-section"><div class="sub-section" id="sub-res-bigthinking">
+<div class="pg-sec" id="s-big" style="display:none">
+<div class="sub-section" id="sub-res-bigthinking">
 <div class="section-header">
 <div class="eyebrow">Mindset &amp; Success</div>
 <h2>Big Thinking Success Field Guide</h2>
@@ -4014,8 +4136,194 @@ body { margin:0; background:var(--cream,#faf8f4); color:var(--navy,#0c1d30); fon
 &lt;/html&gt;
 " style="width:100%;height:860px;border:none;display:block" title="Big Thinking Success Field Guide"></iframe>
 </div>
-</div></div>
-<div id="s-trust" class="page-section"><div class="sub-section" id="sub-res-trustworthy">
+</div>
+</div>
+
+</div>
+<script>
+
+function showSec(id, btn) {
+  document.querySelectorAll('.pg-sec').forEach(function(s){
+    s.classList.remove('active');
+    s.style.display = 'none';
+  });
+  document.querySelectorAll('.sub-pill').forEach(function(b){ b.classList.remove('active'); });
+  var el = document.getElementById(id);
+  if (el) { el.classList.add('active'); el.style.display = 'block'; }
+  if (btn) btn.classList.add('active');
+}
+
+function showSub(id, triggerEl) {
+  document.querySelectorAll('.sub-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
+  var el = document.getElementById('sub-' + id);
+  if(el) el.classList.add('active');
+  if(triggerEl) triggerEl.classList.add('active');
+  else if(typeof event !== 'undefined' && event && event.target) event.target.classList.add('active');
+}
+
+(function(){
+  var r = sessionStorage.getItem('hyperion_role') || 'experienced';
+  var cn = document.getElementById('chip-new');
+  var ce = document.getElementById('chip-exp');
+  if(r==='new_associate'){ if(cn) cn.style.display='inline-block'; }
+  else { if(ce) ce.style.display='inline-block'; }
+  if(r==='new_associate'){
+    document.querySelectorAll('#sys-nav a[data-roles="experienced"]').forEach(function(a){a.style.display='none';});
+    document.querySelectorAll('.exp-only').forEach(function(el){el.style.display='none';});
+  }
+})();
+
+</script>
+<script>
+try {
+const glossary = [
+  { term:'FNA — Financial Needs Analysis', def:'The discovery meeting tool used to assess a client\'s current financial situation, gaps, and goals. Every client starts here.' },
+  { term:'IUL — Indexed Universal Life', def:'Permanent life insurance that builds cash value tied to a stock market index. Offers tax-free retirement income, death benefit, and protection from market loss.' },
+  { term:'Term Life Insurance', def:'Coverage for a set period (10, 20, 30 years). Most affordable per dollar of death benefit. Great starting product for young families.' },
+  { term:'FIA — Fixed Index Annuity', def:'Retirement vehicle with principal protection. Growth tied to market index with no direct market participation. Zero loss in down years.' },
+  { term:'RILA — Registered Index-Linked Annuity', def:'Like an FIA but with some downside risk (buffer) in exchange for higher growth potential. For more risk-tolerant clients.' },
+  { term:'LTC — Long-Term Care Insurance', def:'Covers costs of care (home care, assisted living, nursing home) when unable to perform basic daily activities. Massively underdiscussed.' },
+  { term:'BPM — Business Presentation Meeting', def:'WFG\'s primary event to show the business opportunity to prospects. Your most powerful recruiting tool.' },
+  { term:'GX1 / GX2 / GX3', def:'Monthly growth achievement levels. GX1 = first level of monthly production. Three consecutive months earns SMD qualification.' },
+  { term:'SMD — Senior Marketing Director', def:'Leadership level achieved with 90,000 personal + team points for 3 consecutive months.' },
+  { term:'EMD — Executive Marketing Director', def:'Next level above SMD. Requires 3 SMDs on your team and 500,000 team points.' },
+  { term:'Cash Value', def:'The savings component inside a permanent life insurance policy that grows over time and can be borrowed against tax-free.' },
+  { term:'Death Benefit', def:'The tax-free lump sum paid to beneficiaries upon the insured\'s death.' },
+  { term:'Premium', def:'The amount a policyholder pays for insurance coverage, typically monthly or annually.' },
+  { term:'Beneficiary', def:'The person(s) designated to receive the death benefit or policy proceeds.' },
+  { term:'Underwriting', def:'The process insurance companies use to assess risk and determine eligibility and pricing for coverage.' },
+{ term:'Risk Mitigation', def:'The strategic reduction of financial exposure to market loss, taxation, volatility, lawsuits, inflation, or catastrophic life events.' },
+
+{ term:'Tax Efficiency', def:'Structuring wealth so clients keep more of what they earn through strategic tax positioning and tax-advantaged vehicles.' },
+
+{ term:'Tax Diversification', def:'Building multiple buckets of retirement income — taxable, tax-deferred, and tax-free — to maximize flexibility and reduce future tax exposure.' },
+
+{ term:'Tax-Free Retirement Income', def:'Retirement income structured to be received without triggering income taxation when designed properly.' },
+
+{ term:'Tax-Equivalent Return', def:'The taxable rate of return required to equal the value of a tax-free return. Used to demonstrate the hidden value of tax-free accumulation.' },
+
+{ term:'Future Tax Liability', def:'The taxes owed in the future on qualified retirement accounts such as 401(k)s and IRAs. Often called the hidden retirement tax bomb.' },
+
+{ term:'Financial Architecture', def:'The overall design and structure of a family’s financial strategy, including protection, cash flow, tax positioning, and wealth accumulation.' },
+
+{ term:'Capital Preservation', def:'A strategy focused on protecting principal while still allowing for strategic long-term growth.' },
+
+{ term:'Downside Protection', def:'Protecting assets from market loss while still participating in potential upside growth.' },
+
+{ term:'Volatility Management', def:'Reducing the negative impact of market fluctuations on long-term financial outcomes.' },
+
+{ term:'Sequence Risk', def:'The danger of suffering major market losses near or during retirement, which can permanently damage portfolio longevity.' },
+
+{ term:'Income Distribution Strategy', def:'A retirement strategy focused on how assets are withdrawn efficiently and sustainably over time.' },
+
+{ term:'Strategic Wealth Accumulation', def:'A long-term approach to building wealth using disciplined, tax-efficient, and risk-conscious financial strategies.' },
+
+{ term:'Cash Flow Optimization', def:'Improving how income is managed, directed, and utilized to maximize financial efficiency and growth.' },
+
+{ term:'Liquidity Strategy', def:'Maintaining accessible capital while still allowing long-term assets to grow efficiently.' },
+
+{ term:'Capital Allocation', def:'Strategically positioning money across different financial vehicles based on risk, taxes, liquidity, and growth objectives.' },
+
+{ term:'Financial Independence', def:'The ability to sustain one’s lifestyle without dependence on active employment income.' },
+
+{ term:'Generational Wealth', def:'Assets, values, and financial structures intentionally designed to benefit future generations.' },
+
+{ term:'Legacy Planning', def:'The process of structuring wealth transfer, protection, and family impact for future generations.' },
+
+{ term:'Estate Efficiency', def:'Strategies designed to minimize taxes, delays, and erosion of assets during wealth transfer.' },
+
+{ term:'Family Wealth Continuity', def:'Ensuring wealth, assets, and financial values successfully transfer across generations.' },
+
+{ term:'Economic Security', def:'A family’s ability to withstand financial disruptions while maintaining stability and quality of life.' },
+
+{ term:'Market Participation with Protection', def:'Participating in portions of market upside while avoiding direct exposure to full market losses.' },
+
+{ term:'Protected Growth Strategy', def:'A financial strategy designed to capture growth opportunities while minimizing downside exposure.' },
+
+{ term:'Financial Stewardship', def:'Managing money responsibly and intentionally to create long-term impact and legacy.' },
+
+{ term:'Financial Literacy Crisis', def:'The widespread lack of financial education preventing families from building long-term economic security.' },
+
+{ term:'No Family Left Behind', def:'The core crusade and mission of helping families achieve financial education, protection, and independence regardless of income level.' },
+
+{ term:'Identity Expansion', def:'The personal growth process where an individual elevates their self-image, confidence, and belief system to operate at higher levels.' },
+
+{ term:'Borrowed Belief', def:'Leveraging the confidence and conviction of mentors and leaders until personal certainty is developed.' },
+
+{ term:'Leadership Multiplication', def:'Building organizations by developing leaders who can independently train, mentor, and duplicate others.' },
+
+{ term:'Mission-Driven Entrepreneurship', def:'Building a business centered around purpose, impact, and service rather than purely income.' },
+
+{ term:'Entrepreneurial Platform', def:'A scalable business system allowing individuals to create ownership, leverage, and long-term residual income.' },
+
+{ term:'Time Leverage', def:'Creating income and impact beyond the limitations of personal hours worked.' },
+
+{ term:'Residual Income', def:'Ongoing income generated from previously built systems, teams, or assets.' },
+
+{ term:'Scalable Impact', def:'The ability to positively affect increasingly larger numbers of families through leadership and systems.' },
+
+{ term:'Strategic Positioning', def:'Presenting financial solutions in a way that aligns with a client’s long-term goals, psychology, and identity.' },
+
+{ term:'Affluent Market', def:'Professionals, business owners, and high-income earners seeking advanced financial efficiency and wealth strategies.' },
+
+{ term:'High-Identity Market', def:'Individuals who operate with high standards, leadership capacity, ambition, and long-term vision.' },
+
+{ term:'Economic Leverage', def:'Using systems, teams, capital, or financial structures to multiply output and results.' },
+
+{ term:'Financial Efficiency', def:'Maximizing the amount of wealth retained and utilized after taxes, fees, and unnecessary risk.' },
+
+{ term:'Long-Term Economic Security', def:'A stable and sustainable financial future protected against inflation, taxation, volatility, and unforeseen events.' },
+
+{ term:'Financial Impact', def:'The measurable improvement created in a family’s financial future through strategic planning and education.' },
+
+{ term:'Lifestyle by Design', def:'Intentionally creating a life centered around faith, family, freedom, and purpose rather than reacting to circumstances.' },
+
+{ term:'Quality of Life', def:'The overall level of freedom, fulfillment, health, relationships, and time experienced by an individual or family.' },
+
+{ term:'Crusade', def:'The larger mission and purpose behind the business — helping families win financially while developing leaders.' },
+
+{ term:'Vision Casting', def:'Helping individuals see a larger future possibility for their lives, family, finances, and impact.' },
+
+{ term:'Possibility Projection', def:'Projecting a compelling future vision that inspires belief, action, and personal expansion.' },
+
+{ term:'Leadership from the Front', def:'Leading through personal example, production, consistency, and activity rather than words alone.' },
+
+{ term:'Conviction', def:'Unshakable belief in the mission, products, platform, and impact of the business.' },
+
+{ term:'Value-Based Conversation', def:'A conversation focused on outcomes, impact, and transformation rather than products or transactions.' },
+
+{ term:'Strategic Discovery', def:'The process of uncovering a client’s goals, risks, inefficiencies, and opportunities through questions.' },
+];
+const gl = (document.getElementById('glossary-list') || {innerHTML:'', forEach:function(){}});
+glossary.forEach(g => {
+  gl.innerHTML += `<div class="gloss-item"><div class="gloss-term">${g.term}</div><div class="gloss-def">${g.def}</div></div>`;
+});
+
+// Build search index now that all dynamic content has been injected into the DOM
+buildSearchIndex();
+
+
+const trainingPhases = [
+  { phase:'Phase 1', badge:'badge-navy', accent:'var(--navy-mid)', title:'Days 1–3: Belief & Foundation', items:['Why WFG & the mission — personal story from our Leaders','The financial problem in America — why families need us','How to build your 100-name list (complete by end of Day 2)','Products overview: Term, IUL, Annuities, LTC (high-level)','Identity shift — you are a financial professional now'] },
+  { phase:'Phase 2', badge:'badge-gold', accent:'var(--gold-deep)', title:'Days 4–10: Licensing & Scripts', items:['Start licensing prep — son tracks progress daily','Memorize the NEPQ contact script — role play daily','Practice the two-door approach: business + client','Attend BPM as a guest, then as an associate guide','Shadow SMDs on 2–3 appointments'] },
+  { phase:'Phase 3', badge:'badge-navy', accent:'var(--navy-mid)', title:'Days 11–21: Field Training', items:['Observe 10 Step 1 and 2s with trainer present (SMD or senior associate)','Learn to complete FNA and position solutions','Present to 3 people solo with feedback session after each','Lock first personal appointments from your own list','Weekly accountability call with SMD — every Monday'] },
+  { phase:'Phase 4', badge:'badge-green', accent:'var(--green-text)', title:'Days 22–30: GX1 Sprint', items:['Complete 10 Step 1 and 2s independently','Write first personal policy — celebrate publicly at BPM','Recruit first person — walk them through this same program','Attend recognition at BPM','Set GX2 goals with SMD. Begin Month 2 planning.'] }
+];
+const trc = (document.getElementById('training-cards') || {innerHTML:'', forEach:function(){}});
+trainingPhases.forEach((ph, pi) => {
+  trc.innerHTML += `<div class="card" style="border-left:4px solid ${ph.accent};border-radius:0 16px 16px 0;margin-bottom:18px"><div class="badge ${ph.badge}">${ph.phase}</div><h3>${ph.title}</h3><ul class="step-list" style="margin-top:14px">${ph.items.map((item,i)=>`<li class="step-item"><div class="step-num" style="background:var(--gold);color:var(--navy)">${i+1}</div><div class="step-body"><p style="margin:0;font-size:14px;color:#2d3a4a">${item}</p></div></li>`).join('')}</ul></div>`;
+});
+
+
+
+
+
+} catch(e){ console.warn("IS render:", e.message); }
+</script>
+
+<div class="pg-sec exp-only" id="s-tru" style="display:none">
+<div class="sub-section" id="sub-res-trustworthy">
 <div class="section-header">
 <div class="eyebrow">Sales Training</div>
 <h2>Trustworthy Selling — New Agent Competence Kit</h2>
@@ -4923,38 +5231,88 @@ body { margin:0; background:var(--cream,#faf8f4); color:var(--navy,#0c1d30); fon
 &lt;/html&gt;
 " style="width:100%;height:860px;border:none;display:block" title="Trustworthy Selling New Agent Kit"></iframe>
 </div>
-</div></div>
+</div>
 </div>
 
-
+<!-- SWITCH ROLE MODAL -->
+<div id="sw-overlay" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(8,15,30,.85);backdrop-filter:blur(6px);align-items:center;justify-content:center;" onclick="swClose(event)">
+  <div id="sw-box" style="background:#0c1d30;border:1px solid rgba(201,168,76,.3);border-radius:16px;padding:36px 32px;width:100%;max-width:360px;box-shadow:0 24px 60px rgba(0,0,0,.5);position:relative;">
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c9a84c,transparent);border-radius:16px 16px 0 0;"></div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(201,168,76,.6);margin-bottom:10px;">Hyperion System</div>
+    <div style="font-size:20px;font-weight:800;color:#fff;margin-bottom:6px;">Switch Role</div>
+    <div style="font-size:13px;color:rgba(255,255,255,.4);margin-bottom:24px;line-height:1.5;">Enter your access code to switch roles.</div>
+    <input id="sw-input" type="password" placeholder="Enter access code" autocomplete="off"
+      style="width:100%;padding:13px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.25);border-radius:10px;color:#fff;font-size:15px;font-family:inherit;outline:none;letter-spacing:.1em;margin-bottom:8px;"
+      onkeydown="if(event.key==='Enter')swSubmit()"/>
+    <div id="sw-err" style="display:none;font-size:12px;color:#e05555;margin-bottom:10px;padding:8px 12px;background:rgba(224,85,85,.1);border-radius:6px;">⚠ Incorrect code. Try again.</div>
+    <button onclick="swSubmit()" style="width:100%;padding:13px;background:#c9a84c;color:#0c1d30;border:none;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:.04em;transition:background .2s;">Confirm Switch</button>
+    <button onclick="swClose()" style="width:100%;padding:10px;background:transparent;color:rgba(255,255,255,.3);border:none;border-radius:10px;font-size:13px;cursor:pointer;font-family:inherit;margin-top:6px;">Cancel</button>
+  </div>
+</div>
 <script>
-function showSection(id,btn){
-  document.querySelectorAll('.page-section').forEach(function(s){s.classList.remove('active');});
-  document.querySelectorAll('.page-subbtn').forEach(function(b){b.classList.remove('active');});
-  document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
+function swOpen(){
+  var ov=document.getElementById('sw-overlay');
+  ov.style.display='flex';
+  var inp=document.getElementById('sw-input');
+  inp.value='';
+  document.getElementById('sw-err').style.display='none';
+  setTimeout(function(){inp.focus();},100);
 }
-(function(){
-  var r=sessionStorage.getItem('hyperion_role');
-  if(r==='new_associate'){
-    document.querySelectorAll('.exp-only').forEach(function(el){el.style.display='none';});
+function swClose(e){
+  if(!e||e.target===document.getElementById('sw-overlay'))
+    document.getElementById('sw-overlay').style.display='none';
+}
+function swSubmit(){
+  var val=document.getElementById('sw-input').value.trim().toUpperCase();
+  var err=document.getElementById('sw-err');
+  if(val==='LEGACY'){
+    sessionStorage.setItem('hyperion_role','new_associate');
+    location.reload();
+  } else if(val==='1437'){
+    sessionStorage.setItem('hyperion_role','experienced');
+    location.reload();
+  } else {
+    err.style.display='block';
+    var box=document.getElementById('sw-box');
+    box.style.animation='none';
+    setTimeout(function(){
+      box.style.animation='swShake .35s ease';
+    },10);
+    document.getElementById('sw-input').value='';
+    document.getElementById('sw-input').focus();
   }
-})();
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape') document.getElementById('sw-overlay').style.display='none';
+});
 </script>
 <style>
-.page-subbtn{padding:7px 14px;border:1px solid var(--border-gold,rgba(201,168,76,.3));border-radius:20px;background:transparent;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;color:var(--navy,#0c1d30);transition:all .15s;}
-.page-subbtn:hover{background:rgba(201,168,76,.08);}
-.page-subbtn.active{background:var(--navy,#0c1d30);color:var(--gold,#c9a84c);border-color:var(--navy,#0c1d30);}
-.page-section{display:none;}.page-section.active{display:block;}
+@keyframes swShake{0%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}100%{transform:translateX(0)}}
+#sw-input:focus{border-color:rgba(201,168,76,.6);background:rgba(255,255,255,.07);}
 </style>
 
-<script>
-// Show role chip
-(function(){
-  var r = sessionStorage.getItem('hyperion_role');
-  if(r === 'new_associate') document.getElementById('chip-new').style.display='inline-flex';
-  else document.getElementById('chip-exp').style.display='inline-flex';
-})();
-</script>
+<style>
+html, body {
+  background: #080f1e !important;
+  color: #fff !important;
+}
+#sys-topbar { background: rgba(8,15,30,.98) !important; }
+#sys-nav { background: rgba(8,15,30,.95) !important; border-bottom: 1px solid rgba(201,168,76,.12) !important; }
+#sys-content { background: transparent !important; padding: 0 !important; max-width: 100% !important; }
+.sub-pills { background: rgba(8,15,30,.97) !important; margin: 0 !important; border-radius: 0 !important; width: 100%; }
+.pg-sec, .pg-sec.active { background: transparent !important; }
+/* Kill ALL white/cream backgrounds from shared CSS */
+.card, .card-navy, .card-gold, .card-green { background: #0c1528 !important; border-color: rgba(255,255,255,.07) !important; }
+.tab, .sub-section { background: transparent !important; }
+/* White square checkbox issue */
+.esg-check-box, .chk, .chk-box, input[type="checkbox"] { display: none !important; }
+/* Fix any overflow white */
+* { box-sizing: border-box; }
+</style>
+<style>
+.ti-lang { display: grid !important; grid-template-columns: 1fr 1fr !important; }
+.ti-lang-col { display: block !important; }
+.ti-lang-no { border-right: 1px solid rgba(201,168,76,.1) !important; }
+</style>
 </body>
 </html>

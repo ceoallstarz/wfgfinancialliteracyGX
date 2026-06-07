@@ -2,28 +2,63 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Closing / Helping a Family — Hyperion Legacy Builders</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Closing / Helping a Family — Hyperion</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
-
-<script>
-(function(){
-  var role = sessionStorage.getItem('hyperion_role');
-  if(!role){ window.location.href='../index.html'; return; }
-  if(role==="new_associate"){{ window.location.href="../index.html"; return; }}
-  document.documentElement.setAttribute('data-role', role);
-  // Hide experienced-only nav links for new associates
-  document.addEventListener('DOMContentLoaded', function(){
-    if(role === 'new_associate'){
-      document.querySelectorAll('.sys-nav-link[data-roles="experienced"]').forEach(function(el){
-        el.style.display = 'none';
-      });
-    }
-  });
-})();
-</script>
 <style>
-
+/* ── RESET BEFORE ORIGINAL CSS ── */
+html, body { margin:0; padding:0; overflow-x:hidden; overflow-y:auto !important; height:auto !important; background:#faf8f4; }
+* { box-sizing:border-box; }
+/* ── SYSTEM SHELL ── */
+#sys-topbar {
+  background:#0c1d30; padding:10px 20px;
+  display:flex; align-items:center; justify-content:space-between;
+  border-bottom:2px solid #c9a84c;
+  position:sticky; top:0; z-index:99999;
+  font-family:'Inter',system-ui,sans-serif;
+}
+#sys-topbar .brand { color:#c9a84c; font-weight:700; font-size:14px; letter-spacing:.08em; }
+#sys-topbar .actions { display:flex; gap:8px; align-items:center; }
+#sys-topbar a, #sys-topbar button {
+  background:transparent; color:rgba(201,168,76,.8);
+  border:1px solid rgba(201,168,76,.3); padding:5px 13px;
+  font-size:11px; font-weight:600; border-radius:6px; cursor:pointer;
+  text-decoration:none; font-family:inherit;
+}
+#sys-topbar a:hover, #sys-topbar button:hover { background:rgba(201,168,76,.15); color:#c9a84c; }
+.role-chip { font-size:11px; font-weight:600; padding:3px 9px; border-radius:20px; border:1px solid; }
+.chip-new { background:rgba(201,168,76,.15); color:#c9a84c; border-color:rgba(201,168,76,.4); }
+.chip-exp { background:rgba(26,150,100,.15); color:#4ade80; border-color:rgba(26,150,100,.4); }
+#sys-nav {
+  background:#faf8f4; border-bottom:1px solid rgba(201,168,76,.3);
+  overflow-x:auto; position:sticky; top:52px; z-index:99998;
+  font-family:'Inter',system-ui,sans-serif;
+}
+#sys-nav-inner { display:flex; max-width:1200px; margin:0 auto; padding:0 16px; }
+#sys-nav a {
+  display:inline-block; padding:11px 9px; font-size:11px; font-weight:500;
+  color:#4b5563; text-decoration:none; border-bottom:2px solid transparent;
+  white-space:nowrap;
+}
+#sys-nav a:hover { color:#0c1d30; }
+#sys-nav a.active { color:#0c1d30; border-bottom-color:#c9a84c; font-weight:700; }
+#sys-content { max-width:1200px; margin:0 auto; padding:28px 20px 80px; }
+/* sub-nav pills */
+.sub-pills { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:24px; padding-bottom:14px; border-bottom:1px solid rgba(12,29,48,.1); font-family:'Inter',system-ui,sans-serif; }
+.sub-pill {
+  padding:7px 14px; border:1px solid rgba(12,29,48,.2); border-radius:20px;
+  background:transparent; font-size:12px; font-weight:500; cursor:pointer;
+  font-family:inherit; color:#0c1d30; transition:all .15s;
+}
+.sub-pill:hover { background:rgba(201,168,76,.1); border-color:rgba(201,168,76,.5); }
+.sub-pill.active { background:#0c1d30; color:#c9a84c; border-color:#0c1d30; }
+.pg-sec { display:none !important; }
+.pg-sec.active { display:block !important; }
+/* force original tab content visible */
+.tab { display:block !important; padding:0 !important; }
+.tab.active { display:block !important; }
+</style>
+<style>
 /* GX SMD Resource Embedded Styles */
 :root {
   --header-height: 72px;
@@ -2377,92 +2412,207 @@ h1, h2, h3, h4, h5, h6,
   background: rgba(201,168,76,0.05) !important;
 }
 .sub-page-btn:hover { background: rgba(12,29,48,0.03) !important; color: var(--navy-mid) !important; }
-
-/* ── System page shell ── */
-body { margin:0; background:var(--cream,#faf8f4); color:var(--navy,#0c1d30); font-family:'Inter',system-ui,sans-serif; }
-.sys-topbar {
-  background:var(--navy,#0c1d30);
-  padding:10px 24px;
-  display:flex; align-items:center; justify-content:space-between;
-  border-bottom:2px solid var(--gold,#c9a84c);
-  position:sticky; top:0; z-index:200;
-}
-.sys-topbar-brand { color:var(--gold,#c9a84c); font-weight:700; font-size:15px; letter-spacing:.08em; }
-.sys-topbar-actions { display:flex; gap:10px; align-items:center; }
-.sys-topbar-btn {
-  background:transparent; color:rgba(201,168,76,.75);
-  border:1px solid rgba(201,168,76,.3); padding:6px 14px;
-  font-size:12px; font-weight:600; border-radius:6px; cursor:pointer;
-  text-decoration:none; font-family:inherit;
-}
-.sys-topbar-btn:hover { background:rgba(201,168,76,.1); }
-.role-chip {
-  font-size:11px; font-weight:600; padding:3px 10px; border-radius:20px;
-  letter-spacing:.04em;
-}
-.role-chip-new { background:rgba(201,168,76,.18); color:var(--gold,#c9a84c); border:1px solid rgba(201,168,76,.3); }
-.role-chip-exp { background:rgba(26,150,100,.18); color:#4ADE80; border:1px solid rgba(26,150,100,.3); }
-.sys-nav-wrapper {
-  background:rgba(250,248,244,.97);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(201,168,76,.25);
-  overflow-x:auto; position:sticky; top:52px; z-index:100;
-}
-.sys-nav-inner {
-  display:flex; max-width:1200px; margin:0 auto; padding:0 24px;
-}
-.sys-nav-link {
-  display:inline-block; padding:11px 10px; font-size:11.5px; font-weight:500;
-  color:#374151; text-decoration:none; border-bottom:2px solid transparent;
-  white-space:nowrap; transition:all .15s;
-}
-.sys-nav-link:hover { color:var(--navy,#0c1d30); background:rgba(12,29,48,.03); }
-.sys-page-content { max-width:1200px; margin:0 auto; padding:32px 24px 80px; }
-/* Fix tab display in standalone pages */
-.tab { display:block !important; }
-.sub-section { display:none; }
-.sub-section.active { display:block; }
-.rp-section { display:none; }
-.rp-section.active { display:block; }
 </style>
+<style>
+/* ── OVERRIDE ORIGINAL CSS CONFLICTS ── */
+html, body { overflow-y:auto !important; overflow-x:hidden; height:auto !important; }
+.tab { display:block !important; }
+.pg-sec { display:none !important; }
+.pg-sec.active { display:block !important; }
+#system-modal { display:none !important; }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+/* ═══ DARK LUXURY THEME — HYPERION ═══ */
+html, body {
+  background: #080f1e !important;
+  color: rgba(255,255,255,.85) !important;
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+}
+
+/* TOPBAR */
+#sys-topbar {
+  background: rgba(8,15,30,.98) !important;
+  border-bottom: 1px solid rgba(201,168,76,.2) !important;
+  backdrop-filter: blur(12px);
+}
+#sys-topbar .brand { color: #c9a84c !important; }
+#sys-topbar a, #sys-topbar button {
+  color: rgba(201,168,76,.7) !important;
+  border-color: rgba(201,168,76,.25) !important;
+}
+#sys-topbar a:hover, #sys-topbar button:hover {
+  color: #c9a84c !important;
+  background: rgba(201,168,76,.08) !important;
+}
+
+/* NAV */
+#sys-nav {
+  background: rgba(8,15,30,.95) !important;
+  border-bottom: 1px solid rgba(201,168,76,.12) !important;
+}
+#sys-nav a { color: rgba(255,255,255,.4) !important; }
+#sys-nav a:hover { color: rgba(255,255,255,.75) !important; }
+#sys-nav a.active { color: #c9a84c !important; border-bottom-color: #c9a84c !important; }
+
+/* CONTENT */
+#sys-content { background: transparent !important; }
+
+/* SUB PILLS */
+.sub-pills {
+  background: rgba(8,15,30,.95) !important;
+  border-bottom: 1px solid rgba(201,168,76,.12) !important;
+  position: sticky !important;
+  top: 104px !important;
+  z-index: 100 !important;
+  padding: 14px 20px !important;
+  margin: 0 -20px 20px !important;
+}
+.sub-pill {
+  color: rgba(255,255,255,.5) !important;
+  border-color: rgba(201,168,76,.2) !important;
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+}
+.sub-pill:hover { background: rgba(201,168,76,.07) !important; color: #c9a84c !important; }
+.sub-pill.active {
+  background: rgba(201,168,76,.15) !important;
+  color: #c9a84c !important;
+  border-color: rgba(201,168,76,.4) !important;
+}
+.sub-pill.exp-only { display: inline-block; }
+
+/* CARDS */
+.card {
+  background: #0c1528 !important;
+  border-color: rgba(255,255,255,.07) !important;
+  color: rgba(255,255,255,.8) !important;
+}
+.card-navy { background: #0a1020 !important; border-color: rgba(201,168,76,.15) !important; }
+.card-gold { background: rgba(201,168,76,.07) !important; border-color: rgba(201,168,76,.2) !important; }
+.card-green { background: rgba(26,100,68,.15) !important; border-color: rgba(26,100,68,.3) !important; }
+
+/* HEADINGS */
+h1, h2, h3, h4 { color: #fff !important; font-family: 'Cormorant Garamond', Georgia, serif !important; }
+.section-title, .eyebrow { color: #c9a84c !important; }
+.section-header h2 { color: #fff !important; font-family: 'Cormorant Garamond', Georgia, serif !important; font-size: clamp(24px,3vw,36px) !important; }
+
+/* BODY TEXT */
+p { color: rgba(255,255,255,.65) !important; }
+.card p { color: rgba(255,255,255,.65) !important; }
+.card strong { color: rgba(255,255,255,.9) !important; }
+
+/* BADGES */
+.badge { font-family: 'DM Sans', system-ui !important; }
+.badge-gold { background: rgba(201,168,76,.15) !important; color: #c9a84c !important; }
+.badge-navy { background: rgba(255,255,255,.08) !important; color: rgba(255,255,255,.7) !important; }
+.badge-green { background: rgba(26,100,68,.2) !important; color: #4ade80 !important; }
+.badge-red { background: rgba(192,57,43,.2) !important; color: #f87171 !important; }
+
+/* STEP LISTS */
+.step-list .step-item .step-body h4 { color: #fff !important; }
+.step-list .step-item .step-body p { color: rgba(255,255,255,.6) !important; }
+.step-num { background: rgba(201,168,76,.15) !important; color: #c9a84c !important; border-color: rgba(201,168,76,.3) !important; }
+.step-num.gold { background: #c9a84c !important; color: #080f1e !important; }
+
+/* WARN CHIPS / SIGNAL CHIPS */
+.warn-chip { background: rgba(255,255,255,.04) !important; border-color: rgba(255,255,255,.08) !important; }
+.signal-chip { background: rgba(255,255,255,.04) !important; border-color: rgba(255,255,255,.06) !important; color: rgba(255,255,255,.7) !important; }
+
+/* TABS */
+.tab-btn { background: rgba(255,255,255,.04) !important; border-color: rgba(255,255,255,.1) !important; color: rgba(255,255,255,.5) !important; font-family: 'DM Sans', system-ui !important; }
+.tab-btn.active { background: #c9a84c !important; color: #080f1e !important; border-color: #c9a84c !important; }
+.tab-btn:hover:not(.active) { background: rgba(201,168,76,.08) !important; color: rgba(255,255,255,.8) !important; }
+
+/* METRIC BOXES */
+.metric-box { background: #0c1528 !important; border-color: rgba(201,168,76,.15) !important; }
+.metric-box .num { color: #c9a84c !important; font-family: 'Cormorant Garamond', serif !important; }
+.metric-box .lbl { color: rgba(255,255,255,.5) !important; font-family: 'DM Sans', system-ui !important; }
+
+/* FORMS / INPUTS */
+input, textarea, select { background: rgba(255,255,255,.06) !important; border-color: rgba(255,255,255,.12) !important; color: #fff !important; font-family: 'DM Sans', system-ui !important; }
+
+/* LINKS */
+.cta-btn { background: rgba(201,168,76,.1) !important; border-color: rgba(201,168,76,.3) !important; color: #c9a84c !important; }
+.cta-btn:hover { background: rgba(201,168,76,.2) !important; }
+
+/* OBJECTION ITEMS */
+.obj-item { background: #0c1528 !important; border-color: rgba(255,255,255,.07) !important; }
+.obj-q { color: rgba(255,255,255,.85) !important; }
+.obj-a { background: rgba(255,255,255,.03) !important; color: rgba(255,255,255,.7) !important; border-color: rgba(201,168,76,.15) !important; }
+
+/* GRID CARDS */
+.grid2 > .card, .grid3 > .card { background: #0c1528 !important; }
+
+/* TAGS */
+.tag { background: rgba(255,255,255,.07) !important; color: rgba(255,255,255,.6) !important; border: 1px solid rgba(255,255,255,.1) !important; }
+.tag-gold { background: rgba(201,168,76,.12) !important; color: #c9a84c !important; border-color: rgba(201,168,76,.2) !important; }
+.tag-navy { background: rgba(255,255,255,.06) !important; color: rgba(255,255,255,.7) !important; }
+
+/* SECTION HEADERS */
+.section-header p { color: rgba(255,255,255,.55) !important; }
+
+/* HIDE WHITE CHECKBOX ARTIFACTS */
+.esg-check-box, .chk-box { display: none !important; }
+
+/* NAV PILLS in contact scripts etc */
+.nav-pill, .npill { color: rgba(255,255,255,.5) !important; border-color: rgba(201,168,76,.2) !important; font-family: 'DM Sans', system-ui !important; }
+.nav-pill.active, .npill.act { background: rgba(201,168,76,.15) !important; color: #c9a84c !important; border-color: rgba(201,168,76,.4) !important; }
+
+/* SCORE / MISC */
+.primary-btn { background: #c9a84c !important; color: #080f1e !important; border: none !important; }
+.secondary-btn { background: rgba(255,255,255,.08) !important; color: rgba(255,255,255,.7) !important; border-color: rgba(255,255,255,.12) !important; }
+
+/* OVERRIDE WHITE FROM SHARED CSS */
+:root {
+  --bg: #080f1e !important;
+  --bg2: #0c1528 !important;
+  --surface: #0f1d38 !important;
+  --white: #fff !important;
+  --off-white: #0c1528 !important;
+  --gray-50: #0a1020 !important;
+  --text: rgba(255,255,255,.85) !important;
+  --text-2: rgba(255,255,255,.65) !important;
+  --text-3: rgba(255,255,255,.4) !important;
+  --border: rgba(255,255,255,.08) !important;
+}
+</style>
+
 </head>
 <body>
 
-<!-- TOP BAR -->
-<div class="sys-topbar">
-  <span class="sys-topbar-brand">⚙ RFM SYSTEM — HYPERION</span>
-  <div class="sys-topbar-actions">
-    <span class="role-chip role-chip-new" id="chip-new" style="display:none">🟡 New Associate</span>
-    <span class="role-chip role-chip-exp" id="chip-exp" style="display:none">🟢 Experienced</span>
-    <a href="../index.html" class="sys-topbar-btn" onclick="sessionStorage.removeItem('hyperion_role');return true;">⇄ Switch Role</a>
-    <a href="../index.html" class="sys-topbar-btn">✕ Exit</a>
+<div id="sys-topbar">
+  <span class="brand">⚙ RFM SYSTEM — HYPERION</span>
+  <div class="actions">
+    <span class="role-chip chip-new" id="chip-new" style="display:none">🟡 New Associate</span>
+    <span class="role-chip chip-exp" id="chip-exp" style="display:none">🟢 Experienced</span>
+    <button onclick="swOpen()">⇄ Switch Role</button>
+    <a href="../index.html">✕ Exit</a>
   </div>
 </div>
 
-<!-- PAGE NAV -->
-<div class="sys-nav-wrapper">
-  <div class="sys-nav-inner">
-<a href="mission-hq.html" class="sys-nav-link" data-roles="all">🎯 Mission HQ</a>
-<a href="fast-start-onboarding.html" class="sys-nav-link" data-roles="all">🚀 Fast Start Onboarding</a>
-<a href="prospecting.html" class="sys-nav-link" data-roles="all">📋 Prospecting</a>
-<a href="contact-scripts.html" class="sys-nav-link" data-roles="all">📞 Contact Scripts</a>
-<a href="objections.html" class="sys-nav-link" data-roles="all">🛡️ Objections</a>
-<a href="presentations.html" class="sys-nav-link" data-roles="all">🎞 Presentations</a>
-<a href="closing.html" class="sys-nav-link" style="border-bottom:2px solid var(--gold);color:var(--navy);font-weight:600;" data-roles="experienced">🤝 Closing / Helping a Family</a>
-<a href="identity-shift.html" class="sys-nav-link" data-roles="all">💡 Identity Shift</a>
+<div id="sys-nav">
+  <div id="sys-nav-inner">
+<a href="mission-hq.html" data-roles="all">🎯 Mission HQ</a>
+<a href="fast-start-onboarding.html" data-roles="all">🚀 Fast Start Onboarding</a>
+<a href="prospecting.html" data-roles="all">📋 Prospecting</a>
+<a href="contact-scripts.html" data-roles="all">📞 Contact Scripts</a>
+<a href="objections.html" data-roles="all">🛡️ Objections</a>
+<a href="presentations.html" data-roles="all">🎞 Presentations</a>
+<a href="closing.html" class="active" data-roles="experienced">🤝 Closing / Helping Family</a>
+<a href="identity-shift.html" data-roles="all">💡 Identity Shift</a>
 
   </div>
 </div>
 
-<!-- CONTENT -->
-<div class="sys-page-content">
-
-<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--border,rgba(12,29,48,.09));">
-  <button class="page-subbtn active" onclick="showSection('s-close',this)">🤝 Close & Partner</button>
-  <button class="page-subbtn" onclick="showSection('s-helpfam',this)">👨‍👩‍👧 Help a Family</button>
-  <button class="page-subbtn" onclick="showSection('s-ltc',this)">🏥 LTC Campaign</button>
+<div id="sys-content">
+<div class="sub-pills">
+  <button class="sub-pill active exp-only" onclick="showSec('s-clo',this)">🤝 Close & Partner</button>
+  <button class="sub-pill exp-only" onclick="showSec('s-hel',this)">👨‍👩‍👧 Help a Family</button>
+  <button class="sub-pill exp-only" onclick="showSec('s-ltc',this)">🏥 LTC Campaign</button>
 </div>
-<div id="s-close" class="page-section active"><div class="tab" id="tab-close">
+<div class="pg-sec active" id="s-clo"><div class="tab" id="tab-close">
 <div class="section-header">
 <div class="eyebrow">Step 4</div>
 <h2>Close as Business Partner AND Client</h2>
@@ -2492,7 +2642,7 @@ body { margin:0; background:var(--cream,#faf8f4); color:var(--navy,#0c1d30); fon
 'Hey! I have some friends, Glenn and Mitch, who specialize in helping families and business owners create customized financial strategies and long-term solutions. No pressure at all — I just thought you’d genuinely enjoy meeting them and getting connected.' That's all I need."</div>
 </div>
 </div></div>
-<div id="s-helpfam" class="page-section"><div class="sub-section" id="sub-res-helpfamily">
+<div class="pg-sec" id="s-hel"><div class="sub-section" id="sub-res-helpfamily">
 <div class="sub-tab-row">
 <button class="sub-tab active" onclick="showHF('hf-fna')">📊 FNA Close</button>
 <button class="sub-tab" onclick="showHF('hf-tltc')">🤝 TLTC Recruit Close</button>
@@ -3108,7 +3258,7 @@ body { margin:0; background:var(--cream,#faf8f4); color:var(--navy,#0c1d30); fon
 </div>
 </div>
 </div></div>
-<div id="s-ltc" class="page-section"><div class="sub-section" id="sub-res-ltc">
+<div class="pg-sec" id="s-ltc"><div class="sub-section" id="sub-res-ltc">
 <div class="section-header">
 <div class="eyebrow">LTC Freedom Campaign</div>
 <h2>The One Conversation That Changes Everything</h2>
@@ -3218,37 +3368,2020 @@ body { margin:0; background:var(--cream,#faf8f4); color:var(--navy,#0c1d30); fon
 </div>
 </div>
 </div></div>
+
 </div>
-
-
+<style>
+/* ── Objections accordion fix ── */
+.obj-a { display:none; padding:14px 16px; color:#374151; line-height:1.7; font-size:14px; white-space:pre-line; }
+.obj-a.open { display:block !important; }
+.obj-q { cursor:pointer; }
+.obj-q .arrow { float:right; transition:transform .2s; }
+.obj-q.open .arrow { transform:rotate(180deg); }
+</style>
 <script>
-function showSection(id,btn){
-  document.querySelectorAll('.page-section').forEach(function(s){s.classList.remove('active');});
-  document.querySelectorAll('.page-subbtn').forEach(function(b){b.classList.remove('active');});
-  document.getElementById(id).classList.add('active');
+function getOffSet(){
+        var _offset = 450;
+        var windowHeight = window.innerHeight;
+
+        if(windowHeight > 500) {
+          _offset = 400;
+        } 
+        if(windowHeight > 680) {
+          _offset = 300
+        }
+        if(windowHeight > 830) {
+          _offset = 210;
+        }
+
+        return _offset;
+      }
+
+      function setParallaxPosition($doc, multiplier, $object){
+        var offset = getOffSet();
+        var from_top = $doc.scrollTop(),
+          bg_css = 'center ' +(multiplier * from_top - offset) + 'px';
+        $object.css({"background-position" : bg_css });
+      }
+
+      // Parallax function
+      // Adapted based on https://codepen.io/roborich/pen/wpAsm        
+      var background_image_parallax = function($object, multiplier, forceSet){
+        multiplier = typeof multiplier !== 'undefined' ? multiplier : 0.5;
+        multiplier = 1 - multiplier;
+        var $doc = $(document);
+        // $object.css({"background-attatchment" : "fixed"});
+
+        if(forceSet) {
+          setParallaxPosition($doc, multiplier, $object);
+        } else {
+          $(window).scroll(function(){          
+            setParallaxPosition($doc, multiplier, $object);
+          });
+        }
+      };
+
+      var background_image_parallax_2 = function($object, multiplier){
+        multiplier = typeof multiplier !== 'undefined' ? multiplier : 0.5;
+        multiplier = 1 - multiplier;
+        var $doc = $(document);
+        $object.css({"background-attachment" : "fixed"});
+        
+        $(window).scroll(function(){
+          if($(window).width() > 768) {
+            var firstTop = $object.offset().top,
+                pos = $(window).scrollTop(),
+                yPos = Math.round((multiplier * (firstTop - pos)) - 186);              
+
+            var bg_css = 'center ' + yPos + 'px';
+
+            $object.css({"background-position" : bg_css });
+          } else {
+            $object.css({"background-position" : "center" });
+          }
+        });
+      };
+      
+      $(function(){
+        // Hero Section - Background Parallax
+        background_image_parallax($(".tm-parallax"), 0.30, false);
+        background_image_parallax_2($("#contact"), 0.80);   
+        background_image_parallax_2($("#testimonials"), 0.80);   
+        
+        // Handle window resize
+        window.addEventListener('resize', function(){
+          background_image_parallax($(".tm-parallax"), 0.30, true);
+        }, true);
+
+        // Detect window scroll and update navbar
+        $(window).scroll(function(e){          
+          if($(document).scrollTop() > 120) {
+            $('.tm-navbar').addClass("scroll");
+          } else {
+            $('.tm-navbar').removeClass("scroll");
+          }
+        });
+        
+        // Close mobile menu after click 
+        $('#tmNav a').on('click', function(){
+          $('.navbar-collapse').removeClass('show'); 
+        })
+
+        // Scroll to corresponding section with animation
+        $('#tmNav').singlePageNav({
+          'easing': 'easeInOutExpo',
+          'speed': 600
+        });        
+        
+        // Add smooth scrolling to all links
+        // https://www.w3schools.com/howto/howto_css_smooth_scroll.asp
+        $("a").on('click', function(event) {
+          if (this.hash !== "") {
+            event.preventDefault();
+            var hash = this.hash;
+
+            $('html, body').animate({
+              scrollTop: $(hash).offset().top
+            }, 600, 'easeInOutExpo', function(){
+              window.location.hash = hash;
+            });
+          } // End if
+        });
+
+        // Pop up
+        $('.tm-gallery').magnificPopup({
+          delegate: 'a',
+          type: 'image',
+          gallery: { enabled: true }
+        });
+
+        $('.tm-testimonials-carousel').slick({
+          dots: true,
+          prevArrow: false,
+          nextArrow: false,
+          infinite: false,
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          responsive: [
+            {
+              breakpoint: 992,
+              settings: {
+                slidesToShow: 2
+              }
+            },
+            {
+              breakpoint: 768,
+              settings: {
+                slidesToShow: 2
+              }
+            }, 
+            {
+              breakpoint: 480,
+              settings: {
+                  slidesToShow: 1
+              }                 
+            }
+          ]
+        });
+
+        // Gallery
+        $('.tm-gallery').slick({
+          dots: true,
+          infinite: false,
+          slidesToShow: 5,
+          slidesToScroll: 2,
+          responsive: [
+          {
+            breakpoint: 1199,
+            settings: {
+              slidesToShow: 4,
+              slidesToScroll: 2
+            }
+          },
+          {
+            breakpoint: 991,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 2
+            }
+          },
+          {
+            breakpoint: 767,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1
+            }
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+        ]
+        });
+      });
+
+function rmShowPanel(id,btn){
+  document.querySelectorAll('#tab-referral .rm-panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('#tab-referral .phase-btn').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('rm-panel-'+id).classList.add('active');
   btn.classList.add('active');
 }
+function rmCopyText(btn,label){
+  var card=btn.closest('.rm-section-card');
+  var scripts=card.querySelectorAll('.rm-script-block');
+  var text=Array.from(scripts).map(function(s){return s.innerText.trim();}).join('\n\n');
+  navigator.clipboard.writeText(text).then(function(){
+    btn.innerHTML='<i class="ti ti-check" aria-hidden="true"></i>Copied!';
+    setTimeout(function(){btn.innerHTML='<i class="ti ti-copy" aria-hidden="true"></i>Copy script';},1800);
+  });
+}
+function rmUpdateTracker(){
+  var boxes=document.querySelectorAll('#rm-checklist input[type=checkbox]');
+  var done=Array.from(boxes).filter(function(b){return b.checked;}).length;
+  var total=boxes.length;
+  document.getElementById('rm-prog-fill').style.width=Math.round(done/total*100)+'%';
+  document.getElementById('rm-prog-text').textContent=done+' / '+total+' complete';
+  document.getElementById('rm-m-collected').textContent=document.getElementById('rm-c5').checked?'✓':'0';
+  document.getElementById('rm-m-calls').textContent=document.getElementById('rm-c7').checked?'✓':'0';
+  document.getElementById('rm-m-apts').textContent=document.getElementById('rm-c8').checked?'✓':'0';
+}
+
 (function(){
-  var r=sessionStorage.getItem('hyperion_role');
-  if(r==='new_associate'){
+/* ── namespaced data ── */
+const hcgStages=[
+  {
+    id:0,label:'New associate',sub:'Week 1–2 · just started',dot:'#B4B2A9',
+    open:' "Hey [Name]! It\'s [you] — how are you doing?"',
+    open_coach:'Let them talk 30–60 seconds. Actually listen. Trust is built here — before a single word about the event.',
+    bridge:' "Hey — I\'m really glad I caught you. I just started something new and honestly you were one of the first people I thought of. I wanted to personally invite you."',
+    bridge_coach:'"I just started something new" creates instant curiosity. Your excitement is real — that\'s your edge. Mean every word.',
+    ask:' "The company I just partnered with is hosting a free Zoom this week — Thursday at 6PM or Saturday at 9AM Pacific. It covers things most financial professionals never bother to explain to everyday families. From everything I\'ve seen so far, I walked away thinking — why didn\'t anyone teach us this sooner. I want you to see it too. Which works better — Thursday or Saturday?"',
+    ask_coach:'Then stop. Full stop. The silence belongs to them. Don\'t fill it.',
+    yes_them:' "Sure, I can do Saturday."',
+    yes_you:' "Perfect. What\'s your email? I\'m sending you the link right now. I\'m really glad you\'re coming — I think you\'re going to get a lot out of it."',
+    yes_coach:'Warm. Short. Send the link within 5 minutes. Don\'t add more.',
+    tip:'Your newness is your hook, not your weakness. When someone you trust calls excited about something new — you pay attention. Lead with that energy.',
+    alt_title:'Lean on your mentor',
+    alt:' "Hey [Name]! It\'s [you] — how are you doing?"\n\n[Listen 30–60 sec]\n\n"Hey — I just partnered with a company and we are hosting a free Zoom this week. Thursday at 6PM or Saturday at 9AM Pacific. It covers things most families were never taught. I want you to meet them and see why I walked away thinking — why didn\'t anyone teach us this sooner. Which works better — Thursday or Saturday?"',
+    alt_tip:' "I want you to meet them and see why I walked away thinking — why didn\'t anyone teach us this sooner. — one of the most honest and disarming lines a new associate can say.',
+    vm_text:' "Hey [Name], it\'s [you]. I just started something new and you were honestly one of the first people I thought of. Nothing crazy — I just wanted to personally reach out. Give me a call back when you get a sec, or I\'ll shoot you a text."',
+    vm_time:'~15 sec',
+    text_text:' "Hey [Name] — just left you a voicemail. I just partnered with company and they\'re hosting a free Zoom this Thursday at 6PM or Saturday at 9AM Pacific — About things we never learned about money. I walked away thinking — why didn\'t anyone teach us this sooner.. Thought of you personally. Want me to send the link?"',
+  },
+  {
+    id:1,label:'Growing',sub:'Week 3–4 · attended the session',dot:'#378ADD',
+    open:' "Hey [Name]! It\'s [you] — how are you doing?"',
+    open_coach:'Let them talk 30–60 seconds. You\'ve done a few calls now — the listen feels more natural. Use it.',
+    bridge:' "Hey — your name came to mind and I wanted to personally reach out."',
+    bridge_coach:'For close contacts: "I was thinking about you." For everyone else: "your name came to mind." Both honest. Both personal.',
+    ask:'"My company is hosting a free Zoom this week — Thursday at 6PM or Saturday at 9AM Pacific. It covers things most financial professionals never bother to explain to everyday families — Risk Mitigation, Tax Efficiency, and Generational Wealth. I went through this myself and walked away thinking — why didn\'t anyone show me this sooner. I genuinely want you there. Which works better — Thursday or Saturday?"',
+    ask_coach:'You\'ve now attended. That line is yours — say it with the weight of actually having experienced it.',
+    yes_them:' "Sure, I can do Saturday."',
+    yes_you:' "Perfect. What\'s your email? I\'m sending you the link right now. I\'m really glad you\'re coming — I think you\'re going to get a lot out of it."',
+    yes_coach:'Same close. Always. Warm, short, send the link.',
+    tip:'You now have your own genuine reaction to the session. "I walked away thinking — why didn\'t anyone show me this sooner" is the most powerful social proof you have — because it\'s yours.',
+    vm_text:' "Hey [Name], it\'s [you]. Your name came to mind and I wanted to personally reach out — I went through something recently that honestly had me thinking why didn\'t anyone teach us this sooner. I want you to see it. Call me back or I\'ll text you the details."',
+    vm_time:'~18 sec',
+    text_text:' "Hey [Name] — just left you a voicemail. My company is hosting a free Zoom this Thursday at 6PM or Saturday at 9AM Pacific on things we never learned about money. I went through it and walked away thinking — why didn\'t anyone show me this sooner. Want me to send the link?"',
+  },
+  {
+    id:2,label:'Building',sub:'Month 2+ · first recruits',dot:'#7F77DD',
+    open:'"Hey [Name]! It\'s [you] — how are you doing?"',
+    open_coach:'The listen is automatic now. You genuinely want to know. That\'s where trust lives.',
+    bridge:'"Hey — I\'m really glad I caught you. Your name came to mind and I wanted to reach out personally."',
+    bridge_coach:'Now "my team" is true — you have people working with you. Use it. Don\'t use it before it\'s earned.',
+    ask:' "My team is putting on a free Zoom this week — Thursday at 6PM or Saturday at 9AM Pacific. It covers things most financial professionals never bother to explain to everyday families — Risk Mitigation, Tax Efficiency, and Generational Wealth. People just like you walk away saying they wish they\'d learned this ten years ago. I genuinely want you there. Which works better — Thursday or Saturday?"',
+    ask_coach:'The identity social proof is now real — you\'ve seen it yourself from families you\'ve helped. Say it like you mean it because you do.',
+    yes_them:' "Sure, I can do Saturday."',
+    yes_you:' "Perfect. What\'s your email? I\'m sending you the link right now. I\'m really glad you\'re coming — I think you\'re going to get a lot out of it."',
+    yes_coach:'Identical close. Never changes. Warm, settled, send within 5 minutes.',
+    tip:'The double factor is working for you now. For every 3 people you invite, 1–2 will come regardless of polish. Volume plus consistency plus this script is the formula.',
+    vm_text:' "Hey [Name], it\'s [you]. Your name came to mind and I wanted to reach out personally about something I think you\'d genuinely get a lot out of. Nothing heavy. Give me a call back when you get a sec or I\'ll shoot you a text."',
+    vm_time:'~17 sec',
+    text_text:' "Hey [Name] — just left you a voicemail. My team is hosting a free Zoom this Thursday at 6PM or Saturday at 9AM Pacific on Risk Mitigation, Tax Efficiency, and Generational Wealth. Thought of you personally. Want me to send the link?"',
+  },
+  {
+    id:3,label:'Experienced',sub:'GX1+ · full script',dot:'#1D9E75',
+    open:' "Hey [Name]! It\'s [you] — how are you doing?"',
+    open_coach:'The listen is your superpower now. You\'re not waiting for your turn — you\'re gathering the personal hook you\'ll use in the bridge.',
+    bridge:' "Hey — I\'m actually really glad I caught you. I was thinking about you, and honestly with [what you heard in the listen], I think this is perfectly timed."',
+    bridge_coach:'"I was thinking about you" — earned at this stage. You know your people. Use what they told you in the open to make the bridge feel specific and personal.',
+    ask:' "My team is hosting a free Zoom this week — Thursday at 6PM or Saturday at 9AM Pacific. It covers things most financial professionals never bother to explain to everyday families — Risk Mitigation, Tax Efficiency, and Generational Wealth. People just like you walk away saying they wish they\'d learned this ten years ago. I genuinely want you there. Which works better — Thursday or Saturday?"',
+    ask_coach:'40 seconds max from "my team is hosting" to "Thursday or Saturday." Every word earns its place. Then silence.',
+    yes_them:' "Sure, I can do Saturday."',
+    yes_you:' "Perfect. What\'s your email? I\'m sending you the link right now. I\'m really glad you\'re coming — I think you\'re going to get a lot out of it."',
+    yes_coach:'Warm. Settled. Confident. You expected the yes — because you believe in the value. That energy is audible.',
+    tip:'At this stage your language and your conviction are fully aligned. You\'re not delivering a script — you\'re having a genuine conversation that happens to follow a proven structure.',
+    vm_text:' "Hey [Name], it\'s [you]. I was thinking about you and wanted to personally reach out — my team is doing something this week I think you\'d genuinely get a lot out of. Nothing heavy. Give me a call back when you get a sec or I\'ll shoot you a text."',
+    vm_time:'~18 sec',
+    text_text:' "Hey [Name] — just left you a voicemail. My team is hosting a free Zoom on Risk Mitigation, Tax Efficiency, and Generational Wealth — Thursday at 6PM or Saturday at 9AM Pacific. Thought of you personally. Want me to send the link?"',
+  },
+];
+
+const hcgObjections=[
+  {q:'"What is it exactly?"',urgent:false,
+   a:'"It\'s a free educational session — covers how to protect your income, keep more of what you earn from taxes, and build something that actually passes down to your family. Things most people were never taught. It\'s 45 minutes on Zoom. Thursday or Saturday?"',
+   tip:'Brief answer, then immediately re-close with "Thursday or Saturday?" Don\'t lecture.'},
+  {q:'"Is there a business side to this?"',urgent:false,
+   a:'"Yes — and I\'ll tell you everything about that after the session if you\'re interested. The education itself stands completely on its own. Come and see for yourself. Thursday or Saturday?"',
+   tip:'Always answer this directly. Transparency is your competitive advantage. Sequencing is not deception.'},
+  {q:'"Is this MLM / a sales thing?"',urgent:false,
+   a:'"I get why you\'d ask. No — we\'re licensed financial professionals with Revolution Financial Management, a Transamerica company. Been around since the 1800s, over $700 billion in assets. Come and form your own opinion — it\'s 45 minutes, it\'s free, and I wouldn\'t call you personally if I didn\'t think it was worth your time. Thursday or Saturday?"',
+   tip:'Lead with the credibility (Transamerica, 1800s, $700B). Let them form their own opinion.'},
+  {q:'"I\'ve seen WFG — it doesn\'t work."',urgent:true,
+   a:'"I hear you — and I respect that you\'ve got a perspective on it. Can I ask what you saw? Because your experience might be totally valid, and I\'d rather hear it than talk past it." [Listen.] "What I\'d ask is — come to this session for the financial education, not for the business side. The content on Risk Mitigation, Tax Efficiency, and Generational Wealth stands completely on its own. If after 45 minutes you still feel the same way, tell me honestly. I\'d rather you see it for yourself than take my word for it. Thursday or Saturday?"',
+   tip:'Don\'t defend WFG before you know what they saw. Ask first. Listen. Then redirect to the education — not the business. The session does the convincing, not you.'},
+  {q:'"Run away — they\'ll take your money."',urgent:true,
+   a:'"I appreciate you looking out for me — genuinely. Tell me what you heard, because I want to understand where that\'s coming from." [Listen.] "Here\'s what I know: it\'s Revolution Financial Management, a Transamerica company — $700 billion in assets, been around since the 1800s. And here\'s what I can tell you about my own experience: I haven\'t paid them a dollar. The families we help don\'t pay us either. We\'re paid by the carriers. Come to the free session and see for yourself — bring your skepticism. I actually want your honest opinion after."',
+   tip:'"Bring your skepticism" disarms the objection completely. You\'re not running from the pushback — you\'re inviting it. That\'s trustworthy.'},
+  {q:'"I\'m really busy."',urgent:false,
+   a:'"I hear you — it\'s only 45 minutes on Zoom, you don\'t have to go anywhere. Thursday at 6 or Saturday at 9 — which is the less crazy one for you?"',
+   tip:'Acknowledge it once. Then re-close immediately with the binary choice.'},
+  {q:'"Just send me the info."',urgent:false,
+   a:'"I\'ll send you the link — but honestly it doesn\'t do it justice on paper. It\'s one of those things you have to experience. Can I put you down for Thursday or Saturday and you decide closer to the time?"',
+   tip:'Always redirect from "send me info" to the live event. Reading about it is not attending it.'},
+  {q:'"I can\'t afford financial services."',urgent:false,
+   a:'"That\'s exactly why I thought of you — it\'s completely free. No fee ever to sit down with us. The families who need this most are the ones the traditional industry ignores. That\'s who we built this for. Thursday or Saturday?"',
+   tip:'This objection is actually your best opening. The "990 out of 1,000" framing was made for this moment.'},
+  {q:'"Let me think about it."',urgent:false,
+   a:'"Of course — let me send you the link now and you decide closer to the time. Thursday at 6 or Saturday at 9 — which should I put you down for tentatively?"',
+   tip:'"Tentatively" reduces the commitment. They\'re not locked in — they just have a link and a time. That\'s enough.'},
+  {q:'"Are you trying to recruit me?"',urgent:false,
+   a:'"I\'ll be straight with you — eventually I\'d love to share the business side if you\'re open to it. But that\'s not why I\'m inviting you right now. The financial education is genuinely valuable on its own. Come for that first. Everything else is a conversation for after."',
+   tip:'Answer it directly every time. The person who answers this honestly is the person you trust with your money.'},
+  {q:'"I\'m not really into financial stuff."',urgent:false,
+   a:'"Most people feel that way — honestly because it was never explained in a way that made sense. That\'s kind of the whole point of this session. It\'s not complicated or dry. I think it\'d surprise you. Just 45 minutes — Thursday or Saturday?"',
+   tip:'Validate the feeling. Then reframe why this is different. Then close.'},
+  {q:'"I already have a financial advisor."',urgent:false,
+   a:'"That\'s great — honestly most people don\'t. I\'m not here to replace anyone. I\'d just love to show you what we do for families and let you decide if there\'s a gap we could help fill. It\'s completely free and there\'s no obligation. What do you have to lose by taking 45 minutes? Thursday or Saturday?"',
+   tip:'Never compete with their current advisor. Position this as complementary.'},
+];
+
+const hcgMindset=[
+  {n:1,title:'Your newness is not a weakness.',body:'When someone you personally know and trust calls you excited about something new — you pay attention. That\'s not a liability. That\'s a personal introduction. It\'s the most powerful thing in Trustworthy Selling.'},
+  {n:2,title:'You are the bridge, not the expert.',body:'You don\'t need to know everything. Your job is to get them in the room. Your mentor or SMD is the expert. Edify them honestly and let the event do the work.'},
+  {n:3,title:'Consistency theory — applied to you.',body:'Your internal belief has to match your ask. Before every call: "I am calling because I genuinely believe this will help this person." If you believe it, they\'ll hear it. If you don\'t yet — go back to the session until you do.'},
+  {n:4,title:'30 calls a week from your warm list gets GX1.',body:'You don\'t need cold leads. You need your phone, your contacts, and this script. Six calls a day, five days. The people who know you are the easiest yes — because trust is already there.'},
+];
+
+const hcgRules=[
+  {icon:'ti-ear',title:'Listen before you ask.',body:'The 30–60 seconds in the open is not filler. It\'s where trust is built. Every word of the ask lands harder because of it.'},
+  {icon:'ti-hand-stop',title:'Stop after "Thursday or Saturday?"',body:'Every word after the close costs you a yes. The silence is theirs — let them use it. Count to five if you have to. Do not fill the gap.'},
+  {icon:'ti-shield-check',title:'Answer "is there a business side?" directly.',body:'Always. Every time. Transparency is your competitive advantage. No one in this industry does it — you will.'},
+  {icon:'ti-clock',title:'Send the link within 5 minutes of the yes.',body:'Don\'t let them cool off. A warm yes turns cold quickly. Text them the link before you dial the next person.'},
+  {icon:'ti-message',title:'Voicemail + text is always better than either alone.',body:'They see your name twice in two minutes while you\'re still fresh. Send the text within 2 minutes of hanging up.'},
+  {icon:'ti-repeat',title:'One follow-up after a no-answer. One.',body:'"Hey [Name] — wanted to make sure you got my message. Still want me to send the link?" One follow-up is persistence. Two is pressure.'},
+];
+
+let hcgCurStage=0;
+let hcgCurTab='script';
+
+window.hcgSetStage=function(i,el){
+  hcgCurStage=i;
+  document.querySelectorAll('#hcg-stage-bar .stage-btn').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  hcgRenderTab(hcgCurTab);
+};
+
+window.hcgSetTab=function(id,el){
+  hcgCurTab=id;
+  document.querySelectorAll('#cs-callguide .pane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('#cs-callguide .nav-bar .nav-btn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('hcg-p-'+id).classList.add('on');
+  if(el)el.classList.add('on');
+  hcgRenderTab(id);
+};
+
+function hcgRenderTab(id){
+  if(id==='script')hcgRenderScript();
+  else if(id==='vm')hcgRenderVM();
+  else if(id==='obj')hcgRenderObj();
+  else if(id==='mindset')hcgRenderMindset();
+  else if(id==='rules')hcgRenderRules();
+}
+
+function hcgRenderScript(){
+  const s=hcgStages[hcgCurStage];
+  const el=document.getElementById('hcg-p-script');
+  el.innerHTML=`
+    <div style="display:flex;align-items:center;gap:7px;margin-bottom:12px">
+      <div class="sdot" style="background:${s.dot}"></div>
+      <span style="font-size:13px;font-weight:500;color:var(--color-text-primary)">${s.label}</span>
+      <span style="font-size:11px;color:var(--color-text-secondary)">· ${s.sub}</span>
+    </div>
+    <div class="card green">
+      <div class="phase-lbl">Open</div>
+      <div class="script-line"><span class="who you">You</span><span class="said">${s.open}</span></div>
+      <div class="coach-note">${s.open_coach}</div>
+      <div class="divider-g"></div>
+      <div class="phase-lbl">Bridge</div>
+      <div class="script-line"><span class="who you">You</span><span class="said">${s.bridge}</span></div>
+      <div class="coach-note">${s.bridge_coach}</div>
+      <div class="divider-g"></div>
+      <div class="phase-lbl">The ask</div>
+      <div class="script-line"><span class="who you">You</span><span class="said">${s.ask}</span></div>
+      <div class="coach-note">${s.ask_coach}</div>
+      <div class="divider-g"></div>
+      <div class="phase-lbl">They say yes</div>
+      <div class="script-line"><span class="who them">Them</span><span class="said said-them">${s.yes_them}</span></div>
+      <div class="script-line" style="margin-top:5px"><span class="who you">You</span><span class="said">${s.yes_you}</span></div>
+      <div class="coach-note">${s.yes_coach}</div>
+    </div>
+    <div class="tip">${s.tip}</div>
+    ${s.alt?`<div class="sec">Alternate — lean on your mentor</div><div class="card blue"><div class="card-title"><i class="ti ti-users" style="font-size:16px" aria-hidden="true"></i>${s.alt_title||'Mentor version'}</div><div class="said" style="color:#0C447C;font-size:13px;white-space:pre-line">${s.alt}</div>${s.alt_tip?`<div class="tip" style="margin-top:8px">${s.alt_tip}</div>`:''}</div>`:''}
+  `;
+}
+
+function hcgRenderVM(){
+  const s=hcgStages[hcgCurStage];
+  const el=document.getElementById('hcg-p-vm');
+  el.innerHTML=`
+    <div class="sec">Voicemail · <span style="color:#085041">${s.vm_time}</span></div>
+    <div class="vm-box">
+      <div class="vm-label">Leave this if no answer<span class="vm-time">${s.vm_time}</span></div>
+      <div class="vm-text">${s.vm_text}</div>
+    </div>
+    <div class="sec">Follow-up text — send within 2 minutes</div>
+    <div class="text-box">
+      <div class="text-lbl">Send immediately after hanging up</div>
+      <div class="text-txt">${s.text_text}</div>
+    </div>
+    <div class="tip">Voicemail + text together converts far better than either alone. They see your name twice while you\'re still fresh.</div>
+    <div class="warn" style="margin-top:8px"><strong style="font-weight:500">Goal of the voicemail:</strong> curiosity and a callback — not a pitch. Under 20 seconds. Never leave the full invite on a voicemail.</div>
+    <div class="sec" style="margin-top:16px">If they don\'t call back</div>
+    <div class="card">
+      <div style="font-size:13px;color:var(--color-text-secondary);font-style:italic;line-height:1.7">"Hey [Name] — wanted to make sure you got my message. The Zoom is Thursday at 6 or Saturday at 9. Still want me to send you the link?"</div>
+      <div class="tip" style="margin-top:8px">One follow-up. One. After that — move on and call the next person. Your 30/week target means you never need to chase anyone.</div>
+    </div>
+  `;
+}
+
+function hcgRenderObj(){
+  const el=document.getElementById('hcg-p-obj');
+  const urgent=hcgObjections.filter(o=>o.urgent);
+  const normal=hcgObjections.filter(o=>!o.urgent);
+  let h=`<div class="sec">Urgent — heard while on the call</div>`;
+  h+=`<div class="qbar">`;
+  urgent.forEach((o,i)=>{h+=`<span class="qtag urgent" onclick="hcgJumpObj('hu${i}')">${o.q.replace(/"/g,'')}</span>`;});
+  h+=`</div>`;
+  urgent.forEach((o,i)=>{
+    h+=`<div class="obj" id="hu${i}"><div class="obj-hdr urgent" onclick="hcgTogObj(this)"><span class="obj-q urgent">${o.q}</span><i class="ti ti-chevron-down chev" aria-hidden="true"></i></div><div class="obj-body"><div>${o.a}</div>${o.tip?`<div class="obj-tip">${o.tip}</div>`:''}</div></div>`;
+  });
+  h+=`<div class="sec" style="margin-top:14px">All objections — tap to reveal</div>`;
+  h+=`<div class="qbar">`;
+  normal.forEach((o,i)=>{h+=`<span class="qtag" onclick="hcgJumpObj('hn${i}')">${o.q.replace(/"/g,'')}</span>`;});
+  h+=`</div>`;
+  normal.forEach((o,i)=>{
+    h+=`<div class="obj" id="hn${i}"><div class="obj-hdr" onclick="hcgTogObj(this)"><span class="obj-q">${o.q}</span><i class="ti ti-chevron-down chev" aria-hidden="true"></i></div><div class="obj-body"><div>${o.a}</div>${o.tip?`<div class="obj-tip">${o.tip}</div>`:''}</div></div>`;
+  });
+  h+=`<div class="tip" style="margin-top:12px"><strong style="font-weight:500">After every objection:</strong> answer briefly, then re-close immediately with "Thursday or Saturday?" The close always comes back.</div>`;
+  el.innerHTML=h;
+}
+
+function hcgRenderMindset(){
+  const el=document.getElementById('hcg-p-mindset');
+  let h='';
+  h+=`<div class="card">`;
+  hcgMindset.forEach(m=>{
+    h+=`<div class="mrow"><div class="mnum">${m.n}</div><div class="mrow-body"><strong style="font-weight:500">${m.title}</strong><br><span style="color:var(--color-text-secondary);font-size:12px">${m.body}</span></div></div>`;
+  });
+  h+=`</div>`;
+  h+=`<div class="sec">Before every call block — say this once out loud</div>`;
+  h+=`<div class="card green"><div class="said" style="color:#085041;font-size:15px;line-height:1.8">"I am calling because I genuinely believe this will help this person."</div><div class="coach-note" style="padding-left:0;margin-top:8px">Consistency theory: your thoughts have to match your behavior. If you believe it, they\'ll hear it. If you don\'t yet — go back to the session until you do.</div></div>`;
+  el.innerHTML=h;
+}
+
+function hcgRenderRules(){
+  const el=document.getElementById('hcg-p-rules');
+  let h='<div class="card">';
+  hcgRules.forEach(r=>{
+    h+=`<div class="mrow"><i class="ti ${r.icon}" style="font-size:17px;color:#1D9E75;margin-top:1px;flex-shrink:0" aria-hidden="true"></i><div class="mrow-body"><strong style="font-weight:500">${r.title}</strong><br><span style="color:var(--color-text-secondary);font-size:12px">${r.body}</span></div></div>`;
+  });
+  h+='</div>';
+  h+=`<div class="sec">The language that evolves by stage</div>`;
+  const evol=[
+    {dot:'#B4B2A9',label:'Week 1–2',lines:['"The company I just partnered with is hosting..."','"From everything I\'ve seen so far..."']},
+    {dot:'#378ADD',label:'Week 3–4',lines:['"My company is hosting..."','"I went through this myself and walked away thinking..."']},
+    {dot:'#7F77DD',label:'Month 2+',lines:['"My team is putting on..."','"People just like you walk away saying..."']},
+    {dot:'#1D9E75',label:'GX1+',lines:['"My team is hosting..."','"I was thinking about you..."']},
+  ];
+  evol.forEach(e=>{
+    h+=`<div class="card" style="margin-bottom:7px"><div style="display:flex;align-items:center;gap:7px;margin-bottom:7px"><div class="sdot" style="background:${e.dot}"></div><span style="font-size:12px;font-weight:500;color:var(--color-text-primary)">${e.label}</span></div>`;
+    e.lines.forEach(l=>{h+=`<div style="font-size:13px;font-style:italic;color:var(--color-text-secondary);padding:2px 0;line-height:1.6">${l}</div>`;});
+    h+=`</div>`;
+  });
+  h+=`<div class="warn"><strong style="font-weight:500">The one line that never changes:</strong> "Which works better — Thursday or Saturday?" The close is always the same. Confidence on the close doesn't require experience. It requires belief in the value.</div>`;
+  el.innerHTML=h;
+}
+
+window.hcgTogObj=function(hdr){
+  const b=hdr.nextElementSibling;
+  const c=hdr.querySelector('.chev');
+  const open=b.classList.contains('open');
+  b.classList.toggle('open',!open);
+  c.style.transform=open?'':'rotate(180deg)';
+};
+
+window.hcgJumpObj=function(id){
+  const el=document.getElementById(id);
+  if(!el)return;
+  const body=el.querySelector('.obj-body');
+  const chev=el.querySelector('.chev');
+  body.classList.add('open');
+  chev.style.transform='rotate(180deg)';
+  el.scrollIntoView({behavior:'smooth',block:'center'});
+};
+
+hcgRenderScript();
+hcgRenderObj();
+hcgRenderVM();
+hcgRenderMindset();
+hcgRenderRules();
+})();
+
+function csShowTab(name) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
+    document.getElementById('cs-' + name).classList.add('active');
+    const pills = document.querySelectorAll('.nav-pill');
+    const map = { callguide:0, quick:1, reconnect:2, hesitancy:3, compare:4, bpminvite:5 };
+    if (map[name] !== undefined) pills[map[name]].classList.add('active');
+  }
+
+  function csToggleCard(header) {
+    const body = header.nextElementSibling;
+    const chevron = header.querySelector('.chevron');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    header.classList.toggle('expanded', !isOpen);
+    chevron.classList.toggle('open', !isOpen);
+  }
+
+  function csShowCall(id, btn) {
+    document.querySelectorAll('.call-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.call-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  var currentType = 'warm';
+  function csSetType(type) {
+    currentType = type;
+    document.getElementById('btn-warm').classList.toggle('active', type === 'warm');
+    document.getElementById('btn-cold').classList.toggle('active', type === 'cold');
+    ['1','2','3'].forEach(n => {
+      const w = document.getElementById('c' + n + '-warm');
+      const c = document.getElementById('c' + n + '-cold');
+      if (w) w.style.display = type === 'warm' ? '' : 'none';
+      if (c) c.style.display = type === 'cold' ? '' : 'none';
+    });
+  }
+
+// Sidebar active
+function setActive(el){
+  document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// Tab switcher
+function switchTab(group,id,btn){
+  const parent=btn?btn.closest('.tab-nav'):null;
+  if(parent){
+    parent.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const section=parent.nextElementSibling;
+    if(section){
+      section.querySelectorAll('.tab-pane').forEach(p=>{p.style.display='none';p.classList.remove('active')});
+      const target=document.getElementById(id);
+      if(target){target.style.display='block';target.classList.add('active');}
+    }
+  }
+}
+
+// Copy text
+function copyText(id){
+  const el=document.getElementById(id);
+  if(!el)return;
+  let text=el.textContent||el.innerText;
+  navigator.clipboard.writeText(text.trim()).then(()=>{
+    document.querySelectorAll('.copy-btn').forEach(b=>{
+      if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+id+"'")){
+        const orig=b.textContent;
+        b.textContent='✓ copied';
+        b.style.color='var(--green)';
+        setTimeout(()=>{b.textContent=orig;b.style.color='';},2000);
+      }
+    });
+  });
+}
+
+// Calendar
+const calDays=[
+  {n:1,dow:0,title:"Month-start calls",dot:"green",tasks:["Month-start call with every base member — 10 min each","Get their GX declaration out loud","Build their prospect list together","Make one live 3-way call before you hang up","Set weekly targets with each person"]},
+  {n:2,dow:1,title:"Personal blitz",dot:"gray",tasks:["Contact 15 people from your own list","Send project script to 5 warm contacts","Book 3–5 appointments this week","Add 3 new names to your list"]},
+  {n:3,dow:2,title:"3-way call block",dot:"green",tasks:["Block 2 hours for team 3-way calls","Message team: 'Available tonight for calls'","Jump on every request","Model what a great opening sounds like"]},
+  {n:4,dow:3,title:"Follow-up day",dot:"gray",tasks:["Call everyone who had an appointment this week","Close or set next step on every lead","Push for your first personal recruit","Text any open prospects from days 1–3"]},
+  {n:5,dow:4,title:"Team prep",dot:"gray",tasks:["Pulse check on team call counts","Anyone with 0 calls — quick call right now","Remind everyone about Saturday VPM"]},
+  {n:6,dow:5,title:"Super VPM",dot:"purple",tasks:["Every team member brings a prospect","Edify your team members publicly","Run the presentation, close for follow-ups","Recognize any milestones this week"]},
+  {n:7,dow:6,title:"Rest + team text",dot:"gray",tasks:["Send team week 1 numbers summary","Celebrate movement, redirect gently","Rest — you earned it"]},
+  {n:8,dow:0,title:"Taproot day",dot:"green",tasks:["Introduce ALL week 1 recruits to upline today","Schedule VGOs for each new recruit this week","Help them book their first appointment"]},
+  {n:9,dow:1,title:"VGO day",dot:"green",tasks:["Run VGO for newest recruit","Their family/friends are the audience","Edify recruit, present, close for follow-ups"]},
+  {n:10,dow:2,title:"Zero-recruit check",dot:"amber",tasks:["Anyone with 0 recruits gets a call TODAY","Make a live call together on the spot","Do not accept 'I'll get to it'"]},
+  {n:11,dow:3,title:"Close recruit #2",dot:"green",tasks:["All week 2 appointments close today","Push to close your second personal recruit","Taproot anyone who joins immediately"]},
+  {n:12,dow:4,title:"Fast Start check",dot:"gray",tasks:["Who is qualified for Fast Start School?","Get them confirmed and registered","Remind team of Saturday VPM"]},
+  {n:13,dow:5,title:"Super VPM",dot:"purple",tasks:["Week 2 VPM — new recruits bring first guest","Recognize anyone who recruited this week","Let a new recruit speak for 2 minutes"]},
+  {n:14,dow:6,title:"Mid-month prep",dot:"amber",tasks:["Review everyone's numbers quietly","Write the list: who has 0, 1, 2 recruits?","Set your alarm — day 15 is your biggest day"]},
+  {n:15,dow:0,title:"Mid-month recovery",dot:"amber",tasks:["MOST IMPORTANT DAY — run recovery calls","Call everyone with 0 or 1 recruit first thing","Use mid-month recovery script — get 3 names","Make a live call with them before you hang up","Anyone at 2 recruits — remind them taproot counts"]},
+  {n:16,dow:1,title:"Recruit #3 push",dot:"green",tasks:["Work follow-up list — 'not right now' people","Call contacts from 4–8 weeks ago","Push to close your third personal recruit"]},
+  {n:17,dow:2,title:"3-way block",dot:"green",tasks:["Block 2 hours — available for team calls","'Who needs me on a call tonight?'","Bring full energy — week 3 is crunch time"]},
+  {n:18,dow:3,title:"Points gap",dot:"amber",tasks:["Review who has recruits but no points","Text them: 'When are you meeting your recruits?'","Help schedule VGO or client sit-down"]},
+  {n:19,dow:4,title:"GX qualifier check",dot:"green",tasks:["Who has hit GX1 so far? Personal congrats","Who is one recruit away? Call them now","'You are ONE person away — who are you calling?'"]},
+  {n:20,dow:5,title:"Super VPM",dot:"purple",tasks:["Week 3 VPM — highest urgency energy","Let GX qualifiers speak 2 mins each","Peer testimony in week 3 converts fence-sitters"]},
+  {n:21,dow:6,title:"Final week prep",dot:"amber",tasks:["Who still needs GX? Final list","Anyone at 2 recruits — remind them taproot option","'One week left. Let's finish strong.'"]},
+  {n:22,dow:0,title:"Final push",dot:"green",tasks:["Call everyone still short daily","Daily contact with anyone at 2 recruits","Taproot reminder: recruit's recruit counts"]},
+  {n:23,dow:1,title:"Final push 2",dot:"green",tasks:["Follow up on all weekend activity","Make 3-way calls for anyone close to closing","Celebrate new GX1 qualifiers in team chat"]},
+  {n:24,dow:2,title:"Final 3-way",dot:"green",tasks:["Last Wednesday 3-way block of the month","Who is one conversation away from recruit #3?","'Last call block this month — who needs me?'"]},
+  {n:25,dow:3,title:"Points deadline",dot:"amber",tasks:["Points from this week still count","Any recruit who hasn't done JOS yet — call them","Close the points gap for everyone with recruits"]},
+  {n:26,dow:4,title:"Recognition prep",dot:"blue",tasks:["Compile final GX qualifier list","Write each person's specific story","Prepare recognition posts for Saturday"]},
+  {n:27,dow:5,title:"Final VPM + recognition",dot:"blue",tasks:["Last Super VPM of the month","Recognize EVERY GX qualifier by name and story","Let first-time GX qualifiers speak","Plant next month: 'Day 1 we go again'"]},
+  {n:28,dow:6,title:"Miss calls begin",dot:"blue",tasks:["Call anyone who didn't hit GX — no shame","'What happened, and what's different next month?'","Set the day-1 appointment before you hang up"]},
+  {n:29,dow:0,title:"Continue miss calls",dot:"blue",tasks:["Finish any remaining miss calls","Confirm day-1 call times with everyone"]},
+  {n:30,dow:1,title:"Month close",dot:"blue",tasks:["Final team numbers post — celebrate the month","Tomorrow is day 1. The machine keeps running."]},
+];
+
+let activeCalDay=1;
+const calTaskState={};
+
+function renderCalGrid(){
+  const g=document.getElementById('cal-grid');
+  if(!g)return;
+  g.innerHTML='';
+  calDays.forEach(d=>{
+    const c=document.createElement('div');
+    const isWE=d.dow===5||d.dow===6;
+    c.className='day-cell'+(isWE?' weekend':'')+(d.n===activeCalDay?' active':'');
+    const dotClass={green:'dot-green',amber:'dot-amber',purple:'dot-purple',blue:'dot-blue',gray:'dot-gray'}[d.dot]||'dot-gray';
+    c.innerHTML=`<div class="day-num">${d.n}</div><div class="day-title">${d.title.substring(0,18)}</div><div class="day-dot ${dotClass}"></div>`;
+    c.onclick=()=>selectCalDay(d.n);
+    g.appendChild(c);
+  });
+}
+
+function selectCalDay(n){
+  activeCalDay=n;
+  const d=calDays.find(x=>x.n===n);
+  if(!d)return;
+  if(!calTaskState[n])calTaskState[n]=d.tasks.map(()=>false);
+  const panel=document.getElementById('cal-detail');
+  if(!panel)return;
+  const tasksHtml=d.tasks.map((t,i)=>`
+    <div class="checklist-item">
+      <div class="chk${calTaskState[n][i]?' done':''}" onclick="toggleCalTask(${n},${i})">
+        ${calTaskState[n][i]?'<svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}
+      </div>
+      <div class="chk-label${calTaskState[n][i]?' done-text':''}">${t}</div>
+    </div>
+  `).join('');
+  panel.innerHTML=`<div class="detail-title">Day ${n} — ${d.title}</div>${tasksHtml}`;
+  document.querySelectorAll('.day-cell').forEach((c,i)=>{
+    c.classList.toggle('active',calDays[i]&&calDays[i].n===n);
+  });
+}
+
+function toggleCalTask(day,idx){
+  if(!calTaskState[day])calTaskState[day]=calDays.find(x=>x.n===day).tasks.map(()=>false);
+  calTaskState[day][idx]=!calTaskState[day][idx];
+  selectCalDay(day);
+}
+
+// VGO checklist
+const vgoChecks={
+  'vgo-cl-1':[
+    {t:'Schedule VGO date before hanging up — give two options',s:'Tuesday or Thursday. Lock it in now.'},
+    {t:'Confirm the Zoom link and send immediately',s:'They need it to share in invites.'},
+    {t:'Set up the guest list session for tomorrow',s:'Phone walkthrough call — 30 mins.'},
+    {t:'Send them the invite script right now',s:'They start inviting tonight.'},
+  ],
+  'vgo-cl-2':[
+    {t:'Phone walkthrough — pull 25–30 names together',s:'Go category by category.'},
+    {t:'Top 8 contacts get a personal call today',s:'Call converts 3x better than text.'},
+    {t:'Remaining contacts get personal text invites',s:'Personalized — not a mass blast.'},
+    {t:'Send Zoom link to everyone who says yes',s:'Follow up with calendar invite.'},
+  ],
+  'vgo-cl-3':[
+    {t:'Day-before reminder text to all confirmed guests',s:'Personal and warm — use their name.'},
+    {t:'Day-of morning text to all confirmed guests',s:'Quick, energetic, includes the link.'},
+    {t:'Recruit makes personal calls to top contacts',s:'Anyone who hasn\'t confirmed gets a call.'},
+    {t:'Recruit practices edification script out loud',s:'Run through it twice before going live.'},
+  ],
+  'vgo-cl-4':[
+    {t:'SMD joins 15 minutes early — tech check done',s:'Audio, video, screen share confirmed.'},
+    {t:'Recruit delivers edification word for word',s:'Most important 60 seconds of the event.'},
+    {t:'SMD runs BPM — 35 minutes max',s:'Engagement questions every 8–10 mins.'},
+    {t:'Closing ask — book follow-up calls before anyone leaves',s:'Get names and times.'},
+    {t:'Immediate debrief with recruit — 5 minutes',s:'Who follows up? What does recruit do this week?'},
+    {t:'Recruit sends "so glad you came" texts — same night',s:'Before SMD calls anyone.'},
+    {t:'SMD makes follow-up calls within 48 hours',s:'Ask what resonated most. Book next step.'},
+    {t:'Recognize recruit publicly for running their VGO',s:'Post in team chat. Make it a moment.'},
+  ]
+};
+
+const vgoState={};
+let vgoTotal=0;
+Object.keys(vgoChecks).forEach(k=>{vgoChecks[k].forEach((_,i)=>{vgoTotal++;vgoState[k+'-'+i]=false;})});
+
+function buildVGOChecklist(id){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.innerHTML=vgoChecks[id].map((c,i)=>`
+    <div class="checklist-item">
+      <div class="chk${vgoState[id+'-'+i]?' done':''}" onclick="toggleVGO('${id}',${i})">
+        ${vgoState[id+'-'+i]?'<svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}
+      </div>
+      <div>
+        <div class="chk-label${vgoState[id+'-'+i]?' done-text':''}">${c.t}</div>
+        <div class="chk-sub">${c.s}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleVGO(id,i){
+  vgoState[id+'-'+i]=!vgoState[id+'-'+i];
+  buildVGOChecklist(id);
+  updateVGOProgress();
+}
+
+function updateVGOProgress(){
+  const done=Object.values(vgoState).filter(Boolean).length;
+  const pct=Math.round(done/vgoTotal*100);
+  const bar=document.getElementById('vgo-prog-bar');
+  const txt=document.getElementById('vgo-prog-text');
+  if(bar)bar.style.width=pct+'%';
+  if(txt)txt.textContent=done+' / '+vgoTotal+' done';
+}
+
+function resetVGO(){
+  Object.keys(vgoState).forEach(k=>vgoState[k]=false);
+  Object.keys(vgoChecks).forEach(buildVGOChecklist);
+  updateVGOProgress();
+}
+
+Object.keys(vgoChecks).forEach(buildVGOChecklist);
+updateVGOProgress();
+renderCalGrid();
+selectCalDay(1);
+
+// Intersection observer for sticky nav
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.sticky-nav a');
+const sideLinks=document.querySelectorAll('.nav-item');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(l=>{l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id)});
+      sideLinks.forEach(l=>{l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id)});
+    }
+  });
+},{threshold:.2});
+sections.forEach(s=>obs.observe(s));
+
+(function() {
+        var ESG_KEY = 'rfm_easy_start_v2';
+        var esgChecked = {};
+        var ESG_TOTAL = 25;
+
+        function esgSave() { try { sessionStorage.setItem(ESG_KEY, JSON.stringify(esgChecked)); } catch(e){} }
+        function esgLoad() { try { var d=sessionStorage.getItem(ESG_KEY); if(d) esgChecked=JSON.parse(d); } catch(e){} }
+
+        window.esgToggle = function(el) {
+          var id = el.dataset.id;
+          if (esgChecked[id]) { delete esgChecked[id]; el.classList.remove('esg-done'); }
+          else { esgChecked[id]=true; el.classList.add('esg-done'); }
+          esgSave(); esgUpdateProgress();
+        };
+
+        window.esgUpdateProgress = function() {
+          var done = Object.keys(esgChecked).length;
+          var pct = Math.round((done/ESG_TOTAL)*100);
+          var bar = document.getElementById('esg-prog-bar');
+          var lbl = document.getElementById('esg-prog-label');
+          if (bar) bar.style.width = pct + '%';
+          if (lbl) lbl.textContent = done + ' of ' + ESG_TOTAL + ' steps completed (' + pct + '%)';
+        };
+
+        window.esgShowPhase = function(idx, btn) {
+          document.querySelectorAll('.esg-phase-content').forEach(function(el,i){ el.classList.toggle('esg-visible', i===idx); });
+          document.querySelectorAll('.esg-tab-btn').forEach(function(b){ b.classList.remove('active'); });
+          btn.classList.add('active');
+        };
+
+        window.esgResetAll = function() {
+          if (!confirm('Reset all Easy Start checkboxes?')) return;
+          esgChecked = {}; esgSave();
+          document.querySelectorAll('.esg-check-item').forEach(function(el){ el.classList.remove('esg-done'); });
+          esgUpdateProgress();
+        };
+
+        esgLoad();
+        document.querySelectorAll('.esg-check-item').forEach(function(el){
+          if (esgChecked[el.dataset.id]) el.classList.add('esg-done');
+        });
+        esgUpdateProgress();
+      })();
+
+// ===== SEARCH INDEX — built from live DOM so nothing is ever missed =====
+const TAB_LABELS = {
+  overview: 'Mission HQ', list: 'Build the List', referral: 'Referral Mastery', contact: 'Contact Scripts',
+  appt: 'Lock Appointments', close: 'Close & Partner', objections: 'Objections',
+  timeline: 'SMD→EMD Path', profiles: 'Recruit Profiles', training: 'Training',
+  glossary: 'Terms & Identity', licensing: 'Licensing', resources: 'Resources'
+};
+
+var SEARCH_INDEX = [];
+
+function buildSearchIndex() {
+  SEARCH_INDEX = [];
+  document.querySelectorAll('.tab').forEach(function(tabEl) {
+    var tabId = tabEl.id.replace('tab-', '');
+    var tabLabel = TAB_LABELS[tabId] || tabId;
+
+    function getSubContext(el) {
+      var subSection = el.closest('.sub-section, .hf-sub-section, .prosp-section, .pitch-section');
+      if (!subSection) return { subId: null, hfId: null };
+      var id = subSection.id ? subSection.id.replace(/^sub-/, '') : null;
+      if (subSection.classList.contains('hf-sub-section')) {
+        var parentSub = subSection.parentElement && subSection.parentElement.closest('.sub-section');
+        var parentId = parentSub && parentSub.id ? parentSub.id.replace(/^sub-/, '') : 'res-helpfamily';
+        return { subId: parentId, hfId: id };
+      }
+      return { subId: id, hfId: null };
+    }
+
+    tabEl.querySelectorAll('.card, .timeline-card, .obj-item, .gloss-item, .script-box, .warn-chip, .step-item').forEach(function(block) {
+      var heading = '';
+      var h = block.querySelector('h3, h4, .gloss-term, .obj-q, .script-label, strong');
+      if (h) heading = h.textContent.trim();
+      var fullText = block.textContent.replace(/\s+/g, ' ').trim();
+      if (fullText.length < 8) return;
+      if (!heading) heading = fullText.slice(0, 60);
+      var ctx = getSubContext(block);
+      SEARCH_INDEX.push({ tab: tabId, tabLabel: tabLabel, title: heading, text: fullText, subId: ctx.subId, hfId: ctx.hfId });
+    });
+
+    var wholeText = tabEl.textContent.replace(/\s+/g, ' ').trim();
+    SEARCH_INDEX.push({ tab: tabId, tabLabel: tabLabel, title: tabLabel + ' — full section', text: wholeText, _bulk: true, subId: null, hfId: null });
+  });
+
+  // Hard-coded TLTC entries so they always surface when searching "tltc"
+  SEARCH_INDEX.push({ tab: 'resources', tabLabel: 'Resources', title: 'TLTC Recruit Close', text: 'TLTC Recruit Close — Help a Family tab. Move the recruit from curiosity to a booked meeting with your broker. Emotional discovery, cost of inaction, readiness question, qualifying commitment, broker transition close.', subId: 'res-helpfamily', hfId: 'hf-tltc' });
+  SEARCH_INDEX.push({ tab: 'resources', tabLabel: 'Resources', title: 'TLTC Meeting Close', text: 'TLTC Meeting Close — recruiting close script. Goal: move the recruit from curiosity to a booked meeting. Slow your pace. Let silence do the work. Book the meeting.', subId: 'res-helpfamily', hfId: 'hf-tltc' });
+  SEARCH_INDEX.push({ tab: 'resources', tabLabel: 'Resources', title: 'AMA / TLTC Business Close', text: 'AMA TLTC Business Close — business opportunity close. Walk through Training, Licensing, Time, Investment in sequence. Each section builds agreement before the next.', subId: 'res-helpfamily', hfId: 'hf-ama' });
+
+  // Hard-coded BPM Presentation entries — content lives inside an iframe so DOM indexing can't reach it
+  SEARCH_INDEX.push({ tab: 'resources', tabLabel: 'BPM Presentation', title: '3 Buckets of Money', text: 'BPM Slide 7: The 3 Buckets of Money — Fixed accounts (safe, FDIC insured, 0–3% return, inflation eats buying power), Variable accounts (high risk, potential 10%+ returns, unlimited downside, can lose everything in market crash), Indexed accounts (best of both worlds, 0% floor never lose principal, captures market gains, locks in gains each year, returns capped typically 10–15%, must qualify). Risk management strategy. Indexed accounts mirror the market on the way up but when market crashes you don\'t lose a penny floor is zero. Capture upside without downside.', subId: 'res-bpm-slides', hfId: null });
+  SEARCH_INDEX.push({ tab: 'resources', tabLabel: 'BPM Presentation', title: 'Indexed Accounts — Capped Returns', text: 'BPM Presentation: Indexed accounts have returns capped typically 10–15%. Returns are capped in exchange for zero downside floor protection. You never lose principal but cap limits how much you can gain in any single year. The cap is the cost of the floor. Fixed indexed accounts capped growth upside.', subId: 'res-bpm-slides', hfId: null });
+  SEARCH_INDEX.push({ tab: 'resources', tabLabel: 'BPM Presentation', title: 'Rule of 72 — Doubling Money', text: 'BPM Slide 6: Rule of 72. Divide 72 by your interest rate to find out how many years it takes to double your money. At 1% (savings account) = 72 years to double. At 6% = 12 years to double. At 10% = 7.2 years to double. Time value of money compound interest growth.', subId: 'res-bpm-slides', hfId: null });
+  SEARCH_INDEX.push({ tab: 'resources', tabLabel: 'BPM Presentation', title: 'Taxes — 3 Buckets: Taxable, Tax-Deferred, Tax-Advantaged', text: 'BPM Slide 7 Taxes: Three tax buckets. Taxable (grade C) — savings CDs stocks crypto, taxed every year on gains, short-term liquidity. Tax-Deferred (grade B) — 401k Traditional IRA Pension, pre-tax contributions pay taxes at retirement. Tax-Advantaged (grade A+) — Roth IRA indexed life insurance, after-tax now grows AND withdraws tax-free. Pay now or pay more later. Do you think taxes will be higher or lower in 20 years? Get as much into tax-free as possible NOW.', subId: 'res-bpm-slides', hfId: null });
+  SEARCH_INDEX.push({ tab: 'resources', tabLabel: 'BPM Presentation', title: 'BPM — Business Presentation Meeting Overview', text: 'BPM Business Presentation Meeting full 17-slide interactive deck. Slides: Business Presentation intro, 3 Eyes Framework, Who We Are WFG, The Problem financial crisis, 3-Legged Stool pension social security savings broken, Rule of 72, 3 Buckets fixed variable indexed, Taxes taxable deferred advantaged, 5 Business Concerns investment time knowledge market risk, Cash Flow Quadrant Kiyosaki ESBI, Business Opportunity, Compensation earnings, Baby Boomer timing wave, Success Stories backgrounds, How to Get Started solve 5 concerns, Values Culture faith family, Next Steps action items.', subId: 'res-bpm-slides', hfId: null });
+  SEARCH_INDEX.push({ tab: 'resources', tabLabel: 'BPM Presentation', title: 'Cash Flow Quadrant — E S B I', text: 'BPM Slide: Robert Kiyosaki Cash Flow Quadrant. E = Employee left side 90% of people 10% of wealth, boss controls time and income limited upside. S = Self-Employed left side own a job not a business stop working stop earning trading time for money. B = Business Owner right side 10% of people 90% of wealth own a system money flows whether there or not true leverage. I = Investor right side money makes money financial knowledge greatest asset. Move from left side E/S to right side B/I inside the financial industry.', subId: 'res-bpm-slides', hfId: null });
+  SEARCH_INDEX.push({ tab: 'resources', tabLabel: 'BPM Presentation', title: '3-Legged Stool — Pension Social Security Savings', text: 'BPM Slide: The 3-Legged Stool of retirement is broken. Pensions almost gone unless government worker. Social Security SSA could run short by 2032. Personal savings most Americans living paycheck to paycheck. The whole stool is broken. Retirement security problem.', subId: 'res-bpm-slides', hfId: null });
+  SEARCH_INDEX.push({ tab: 'resources', tabLabel: 'BPM Presentation', title: 'Business Opportunity — 4 Ways to Earn', text: 'BPM Slide 10: Business Opportunity. Own a Financial Agency. Not MLM not a side hustle. Licensed regulated recession-proof business. 4 ways to earn: 1. Client commissions paid 2x per week, 2. Supervisory overrides earn on team production, 3. Passive residual income recurring from existing policies, 4. Bonuses company incentives trips watches cars recognition. 100% commission no salary ceiling. Work part-time or full-time. No cold calling 100% referral based. Work from anywhere via Zoom.', subId: 'res-bpm-slides', hfId: null });
+  SEARCH_INDEX.push({ tab: 'resources', tabLabel: 'BPM Presentation', title: 'Baby Boomer Wave — Timing', text: 'BPM Slide 12: Baby Boomer Wave timing. 77 million baby boomers. 10000+ turn 65 every single day. $84 trillion wealth transfer over next 20 years. Born 1946 retiring now 2011+. Financial services you are here. Best time to be in the financial industry.', subId: 'res-bpm-slides', hfId: null });
+  SEARCH_INDEX.push({ tab: 'resources', tabLabel: 'BPM Presentation', title: 'Compensation — Real Numbers', text: 'BPM Slide 11: Compensation real numbers. Associate part-time $4000/month $48000/year help 4 families. Broker higher contract level $7000/month $85000/year. Broker plus team of 5 supervisory overrides $15000/month $186000/year. You plus team of 5 full agency model $22000+/month $270000+/year. Based on helping 4 families per month save $185/month into a plan.', subId: 'res-bpm-slides', hfId: null });
+}
+
+function highlight(text, query) {
+  if (!query) return text;
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp('(' + escaped + ')', 'gi'), '<mark>$1</mark>');
+}
+
+function getSnippet(text, query, maxLen) {
+  maxLen = maxLen || 100;
+  var lower = text.toLowerCase();
+  var words = query.toLowerCase().split(/\s+/).filter(Boolean);
+  // Find earliest match position
+  var pos = -1;
+  for (var i = 0; i < words.length; i++) {
+    var p = lower.indexOf(words[i]);
+    if (p !== -1 && (pos === -1 || p < pos)) pos = p;
+  }
+  if (pos === -1) return text.slice(0, maxLen) + (text.length > maxLen ? '…' : '');
+  var start = Math.max(0, pos - 30);
+  var end = Math.min(text.length, start + maxLen);
+  var snippet = (start > 0 ? '…' : '') + text.slice(start, end) + (end < text.length ? '…' : '');
+  return snippet;
+}
+
+function expandQuery(q) {
+  // Alias map: searching these terms also searches their equivalents
+  const aliases = {
+    'tltc': 'tltc recruit close meeting business ama',
+    'ltc':  'long-term care ltc one-pager',
+    'iul':  'indexed universal life',
+    'fia':  'fixed index annuity',
+    'rila': 'registered index-linked annuity',
+    'bpm':  'business presentation meeting 3 buckets capped indexed fixed variable taxes quadrant stool rule 72',
+    'fna':  'financial needs analysis',
+    'emd':  'executive marketing director',
+    'smd':  'senior marketing director',
+    'gx':   'gx1 gx2 gx3'
+  };
+  const lower = q.toLowerCase().trim();
+  const words = lower.split(/\s+/);
+  const expanded = [...words];
+  words.forEach(w => { if (aliases[w]) expanded.push(...aliases[w].split(' ')); });
+  return [...new Set(expanded)].join(' ');
+}
+
+function positionSearchResults() {
+  const wrap = document.querySelector('#search-desktop .hero-search-wrap');
+  const resultsEl = document.getElementById('search-results');
+  if (!wrap || !resultsEl) return;
+  const rect = wrap.getBoundingClientRect();
+  resultsEl.style.top   = (rect.bottom + 8) + 'px';
+  resultsEl.style.right = (window.innerWidth - rect.right) + 'px';
+  resultsEl.style.left  = 'auto';
+}
+
+function runSearch(query) {
+  // Build index from DOM on first search
+  if (SEARCH_INDEX.length === 0) try { buildSearchIndex(); } catch(e) { console.warn('Search index skipped:', e.message); }
+
+  const clearBtn = document.getElementById('hero-search-clear');
+  const resultsEl = document.getElementById('search-results');
+  query = (query || '').trim();
+
+  if (clearBtn) clearBtn.classList.toggle('visible', query.length > 0);
+
+  if (query.length < 2) {
+    resultsEl.classList.remove('open');
+    resultsEl.innerHTML = '';
+    return;
+  }
+
+  const expandedQuery = expandQuery(query);
+  const words = expandedQuery.toLowerCase().split(/\s+/).filter(Boolean);
+
+  // Score every index entry
+  const scored = SEARCH_INDEX.map(function(item) {
+    const titleLower = item.title.toLowerCase();
+    const textLower = item.text.toLowerCase();
+    const haystackLower = titleLower + ' ' + textLower;
+    let score = 0;
+    words.forEach(function(w) {
+      if (titleLower.includes(w)) score += 6;  // title match heavily weighted
+      if (textLower.includes(w)) score += 1;
+    });
+    // Exact phrase bonus
+    if (words.length > 1 && haystackLower.includes(query.toLowerCase())) score += 5;
+    // Penalise bulk entries so specific cards surface first
+    if (item._bulk) score = Math.max(0, score - 4);
+    return { item, score };
+  }).filter(function(r) { return r.score > 0; })
+    .sort(function(a, b) { return b.score - a.score; });
+
+  // Deduplicate: allow up to 4 results per tab when scores are high (so both TLTC sections show)
+  const tabCount = {};
+  const deduped = [];
+  for (var i = 0; i < scored.length && deduped.length < 10; i++) {
+    var r = scored[i];
+    var tid = r.item.tab;
+    tabCount[tid] = (tabCount[tid] || 0);
+    var limit = r.score >= 6 ? 4 : 2;
+    if (tabCount[tid] < limit) {
+      deduped.push(r);
+      tabCount[tid]++;
+    }
+  }
+
+  if (deduped.length === 0) {
+    resultsEl.innerHTML = '<div class="search-no-results">No results for <strong>"' + query + '"</strong></div>';
+  } else {
+    resultsEl.innerHTML = deduped.map(function(r) {
+      var snippet = getSnippet(r.item.text, query, 110);
+      var subId = r.item.subId || '';
+      var hfId  = r.item.hfId  || '';
+      return '<div class="search-result-item" onclick="searchGoTo(\'' + r.item.tab + '\',\'' + subId + '\',\'' + hfId + '\')">' +
+        '<div class="search-result-tab">' + r.item.tabLabel + '</div>' +
+        '<div class="search-result-title">' + highlight(r.item.title.slice(0, 70), query) + '</div>' +
+        '<div class="search-result-snippet">' + highlight(snippet, query) + '</div>' +
+        '</div>';
+    }).join('');
+  }
+  resultsEl.classList.add('open');
+  positionSearchResults();
+}
+
+function searchGoTo(tabId, subId, hfId) {
+  clearSearch();
+  // Step 1: activate main tab
+  const btn = document.querySelector('.nav-btn[onclick*="\'' + tabId + '\'"]');
+  showTab(tabId, btn || null);
+
+  // Step 2: activate sub-section (e.g. res-helpfamily)
+  if (subId) {
+    setTimeout(function() {
+      document.querySelectorAll('.sub-section').forEach(function(s) { s.classList.remove('active'); });
+      document.querySelectorAll('.sub-tab').forEach(function(b) { b.classList.remove('active'); });
+      var subEl = document.getElementById('sub-' + subId);
+      if (subEl) { subEl.classList.add('active'); }
+      // activate matching top-level sub-tab button
+      document.querySelectorAll('.sub-tab').forEach(function(b) {
+        if (b.getAttribute('onclick') && b.getAttribute('onclick').indexOf("'" + subId + "'") !== -1) {
+          b.classList.add('active');
+        }
+      });
+
+      // Step 3: activate hf-sub-section inside it
+      if (hfId) {
+        setTimeout(function() {
+          document.querySelectorAll('.hf-sub-section').forEach(function(s) { s.classList.remove('active'); });
+          document.querySelectorAll('#sub-res-helpfamily .sub-tab').forEach(function(b) { b.classList.remove('active'); });
+          var hfEl = document.getElementById('sub-' + hfId);
+          if (hfEl) { hfEl.classList.add('active'); }
+          document.querySelectorAll('#sub-res-helpfamily .sub-tab').forEach(function(b) {
+            if (b.getAttribute('onclick') && b.getAttribute('onclick').indexOf("'" + hfId + "'") !== -1) {
+              b.classList.add('active');
+            }
+          });
+        }, 60);
+      }
+    }, 60);
+  }
+}
+
+function clearSearch() {
+  const input = document.getElementById('hero-search-input');
+  const resultsEl = document.getElementById('search-results');
+  const clearBtn = document.getElementById('hero-search-clear');
+  if (input) input.value = '';
+  if (clearBtn) clearBtn.classList.remove('visible');
+  if (resultsEl) { resultsEl.classList.remove('open'); resultsEl.innerHTML = ''; }
+}
+
+function handleSearchKey(e) {
+  if (e.key === 'Escape') { clearSearch(); e.target.blur(); }
+  if (e.key === 'Enter') {
+    const first = document.querySelector('.search-result-item');
+    if (first) first.click();
+  }
+}
+
+// Close search results when clicking outside
+document.addEventListener('click', function(e) {
+  const wrap = document.querySelector('.hero-search-wrap');
+  if (wrap && !wrap.contains(e.target)) {
+    const resultsEl = document.getElementById('search-results');
+    if (resultsEl) resultsEl.classList.remove('open');
+  }
+});
+
+// Reposition search results on scroll/resize (since we use position:fixed)
+window.addEventListener('resize', function() {
+  const resultsEl = document.getElementById('search-results');
+  if (resultsEl && resultsEl.classList.contains('open')) positionSearchResults();
+}, { passive: true });
+window.addEventListener('scroll', function() {
+  const resultsEl = document.getElementById('search-results');
+  if (resultsEl && resultsEl.classList.contains('open')) positionSearchResults();
+}, { passive: true });
+
+// Teleport search-results to <body> so it's never clipped by hero overflow or stacking contexts
+document.addEventListener('DOMContentLoaded', function() {
+  var resultsEl = document.getElementById('search-results');
+  if (resultsEl) { document.body.appendChild(resultsEl); }
+});
+
+// ===== NAV =====
+function showResourceDirect(subId, btn) {
+  // Switch to resources tab but hide the header
+  var tabEl = document.getElementById('tab-resources');
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+  document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
+  tabEl.classList.add('active');
+  tabEl.classList.remove('show-header');
+  if (btn) btn.classList.add('active');
+  showSub(subId, null);
+  var clip = document.querySelector('.hero-clip');
+  if (clip) clip.classList.add('collapsed');
+  window.scrollTo(0, 0);
+}
+
+function showTab(id, btn) {
+  var tabEl = document.getElementById('tab-' + id);
+  if (!tabEl) return;
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+  document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
+  tabEl.classList.add('active');
+  if (btn) btn.classList.add('active');
+  // Show Resources header only when clicking the Resources nav button directly
+  if (id === 'resources') tabEl.classList.add('show-header');
+  var clip = document.querySelector('.hero-clip');
+  if (clip) clip.classList.add('collapsed');
+  window.scrollTo(0, 0);
+}
+
+// Hero collapses when scrolled past it, returns only when back at very top
+(function() {
+  var clip = document.querySelector('.hero-clip');
+  var ticking = false;
+
+  function update() {
+    var y = window.scrollY || window.pageYOffset;
+    if (y > 60) {
+      clip.classList.add('collapsed');
+    } else if (y === 0) {
+      clip.classList.remove('collapsed');
+    }
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, { passive: true });
+})();
+
+function showHF(id) {
+  document.querySelectorAll('.hf-sub-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('#sub-res-helpfamily .sub-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('sub-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+function showRPSub(id, btn) {
+  document.querySelectorAll('.rp-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.rp-sub').forEach(b => b.classList.remove('active'));
+  document.getElementById('sub-' + id + '2').classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+function showSub(id, triggerEl) {
+  document.querySelectorAll('.sub-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
+  var el = document.getElementById('sub-' + id);
+  if(el) el.classList.add('active');
+  if(triggerEl) triggerEl.classList.add('active');
+  else if(typeof event !== 'undefined' && event && event.target) event.target.classList.add('active');
+}
+
+function showProspTab(id, btn) {
+  document.querySelectorAll('.prosp-section').forEach(s => { s.style.display='none'; s.classList.remove('active'); });
+  document.querySelectorAll('#prosp-tab-row .sub-tab').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById('prosp-' + id);
+  if (el) { el.style.display='block'; el.classList.add('active'); }
+  if (btn) btn.classList.add('active');
+}
+
+function showPitchTab(id, btn) {
+  document.querySelectorAll('.pitch-section').forEach(s => { s.style.display='none'; s.classList.remove('active'); });
+  document.querySelectorAll('#pitch-tab-row .sub-tab').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById('pitch-' + id);
+  if (el) { el.style.display='block'; el.classList.add('active'); }
+  if (btn) btn.classList.add('active');
+}
+
+function calcProspScore() {
+  const vals = [+document.getElementById('pt1').value, +document.getElementById('pt2').value, +document.getElementById('pt3').value, +document.getElementById('pt4').value];
+  const targets = [3, 5, 1, 1];
+  const score = vals.reduce((a, v, i) => a + Math.min(v / targets[i], 1), 0);
+  const pct = Math.round(score / 4 * 100);
+  const box = document.getElementById('prosp-score-box');
+  const label = document.getElementById('prosp-score-label');
+  const msg = document.getElementById('prosp-score-msg');
+  box.style.display = 'block';
+  label.textContent = 'Daily completion: ' + pct + '%';
+  if (pct >= 100) msg.textContent = 'Full Daily 5 complete! Consistency like this builds a $10k/month business.';
+  else if (pct >= 60) msg.textContent = 'Solid day — finish strong. The appointment is where the money is.';
+  else msg.textContent = "You're getting started. Every action today is a seed planted.";
+}
+
+// ===== OBJECTIONS =====
+const objections = [
+  { q: '"I don\'t have time for this." / "I\'m too busy with my job."', a: 'Good — we work around life, not instead of it. The only question is whether what you\'re doing now is going to give you more time, income, and flexibility. Is it?' },
+  { q: '"Is this a pyramid scheme?"', a: '"Great question — and a fair one. Pyramid schemes are illegal. We\'re licensed in all 50 states, regulated federally by FINRA, and backed by Aegon — a company that\'s been around since the 1800s with hundreds of billions in assets. Nationwide, Pacific Life, and Transamerica wouldn\'t partner with us if that were true. Think Keller Williams or State Farm — independent agents, operating under a larger licensed organization. That\'s us. What made you ask? I want to make sure I\'m addressing what\'s really behind it."' },
+  { q: '"I just Google WFG and all I see is negative / scam results"', a: '"I love that you\'re doing your research — that tells me you\'re a serious person and you take your finances seriously. Let me make that research more useful, because if you just Google us, you\'re going to end up on Reddit or a forum, and honestly, anyone can post anything there. We have 95,000 licensed agents and not every experience is the same. Here\'s where I\'d actually point you. Pull up bbb.org — Better Business Bureau — and search World Financial Group Johns Creek, GA. A+ rating. That\'s not bought, that\'s earned. Then bookmark aegon.com — nearly 200 years old, managing hundreds of billions ofdollars globally. Also tfaconnect.com — that\'s Transamerica, one of our main carriers. And worldfinancialgroup.com — our brokerage directly. What I\'d love to do is set up a second conversation — and I want you to come in ready to interview us. Bring every question, everything that concerned you, anything you saw. We\'ll go through it all. And then if you feel good, I\'ll have a few questions to see if it\'s a mutual fit. Sound fair?"' },
+  { q: '"I\'m not a salesperson."', a: '"Good news — neither am I, really. We\'re a professional financial educators. We don\'t sell anything — we sit down with families, understand their situation, and help them design a plan. Most of our best people were teachers, nurses, coaches — people who care about others. That\'s the skillset here."' },
+  { q: '"I need to think about it."', a: '"Of course — this is a real decision. Can I ask what specifically you\'re thinking through? Is it the time, the investment, the uncertainty of income? Because I want to make sure I answer the right question for you, not just leave you hanging."' },
+  { q: '"I already have a financial advisor."', a: '"That\'s great — honestly, that means you already value this kind of work. Can I ask — are they helping you build income, or just managing what you already have? What we do isn’t meant to replace anything you’re already doing. From what I’ve seen, we typically complement what’s already working for someone like you. Would it make sense for us to get together so you can see if there’s anything here that might be helpful? If you like what you see, great. If not, no problem."' },
+  { q: '"I want to do research."', a: '"Good — you should. Here\'s where to look: BBB.org — search World Financial Group in Johns Creek, GA. A+ rating. Aegon.com — our parent company. Been around since the 1800\'s with hundreds of billions in assets. Transamerica.com — one of our primary carriers. Worldfinancialgroup.com — our brokerage directly. Avoid forming opinions from Reddit — anyone can post anything. The regulated sources tell the real story. When you\'ve had a chance to look, let\'s get back together. Come in like you\'re interviewing us — bring every question, every concern. We\'ll go through all of it. And if everything checks out, I\'ll have a few questions for you too, to make sure it\'s a good fit on both sides. Does that sound fair?"' },
+  { q: '"My spouse isn\'t on board."', a: '"I completely respect that. Can I ask — what\'s their top 2 main concerns? I\'d love to address it directly. Would it be okay if we got them on a quick call or even brought them to one of our events? Most spouses become the biggest supporters once they see the full picture."' },
+  { q: '"I\'ll just do a Roth or Back Door Roth."', a: 'Love it — a Roth is a great foundation. A few things worth knowing before you stop there though.\n\nAre you familiar with the pro-rata rule? If you have any pre-tax IRA money, your backdoor Roth conversion may not be as clean as you think — could trigger an unexpected tax bill.\n\nAlso — $7,000 a year. That\'s the ceiling. If you\'re serious about building a meaningful tax-free retirement income, that cap hits fast.\n\nAn IUL has no contribution limits, no RMDs, no market losses, and the same tax-free treatment on the way out. Wealthy people don\'t use it instead of a Roth — they use it because $7,000 a year isn\'t enough.\n\nThe question is whether it is for you. Is it?' },
+  { q: '"I don\'t need IUL life insurance."', a: 'That\'s the most common misconception about an IUL — people hear \'life insurance\' and tune out. But the death benefit is almost secondary to how most people actually use it.\n\nThink of it less as life insurance and more as a tax-free retirement account with a death benefit attached. The wealthy use it because it has no contribution limits, no RMDs, no market losses, and every dollar coming out in retirement is tax-free.\n\nThe death benefit is just a bonus — it\'s what makes the tax treatment possible.\n\nSo the real question isn\'t whether you need life insurance. It\'s whether you want another tax-free bucket with no ceiling and no downside risk. Do you?' },  { q: '"Candy Company, you\'re compensation is too low"', a: '"The financial services industry is full of traps — traditional companies that cap your growth and hand all the real money to a handful of regional managers, general agencies that just train their own competition until agents leave to open a shop at the other end of the strip mall, and now more than ever, candy companies flooding your phone promising flashy numbers designed to lure you away from something real. They know exactly how to make their offer look better, but just like candy, it\'s colorful on the outside and hollow — or worse, poisonous — on the inside. When a competitor claims to pay 133%, 152%, or 175%, the first question you ask is "133% of what?" — because they\'re quoting points, not your actual contract, and when you convert their numbers to a true 100% table, WFG wins every single time, because nobody can make 100 cents become 130 cents. Then look at their spread structure — most candy companies flank you all the way up to executive level, meaning every time someone on your team gets promoted you lose that override, while WFG\'s generational overrides above SMD are permanent, unchangeable, and you can even override someone with a higher title than you. Most of these companies also have one or two product carriers — one recruiting your people right now just had their only IUL carrier give them a 90-day cancellation notice for unethical behavior — while WFG has 189 providers, 379+ products, a full broker-dealer, and 25+ years of never missing a payout, with $1.37 billion paid to the field in 2023 alone. A higher contract number means nothing if it\'s on a smaller pizza, with a temporary structure, from a company that might not exist next year."'},
+  { q: '"I don\'t need an IUL."', a: 'That\'s possible — not everyone does. Help me understand, what\'s your current plan for tax-free retirement income? Do you have a pension, maxed-out 401k, or another tax-free vehicle in place?\n\nBecause here\'s what I see with a lot of people — they have pre-tax money stacked up in 401ks and IRAs, which is great, but every dollar coming out in retirement gets taxed as ordinary income. An IUL is just a separate tax-free bucket — no RMDs, no contribution limits tied to income, downside protection, and a death benefit on top.\n\nWealthy people don\'t use it because they have to. They use it because they\'ve maxed everything else and still want more tax-free growth.\n\nIf your current strategy already covers all of that — you\'re probably right, you don\'t need it. If there\'s any gap, it\'s worth at least understanding what you might be leaving on the table. So which is it?' },
+  { q: '"I don\'t need life insurance."', a: 'That\'s possible — not everyone does. Help me understand, what makes you feel that way? Is it that you have enough assets to self-insure, no dependents relying on your income, or something else?\n\nBecause life insurance means different things at different stages. For some people it\'s pure protection — replacing income if something happened. For others it\'s a tax-free retirement vehicle, estate planning, or leaving a legacy.\n\nIf you\'re fully covered on all of that — you\'re probably right. But if there\'s any gap in what happens to the people who depend on you, or how your wealth transfers, it\'s a conversation to know for sure. Which is it?' }
+];
+const objList = document.getElementById('obj-list');
+if(objList) objections.forEach((obj, i) => {
+  objList.innerHTML += `<div class="obj-item"><div class="obj-q" id="oq${i}" onclick="toggleObj(${i})">${obj.q}<span class="arrow">⌄</span></div><div class="obj-a" id="oa${i}">${obj.a}</div></div>`;
+});
+function toggleObj(i) {
+  const q = document.getElementById('oq'+i), a = document.getElementById('oa'+i);
+  a.classList.toggle('open'); q.classList.toggle('open');
+}
+
+// ===== TIMELINE =====
+const timelineData = [
+  { month: 'Month 1', gold: false, title: 'Ignition — Build & Recruit', items: ['Finish 100-name list. A-B-C qualify all contacts.',' Full Timers Contact 20 people per day. Lock 2–3 appointments/day personally.','Activate 3 of your 5 existing licensed associates with this program.','Run BPM weekly. Host 2 Zoom info sessions.','Do your own GX1: 30 Booked Appointments 18 FNAs, 6–8 policies written.','Son tracks all appointments, follow-ups, and licensing progress.'] },
+  { month: 'Month 2 — GX2', gold: false, title: 'Build Momentum — Duplicate', items: ['Your 3 new associates each start their GX1.','You run GX2: 20+ FNAs, 6–8 policies, 3 new recruits personally.','Host weekly field training sessions. Wife leads culture and morale.','Total team: target 6 people actively working.','Points focus: push team to 50,000 combined points.','Introduce annuity, and LTC conversations to B-list clients.'] },
+  { month: 'Month 3 — GX3 → SMD', gold: false, title: 'Push to 90K — SMD Qualification', items: ['All 9 people on team doing GX1 simultaneously.','Your role: coach, motivate, remove obstacles.','Hold daily 15-min team calls. Weekly recognition.','Hit 90,000 team points. SMD achieved.','Document everything — this becomes your playbook for 3 more SMDs.','Begin identifying 3 candidates to develop as your future SMDs.'] },
+  { month: 'Months 4–6 → EMD', gold: true, title: 'Build 3 SMDs — EMD Qualification', items: ['Each of your top 3 associates replicates your GX1→GX2→GX3 cycle.','You shift from builder to leader and trainer.','Support each future SMD with weekly 1:1 coaching sessions.','Son coordinates team logistics, BPM, licensing tracking.','Hit 500,000 total team points across 3 SMD qualifying months.','EMD achieved. Build the next generation of leaders.'] }
+];
+const tc = document.getElementById('timeline-cards');
+timelineData.forEach(t => {
+  tc.innerHTML += `<div class="timeline-card"><div class="timeline-month ${t.gold?'gold':''}">${t.month}</div><h3 style="font-family:var(--serif);font-size:18px;font-weight:700;margin-bottom:14px;color:var(--navy)">${t.title}</h3><ul class="step-list">${t.items.map(item=>`<li class="step-item"><div class="step-num" style="background:var(--gold);color:var(--navy);font-size:16px">→</div><div class="step-body"><p style="margin:0;font-size:14px;color:#2d3a4a">${item}</p></div></li>`).join('')}</ul></div>`;
+});
+
+// ===== ARCHETYPES =====
+const archetypes = [
+  { badge:'Archetype 1 — highest priority', bclass:'badge-navy', color:'var(--navy-mid)', title:'The Frustrated High-Earner', desc:'Good income but no margin. Corporate job, feeling trapped. Lifestyle crept up with the paycheck. Knows they\'re one layoff from crisis. Ambitious but stuck inside someone else\'s system.', where:'Former corporate coworkers, LinkedIn connections, middle management peers, friends who "do well" but complain about work constantly.' },
+  { badge:'Archetype 2 — fast mover', bclass:'badge-gold', color:'var(--gold-deep)', title:'The Life-Transition Person', desc:'Just had a baby, got married, divorced, lost a job, got promoted, or turned 30/40. Life changed — their mindset is open. Perfect timing to invite.', where:'Family network, old friends reconnecting on social media, anyone who\'s posted a major life announcement recently.' },
+  { badge:'Archetype 3 — natural builder', bclass:'badge-green', color:'var(--green-text)', title:'The People-Magnet', desc:'Hair stylist, barber, trainer, teacher, nurse, pastor, real estate agent. Already has a warm network and earns trust naturally. Their network is their asset.', where:'Faith community, gym, service professionals you use personally, community volunteers, coaches.' },
+  { badge:'Archetype 4 — mission-driven', bclass:'badge-purple', color:'#3C3489', title:'The Purpose Seeker', desc:'Doing work that doesn\'t fulfill them financially or spiritually. Responds powerfully to the WFG mission. Values over income — until you show them both are possible.', where:'Faith community, nonprofit workers, educators, social workers, military veterans, community organizers.' },
+  { badge:'Archetype 5 — sleeper', bclass:'badge-gold', color:'var(--gold-deep)', title:'The Hungry Side-Hustler', desc:'Already has 1–2 side hustles. DoorDash, Uber, Amazon, dropshipping. Entrepreneurial energy but no real vehicle. Once they see licensing + training + team support, WFG clicks.', where:'Old friends who always have a new project, anyone who\'s tried an MLM before, social posts about "building something."' }
+];
+const ac = document.getElementById('archetype-cards');
+if (ac) {
+  archetypes.forEach(a => {
+  ac.innerHTML += `<div class="card" style="border-left:4px solid ${a.color};border-radius:0 16px 16px 0"><div class="badge ${a.bclass}">${a.badge}</div><h3>${a.title}</h3><p style="margin-bottom:12px">${a.desc}</p><div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--gold-deep);margin-bottom:6px">Where to find them</div><p style="font-size:12px">${a.where}</p></div>`;
+  });
+}
+
+// ===== TRAITS =====
+const traits = [
+  { icon:'🔥', h:'Coachable, not know-it-all', p:'Listens more than argues. Open to learning. Coachability matters 10x more than existing financial knowledge.' },
+  { icon:'👥', h:'Has a natural warm market', p:'Social, communal, trusted. Friends and family who respect them. Relationships people trust.' },
+  { icon:'❤️', h:'Driven by more than money', p:'Pure money motivation burns out. The best recruits want to help people, build something, or leave something behind.' },
+  { icon:'🎯', h:'Dissatisfied with the status quo', p:'Content people don\'t move. You want someone who feels the gap between where they are and where they want to be.' },
+  { icon:'⏰', h:'Can find 10–15 hours per week', p:'They don\'t need to quit their job. If they can\'t find 10 hours, they\'re not ready. Revisit in 60 days.' },
+  { icon:'⭐', h:'Integrity and honesty', p:'Non-negotiable. This business runs on trust. Character first, always.' }
+];
+const tl = document.getElementById('trait-list');
+traits.forEach(t => {
+  tl.innerHTML += `<li class="step-item"><div class="step-num" style="background:var(--cream);color:var(--navy);font-size:16px;border:1px solid var(--border)">${t.icon}</div><div class="step-body"><h4>${t.h}</h4><p>${t.p}</p></div></li>`;
+});
+const smdTraits = [
+  { h:'They recruit before you ask them to', p:'Naturally starts thinking about who else should hear this. Doesn\'t wait for permission to share.' },
+  { h:'They show up without being chased', p:'Calls you, asks questions, attends events. You\'re not dragging them — they\'re pulling you.' },
+  { h:'They handle rejection and keep moving', p:'Not deterred by one "no." They process it and move to the next. Resilience under early pressure is the tell.' },
+  { h:'They care about their team\'s success, not just their own', p:'By month 2 they\'re already thinking about how to help their recruit. That\'s the leadership instinct that builds SMDs.' }
+];
+const stl = document.getElementById('smd-trait-list');
+smdTraits.forEach(t => {
+  stl.innerHTML += `<li class="step-item"><div class="step-num gold">★</div><div class="step-body"><h4>${t.h}</h4><p>${t.p}</p></div></li>`;
+});
+
+// ===== SIGNALS =====
+const verbal = ['"I\'m so tired of my job"','"I need to make more money"','"I want to be home more"','"I\'m not where I thought I\'d be"','"I want to start something"','"My company laid people off"','"I have no retirement plan"','"I want to leave something for my kids"'];
+const life = ['New baby or pregnancy','Engagement or marriage','Job loss or career change','Bought or sold a home','Health scare (family or personal)','Milestone birthday (30, 40, 50)','Moved to a new city','Kids starting school / college'];
+const social = ['Posting about a new side hustle','Updating LinkedIn frequently','Engaging with business content','Venting about work publicly','Celebrating a life milestone','Starting a community or group'];
+document.getElementById('verbal-signals').innerHTML = verbal.map(s=>`<div class="signal-chip">💬 ${s}</div>`).join('');
+document.getElementById('life-signals').innerHTML = life.map(s=>`<div class="signal-chip">📌 ${s}</div>`).join('');
+document.getElementById('social-signals').innerHTML = social.map(s=>`<div class="signal-chip">📱 ${s}</div>`).join('');
+
+// ===== SCORER =====
+const factors = [
+  { id:'f1', label:'Financial urgency', desc:'How much do they need more money right now?' },
+  { id:'f2', label:'Warm network size', desc:'Do they have people who trust and like them?' },
+  { id:'f3', label:'Coachability', desc:'Are they open-minded and willing to learn?' },
+  { id:'f4', label:'Ambition / drive', desc:'Do they talk about wanting more in life?' },
+  { id:'f5', label:'Life-change trigger', desc:'Did something recently shift their mindset?' },
+  { id:'f6', label:'Time availability', desc:'Can they realistically give 10–15 hrs/week?' }
+];
+const fi = document.getElementById('factor-inputs');
+factors.forEach(f => {
+  fi.innerHTML += `<div class="scorer-factor"><div class="factor-top"><label>${f.label}</label><span class="val" id="${f.id}-out">3</span></div><div class="factor-desc">${f.desc}</div><input type="range" min="1" max="5" value="3" step="1" id="${f.id}" oninput="document.getElementById('${f.id}-out').textContent=this.value"></div>`;
+});
+function calcScore() {
+  const name = document.getElementById('prospect-name').value || 'This person';
+  let total = 0;
+  factors.forEach(f => { total += parseInt(document.getElementById(f.id).value); });
+  const max = factors.length * 5, pct = Math.round((total/max)*100);
+  let tier, bg, advice;
+  if(pct>=80){ tier='A-List — Contact within 24 hours'; bg='var(--navy)'; advice='High priority. This person has the profile of a future SMD. Lead with the business opportunity immediately.' }
+  else if(pct>=60){ tier='B-List — Contact this week'; bg='var(--gold-deep)'; advice='Strong prospect. Contact this week. Lead with the mission and let the business unfold naturally.' }
+  else if(pct>=40){ tier='C-List — Warm up first'; bg='#5a7a9a'; advice='Reconnect socially first over 2–4 weeks, then introduce the conversation.' }
+  else{ tier='Hold — revisit in 60 days'; bg='var(--gray)'; advice='Too early or not the right fit right now. Stay warm. Don\'t force it.' }
+  document.getElementById('result-output').innerHTML = `<div class="result-box" style="background:${bg};color:#fff"><span class="result-num">${total}/${max}</span><div class="meter-bar"><div class="meter-fill" style="width:${pct}%"></div></div><div class="result-tier">${tier}</div><div class="result-advice">${advice}</div></div>`;
+  document.getElementById('scorer-form').style.display='none';
+  document.getElementById('scorer-result').style.display='block';
+}
+function resetScorer() {
+  document.getElementById('prospect-name').value='';
+  factors.forEach(f=>{ document.getElementById(f.id).value=3; document.getElementById(f.id+'-out').textContent='3'; });
+  document.getElementById('scorer-result').style.display='none';
+  document.getElementById('scorer-form').style.display='block';
+}
+
+// ===== AVOID =====
+const avoidList = [
+  { title:'The chronic skeptic', desc:'Questions everything before trying anything. Has a reason why every opportunity is a scam. You can\'t logic someone into belief — move on.' },
+  { title:'The approval-seeker', desc:'Needs everyone around them to say yes first. Spouse, best friend, parents all have to approve. Invite the whole circle instead of waiting.' },
+  { title:'The "one day" person', desc:'Always interested, never ready. If they\'ve said "I just need to get past this thing" twice, they\'ll say it a third time. Keep warm but don\'t build your GX around them.' },
+  { title:'The negative-energy person', desc:'Complains constantly, turns pessimistic at the first hard moment. One negative associate can poison a whole team culture. Attitude is non-negotiable.' },
+  { title:'The too-comfortable', desc:'Happy with their current income, no financial urgency, no deeper why. They may be good clients eventually — but the pain that drives action isn\'t there yet.' }
+];
+const al = document.getElementById('avoid-list');
+avoidList.forEach(a => {
+  al.innerHTML += `<div class="warn-chip"><span class="warn-icon">⚠️</span><div><strong style="font-size:14px;display:block;margin-bottom:3px">${a.title}</strong><span style="font-size:13px;color:var(--gray-700)">${a.desc}</span></div></div>`;
+});
+
+// ===== DUPLICATE POPULATE for tab-list (Build the List) versions =====
+const ac2 = document.getElementById('archetype-cards2');
+if (ac2) archetypes.forEach(a => { ac2.innerHTML += `<div class="card" style="border-left:4px solid ${a.color};border-radius:0 16px 16px 0"><div class="badge ${a.bclass}">${a.badge}</div><h3>${a.title}</h3><p style="margin-bottom:12px">${a.desc}</p><div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--gold-deep);margin-bottom:6px">Where to find them</div><p style="font-size:12px">${a.where}</p></div>`; });
+const tl2 = document.getElementById('trait-list2');
+if (tl2) traits.forEach(t => { tl2.innerHTML += `<li class="step-item"><div class="step-num" style="background:var(--cream);color:var(--navy);font-size:16px;border:1px solid var(--border)">${t.icon}</div><div class="step-body"><h4>${t.h}</h4><p>${t.p}</p></div></li>`; });
+const stl2 = document.getElementById('smd-trait-list2');
+if (stl2) smdTraits.forEach(t => { stl2.innerHTML += `<li class="step-item"><div class="step-num gold">★</div><div class="step-body"><h4>${t.h}</h4><p>${t.p}</p></div></li>`; });
+const vs2 = document.getElementById('verbal-signals2');
+if (vs2) vs2.innerHTML = verbal.map(s=>`<div class="signal-chip">💬 ${s}</div>`).join('');
+const ls2 = document.getElementById('life-signals2');
+if (ls2) ls2.innerHTML = life.map(s=>`<div class="signal-chip">📌 ${s}</div>`).join('');
+const ss2 = document.getElementById('social-signals2');
+if (ss2) ss2.innerHTML = social.map(s=>`<div class="signal-chip">📱 ${s}</div>`).join('');
+const fi2 = document.getElementById('factor-inputs2');
+if (fi2) factors.forEach(f => { fi2.innerHTML += `<div class="scorer-factor"><div class="factor-top"><label>${f.label}</label><span class="val" id="${f.id}-out2">3</span></div><div class="factor-desc">${f.desc}</div><input type="range" min="1" max="5" value="3" step="1" id="${f.id}2" oninput="document.getElementById('${f.id}-out2').textContent=this.value"></div>`; });
+function calcScore2() {
+  const name = document.getElementById('prospect-name2').value || 'This person';
+  let total = 0; factors.forEach(f => { total += parseInt(document.getElementById(f.id+'2').value); });
+  const max = factors.length * 5; const pct = Math.round((total/max)*100);
+  let tier = pct>=80?'🔥 A-List — Contact today':pct>=60?'⭐ Strong B-List — Contact this week':pct>=40?'📋 B/C — Worth a conversation':'⏳ C-List — Keep warm, revisit in 60 days';
+  document.getElementById('scorer-form2').style.display='none';
+  document.getElementById('scorer-result2').style.display='block';
+  document.getElementById('result-output2').innerHTML=`<div class="score-output"><div class="score-big">${total}/${max}</div><div class="score-pct">${pct}% priority score</div><div class="score-tier">${tier}</div><p style="font-size:13px;color:var(--gray-700);margin-top:10px">${name} ${pct>=60?'is a strong candidate — reach out soon.':'may not be ready yet — stay warm and revisit.'}</p></div>`;
+}
+function resetScorer2() { document.getElementById('prospect-name2').value=''; factors.forEach(f=>{document.getElementById(f.id+'2').value=3;document.getElementById(f.id+'-out2').textContent=3;}); document.getElementById('scorer-form2').style.display='block'; document.getElementById('scorer-result2').style.display='none'; }
+const al2 = document.getElementById('avoid-list2');
+if (al2) avoidList.forEach(a => { al2.innerHTML += `<div class="warn-chip"><span class="warn-icon">⚠️</span><div><strong style="font-size:14px;display:block;margin-bottom:3px">${a.title}</strong><span style="font-size:13px;color:var(--gray-700)">${a.desc}</span></div></div>`; });
+
+// ===== TRAINING =====
+const trainingPhases = [
+  { phase:'Phase 1', badge:'badge-navy', accent:'var(--navy-mid)', title:'Days 1–3: Belief & Foundation', items:['Why WFG & the mission — personal story from our Leaders','The financial problem in America — why families need us','How to build your 100-name list (complete by end of Day 2)','Products overview: Term, IUL, Annuities, LTC (high-level)','Identity shift — you are a financial professional now'] },
+  { phase:'Phase 2', badge:'badge-gold', accent:'var(--gold-deep)', title:'Days 4–10: Licensing & Scripts', items:['Start licensing prep — son tracks progress daily','Memorize the NEPQ contact script — role play daily','Practice the two-door approach: business + client','Attend BPM as a guest, then as an associate guide','Shadow SMDs on 2–3 appointments'] },
+  { phase:'Phase 3', badge:'badge-navy', accent:'var(--navy-mid)', title:'Days 11–21: Field Training', items:['Observe 10 Step 1 and 2s with trainer present (SMD or senior associate)','Learn to complete FNA and position solutions','Present to 3 people solo with feedback session after each','Lock first personal appointments from your own list','Weekly accountability call with SMD — every Monday'] },
+  { phase:'Phase 4', badge:'badge-green', accent:'var(--green-text)', title:'Days 22–30: GX1 Sprint', items:['Complete 10 Step 1 and 2s independently','Write first personal policy — celebrate publicly at BPM','Recruit first person — walk them through this same program','Attend recognition at BPM','Set GX2 goals with SMD. Begin Month 2 planning.'] }
+];
+const trc = document.getElementById('training-cards');
+trainingPhases.forEach((ph, pi) => {
+  trc.innerHTML += `<div class="card" style="border-left:4px solid ${ph.accent};border-radius:0 16px 16px 0;margin-bottom:18px"><div class="badge ${ph.badge}">${ph.phase}</div><h3>${ph.title}</h3><ul class="step-list" style="margin-top:14px">${ph.items.map((item,i)=>`<li class="step-item"><div class="step-num" style="background:var(--gold);color:var(--navy)">${i+1}</div><div class="step-body"><p style="margin:0;font-size:14px;color:#2d3a4a">${item}</p></div></li>`).join('')}</ul></div>`;
+});
+
+// ===== GLOSSARY =====
+const glossary = [
+  { term:'FNA — Financial Needs Analysis', def:'The discovery meeting tool used to assess a client\'s current financial situation, gaps, and goals. Every client starts here.' },
+  { term:'IUL — Indexed Universal Life', def:'Permanent life insurance that builds cash value tied to a stock market index. Offers tax-free retirement income, death benefit, and protection from market loss.' },
+  { term:'Term Life Insurance', def:'Coverage for a set period (10, 20, 30 years). Most affordable per dollar of death benefit. Great starting product for young families.' },
+  { term:'FIA — Fixed Index Annuity', def:'Retirement vehicle with principal protection. Growth tied to market index with no direct market participation. Zero loss in down years.' },
+  { term:'RILA — Registered Index-Linked Annuity', def:'Like an FIA but with some downside risk (buffer) in exchange for higher growth potential. For more risk-tolerant clients.' },
+  { term:'LTC — Long-Term Care Insurance', def:'Covers costs of care (home care, assisted living, nursing home) when unable to perform basic daily activities. Massively underdiscussed.' },
+  { term:'BPM — Business Presentation Meeting', def:'WFG\'s primary event to show the business opportunity to prospects. Your most powerful recruiting tool.' },
+  { term:'GX1 / GX2 / GX3', def:'Monthly growth achievement levels. GX1 = first level of monthly production. Three consecutive months earns SMD qualification.' },
+  { term:'SMD — Senior Marketing Director', def:'Leadership level achieved with 90,000 personal + team points for 3 consecutive months.' },
+  { term:'EMD — Executive Marketing Director', def:'Next level above SMD. Requires 3 SMDs on your team and 500,000 team points.' },
+  { term:'Cash Value', def:'The savings component inside a permanent life insurance policy that grows over time and can be borrowed against tax-free.' },
+  { term:'Death Benefit', def:'The tax-free lump sum paid to beneficiaries upon the insured\'s death.' },
+  { term:'Premium', def:'The amount a policyholder pays for insurance coverage, typically monthly or annually.' },
+  { term:'Beneficiary', def:'The person(s) designated to receive the death benefit or policy proceeds.' },
+  { term:'Underwriting', def:'The process insurance companies use to assess risk and determine eligibility and pricing for coverage.' },
+{ term:'Risk Mitigation', def:'The strategic reduction of financial exposure to market loss, taxation, volatility, lawsuits, inflation, or catastrophic life events.' },
+
+{ term:'Tax Efficiency', def:'Structuring wealth so clients keep more of what they earn through strategic tax positioning and tax-advantaged vehicles.' },
+
+{ term:'Tax Diversification', def:'Building multiple buckets of retirement income — taxable, tax-deferred, and tax-free — to maximize flexibility and reduce future tax exposure.' },
+
+{ term:'Tax-Free Retirement Income', def:'Retirement income structured to be received without triggering income taxation when designed properly.' },
+
+{ term:'Tax-Equivalent Return', def:'The taxable rate of return required to equal the value of a tax-free return. Used to demonstrate the hidden value of tax-free accumulation.' },
+
+{ term:'Future Tax Liability', def:'The taxes owed in the future on qualified retirement accounts such as 401(k)s and IRAs. Often called the hidden retirement tax bomb.' },
+
+{ term:'Financial Architecture', def:'The overall design and structure of a family’s financial strategy, including protection, cash flow, tax positioning, and wealth accumulation.' },
+
+{ term:'Capital Preservation', def:'A strategy focused on protecting principal while still allowing for strategic long-term growth.' },
+
+{ term:'Downside Protection', def:'Protecting assets from market loss while still participating in potential upside growth.' },
+
+{ term:'Volatility Management', def:'Reducing the negative impact of market fluctuations on long-term financial outcomes.' },
+
+{ term:'Sequence Risk', def:'The danger of suffering major market losses near or during retirement, which can permanently damage portfolio longevity.' },
+
+{ term:'Income Distribution Strategy', def:'A retirement strategy focused on how assets are withdrawn efficiently and sustainably over time.' },
+
+{ term:'Strategic Wealth Accumulation', def:'A long-term approach to building wealth using disciplined, tax-efficient, and risk-conscious financial strategies.' },
+
+{ term:'Cash Flow Optimization', def:'Improving how income is managed, directed, and utilized to maximize financial efficiency and growth.' },
+
+{ term:'Liquidity Strategy', def:'Maintaining accessible capital while still allowing long-term assets to grow efficiently.' },
+
+{ term:'Capital Allocation', def:'Strategically positioning money across different financial vehicles based on risk, taxes, liquidity, and growth objectives.' },
+
+{ term:'Financial Independence', def:'The ability to sustain one’s lifestyle without dependence on active employment income.' },
+
+{ term:'Generational Wealth', def:'Assets, values, and financial structures intentionally designed to benefit future generations.' },
+
+{ term:'Legacy Planning', def:'The process of structuring wealth transfer, protection, and family impact for future generations.' },
+
+{ term:'Estate Efficiency', def:'Strategies designed to minimize taxes, delays, and erosion of assets during wealth transfer.' },
+
+{ term:'Family Wealth Continuity', def:'Ensuring wealth, assets, and financial values successfully transfer across generations.' },
+
+{ term:'Economic Security', def:'A family’s ability to withstand financial disruptions while maintaining stability and quality of life.' },
+
+{ term:'Market Participation with Protection', def:'Participating in portions of market upside while avoiding direct exposure to full market losses.' },
+
+{ term:'Protected Growth Strategy', def:'A financial strategy designed to capture growth opportunities while minimizing downside exposure.' },
+
+{ term:'Financial Stewardship', def:'Managing money responsibly and intentionally to create long-term impact and legacy.' },
+
+{ term:'Financial Literacy Crisis', def:'The widespread lack of financial education preventing families from building long-term economic security.' },
+
+{ term:'No Family Left Behind', def:'The core crusade and mission of helping families achieve financial education, protection, and independence regardless of income level.' },
+
+{ term:'Identity Expansion', def:'The personal growth process where an individual elevates their self-image, confidence, and belief system to operate at higher levels.' },
+
+{ term:'Borrowed Belief', def:'Leveraging the confidence and conviction of mentors and leaders until personal certainty is developed.' },
+
+{ term:'Leadership Multiplication', def:'Building organizations by developing leaders who can independently train, mentor, and duplicate others.' },
+
+{ term:'Mission-Driven Entrepreneurship', def:'Building a business centered around purpose, impact, and service rather than purely income.' },
+
+{ term:'Entrepreneurial Platform', def:'A scalable business system allowing individuals to create ownership, leverage, and long-term residual income.' },
+
+{ term:'Time Leverage', def:'Creating income and impact beyond the limitations of personal hours worked.' },
+
+{ term:'Residual Income', def:'Ongoing income generated from previously built systems, teams, or assets.' },
+
+{ term:'Scalable Impact', def:'The ability to positively affect increasingly larger numbers of families through leadership and systems.' },
+
+{ term:'Strategic Positioning', def:'Presenting financial solutions in a way that aligns with a client’s long-term goals, psychology, and identity.' },
+
+{ term:'Affluent Market', def:'Professionals, business owners, and high-income earners seeking advanced financial efficiency and wealth strategies.' },
+
+{ term:'High-Identity Market', def:'Individuals who operate with high standards, leadership capacity, ambition, and long-term vision.' },
+
+{ term:'Economic Leverage', def:'Using systems, teams, capital, or financial structures to multiply output and results.' },
+
+{ term:'Financial Efficiency', def:'Maximizing the amount of wealth retained and utilized after taxes, fees, and unnecessary risk.' },
+
+{ term:'Long-Term Economic Security', def:'A stable and sustainable financial future protected against inflation, taxation, volatility, and unforeseen events.' },
+
+{ term:'Financial Impact', def:'The measurable improvement created in a family’s financial future through strategic planning and education.' },
+
+{ term:'Lifestyle by Design', def:'Intentionally creating a life centered around faith, family, freedom, and purpose rather than reacting to circumstances.' },
+
+{ term:'Quality of Life', def:'The overall level of freedom, fulfillment, health, relationships, and time experienced by an individual or family.' },
+
+{ term:'Crusade', def:'The larger mission and purpose behind the business — helping families win financially while developing leaders.' },
+
+{ term:'Vision Casting', def:'Helping individuals see a larger future possibility for their lives, family, finances, and impact.' },
+
+{ term:'Possibility Projection', def:'Projecting a compelling future vision that inspires belief, action, and personal expansion.' },
+
+{ term:'Leadership from the Front', def:'Leading through personal example, production, consistency, and activity rather than words alone.' },
+
+{ term:'Conviction', def:'Unshakable belief in the mission, products, platform, and impact of the business.' },
+
+{ term:'Value-Based Conversation', def:'A conversation focused on outcomes, impact, and transformation rather than products or transactions.' },
+
+{ term:'Strategic Discovery', def:'The process of uncovering a client’s goals, risks, inefficiencies, and opportunities through questions.' },
+];
+const gl = document.getElementById('glossary-list');
+if(gl) { glossary.forEach(g => { gl.innerHTML += `<div class="gloss-item"><div class="gloss-term">${g.term}</div><div class="gloss-def">${g.def}</div></div>`; }); }
+
+// Build search index now that all dynamic content has been injected into the DOM
+try { buildSearchIndex(); } catch(e) { console.warn('Search index skipped:', e.message); }
+
+let cur=0,total=8;
+const badges=['① Mindset & Setup','② Rapport Building','③ Three Eyes + Overview','④ Path Decision','⑤ Step 4 — Education','⑥ Step 2 — Business','⑦ TLTC Close','⑧ Objection Handling'];
+
+function goTo(n){
+  document.getElementById('sec-'+cur).style.display='none';
+  document.getElementById('ft-'+cur).classList.remove('active');
+  if(cur>0)document.getElementById('ft-'+cur).classList.add('done');
+  document.getElementById('fm-'+cur).classList.remove('fn-cur');
+  cur=n;
+  document.getElementById('sec-'+cur).style.display='block';
+  document.getElementById('ft-'+cur).classList.add('active');
+  document.getElementById('ft-'+cur).classList.remove('done');
+  document.getElementById('fm-'+cur).classList.add('fn-cur');
+  document.getElementById('sec-badge').textContent=badges[cur];
+  document.getElementById('script-area').scrollTop=0;
+  window.scrollTo({top:0,behavior:'instant'});
+  document.documentElement.scrollTop=0;
+  document.body.scrollTop=0;
+}
+
+function toggleBlock(el){
+  const isActive=el.classList.contains('active-block');
+  document.querySelectorAll('#sec-'+cur+' .sblock.active-block').forEach(b=>{b.classList.remove('active-block');b.classList.add('done-block');});
+  if(isActive){el.classList.remove('active-block');el.classList.remove('done-block');}
+  else{el.classList.remove('done-block');el.classList.add('active-block');}
+}
+
+function toggleObj(el){
+  const open=el.classList.contains('open');
+  document.querySelectorAll('.obj-item').forEach(o=>o.classList.remove('open'));
+  if(!open)el.classList.add('open');
+}
+
+let tSec=0,tRun=false,tInt=null;
+function toggleTimer(){
+  if(tRun){clearInterval(tInt);tRun=false;document.getElementById('tstart').textContent='Resume';}
+  else{tInt=setInterval(()=>{tSec++;const m=String(Math.floor(tSec/60)).padStart(2,'0');const s=String(tSec%60).padStart(2,'0');document.getElementById('tnum').textContent=m+':'+s;},1000);tRun=true;document.getElementById('tstart').textContent='Pause';}
+}
+function resetTimer(){clearInterval(tInt);tRun=false;tSec=0;document.getElementById('tnum').textContent='00:00';document.getElementById('tstart').textContent='Start';}
+
+(function(){
+  var loaded = false;
+  window.openRFMFlipChart = function() {
+    var modal = document.getElementById('rfm-flipchart-modal');
+    var frame = document.getElementById('rfm-flipchart-frame');
+    if (!loaded) {
+      frame.srcdoc = document.getElementById('rfm-flipchart-tpl').innerHTML;
+      loaded = true;
+    }
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  };
+  window.closeRFMFlipChart = function() {
+    document.getElementById('rfm-flipchart-modal').style.display = 'none';
+    document.body.style.overflow = '';
+  };
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') window.closeRFMFlipChart();
+  });
+})();
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  HYPERION 8-PAGE NAVIGATION SYSTEM
+// ═══════════════════════════════════════════════════════
+var HYPERION_PAGES = {
+  p1: {
+    label: 'Mission HQ', roles: 'all',
+    sections: [
+      { label: '🎯 Mission HQ', roles: 'all',
+        fn: function(){ showTab('overview', null); } }
+    ]
+  },
+  p2: {
+    label: 'Fast Start Onboarding', roles: 'all',
+    sections: [
+      { label: '📄 New Associate',    roles: 'all',        fn: function(){ showResourceDirect('res-new', null); } },
+      { label: '🚀 Fast Start',       roles: 'all',        fn: function(){ showResourceDirect('res-fast', null); } },
+      { label: '🪪 Licensing',        roles: 'all',        fn: function(){ showTab('licensing', null); } },
+      { label: '📧 Key Contacts',     roles: 'all',        fn: function(){ showResourceDirect('res-contacts', null); } },
+      { label: '⚡ GX Program',       roles: 'experienced', fn: function(){ showTab('gxprogram', null); } },
+      { label: '📈 SMD→EMD Path',     roles: 'experienced', fn: function(){ showTab('timeline', null); } },
+      { label: '📋 Business Plan',    roles: 'experienced', fn: function(){ showResourceDirect('res-bizplan', null); } }
+    ]
+  },
+  p3: {
+    label: 'Prospecting', roles: 'all',
+    sections: [
+      { label: '📋 Build the List',      roles: 'all',        fn: function(){ showTab('list', null); } },
+      { label: '📅 Lock Appointments',   roles: 'experienced', fn: function(){ showTab('appt', null); } },
+      { label: '🎯 Prospecting Program', roles: 'experienced', fn: function(){ showResourceDirect('res-prospecting', null); } },
+      { label: '💼 Approach Guide',      roles: 'experienced', fn: function(){ showResourceDirect('res-pitch', null); } },
+      { label: '🤝 Referral Mastery',    roles: 'experienced', fn: function(){ showTab('referral', null); } }
+    ]
+  },
+  p4: {
+    label: 'Contact Scripts', roles: 'all',
+    sections: [
+      { label: '📞 Contact Scripts', roles: 'all', fn: function(){ showTab('contact', null); } }
+    ]
+  },
+  p5: {
+    label: 'Objections', roles: 'all',
+    sections: [
+      { label: '🛡️ Objections', roles: 'all', fn: function(){ showTab('objections', null); } }
+    ]
+  },
+  p6: {
+    label: 'Presentations', roles: 'all',
+    sections: [
+      { label: '📊 RFM Flip Chart',       roles: 'all',        fn: function(){ openRFMFlipChart(); } },
+      { label: '🖥️ BPM Slides ↗',         roles: 'experienced', fn: function(){ window.open('https://docs.google.com/presentation/d/e/2PACX-1vQfKeNNPtCp-orAB9zUNzYQcQvf0JhLBJS9HEtORPdrHZdCkSLSx6nTa9Uewrea39GgnGf7FJotH9gs/pub?start=false&loop=false&delayms=3000','_blank'); } },
+      { label: '📊 BPM Presentation',     roles: 'experienced', fn: function(){ showResourceDirect('res-bpm-slides', null); } },
+      { label: '🎤 Zoom Script',          roles: 'experienced', fn: function(){ showResourceDirect('res-bpm', null); } },
+      { label: '📋 Step 1-2-4 Flip Chart ↗', roles: 'experienced', fn: function(){ window.open('https://drive.google.com/file/d/1oM-DYBdqFZzKZktk4lGuSnkh_0_ymnjw/view','_blank'); } }
+    ]
+  },
+  p7: {
+    label: 'Closing / Helping a Family', roles: 'experienced',
+    sections: [
+      { label: '🤝 Close & Partner',    roles: 'experienced', fn: function(){ showTab('close', null); } },
+      { label: '👨‍👩‍👧 Help a Family',     roles: 'experienced', fn: function(){ showResourceDirect('res-helpfamily', null); } },
+      { label: '🏥 LTC Campaign',       roles: 'experienced', fn: function(){ showResourceDirect('res-ltc', null); } }
+    ]
+  },
+  p8: {
+    label: 'Identity Shift', roles: 'all',
+    sections: [
+      { label: '🎓 Training',               roles: 'all', fn: function(){ showTab('training', null); } },
+      { label: '📖 Terms & Identity',       roles: 'all', fn: function(){ showTab('glossary', null); } },
+      { label: '🧠 Big Thinking Guide',     roles: 'all', fn: function(){ showResourceDirect('res-bigthinking', null); } },
+      { label: '🤝 Trustworthy Selling',    roles: 'all', fn: function(){ showResourceDirect('res-trustworthy', null); } }
+    ]
+  }
+};
+
+var hyperionCurrentPage = 'p1';
+var hyperionCurrentSection = 0;
+
+function getRole(){
+  return sessionStorage.getItem('hyperion_role') || 'experienced';
+}
+
+function showPage(pageId, btn){
+  var role = getRole();
+  var page = HYPERION_PAGES[pageId];
+  if(!page) return;
+
+  // Update page-level nav active state
+  document.querySelectorAll('#page-nav .nav-btn').forEach(function(b){ b.classList.remove('active'); });
+  if(btn) btn.classList.add('active');
+  hyperionCurrentPage = pageId;
+
+  // Build sub-nav
+  var subBar   = document.getElementById('sub-nav-bar');
+  var subInner = document.getElementById('sub-nav-inner');
+  var sections = page.sections.filter(function(s){
+    return role === 'experienced' || s.roles === 'all';
+  });
+
+  if(sections.length <= 1){
+    subBar.style.display = 'none';
+  } else {
+    subBar.style.display = 'block';
+    subInner.innerHTML = '';
+    sections.forEach(function(sec, i){
+      var b = document.createElement('button');
+      b.className = 'nav-btn sub-page-btn' + (i === 0 ? ' active' : '');
+      b.style.cssText = 'font-size:11.5px;padding:8px 10px;';
+      b.textContent = sec.label;
+      b.onclick = (function(s, btn2, idx, pageBtn){ return function(){
+        subInner.querySelectorAll('.sub-page-btn').forEach(function(x){ x.classList.remove('active'); });
+        btn2.classList.add('active');
+        hyperionCurrentSection = idx;
+        s.fn();
+        // Restore page-level active after showTab clears it
+        document.querySelectorAll('#page-nav .nav-btn').forEach(function(x){ x.classList.remove('active'); });
+        if(pageBtn) pageBtn.classList.add('active');
+        btn2.classList.add('active');
+      }; })(sec, b, i, btn);
+      subInner.appendChild(b);
+    });
+  }
+
+  // Show first available section — then restore page nav active state
+  hyperionCurrentSection = 0;
+  if(sections.length > 0){
+    sections[0].fn();
+    // showTab clears all .nav-btn actives — restore ours
+    document.querySelectorAll('#page-nav .nav-btn').forEach(function(b){ b.classList.remove('active'); });
+    if(btn) btn.classList.add('active');
+  }
+}
+
+// Override applyRole to also apply to page nav buttons
+var _originalApplyRole = window.applyRole || function(){};
+window.applyRole = function(role){
+  _originalApplyRole(role);
+  // Hide page nav buttons the role can't see
+  document.querySelectorAll('#page-nav .nav-btn[data-roles="experienced"]').forEach(function(b){
+    b.style.display = (role === 'new_associate') ? 'none' : '';
+  });
+  // Re-render current page's sub-nav with role filter
+  var activePgBtn = document.querySelector('#page-nav .nav-btn.active');
+  if(activePgBtn) showPage(activePgBtn.getAttribute('data-page'), activePgBtn);
+};
+
+// Called by applyRole when system modal opens
+window.hyperionInit = function(){
+  var r = sessionStorage.getItem('hyperion_role') || 'experienced';
+  // Hide experienced-only pages for new associate
+  document.querySelectorAll('#page-nav .nav-btn[data-roles="experienced"]').forEach(function(b){
+    b.style.display = (r === 'new_associate') ? 'none' : '';
+  });
+  var startBtn = document.querySelector('#page-nav .nav-btn[data-page="p1"]');
+  showPage('p1', startBtn);
+};
+
+function showGXPhase(id, btn) {
+  document.querySelectorAll('.gx-phase').forEach(function(s){ s.classList.remove('active'); s.style.display='none'; });
+  document.querySelectorAll('.sub-tab').forEach(function(b){ b.classList.remove('active'); });
+  var el = document.getElementById('gx-' + id);
+  if (el) { el.classList.add('active'); el.style.display='block'; }
+  if (btn) btn.classList.add('active');
+}
+
+function openSystem(){
+  // If already authenticated this session, skip password
+  var existingRole = sessionStorage.getItem('hyperion_role');
+  if(existingRole){
+    window.location.href = 'system/mission-hq.html';
+    return;
+  }
+  document.getElementById('pw-modal').style.display='flex';
+  setTimeout(function(){ document.getElementById('pw-input').focus(); }, 100);
+}
+function submitPW(){
+  var v = document.getElementById('pw-input').value.trim().toUpperCase();
+  if(v === '1437' || v === 'LEGACY'){
+    var role = (v === 'LEGACY') ? 'new_associate' : 'experienced';
+    sessionStorage.setItem('hyperion_role', role);
+    document.getElementById('pw-modal').style.display='none';
+    document.getElementById('pw-input').value='';
+    document.getElementById('pw-error').style.display='none';
+    window.location.href = 'system/mission-hq.html';
+  } else {
+    document.getElementById('pw-error').style.display='block';
+    document.getElementById('pw-input').value='';
+    document.getElementById('pw-input').focus();
+  }
+}
+function applyRole(role){
+  document.getElementById('system-modal').setAttribute('data-role', role);
+  if(typeof window.hyperionInit === 'function') window.hyperionInit();
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter' && document.getElementById('pw-modal').style.display==='flex') submitPW();
+});
+function closeSystem(){
+  document.getElementById('system-modal').style.display='none';
+  document.body.style.overflow='';
+}
+function switchRole(){
+  sessionStorage.removeItem('hyperion_role');
+  document.getElementById('system-modal').style.display='none';
+  document.getElementById('system-modal').removeAttribute('data-role');
+  document.body.style.overflow='';
+  setTimeout(function(){ openSystem(); }, 150);
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSystem();});
+</script>
+<script>
+(function(){
+  var r = sessionStorage.getItem('hyperion_role') || 'experienced';
+  // show role chip
+  var cn = document.getElementById('chip-new');
+  var ce = document.getElementById('chip-exp');
+  if(r === 'new_associate'){ if(cn) cn.style.display='inline-block'; }
+  else { if(ce) ce.style.display='inline-block'; }
+  // hide experienced-only nav links
+  if(r === 'new_associate'){
+    document.querySelectorAll('#sys-nav a[data-roles="experienced"]').forEach(function(a){a.style.display='none';});
     document.querySelectorAll('.exp-only').forEach(function(el){el.style.display='none';});
   }
 })();
+
+function showSec(id, btn){
+  document.querySelectorAll('.pg-sec').forEach(function(s){s.classList.remove('active');});
+  document.querySelectorAll('.sub-pill').forEach(function(b){b.classList.remove('active');});
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+<!-- SWITCH ROLE MODAL -->
+<div id="sw-overlay" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(8,15,30,.85);backdrop-filter:blur(6px);align-items:center;justify-content:center;" onclick="swClose(event)">
+  <div id="sw-box" style="background:#0c1d30;border:1px solid rgba(201,168,76,.3);border-radius:16px;padding:36px 32px;width:100%;max-width:360px;box-shadow:0 24px 60px rgba(0,0,0,.5);position:relative;">
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c9a84c,transparent);border-radius:16px 16px 0 0;"></div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(201,168,76,.6);margin-bottom:10px;">Hyperion System</div>
+    <div style="font-size:20px;font-weight:800;color:#fff;margin-bottom:6px;">Switch Role</div>
+    <div style="font-size:13px;color:rgba(255,255,255,.4);margin-bottom:24px;line-height:1.5;">Enter your access code to switch roles.</div>
+    <input id="sw-input" type="password" placeholder="Enter access code" autocomplete="off"
+      style="width:100%;padding:13px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.25);border-radius:10px;color:#fff;font-size:15px;font-family:inherit;outline:none;letter-spacing:.1em;margin-bottom:8px;"
+      onkeydown="if(event.key==='Enter')swSubmit()"/>
+    <div id="sw-err" style="display:none;font-size:12px;color:#e05555;margin-bottom:10px;padding:8px 12px;background:rgba(224,85,85,.1);border-radius:6px;">⚠ Incorrect code. Try again.</div>
+    <button onclick="swSubmit()" style="width:100%;padding:13px;background:#c9a84c;color:#0c1d30;border:none;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:.04em;transition:background .2s;">Confirm Switch</button>
+    <button onclick="swClose()" style="width:100%;padding:10px;background:transparent;color:rgba(255,255,255,.3);border:none;border-radius:10px;font-size:13px;cursor:pointer;font-family:inherit;margin-top:6px;">Cancel</button>
+  </div>
+</div>
+<script>
+function swOpen(){
+  var ov=document.getElementById('sw-overlay');
+  ov.style.display='flex';
+  var inp=document.getElementById('sw-input');
+  inp.value='';
+  document.getElementById('sw-err').style.display='none';
+  setTimeout(function(){inp.focus();},100);
+}
+function swClose(e){
+  if(!e||e.target===document.getElementById('sw-overlay'))
+    document.getElementById('sw-overlay').style.display='none';
+}
+function swSubmit(){
+  var val=document.getElementById('sw-input').value.trim().toUpperCase();
+  var err=document.getElementById('sw-err');
+  if(val==='LEGACY'){
+    sessionStorage.setItem('hyperion_role','new_associate');
+    location.reload();
+  } else if(val==='1437'){
+    sessionStorage.setItem('hyperion_role','experienced');
+    location.reload();
+  } else {
+    err.style.display='block';
+    var box=document.getElementById('sw-box');
+    box.style.animation='none';
+    setTimeout(function(){
+      box.style.animation='swShake .35s ease';
+    },10);
+    document.getElementById('sw-input').value='';
+    document.getElementById('sw-input').focus();
+  }
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape') document.getElementById('sw-overlay').style.display='none';
+});
 </script>
 <style>
-.page-subbtn{padding:7px 14px;border:1px solid var(--border-gold,rgba(201,168,76,.3));border-radius:20px;background:transparent;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;color:var(--navy,#0c1d30);transition:all .15s;}
-.page-subbtn:hover{background:rgba(201,168,76,.08);}
-.page-subbtn.active{background:var(--navy,#0c1d30);color:var(--gold,#c9a84c);border-color:var(--navy,#0c1d30);}
-.page-section{display:none;}.page-section.active{display:block;}
+@keyframes swShake{0%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}100%{transform:translateX(0)}}
+#sw-input:focus{border-color:rgba(201,168,76,.6);background:rgba(255,255,255,.07);}
 </style>
 
-<script>
-// Show role chip
-(function(){
-  var r = sessionStorage.getItem('hyperion_role');
-  if(r === 'new_associate') document.getElementById('chip-new').style.display='inline-flex';
-  else document.getElementById('chip-exp').style.display='inline-flex';
-})();
-</script>
+<style>
+/* ═══ CONTRAST FIX — force dark on ALL white/light backgrounds ═══ */
+/* Override inline white backgrounds */
+.card, .card *, .warn-chip, .signal-chip, .step-item,
+.qualify-item, .contact-item, .resource-item,
+[style*="background:#fff"], [style*="background: #fff"],
+[style*="background:#ffffff"], [style*="background:white"],
+[style*="background:var(--white)"], [style*="background:var(--off-white)"],
+[style*="background:var(--bg)"], [style*="background:var(--surface)"],
+[style*="background:#faf"], [style*="background:#f9f"],
+[style*="background:#f4f"], [style*="background:#f0f"],
+[style*="background:#eff"], [style*="background:rgba(255,255,255"] {
+  color: rgba(255,255,255,.8) !important;
+}
+
+/* Force card backgrounds dark */
+.card { background: #0c1528 !important; }
+.card-accent-green, .card-accent-blue, .card-accent-amber,
+.card-accent-purple, .card-accent-coral, .card-accent-coral,
+.card-green, .card-navy, .card-gold {
+  background: #0c1528 !important;
+}
+
+/* Warn chips */
+.warn-chip { background: rgba(255,255,255,.04) !important; }
+.warn-chip span, .warn-chip div { color: rgba(255,255,255,.8) !important; }
+.warn-icon { background: rgba(201,168,76,.2) !important; color: #c9a84c !important; }
+
+/* Step items */
+.step-item .step-body h4 { color: #fff !important; }
+.step-item .step-body p { color: rgba(255,255,255,.7) !important; }
+
+/* EMA / contact cards */
+.contact-card, .resource-card, .qualify-list, .qualify-item {
+  background: rgba(255,255,255,.04) !important;
+  color: rgba(255,255,255,.8) !important;
+}
+.qualify-item { border-color: rgba(255,255,255,.08) !important; }
+
+/* Grid cards */
+.grid2 .card, .grid3 .card, .grid4 .card { background: #0c1528 !important; }
+
+/* All headings in cards */
+.card h3, .card h4, .card h5 { color: #fff !important; }
+.card p, .card li, .card span { color: rgba(255,255,255,.7) !important; }
+.card strong { color: rgba(255,255,255,.9) !important; }
+.card a { color: #c9a84c !important; }
+
+/* Key contacts / email links */
+.cta-btn {
+  background: rgba(201,168,76,.12) !important;
+  color: #c9a84c !important;
+  border: 1px solid rgba(201,168,76,.3) !important;
+}
+
+/* Score / metric cards */
+.metric-card, .metric-box {
+  background: #0c1528 !important;
+  border-color: rgba(201,168,76,.15) !important;
+}
+.metric-value, .metric-label, .metric-sub { color: rgba(255,255,255,.7) !important; }
+.metric-value { color: #c9a84c !important; font-weight: 700 !important; }
+
+/* Signal chips */
+.signal-chip {
+  background: rgba(255,255,255,.04) !important;
+  border: 1px solid rgba(255,255,255,.07) !important;
+  color: rgba(255,255,255,.75) !important;
+}
+
+/* Badge colors */
+.badge-gold { background: rgba(201,168,76,.15) !important; color: #e8c97a !important; }
+.badge-navy { background: rgba(255,255,255,.08) !important; color: rgba(255,255,255,.8) !important; }
+.badge-green { background: rgba(26,100,68,.25) !important; color: #4ade80 !important; }
+
+/* Truth cards, qualify items */
+.truth-card { background: #0c1528 !important; color: rgba(255,255,255,.8) !important; }
+.truth-num { background: rgba(201,168,76,.15) !important; color: #c9a84c !important; }
+
+/* Income rows / bars */
+.income-label { color: rgba(255,255,255,.75) !important; }
+.income-bar { background: rgba(255,255,255,.08) !important; }
+.income-val { color: #c9a84c !important; }
+
+/* Tags */
+.tag, .tag-navy, .tag-gold {
+  color: rgba(255,255,255,.7) !important;
+  background: rgba(255,255,255,.06) !important;
+  border: 1px solid rgba(255,255,255,.1) !important;
+}
+.tag-gold { background: rgba(201,168,76,.12) !important; color: #c9a84c !important; border-color: rgba(201,168,76,.2) !important; }
+
+/* Week blocks, day cells */
+.week-block .card { background: #0a1020 !important; }
+.day-cell { background: #0c1528 !important; border-color: rgba(255,255,255,.07) !important; color: rgba(255,255,255,.7) !important; }
+.day-cell.active { border-color: #c9a84c !important; background: rgba(201,168,76,.08) !important; }
+
+/* Checklist items */
+.checklist-item, .esg-check-item {
+  background: #0c1528 !important;
+  border-color: rgba(255,255,255,.07) !important;
+  color: rgba(255,255,255,.8) !important;
+}
+.esg-check-item.esg-done { background: rgba(26,100,68,.15) !important; }
+
+/* Nav pills / tab navs */
+.tab-nav { border-color: rgba(255,255,255,.08) !important; }
+
+/* RFM flip chart close */
+.rfm-close-btn { background: #c9a84c !important; color: #080f1e !important; }
+
+/* Section headers */
+.section-header h2 { color: #fff !important; }
+.section-header p { color: rgba(255,255,255,.55) !important; }
+.eyebrow { color: #c9a84c !important; }
+
+/* Fix any remaining white inline backgrounds via universal override */
+* { transition: none !important; }
+</style>
+
+<style>
+/* KEY CONTACTS - target inline background:var(--white) */
+[style*="background:var(--white)"] {
+  background: #0c1528 !important;
+  color: rgba(255,255,255,.85) !important;
+  border-color: rgba(255,255,255,.08) !important;
+}
+[style*="background:var(--navy-subtle)"] { background: rgba(201,168,76,.12) !important; }
+[style*="background:var(--gold-pale)"] { background: rgba(201,168,76,.08) !important; }
+[style*="background:var(--green-light)"] { background: rgba(26,100,68,.15) !important; }
+[style*="background:var(--off-white)"] { background: #0a1020 !important; }
+[style*="background:var(--cream)"] { background: #0a1020 !important; }
+[style*="background:var(--surface)"] { background: #0c1528 !important; }
+[style*="background:var(--gray-50)"] { background: #0a1020 !important; }
+[style*="background:var(--bg)"] { background: #080f1e !important; }
+[style*="background:#fff"], [style*="background: #fff"],
+[style*="background:#ffffff"], [style*="background:#FFFFFF"] {
+  background: #0c1528 !important;
+}
+[style*="background:white"] { background: #0c1528 !important; }
+
+/* All inline text colors on var(--text) */
+[style*="color:var(--text)"] { color: rgba(255,255,255,.85) !important; }
+[style*="color:var(--gray)"] { color: rgba(255,255,255,.55) !important; }
+[style*="color:var(--navy)"] { color: rgba(255,255,255,.85) !important; }
+[style*="color:var(--text-2)"] { color: rgba(255,255,255,.7) !important; }
+[style*="color:var(--text-3)"] { color: rgba(255,255,255,.5) !important; }
+[style*="color:var(--gray-500)"] { color: rgba(255,255,255,.5) !important; }
+[style*="color:var(--gray-700)"] { color: rgba(255,255,255,.7) !important; }
+
+/* GX inner section backgrounds */
+.gxp-body { background: #080f1e !important; }
+.gxp-card { background: #0c1528 !important; border-color: rgba(255,255,255,.07) !important; }
+.gxp-card h3 { color: #fff !important; }
+.gxp-card p { color: rgba(255,255,255,.7) !important; }
+.section { background: transparent !important; }
+[id*="why"] > *, [id*="mindset"] > *, [id*="m12"] > *, [id*="m3"] > * {
+  background: transparent !important;
+}
+.gxp-sec { background: #080f1e !important; }
+.gxp-month-body { background: #080f1e !important; }
+.gxp-quote p { color: rgba(255,255,255,.8) !important; }
+.gxp-quote-attr { color: rgba(255,255,255,.4) !important; }
+.gxp-warn { background: rgba(192,57,43,.12) !important; color: rgba(255,255,255,.8) !important; }
+.gxp-step .gxp-stept { color: rgba(255,255,255,.75) !important; }
+.gxp-truth { background: #0c1528 !important; }
+.gxp-truth p { color: rgba(255,255,255,.7) !important; }
+
+/* GX iframe-style content from original gx CSS */
+.main { background: transparent !important; }
+.card { background: #0c1528 !important; }
+.card .quote-text { color: rgba(255,255,255,.75) !important; }
+.card .quote-attr { color: rgba(255,255,255,.4) !important; }
+.card .step-text { color: rgba(255,255,255,.7) !important; }
+.card-accent-green, .card-accent-blue, .card-accent-amber,
+.card-accent-purple, .card-accent-coral { background: #0c1528 !important; }
+.income-row { border-color: rgba(255,255,255,.07) !important; }
+.income-bar { background: rgba(255,255,255,.08) !important; }
+.grid2 .card, .grid2 > div { background: #0c1528 !important; }
+.grid3 .card, .grid3 > div { background: #0c1528 !important; }
+.truth-card { background: #0c1528 !important; }
+
+/* Objections */
+.obj-item { background: #0c1528 !important; }
+.obj-q { color: rgba(255,255,255,.9) !important; background: #0c1528 !important; }
+.obj-a { background: #0a1020 !important; color: rgba(255,255,255,.75) !important; border-color: rgba(201,168,76,.15) !important; }
+.obj-a.open { display: block !important; }
+
+/* RFM / RM module */
+.rm-wrap { background: #080f1e !important; }
+.rm-panel { background: #0c1528 !important; color: rgba(255,255,255,.8) !important; }
+.rm-panel * { color: rgba(255,255,255,.75) !important; }
+
+/* Contact item icons */
+[style*="background:var(--navy-subtle)"] { background: rgba(201,168,76,.1) !important; }
+</style>
 </body>
 </html>

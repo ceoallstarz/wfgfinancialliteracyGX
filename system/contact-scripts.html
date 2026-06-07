@@ -2,28 +2,110 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Contact Scripts — Hyperion Legacy Builders</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Contact Scripts — Hyperion</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
-
-<script>
-(function(){
-  var role = sessionStorage.getItem('hyperion_role');
-  if(!role){ window.location.href='../index.html'; return; }
-  
-  document.documentElement.setAttribute('data-role', role);
-  // Hide experienced-only nav links for new associates
-  document.addEventListener('DOMContentLoaded', function(){
-    if(role === 'new_associate'){
-      document.querySelectorAll('.sys-nav-link[data-roles="experienced"]').forEach(function(el){
-        el.style.display = 'none';
-      });
-    }
-  });
-})();
-</script>
 <style>
-
+html,body{margin:0;padding:0;overflow-y:auto!important;height:auto!important;background:#faf8f4;font-family:'Segoe UI',system-ui,sans-serif;}
+#sys-topbar{background:#0c1d30;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #c9a84c;position:sticky;top:0;z-index:99999;}
+#sys-topbar .brand{color:#c9a84c;font-weight:700;font-size:14px;}
+#sys-topbar .actions{display:flex;gap:8px;align-items:center;}
+#sys-topbar a,#sys-topbar button{background:transparent;color:rgba(201,168,76,.8);border:1px solid rgba(201,168,76,.3);padding:5px 13px;font-size:11px;font-weight:600;border-radius:6px;cursor:pointer;text-decoration:none;font-family:inherit;}
+.role-chip{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;border:1px solid;}
+.chip-new{background:rgba(201,168,76,.15);color:#c9a84c;border-color:rgba(201,168,76,.4);}
+.chip-exp{background:rgba(26,150,100,.15);color:#4ade80;border-color:rgba(26,150,100,.4);}
+#sys-nav{background:#faf8f4;border-bottom:1px solid rgba(201,168,76,.3);overflow-x:auto;position:sticky;top:52px;z-index:99998;}
+#sys-nav-inner{display:flex;max-width:1200px;margin:0 auto;padding:0 16px;}
+#sys-nav a{display:inline-block;padding:11px 9px;font-size:11px;font-weight:500;color:#4b5563;text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;}
+#sys-nav a.active{color:#0c1d30;border-bottom-color:#c9a84c;font-weight:700;}
+#sys-content{max-width:900px;margin:0 auto;padding:20px 16px 100px;}
+/* Tab pills */
+.npills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;}
+.npill{padding:8px 16px;border:1px solid rgba(12,29,48,.2);border-radius:20px;background:transparent;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;color:#0c1d30;transition:all .15s;}
+.npill.act{background:#0c1d30;color:#c9a84c;border-color:#0c1d30;}
+/* Tab panels */
+.tpanel{display:none;}
+.tpanel.act{display:block;}
+/* ── HCG DESIGN ── */
+.hcg{background:#080f1e;border-radius:14px;overflow:hidden;border:1px solid rgba(201,168,76,.2);box-shadow:0 4px 24px rgba(12,29,48,.1);}
+.hcg-head{background:#0c1d30;padding:16px 18px 0;}
+.hcg-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.hcg-icon{width:36px;height:36px;background:#c9a84c;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.hcg-brand-title{font-size:15px;font-weight:800;color:#fff;}
+.hcg-brand-sub{font-size:11px;color:rgba(255,255,255,.45);}
+.hcg-stages{display:flex;gap:6px;overflow-x:auto;padding-bottom:14px;scrollbar-width:none;}
+.hcg-stages::-webkit-scrollbar{display:none;}
+.hcg-stg{flex-shrink:0;padding:8px 14px;border-radius:20px;border:1px solid rgba(201,168,76,.25);background:transparent;font-size:12px;font-weight:600;color:rgba(255,255,255,.5);cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .2s;}
+.hcg-stg.on{background:#c9a84c;color:#0c1d30;border-color:#c9a84c;}
+.hcg-tabs{background:#142840;display:flex;border-bottom:1px solid rgba(201,168,76,.15);}
+.hcg-tab{flex:1;padding:12px 4px;font-size:11px;font-weight:700;color:rgba(255,255,255,.4);background:transparent;border:none;cursor:pointer;font-family:inherit;border-bottom:2px solid transparent;transition:all .2s;}
+.hcg-tab.on{color:#c9a84c;border-bottom-color:#c9a84c;}
+.hcg-body{padding:0 0 80px;}
+.hcg-pane{display:none;padding:18px;}
+.hcg-pane.on{display:block;}
+/* Stage indicator */
+.hcg-si{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:10px 14px;background:#0c1d30;border-radius:10px;}
+.hcg-si-dot{width:10px;height:10px;border-radius:50%;background:#c9a84c;flex-shrink:0;}
+.hcg-si-name{font-size:13px;font-weight:700;color:#fff;}
+.hcg-si-sub{font-size:11px;color:rgba(255,255,255,.45);}
+/* Script sections */
+.hcg-sec{margin-bottom:16px;}
+.hcg-lbl{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#c9a84c;margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.hcg-lbl::after{content:'';flex:1;height:1px;background:rgba(201,168,76,.2);}
+.hcg-txt{background:#0c1d30;border-radius:12px;padding:16px 18px;font-size:15px;color:rgba(255,255,255,.9);line-height:1.75;font-style:italic;border-left:3px solid #c9a84c;}
+.hcg-cn-btn{display:flex;align-items:center;gap:6px;padding:8px 12px;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.15);border-radius:8px;cursor:pointer;margin-top:6px;font-size:12px;font-weight:600;color:#c9a84c;width:100%;text-align:left;font-family:inherit;}
+.hcg-cn{display:none;padding:12px 14px;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.15);border-top:none;border-radius:0 0 8px 8px;font-size:13px;color:rgba(255,255,255,.75);line-height:1.65;}
+.hcg-cn.on{display:block;}
+/* Bubbles */
+.hcg-exch{display:flex;flex-direction:column;gap:8px;margin-top:6px;}
+.hcg-bbl{display:flex;gap:10px;align-items:flex-start;}
+.hcg-who{font-size:10px;font-weight:700;text-transform:uppercase;padding:3px 8px;border-radius:10px;flex-shrink:0;margin-top:3px;white-space:nowrap;}
+.hcg-them{background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);}
+.hcg-you{background:rgba(201,168,76,.15);color:#c9a84c;}
+.hcg-bbl-txt{font-size:14px;line-height:1.6;color:rgba(255,255,255,.85);background:#0f1d38;padding:10px 14px;border-radius:10px;flex:1;border:1px solid rgba(255,255,255,.08);}
+/* Tip */
+.hcg-tip{background:#0c1d30;border-radius:10px;padding:14px 16px;margin-top:8px;display:flex;gap:10px;}
+.hcg-tip-txt{font-size:13px;color:rgba(255,255,255,.8);line-height:1.6;}
+/* VM */
+.hcg-vm{background:#0c1d30;border-radius:12px;padding:18px;margin-bottom:12px;}
+.hcg-vm-lbl{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#c9a84c;margin-bottom:10px;}
+.hcg-vm-txt{font-size:15px;color:rgba(255,255,255,.9);line-height:1.75;font-style:italic;margin-bottom:8px;}
+.hcg-vm-meta{font-size:11px;color:rgba(255,255,255,.4);}
+/* Mindset */
+.hcg-mind{background:#fff;border-radius:12px;padding:16px;margin-bottom:10px;border:1px solid rgba(12,29,48,.08);display:flex;gap:12px;}
+.hcg-mind-n{width:32px;height:32px;background:#0c1d30;color:#c9a84c;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;}
+.hcg-mind-h{font-size:14px;font-weight:700;color:#0c1d30;margin-bottom:4px;}
+.hcg-mind-b{font-size:13px;color:#6b7280;line-height:1.6;}
+/* Rules */
+.hcg-rule{display:flex;gap:12px;padding:14px;background:#fff;border-radius:12px;margin-bottom:8px;border:1px solid rgba(12,29,48,.08);}
+.hcg-rule-ic{width:34px;height:34px;background:rgba(201,168,76,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.hcg-rule-h{font-size:14px;font-weight:700;color:#0c1d30;margin-bottom:3px;}
+.hcg-rule-b{font-size:13px;color:#6b7280;line-height:1.6;}
+/* Bottom bar */
+.hcg-bar{position:sticky;bottom:0;background:#fff;border-top:1px solid rgba(12,29,48,.1);padding:10px 14px;display:flex;gap:8px;z-index:50;}
+.hcg-bnav{display:flex;align-items:center;gap:5px;padding:10px 14px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid rgba(12,29,48,.15);background:#fff;color:#0c1d30;font-family:inherit;}
+.hcg-bnav:disabled{opacity:.3;cursor:default;}
+.hcg-obj-btn{flex:1;padding:11px;background:#0c1d30;color:#c9a84c;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
+/* Overlay */
+.hcg-ov{display:none;position:fixed;inset:0;z-index:9999;background:rgba(12,29,48,.65);backdrop-filter:blur(3px);}
+.hcg-ov.on{display:flex;align-items:flex-end;}
+.hcg-sheet{width:100%;max-height:88vh;background:#fff;border-radius:20px 20px 0 0;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .3s;}
+.hcg-ov.on .hcg-sheet{transform:translateY(0);}
+.hcg-sh-head{background:#0c1d30;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;border-radius:20px 20px 0 0;}
+.hcg-sh-title{font-size:15px;font-weight:800;color:#c9a84c;}
+.hcg-sh-close{background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.7);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;font-family:inherit;}
+.hcg-sh-body{overflow-y:auto;padding:12px 16px 32px;flex:1;}
+.hcg-oi{border:1px solid rgba(12,29,48,.1);border-radius:12px;margin-bottom:8px;overflow:hidden;}
+.hcg-oq{padding:14px 16px;font-size:14px;font-weight:600;color:#0c1d30;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;background:#fff;}
+.hcg-oq.urg{border-left:3px solid #c0392b;}
+.hcg-oq .arr{font-size:12px;color:#c9a84c;transition:transform .2s;}
+.hcg-oq.open .arr{transform:rotate(180deg);}
+.hcg-oa{display:none;padding:12px 16px;background:#faf8f4;font-size:13.5px;color:#0c1d30;line-height:1.7;font-style:italic;border-top:1px solid rgba(12,29,48,.08);}
+.hcg-oa.on{display:block;}
+.hcg-otip{font-size:12px;color:#9ca3af;font-style:normal;margin-top:8px;padding-top:8px;border-top:1px solid rgba(12,29,48,.06);}
+.urg-badge{font-size:10px;font-weight:700;background:rgba(192,57,43,.1);color:#c0392b;padding:2px 7px;border-radius:8px;flex-shrink:0;}
+</style>
+<style>
 /* GX SMD Resource Embedded Styles */
 :root {
   --header-height: 72px;
@@ -2377,462 +2459,232 @@ h1, h2, h3, h4, h5, h6,
   background: rgba(201,168,76,0.05) !important;
 }
 .sub-page-btn:hover { background: rgba(12,29,48,0.03) !important; color: var(--navy-mid) !important; }
-
-/* ── System page shell ── */
-body { margin:0; background:var(--cream,#faf8f4); color:var(--navy,#0c1d30); font-family:'Inter',system-ui,sans-serif; }
-.sys-topbar {
-  background:var(--navy,#0c1d30);
-  padding:10px 24px;
-  display:flex; align-items:center; justify-content:space-between;
-  border-bottom:2px solid var(--gold,#c9a84c);
-  position:sticky; top:0; z-index:200;
-}
-.sys-topbar-brand { color:var(--gold,#c9a84c); font-weight:700; font-size:15px; letter-spacing:.08em; }
-.sys-topbar-actions { display:flex; gap:10px; align-items:center; }
-.sys-topbar-btn {
-  background:transparent; color:rgba(201,168,76,.75);
-  border:1px solid rgba(201,168,76,.3); padding:6px 14px;
-  font-size:12px; font-weight:600; border-radius:6px; cursor:pointer;
-  text-decoration:none; font-family:inherit;
-}
-.sys-topbar-btn:hover { background:rgba(201,168,76,.1); }
-.role-chip {
-  font-size:11px; font-weight:600; padding:3px 10px; border-radius:20px;
-  letter-spacing:.04em;
-}
-.role-chip-new { background:rgba(201,168,76,.18); color:var(--gold,#c9a84c); border:1px solid rgba(201,168,76,.3); }
-.role-chip-exp { background:rgba(26,150,100,.18); color:#4ADE80; border:1px solid rgba(26,150,100,.3); }
-.sys-nav-wrapper {
-  background:rgba(250,248,244,.97);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(201,168,76,.25);
-  overflow-x:auto; position:sticky; top:52px; z-index:100;
-}
-.sys-nav-inner {
-  display:flex; max-width:1200px; margin:0 auto; padding:0 24px;
-}
-.sys-nav-link {
-  display:inline-block; padding:11px 10px; font-size:11.5px; font-weight:500;
-  color:#374151; text-decoration:none; border-bottom:2px solid transparent;
-  white-space:nowrap; transition:all .15s;
-}
-.sys-nav-link:hover { color:var(--navy,#0c1d30); background:rgba(12,29,48,.03); }
-.sys-page-content { max-width:1200px; margin:0 auto; padding:32px 24px 80px; }
-/* Fix tab display in standalone pages */
-.tab { display:block !important; }
-.sub-section { display:none; }
-.sub-section.active { display:block; }
-.rp-section { display:none; }
-.rp-section.active { display:block; }
 </style>
+<style>
+/* Override original tab-panel hiding */
+.tab-panel { display: block !important; }
+.tpanel { display: none; }
+.tpanel.act { display: block !important; }
+/* CSS variable fallbacks */
+:root{--navy:#0c1d30;--gold:#c9a84c;--green:#1a9467;--green-light:#e8f7f2;--gray:#6b7280;--border:rgba(12,29,48,.1);--surface:#f9f7f4;--text:#0c1d30;--text-2:#374151;--text-3:#6b7280;}
+</style>
+<style>
+.script-card .script-body { display: block !important; }
+.script-body { display: block !important; }
+</style>
+<style>.script-card .script-body,.script-body,.call-panel{display:block!important;}.tab-panel{display:block!important;}</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+/* ═══ DARK LUXURY THEME — HYPERION ═══ */
+html, body {
+  background: #080f1e !important;
+  color: rgba(255,255,255,.85) !important;
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+}
+
+/* TOPBAR */
+#sys-topbar {
+  background: rgba(8,15,30,.98) !important;
+  border-bottom: 1px solid rgba(201,168,76,.2) !important;
+  backdrop-filter: blur(12px);
+}
+#sys-topbar .brand { color: #c9a84c !important; }
+#sys-topbar a, #sys-topbar button {
+  color: rgba(201,168,76,.7) !important;
+  border-color: rgba(201,168,76,.25) !important;
+}
+#sys-topbar a:hover, #sys-topbar button:hover {
+  color: #c9a84c !important;
+  background: rgba(201,168,76,.08) !important;
+}
+
+/* NAV */
+#sys-nav {
+  background: rgba(8,15,30,.95) !important;
+  border-bottom: 1px solid rgba(201,168,76,.12) !important;
+}
+#sys-nav a { color: rgba(255,255,255,.4) !important; }
+#sys-nav a:hover { color: rgba(255,255,255,.75) !important; }
+#sys-nav a.active { color: #c9a84c !important; border-bottom-color: #c9a84c !important; }
+
+/* CONTENT */
+#sys-content { background: transparent !important; }
+
+/* SUB PILLS */
+.sub-pills {
+  background: rgba(8,15,30,.95) !important;
+  border-bottom: 1px solid rgba(201,168,76,.12) !important;
+  position: sticky !important;
+  top: 104px !important;
+  z-index: 100 !important;
+  padding: 14px 20px !important;
+  margin: 0 -20px 20px !important;
+}
+.sub-pill {
+  color: rgba(255,255,255,.5) !important;
+  border-color: rgba(201,168,76,.2) !important;
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+}
+.sub-pill:hover { background: rgba(201,168,76,.07) !important; color: #c9a84c !important; }
+.sub-pill.active {
+  background: rgba(201,168,76,.15) !important;
+  color: #c9a84c !important;
+  border-color: rgba(201,168,76,.4) !important;
+}
+.sub-pill.exp-only { display: inline-block; }
+
+/* CARDS */
+.card {
+  background: #0c1528 !important;
+  border-color: rgba(255,255,255,.07) !important;
+  color: rgba(255,255,255,.8) !important;
+}
+.card-navy { background: #0a1020 !important; border-color: rgba(201,168,76,.15) !important; }
+.card-gold { background: rgba(201,168,76,.07) !important; border-color: rgba(201,168,76,.2) !important; }
+.card-green { background: rgba(26,100,68,.15) !important; border-color: rgba(26,100,68,.3) !important; }
+
+/* HEADINGS */
+h1, h2, h3, h4 { color: #fff !important; font-family: 'Cormorant Garamond', Georgia, serif !important; }
+.section-title, .eyebrow { color: #c9a84c !important; }
+.section-header h2 { color: #fff !important; font-family: 'Cormorant Garamond', Georgia, serif !important; font-size: clamp(24px,3vw,36px) !important; }
+
+/* BODY TEXT */
+p { color: rgba(255,255,255,.65) !important; }
+.card p { color: rgba(255,255,255,.65) !important; }
+.card strong { color: rgba(255,255,255,.9) !important; }
+
+/* BADGES */
+.badge { font-family: 'DM Sans', system-ui !important; }
+.badge-gold { background: rgba(201,168,76,.15) !important; color: #c9a84c !important; }
+.badge-navy { background: rgba(255,255,255,.08) !important; color: rgba(255,255,255,.7) !important; }
+.badge-green { background: rgba(26,100,68,.2) !important; color: #4ade80 !important; }
+.badge-red { background: rgba(192,57,43,.2) !important; color: #f87171 !important; }
+
+/* STEP LISTS */
+.step-list .step-item .step-body h4 { color: #fff !important; }
+.step-list .step-item .step-body p { color: rgba(255,255,255,.6) !important; }
+.step-num { background: rgba(201,168,76,.15) !important; color: #c9a84c !important; border-color: rgba(201,168,76,.3) !important; }
+.step-num.gold { background: #c9a84c !important; color: #080f1e !important; }
+
+/* WARN CHIPS / SIGNAL CHIPS */
+.warn-chip { background: rgba(255,255,255,.04) !important; border-color: rgba(255,255,255,.08) !important; }
+.signal-chip { background: rgba(255,255,255,.04) !important; border-color: rgba(255,255,255,.06) !important; color: rgba(255,255,255,.7) !important; }
+
+/* TABS */
+.tab-btn { background: rgba(255,255,255,.04) !important; border-color: rgba(255,255,255,.1) !important; color: rgba(255,255,255,.5) !important; font-family: 'DM Sans', system-ui !important; }
+.tab-btn.active { background: #c9a84c !important; color: #080f1e !important; border-color: #c9a84c !important; }
+.tab-btn:hover:not(.active) { background: rgba(201,168,76,.08) !important; color: rgba(255,255,255,.8) !important; }
+
+/* METRIC BOXES */
+.metric-box { background: #0c1528 !important; border-color: rgba(201,168,76,.15) !important; }
+.metric-box .num { color: #c9a84c !important; font-family: 'Cormorant Garamond', serif !important; }
+.metric-box .lbl { color: rgba(255,255,255,.5) !important; font-family: 'DM Sans', system-ui !important; }
+
+/* FORMS / INPUTS */
+input, textarea, select { background: rgba(255,255,255,.06) !important; border-color: rgba(255,255,255,.12) !important; color: #fff !important; font-family: 'DM Sans', system-ui !important; }
+
+/* LINKS */
+.cta-btn { background: rgba(201,168,76,.1) !important; border-color: rgba(201,168,76,.3) !important; color: #c9a84c !important; }
+.cta-btn:hover { background: rgba(201,168,76,.2) !important; }
+
+/* OBJECTION ITEMS */
+.obj-item { background: #0c1528 !important; border-color: rgba(255,255,255,.07) !important; }
+.obj-q { color: rgba(255,255,255,.85) !important; }
+.obj-a { background: rgba(255,255,255,.03) !important; color: rgba(255,255,255,.7) !important; border-color: rgba(201,168,76,.15) !important; }
+
+/* GRID CARDS */
+.grid2 > .card, .grid3 > .card { background: #0c1528 !important; }
+
+/* TAGS */
+.tag { background: rgba(255,255,255,.07) !important; color: rgba(255,255,255,.6) !important; border: 1px solid rgba(255,255,255,.1) !important; }
+.tag-gold { background: rgba(201,168,76,.12) !important; color: #c9a84c !important; border-color: rgba(201,168,76,.2) !important; }
+.tag-navy { background: rgba(255,255,255,.06) !important; color: rgba(255,255,255,.7) !important; }
+
+/* SECTION HEADERS */
+.section-header p { color: rgba(255,255,255,.55) !important; }
+
+/* HIDE WHITE CHECKBOX ARTIFACTS */
+.esg-check-box, .chk-box { display: none !important; }
+
+/* NAV PILLS in contact scripts etc */
+.nav-pill, .npill { color: rgba(255,255,255,.5) !important; border-color: rgba(201,168,76,.2) !important; font-family: 'DM Sans', system-ui !important; }
+.nav-pill.active, .npill.act { background: rgba(201,168,76,.15) !important; color: #c9a84c !important; border-color: rgba(201,168,76,.4) !important; }
+
+/* SCORE / MISC */
+.primary-btn { background: #c9a84c !important; color: #080f1e !important; border: none !important; }
+.secondary-btn { background: rgba(255,255,255,.08) !important; color: rgba(255,255,255,.7) !important; border-color: rgba(255,255,255,.12) !important; }
+
+/* OVERRIDE WHITE FROM SHARED CSS */
+:root {
+  --bg: #080f1e !important;
+  --bg2: #0c1528 !important;
+  --surface: #0f1d38 !important;
+  --white: #fff !important;
+  --off-white: #0c1528 !important;
+  --gray-50: #0a1020 !important;
+  --text: rgba(255,255,255,.85) !important;
+  --text-2: rgba(255,255,255,.65) !important;
+  --text-3: rgba(255,255,255,.4) !important;
+  --border: rgba(255,255,255,.08) !important;
+}
+</style>
+
 </head>
 <body>
-
-<!-- TOP BAR -->
-<div class="sys-topbar">
-  <span class="sys-topbar-brand">⚙ RFM SYSTEM — HYPERION</span>
-  <div class="sys-topbar-actions">
-    <span class="role-chip role-chip-new" id="chip-new" style="display:none">🟡 New Associate</span>
-    <span class="role-chip role-chip-exp" id="chip-exp" style="display:none">🟢 Experienced</span>
-    <a href="../index.html" class="sys-topbar-btn" onclick="sessionStorage.removeItem('hyperion_role');return true;">⇄ Switch Role</a>
-    <a href="../index.html" class="sys-topbar-btn">✕ Exit</a>
+<div id="sys-topbar"><span class="brand">⚙ RFM SYSTEM — HYPERION</span><div class="actions"><span class="role-chip chip-new" id="chip-new" style="display:none">🟡 New Associate</span><span class="role-chip chip-exp" id="chip-exp" style="display:none">🟢 Experienced</span><button onclick="swOpen()">⇄ Switch Role</button><a href="../index.html">✕ Exit</a></div></div>
+<div id="sys-nav"><div id="sys-nav-inner">
+<a href="mission-hq.html" data-roles="all">🎯 Mission HQ</a>
+<a href="fast-start-onboarding.html" data-roles="all">🚀 Fast Start Onboarding</a>
+<a href="prospecting.html" data-roles="all">📋 Prospecting</a>
+<a href="contact-scripts.html" class="active" data-roles="all">📞 Contact Scripts</a>
+<a href="objections.html" data-roles="all">🛡️ Objections</a>
+<a href="presentations.html" data-roles="all">🎞 Presentations</a>
+<a href="closing.html" data-roles="experienced">🤝 Closing / Helping Family</a>
+<a href="identity-shift.html" data-roles="all">💡 Identity Shift</a>
+</div></div>
+<div id="sys-content">
+<div class="npills">
+  <button class="npill act" onclick="showTab('callguide',this)">📞 Hyperion Call Guide</button>
+  <button class="npill" onclick="showTab('quick',this)">Quick Scripts</button>
+  <button class="npill exp-only" onclick="showTab('reconnect',this)">3-Call System</button>
+  <button class="npill exp-only" onclick="showTab('hesitancy',this)">Hesitancy</button>
+  <button class="npill exp-only" onclick="showTab('compare',this)">Warm vs Cold</button>
+  <button class="npill exp-only" onclick="showTab('bpminvite',this)">GX BPM Invite</button>
+</div>
+<div class="tpanel act" id="tp-callguide">
+<div class="hcg">
+  <div class="hcg-head">
+    <div class="hcg-brand"><div class="hcg-icon">📞</div><div><div class="hcg-brand-title">Hyperion Call Guide</div><div class="hcg-brand-sub">Trustworthy Selling · use during calls</div></div></div>
+    <div class="hcg-stages" id="hcg-stg-bar"></div>
+  </div>
+  <div class="hcg-tabs">
+    <button class="hcg-tab on" onclick="hTab('script',this)">Script</button>
+    <button class="hcg-tab" onclick="hTab('vm',this)">Voicemail</button>
+    <button class="hcg-tab" onclick="hTab('mindset',this)">Mindset</button>
+    <button class="hcg-tab" onclick="hTab('rules',this)">Rules</button>
+  </div>
+  <div class="hcg-body">
+    <div class="hcg-pane on" id="hp-script"><div id="hcg-sc"></div></div>
+    <div class="hcg-pane" id="hp-vm"><div id="hcg-vm"></div></div>
+    <div class="hcg-pane" id="hp-mindset"><div id="hcg-ms"></div></div>
+    <div class="hcg-pane" id="hp-rules"><div id="hcg-rl"></div></div>
+  </div>
+  <div class="hcg-bar">
+    <button class="hcg-bnav" id="hcg-prev" onclick="hMove(-1)" disabled>◀ Prev</button>
+    <button class="hcg-obj-btn" onclick="hObjOpen()">⚡ Objections</button>
+    <button class="hcg-bnav" id="hcg-next" onclick="hMove(1)">Next ▶</button>
   </div>
 </div>
-
-<!-- PAGE NAV -->
-<div class="sys-nav-wrapper">
-  <div class="sys-nav-inner">
-<a href="mission-hq.html" class="sys-nav-link" data-roles="all">🎯 Mission HQ</a>
-<a href="fast-start-onboarding.html" class="sys-nav-link" data-roles="all">🚀 Fast Start Onboarding</a>
-<a href="prospecting.html" class="sys-nav-link" data-roles="all">📋 Prospecting</a>
-<a href="contact-scripts.html" class="sys-nav-link" style="border-bottom:2px solid var(--gold);color:var(--navy);font-weight:600;" data-roles="all">📞 Contact Scripts</a>
-<a href="objections.html" class="sys-nav-link" data-roles="all">🛡️ Objections</a>
-<a href="presentations.html" class="sys-nav-link" data-roles="all">🎞 Presentations</a>
-<a href="closing.html" class="sys-nav-link" data-roles="experienced">🤝 Closing / Helping a Family</a>
-<a href="identity-shift.html" class="sys-nav-link" data-roles="all">💡 Identity Shift</a>
-
+<div class="hcg-ov" id="hcg-ov" onclick="hObjBg(event)">
+  <div class="hcg-sheet">
+    <div class="hcg-sh-head"><span class="hcg-sh-title">⚡ Objection Handlers</span><button class="hcg-sh-close" onclick="hObjClose()">✕</button></div>
+    <div class="hcg-sh-body" id="hcg-olist"></div>
   </div>
 </div>
-
-<!-- CONTENT -->
-<div class="sys-page-content">
-<div class="tab" id="tab-contact">
-<div class="top-bar">
-<h1>📞 Contact Scripts</h1>
-<p>Step 2 — Lead with curiosity, care, and connection</p>
 </div>
-<div class="main-nav">
-<button class="nav-pill active" onclick="csShowTab('callguide')">📞 Hyperion Call Guide</button>
-<button class="nav-pill" onclick="csShowTab('quick')">Quick Scripts</button>
-<button class="nav-pill" onclick="csShowTab('reconnect')">3-Call System</button>
-<button class="nav-pill" onclick="csShowTab('hesitancy')">Hesitancy</button>
-<button class="nav-pill" onclick="csShowTab('compare')">Warm vs Cold</button>
-<button class="nav-pill" onclick="csShowTab('bpminvite')">GX BPM Invite</button>
-</div>
-<div class="content">
-<!-- ===== TAB: QUICK SCRIPTS ===== -->
-<div class="tab-panel active" id="cs-callguide">
-<style>
-/* ── Hyperion Call Guide — 3-Call System visual language ── */
-#cs-callguide {
-  --hcg-navy:#0f2540;
-  --hcg-gold:#c9a84c;
-  --hcg-gold-light:#f0d080;
-  --hcg-gold-pale:#fdf6e3;
-  --hcg-cream:#f9f6f0;
-  --hcg-white:#ffffff;
-  --hcg-gray:#7a8593;
-  --hcg-border:#e2e6ea;
-  padding:0;
-  position:relative;
-  overflow:hidden;
-  background:var(--hcg-navy);
-}
-/* sticky positioning */
-#cs-callguide .topbar,
-#cs-callguide .stage-bar,
-#cs-callguide .nav-bar { position:sticky; }
-#cs-callguide .topbar { top:0; z-index:50; }
-#cs-callguide .stage-bar { top:57px; z-index:40; }
-#cs-callguide .nav-bar { top:108px; z-index:39; }
-#cs-callguide .float-btn { position:sticky; float:right; }
-</style>
-
-<h2 class="sr-only">Hyperion Legacy Builders — Trustworthy Selling phone call reference app. Scripts organized by experience stage from new associate to experienced trainer, with instant objection handlers accessible during live calls.</h2>
-
-<div class="topbar">
-  <div>
-    <div class="topbar-title">Hyperion call guide</div>
-    <div class="topbar-sub">Trustworthy Selling · use during calls</div>
-  </div>
-  <i class="ti ti-phone" style="font-size:20px;color:var(--color-text-secondary)" aria-hidden="true"></i>
-</div>
-
-<div class="hcg-banner">
-  <span>📋</span>
-  <span><strong>Trustworthy Selling.</strong> Build connection first — never pitch before trust is earned. Use curiosity, care, and consistency.</span>
-</div>
-<div class="stage-bar" id="hcg-stage-bar">
-  <button class="stage-btn on" onclick="hcgSetStage(0,this)">New (week 1–2)</button>
-  <button class="stage-btn" onclick="hcgSetStage(1,this)">Growing (week 3–4)</button>
-  <button class="stage-btn" onclick="hcgSetStage(2,this)">Building (month 2+)</button>
-  <button class="stage-btn" onclick="hcgSetStage(3,this)">Experienced (GX1+)</button>
-</div>
-
-<div class="nav-bar">
-  <button class="nav-btn on" onclick="hcgSetTab('script',this)">Script</button>
-  <button class="nav-btn" onclick="hcgSetTab('vm',this)">Voicemail</button>
-  <button class="nav-btn" onclick="hcgSetTab('obj',this)">Objections</button>
-  <button class="nav-btn" onclick="hcgSetTab('mindset',this)">Mindset</button>
-  <button class="nav-btn" onclick="hcgSetTab('rules',this)">Rules</button>
-</div>
-
-<div class="pane on" id="hcg-p-script"></div>
-<div class="pane" id="hcg-p-vm"></div>
-<div class="pane" id="hcg-p-obj"></div>
-<div class="pane" id="hcg-p-mindset"></div>
-<div class="pane" id="hcg-p-rules"></div>
-
-<button class="float-btn" onclick="hcgSetTab('obj',document.querySelector('#cs-callguide .nav-btn:nth-child(3)'))">
-  <i class="ti ti-alert-triangle" aria-hidden="true"></i> Objection
-</button>
-
-<script>
-(function(){
-/* ── namespaced data ── */
-const hcgStages=[
-  {
-    id:0,label:'New associate',sub:'Week 1–2 · just started',dot:'#B4B2A9',
-    open:' "Hey [Name]! It\'s [you] — how are you doing?"',
-    open_coach:'Let them talk 30–60 seconds. Actually listen. Trust is built here — before a single word about the event.',
-    bridge:' "Hey — I\'m really glad I caught you. I just started something new and honestly you were one of the first people I thought of. I wanted to personally invite you."',
-    bridge_coach:'"I just started something new" creates instant curiosity. Your excitement is real — that\'s your edge. Mean every word.',
-    ask:' "The company I just partnered with is hosting a free Zoom this week — Thursday at 6PM or Saturday at 9AM Pacific. It covers things most financial professionals never bother to explain to everyday families. From everything I\'ve seen so far, I walked away thinking — why didn\'t anyone teach us this sooner. I want you to see it too. Which works better — Thursday or Saturday?"',
-    ask_coach:'Then stop. Full stop. The silence belongs to them. Don\'t fill it.',
-    yes_them:' "Sure, I can do Saturday."',
-    yes_you:' "Perfect. What\'s your email? I\'m sending you the link right now. I\'m really glad you\'re coming — I think you\'re going to get a lot out of it."',
-    yes_coach:'Warm. Short. Send the link within 5 minutes. Don\'t add more.',
-    tip:'Your newness is your hook, not your weakness. When someone you trust calls excited about something new — you pay attention. Lead with that energy.',
-    alt_title:'Lean on your mentor',
-    alt:' "Hey [Name]! It\'s [you] — how are you doing?"\n\n[Listen 30–60 sec]\n\n"Hey — I just partnered with a company and we are hosting a free Zoom this week. Thursday at 6PM or Saturday at 9AM Pacific. It covers things most families were never taught. I want you to meet them and see why I walked away thinking — why didn\'t anyone teach us this sooner. Which works better — Thursday or Saturday?"',
-    alt_tip:' "I want you to meet them and see why I walked away thinking — why didn\'t anyone teach us this sooner. — one of the most honest and disarming lines a new associate can say.',
-    vm_text:' "Hey [Name], it\'s [you]. I just started something new and you were honestly one of the first people I thought of. Nothing crazy — I just wanted to personally reach out. Give me a call back when you get a sec, or I\'ll shoot you a text."',
-    vm_time:'~15 sec',
-    text_text:' "Hey [Name] — just left you a voicemail. I just partnered with company and they\'re hosting a free Zoom this Thursday at 6PM or Saturday at 9AM Pacific — About things we never learned about money. I walked away thinking — why didn\'t anyone teach us this sooner.. Thought of you personally. Want me to send the link?"',
-  },
-  {
-    id:1,label:'Growing',sub:'Week 3–4 · attended the session',dot:'#378ADD',
-    open:' "Hey [Name]! It\'s [you] — how are you doing?"',
-    open_coach:'Let them talk 30–60 seconds. You\'ve done a few calls now — the listen feels more natural. Use it.',
-    bridge:' "Hey — your name came to mind and I wanted to personally reach out."',
-    bridge_coach:'For close contacts: "I was thinking about you." For everyone else: "your name came to mind." Both honest. Both personal.',
-    ask:'"My company is hosting a free Zoom this week — Thursday at 6PM or Saturday at 9AM Pacific. It covers things most financial professionals never bother to explain to everyday families — Risk Mitigation, Tax Efficiency, and Generational Wealth. I went through this myself and walked away thinking — why didn\'t anyone show me this sooner. I genuinely want you there. Which works better — Thursday or Saturday?"',
-    ask_coach:'You\'ve now attended. That line is yours — say it with the weight of actually having experienced it.',
-    yes_them:' "Sure, I can do Saturday."',
-    yes_you:' "Perfect. What\'s your email? I\'m sending you the link right now. I\'m really glad you\'re coming — I think you\'re going to get a lot out of it."',
-    yes_coach:'Same close. Always. Warm, short, send the link.',
-    tip:'You now have your own genuine reaction to the session. "I walked away thinking — why didn\'t anyone show me this sooner" is the most powerful social proof you have — because it\'s yours.',
-    vm_text:' "Hey [Name], it\'s [you]. Your name came to mind and I wanted to personally reach out — I went through something recently that honestly had me thinking why didn\'t anyone teach us this sooner. I want you to see it. Call me back or I\'ll text you the details."',
-    vm_time:'~18 sec',
-    text_text:' "Hey [Name] — just left you a voicemail. My company is hosting a free Zoom this Thursday at 6PM or Saturday at 9AM Pacific on things we never learned about money. I went through it and walked away thinking — why didn\'t anyone show me this sooner. Want me to send the link?"',
-  },
-  {
-    id:2,label:'Building',sub:'Month 2+ · first recruits',dot:'#7F77DD',
-    open:'"Hey [Name]! It\'s [you] — how are you doing?"',
-    open_coach:'The listen is automatic now. You genuinely want to know. That\'s where trust lives.',
-    bridge:'"Hey — I\'m really glad I caught you. Your name came to mind and I wanted to reach out personally."',
-    bridge_coach:'Now "my team" is true — you have people working with you. Use it. Don\'t use it before it\'s earned.',
-    ask:' "My team is putting on a free Zoom this week — Thursday at 6PM or Saturday at 9AM Pacific. It covers things most financial professionals never bother to explain to everyday families — Risk Mitigation, Tax Efficiency, and Generational Wealth. People just like you walk away saying they wish they\'d learned this ten years ago. I genuinely want you there. Which works better — Thursday or Saturday?"',
-    ask_coach:'The identity social proof is now real — you\'ve seen it yourself from families you\'ve helped. Say it like you mean it because you do.',
-    yes_them:' "Sure, I can do Saturday."',
-    yes_you:' "Perfect. What\'s your email? I\'m sending you the link right now. I\'m really glad you\'re coming — I think you\'re going to get a lot out of it."',
-    yes_coach:'Identical close. Never changes. Warm, settled, send within 5 minutes.',
-    tip:'The double factor is working for you now. For every 3 people you invite, 1–2 will come regardless of polish. Volume plus consistency plus this script is the formula.',
-    vm_text:' "Hey [Name], it\'s [you]. Your name came to mind and I wanted to reach out personally about something I think you\'d genuinely get a lot out of. Nothing heavy. Give me a call back when you get a sec or I\'ll shoot you a text."',
-    vm_time:'~17 sec',
-    text_text:' "Hey [Name] — just left you a voicemail. My team is hosting a free Zoom this Thursday at 6PM or Saturday at 9AM Pacific on Risk Mitigation, Tax Efficiency, and Generational Wealth. Thought of you personally. Want me to send the link?"',
-  },
-  {
-    id:3,label:'Experienced',sub:'GX1+ · full script',dot:'#1D9E75',
-    open:' "Hey [Name]! It\'s [you] — how are you doing?"',
-    open_coach:'The listen is your superpower now. You\'re not waiting for your turn — you\'re gathering the personal hook you\'ll use in the bridge.',
-    bridge:' "Hey — I\'m actually really glad I caught you. I was thinking about you, and honestly with [what you heard in the listen], I think this is perfectly timed."',
-    bridge_coach:'"I was thinking about you" — earned at this stage. You know your people. Use what they told you in the open to make the bridge feel specific and personal.',
-    ask:' "My team is hosting a free Zoom this week — Thursday at 6PM or Saturday at 9AM Pacific. It covers things most financial professionals never bother to explain to everyday families — Risk Mitigation, Tax Efficiency, and Generational Wealth. People just like you walk away saying they wish they\'d learned this ten years ago. I genuinely want you there. Which works better — Thursday or Saturday?"',
-    ask_coach:'40 seconds max from "my team is hosting" to "Thursday or Saturday." Every word earns its place. Then silence.',
-    yes_them:' "Sure, I can do Saturday."',
-    yes_you:' "Perfect. What\'s your email? I\'m sending you the link right now. I\'m really glad you\'re coming — I think you\'re going to get a lot out of it."',
-    yes_coach:'Warm. Settled. Confident. You expected the yes — because you believe in the value. That energy is audible.',
-    tip:'At this stage your language and your conviction are fully aligned. You\'re not delivering a script — you\'re having a genuine conversation that happens to follow a proven structure.',
-    vm_text:' "Hey [Name], it\'s [you]. I was thinking about you and wanted to personally reach out — my team is doing something this week I think you\'d genuinely get a lot out of. Nothing heavy. Give me a call back when you get a sec or I\'ll shoot you a text."',
-    vm_time:'~18 sec',
-    text_text:' "Hey [Name] — just left you a voicemail. My team is hosting a free Zoom on Risk Mitigation, Tax Efficiency, and Generational Wealth — Thursday at 6PM or Saturday at 9AM Pacific. Thought of you personally. Want me to send the link?"',
-  },
-];
-
-const hcgObjections=[
-  {q:'"What is it exactly?"',urgent:false,
-   a:'"It\'s a free educational session — covers how to protect your income, keep more of what you earn from taxes, and build something that actually passes down to your family. Things most people were never taught. It\'s 45 minutes on Zoom. Thursday or Saturday?"',
-   tip:'Brief answer, then immediately re-close with "Thursday or Saturday?" Don\'t lecture.'},
-  {q:'"Is there a business side to this?"',urgent:false,
-   a:'"Yes — and I\'ll tell you everything about that after the session if you\'re interested. The education itself stands completely on its own. Come and see for yourself. Thursday or Saturday?"',
-   tip:'Always answer this directly. Transparency is your competitive advantage. Sequencing is not deception.'},
-  {q:'"Is this MLM / a sales thing?"',urgent:false,
-   a:'"I get why you\'d ask. No — we\'re licensed financial professionals with Revolution Financial Management, a Transamerica company. Been around since the 1800s, over $700 billion in assets. Come and form your own opinion — it\'s 45 minutes, it\'s free, and I wouldn\'t call you personally if I didn\'t think it was worth your time. Thursday or Saturday?"',
-   tip:'Lead with the credibility (Transamerica, 1800s, $700B). Let them form their own opinion.'},
-  {q:'"I\'ve seen WFG — it doesn\'t work."',urgent:true,
-   a:'"I hear you — and I respect that you\'ve got a perspective on it. Can I ask what you saw? Because your experience might be totally valid, and I\'d rather hear it than talk past it." [Listen.] "What I\'d ask is — come to this session for the financial education, not for the business side. The content on Risk Mitigation, Tax Efficiency, and Generational Wealth stands completely on its own. If after 45 minutes you still feel the same way, tell me honestly. I\'d rather you see it for yourself than take my word for it. Thursday or Saturday?"',
-   tip:'Don\'t defend WFG before you know what they saw. Ask first. Listen. Then redirect to the education — not the business. The session does the convincing, not you.'},
-  {q:'"Run away — they\'ll take your money."',urgent:true,
-   a:'"I appreciate you looking out for me — genuinely. Tell me what you heard, because I want to understand where that\'s coming from." [Listen.] "Here\'s what I know: it\'s Revolution Financial Management, a Transamerica company — $700 billion in assets, been around since the 1800s. And here\'s what I can tell you about my own experience: I haven\'t paid them a dollar. The families we help don\'t pay us either. We\'re paid by the carriers. Come to the free session and see for yourself — bring your skepticism. I actually want your honest opinion after."',
-   tip:'"Bring your skepticism" disarms the objection completely. You\'re not running from the pushback — you\'re inviting it. That\'s trustworthy.'},
-  {q:'"I\'m really busy."',urgent:false,
-   a:'"I hear you — it\'s only 45 minutes on Zoom, you don\'t have to go anywhere. Thursday at 6 or Saturday at 9 — which is the less crazy one for you?"',
-   tip:'Acknowledge it once. Then re-close immediately with the binary choice.'},
-  {q:'"Just send me the info."',urgent:false,
-   a:'"I\'ll send you the link — but honestly it doesn\'t do it justice on paper. It\'s one of those things you have to experience. Can I put you down for Thursday or Saturday and you decide closer to the time?"',
-   tip:'Always redirect from "send me info" to the live event. Reading about it is not attending it.'},
-  {q:'"I can\'t afford financial services."',urgent:false,
-   a:'"That\'s exactly why I thought of you — it\'s completely free. No fee ever to sit down with us. The families who need this most are the ones the traditional industry ignores. That\'s who we built this for. Thursday or Saturday?"',
-   tip:'This objection is actually your best opening. The "990 out of 1,000" framing was made for this moment.'},
-  {q:'"Let me think about it."',urgent:false,
-   a:'"Of course — let me send you the link now and you decide closer to the time. Thursday at 6 or Saturday at 9 — which should I put you down for tentatively?"',
-   tip:'"Tentatively" reduces the commitment. They\'re not locked in — they just have a link and a time. That\'s enough.'},
-  {q:'"Are you trying to recruit me?"',urgent:false,
-   a:'"I\'ll be straight with you — eventually I\'d love to share the business side if you\'re open to it. But that\'s not why I\'m inviting you right now. The financial education is genuinely valuable on its own. Come for that first. Everything else is a conversation for after."',
-   tip:'Answer it directly every time. The person who answers this honestly is the person you trust with your money.'},
-  {q:'"I\'m not really into financial stuff."',urgent:false,
-   a:'"Most people feel that way — honestly because it was never explained in a way that made sense. That\'s kind of the whole point of this session. It\'s not complicated or dry. I think it\'d surprise you. Just 45 minutes — Thursday or Saturday?"',
-   tip:'Validate the feeling. Then reframe why this is different. Then close.'},
-  {q:'"I already have a financial advisor."',urgent:false,
-   a:'"That\'s great — honestly most people don\'t. I\'m not here to replace anyone. I\'d just love to show you what we do for families and let you decide if there\'s a gap we could help fill. It\'s completely free and there\'s no obligation. What do you have to lose by taking 45 minutes? Thursday or Saturday?"',
-   tip:'Never compete with their current advisor. Position this as complementary.'},
-];
-
-const hcgMindset=[
-  {n:1,title:'Your newness is not a weakness.',body:'When someone you personally know and trust calls you excited about something new — you pay attention. That\'s not a liability. That\'s a personal introduction. It\'s the most powerful thing in Trustworthy Selling.'},
-  {n:2,title:'You are the bridge, not the expert.',body:'You don\'t need to know everything. Your job is to get them in the room. Your mentor or SMD is the expert. Edify them honestly and let the event do the work.'},
-  {n:3,title:'Consistency theory — applied to you.',body:'Your internal belief has to match your ask. Before every call: "I am calling because I genuinely believe this will help this person." If you believe it, they\'ll hear it. If you don\'t yet — go back to the session until you do.'},
-  {n:4,title:'30 calls a week from your warm list gets GX1.',body:'You don\'t need cold leads. You need your phone, your contacts, and this script. Six calls a day, five days. The people who know you are the easiest yes — because trust is already there.'},
-];
-
-const hcgRules=[
-  {icon:'ti-ear',title:'Listen before you ask.',body:'The 30–60 seconds in the open is not filler. It\'s where trust is built. Every word of the ask lands harder because of it.'},
-  {icon:'ti-hand-stop',title:'Stop after "Thursday or Saturday?"',body:'Every word after the close costs you a yes. The silence is theirs — let them use it. Count to five if you have to. Do not fill the gap.'},
-  {icon:'ti-shield-check',title:'Answer "is there a business side?" directly.',body:'Always. Every time. Transparency is your competitive advantage. No one in this industry does it — you will.'},
-  {icon:'ti-clock',title:'Send the link within 5 minutes of the yes.',body:'Don\'t let them cool off. A warm yes turns cold quickly. Text them the link before you dial the next person.'},
-  {icon:'ti-message',title:'Voicemail + text is always better than either alone.',body:'They see your name twice in two minutes while you\'re still fresh. Send the text within 2 minutes of hanging up.'},
-  {icon:'ti-repeat',title:'One follow-up after a no-answer. One.',body:'"Hey [Name] — wanted to make sure you got my message. Still want me to send the link?" One follow-up is persistence. Two is pressure.'},
-];
-
-let hcgCurStage=0;
-let hcgCurTab='script';
-
-window.hcgSetStage=function(i,el){
-  hcgCurStage=i;
-  document.querySelectorAll('#hcg-stage-bar .stage-btn').forEach(b=>b.classList.remove('on'));
-  el.classList.add('on');
-  hcgRenderTab(hcgCurTab);
-};
-
-window.hcgSetTab=function(id,el){
-  hcgCurTab=id;
-  document.querySelectorAll('#cs-callguide .pane').forEach(p=>p.classList.remove('on'));
-  document.querySelectorAll('#cs-callguide .nav-bar .nav-btn').forEach(b=>b.classList.remove('on'));
-  document.getElementById('hcg-p-'+id).classList.add('on');
-  if(el)el.classList.add('on');
-  hcgRenderTab(id);
-};
-
-function hcgRenderTab(id){
-  if(id==='script')hcgRenderScript();
-  else if(id==='vm')hcgRenderVM();
-  else if(id==='obj')hcgRenderObj();
-  else if(id==='mindset')hcgRenderMindset();
-  else if(id==='rules')hcgRenderRules();
-}
-
-function hcgRenderScript(){
-  const s=hcgStages[hcgCurStage];
-  const el=document.getElementById('hcg-p-script');
-  el.innerHTML=`
-    <div style="display:flex;align-items:center;gap:7px;margin-bottom:12px">
-      <div class="sdot" style="background:${s.dot}"></div>
-      <span style="font-size:13px;font-weight:500;color:var(--color-text-primary)">${s.label}</span>
-      <span style="font-size:11px;color:var(--color-text-secondary)">· ${s.sub}</span>
-    </div>
-    <div class="card green">
-      <div class="phase-lbl">Open</div>
-      <div class="script-line"><span class="who you">You</span><span class="said">${s.open}</span></div>
-      <div class="coach-note">${s.open_coach}</div>
-      <div class="divider-g"></div>
-      <div class="phase-lbl">Bridge</div>
-      <div class="script-line"><span class="who you">You</span><span class="said">${s.bridge}</span></div>
-      <div class="coach-note">${s.bridge_coach}</div>
-      <div class="divider-g"></div>
-      <div class="phase-lbl">The ask</div>
-      <div class="script-line"><span class="who you">You</span><span class="said">${s.ask}</span></div>
-      <div class="coach-note">${s.ask_coach}</div>
-      <div class="divider-g"></div>
-      <div class="phase-lbl">They say yes</div>
-      <div class="script-line"><span class="who them">Them</span><span class="said said-them">${s.yes_them}</span></div>
-      <div class="script-line" style="margin-top:5px"><span class="who you">You</span><span class="said">${s.yes_you}</span></div>
-      <div class="coach-note">${s.yes_coach}</div>
-    </div>
-    <div class="tip">${s.tip}</div>
-    ${s.alt?`<div class="sec">Alternate — lean on your mentor</div><div class="card blue"><div class="card-title"><i class="ti ti-users" style="font-size:16px" aria-hidden="true"></i>${s.alt_title||'Mentor version'}</div><div class="said" style="color:#0C447C;font-size:13px;white-space:pre-line">${s.alt}</div>${s.alt_tip?`<div class="tip" style="margin-top:8px">${s.alt_tip}</div>`:''}</div>`:''}
-  `;
-}
-
-function hcgRenderVM(){
-  const s=hcgStages[hcgCurStage];
-  const el=document.getElementById('hcg-p-vm');
-  el.innerHTML=`
-    <div class="sec">Voicemail · <span style="color:#085041">${s.vm_time}</span></div>
-    <div class="vm-box">
-      <div class="vm-label">Leave this if no answer<span class="vm-time">${s.vm_time}</span></div>
-      <div class="vm-text">${s.vm_text}</div>
-    </div>
-    <div class="sec">Follow-up text — send within 2 minutes</div>
-    <div class="text-box">
-      <div class="text-lbl">Send immediately after hanging up</div>
-      <div class="text-txt">${s.text_text}</div>
-    </div>
-    <div class="tip">Voicemail + text together converts far better than either alone. They see your name twice while you\'re still fresh.</div>
-    <div class="warn" style="margin-top:8px"><strong style="font-weight:500">Goal of the voicemail:</strong> curiosity and a callback — not a pitch. Under 20 seconds. Never leave the full invite on a voicemail.</div>
-    <div class="sec" style="margin-top:16px">If they don\'t call back</div>
-    <div class="card">
-      <div style="font-size:13px;color:var(--color-text-secondary);font-style:italic;line-height:1.7">"Hey [Name] — wanted to make sure you got my message. The Zoom is Thursday at 6 or Saturday at 9. Still want me to send you the link?"</div>
-      <div class="tip" style="margin-top:8px">One follow-up. One. After that — move on and call the next person. Your 30/week target means you never need to chase anyone.</div>
-    </div>
-  `;
-}
-
-function hcgRenderObj(){
-  const el=document.getElementById('hcg-p-obj');
-  const urgent=hcgObjections.filter(o=>o.urgent);
-  const normal=hcgObjections.filter(o=>!o.urgent);
-  let h=`<div class="sec">Urgent — heard while on the call</div>`;
-  h+=`<div class="qbar">`;
-  urgent.forEach((o,i)=>{h+=`<span class="qtag urgent" onclick="hcgJumpObj('hu${i}')">${o.q.replace(/"/g,'')}</span>`;});
-  h+=`</div>`;
-  urgent.forEach((o,i)=>{
-    h+=`<div class="obj" id="hu${i}"><div class="obj-hdr urgent" onclick="hcgTogObj(this)"><span class="obj-q urgent">${o.q}</span><i class="ti ti-chevron-down chev" aria-hidden="true"></i></div><div class="obj-body"><div>${o.a}</div>${o.tip?`<div class="obj-tip">${o.tip}</div>`:''}</div></div>`;
-  });
-  h+=`<div class="sec" style="margin-top:14px">All objections — tap to reveal</div>`;
-  h+=`<div class="qbar">`;
-  normal.forEach((o,i)=>{h+=`<span class="qtag" onclick="hcgJumpObj('hn${i}')">${o.q.replace(/"/g,'')}</span>`;});
-  h+=`</div>`;
-  normal.forEach((o,i)=>{
-    h+=`<div class="obj" id="hn${i}"><div class="obj-hdr" onclick="hcgTogObj(this)"><span class="obj-q">${o.q}</span><i class="ti ti-chevron-down chev" aria-hidden="true"></i></div><div class="obj-body"><div>${o.a}</div>${o.tip?`<div class="obj-tip">${o.tip}</div>`:''}</div></div>`;
-  });
-  h+=`<div class="tip" style="margin-top:12px"><strong style="font-weight:500">After every objection:</strong> answer briefly, then re-close immediately with "Thursday or Saturday?" The close always comes back.</div>`;
-  el.innerHTML=h;
-}
-
-function hcgRenderMindset(){
-  const el=document.getElementById('hcg-p-mindset');
-  let h='';
-  h+=`<div class="card">`;
-  hcgMindset.forEach(m=>{
-    h+=`<div class="mrow"><div class="mnum">${m.n}</div><div class="mrow-body"><strong style="font-weight:500">${m.title}</strong><br><span style="color:var(--color-text-secondary);font-size:12px">${m.body}</span></div></div>`;
-  });
-  h+=`</div>`;
-  h+=`<div class="sec">Before every call block — say this once out loud</div>`;
-  h+=`<div class="card green"><div class="said" style="color:#085041;font-size:15px;line-height:1.8">"I am calling because I genuinely believe this will help this person."</div><div class="coach-note" style="padding-left:0;margin-top:8px">Consistency theory: your thoughts have to match your behavior. If you believe it, they\'ll hear it. If you don\'t yet — go back to the session until you do.</div></div>`;
-  el.innerHTML=h;
-}
-
-function hcgRenderRules(){
-  const el=document.getElementById('hcg-p-rules');
-  let h='<div class="card">';
-  hcgRules.forEach(r=>{
-    h+=`<div class="mrow"><i class="ti ${r.icon}" style="font-size:17px;color:#1D9E75;margin-top:1px;flex-shrink:0" aria-hidden="true"></i><div class="mrow-body"><strong style="font-weight:500">${r.title}</strong><br><span style="color:var(--color-text-secondary);font-size:12px">${r.body}</span></div></div>`;
-  });
-  h+='</div>';
-  h+=`<div class="sec">The language that evolves by stage</div>`;
-  const evol=[
-    {dot:'#B4B2A9',label:'Week 1–2',lines:['"The company I just partnered with is hosting..."','"From everything I\'ve seen so far..."']},
-    {dot:'#378ADD',label:'Week 3–4',lines:['"My company is hosting..."','"I went through this myself and walked away thinking..."']},
-    {dot:'#7F77DD',label:'Month 2+',lines:['"My team is putting on..."','"People just like you walk away saying..."']},
-    {dot:'#1D9E75',label:'GX1+',lines:['"My team is hosting..."','"I was thinking about you..."']},
-  ];
-  evol.forEach(e=>{
-    h+=`<div class="card" style="margin-bottom:7px"><div style="display:flex;align-items:center;gap:7px;margin-bottom:7px"><div class="sdot" style="background:${e.dot}"></div><span style="font-size:12px;font-weight:500;color:var(--color-text-primary)">${e.label}</span></div>`;
-    e.lines.forEach(l=>{h+=`<div style="font-size:13px;font-style:italic;color:var(--color-text-secondary);padding:2px 0;line-height:1.6">${l}</div>`;});
-    h+=`</div>`;
-  });
-  h+=`<div class="warn"><strong style="font-weight:500">The one line that never changes:</strong> "Which works better — Thursday or Saturday?" The close is always the same. Confidence on the close doesn't require experience. It requires belief in the value.</div>`;
-  el.innerHTML=h;
-}
-
-window.hcgTogObj=function(hdr){
-  const b=hdr.nextElementSibling;
-  const c=hdr.querySelector('.chev');
-  const open=b.classList.contains('open');
-  b.classList.toggle('open',!open);
-  c.style.transform=open?'':'rotate(180deg)';
-};
-
-window.hcgJumpObj=function(id){
-  const el=document.getElementById(id);
-  if(!el)return;
-  const body=el.querySelector('.obj-body');
-  const chev=el.querySelector('.chev');
-  body.classList.add('open');
-  chev.style.transform='rotate(180deg)';
-  el.scrollIntoView({behavior:'smooth',block:'center'});
-};
-
-hcgRenderScript();
-hcgRenderObj();
-hcgRenderVM();
-hcgRenderMindset();
-hcgRenderRules();
-})();
-</script>
-</div><!-- end cs-callguide -->
-
+<div class="tpanel" id="tp-quick">
 <div class="tab-panel" id="cs-quick">
 <div class="quick-key">
 <div class="qk-icon">🎯</div>
@@ -2973,48 +2825,8 @@ hcgRenderRules();
 </div>
 </div>
 </div>
-<!-- ===== TAB: HESITANCY ===== -->
-<div class="tab-panel" id="cs-hesitancy">
-<div class="quick-key">
-<div class="qk-icon">🛡️</div>
-<div class="qk-text"><strong>Handle hesitancy with calm confidence.</strong> Never push. Acknowledge, reassure, then redirect to the meeting — not the pitch.</div>
 </div>
-<div class="script-card" style="display:block">
-<div class="script-card-header expanded">
-<div class="card-icon icon-navy">🤔</div>
-<div class="script-card-meta">
-<div class="script-card-label">When They're Not Sure</div>
-<div class="script-card-title">Reassurance Script</div>
-</div>
-</div>
-<div class="script-body open">
-<div class="script-text">
-          "It's not one of those things. I'm not going to ask you to buy anything or sign up for anything. I wouldn't disrespect our relationship like that.<br/><br/>
-          I just want to share some information I think is genuinely valuable. If it resonates, great. If not, no hard feelings at all. I just want to earn your referrals — sound fair? We can do a quick 20–30 minutes on Zoom. What's your email?"
-        </div>
-<div class="script-divider">If they ask again</div>
-<div class="script-text">
-          "Totally fair question. It's an educational platform about money — things most families were never taught growing up. I'm not here to make you do anything. I just believe in what I'm doing and I thought of you. If nothing else, you'll walk away with information you can actually use. What's your schedule like for a quick Zoom?"
-        </div>
-</div>
-</div>
-<div style="margin-top: 6px; margin-bottom: 12px; font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--navy)">Response Branches</div>
-<div class="branch branch-yes">
-<div class="branch-label">✓ They say yes</div>
-<div class="branch-text">"Cool — no pressure at all. I can walk you through exactly what I've been doing in about 20–30 minutes. You can decide then if it even makes sense for your life. What works better — evenings or daytime?"</div>
-</div>
-<div class="branch branch-maybe">
-<div class="branch-label">~ Still hesitant</div>
-<div class="branch-text">"Totally understand — a lot of people feel the same way at first. What would need to be true for you to even be curious about something like this?"<br/><br/>
-<span style="font-size:13px;color:var(--gray)">Or simply: "No worries at all — I respect that. If anything changes, you know where to find me."</span></div>
-</div>
-<div class="branch branch-no">
-<div class="branch-label">✗ Clean no</div>
-<div class="branch-text">"No problem whatsoever — I'm genuinely glad we reconnected either way. Let's keep in touch."<br/><br/>
-<span style="font-size:13px;color:var(--gray);font-style:italic">Never push past a clean no. Your integrity is your brand.</span></div>
-</div>
-</div>
-<!-- ===== TAB: 3-CALL SYSTEM ===== -->
+<div class="tpanel exp-only" id="tp-reconnect">
 <div class="tab-panel" id="cs-reconnect">
 <div class="quick-key">
 <div class="qk-icon">📋</div>
@@ -3151,7 +2963,50 @@ hcgRenderRules();
 </div>
 </div>
 </div>
-<!-- ===== TAB: COMPARE ===== -->
+</div>
+<div class="tpanel exp-only" id="tp-hesitancy">
+<div class="tab-panel" id="cs-hesitancy">
+<div class="quick-key">
+<div class="qk-icon">🛡️</div>
+<div class="qk-text"><strong>Handle hesitancy with calm confidence.</strong> Never push. Acknowledge, reassure, then redirect to the meeting — not the pitch.</div>
+</div>
+<div class="script-card" style="display:block">
+<div class="script-card-header expanded">
+<div class="card-icon icon-navy">🤔</div>
+<div class="script-card-meta">
+<div class="script-card-label">When They're Not Sure</div>
+<div class="script-card-title">Reassurance Script</div>
+</div>
+</div>
+<div class="script-body open">
+<div class="script-text">
+          "It's not one of those things. I'm not going to ask you to buy anything or sign up for anything. I wouldn't disrespect our relationship like that.<br/><br/>
+          I just want to share some information I think is genuinely valuable. If it resonates, great. If not, no hard feelings at all. I just want to earn your referrals — sound fair? We can do a quick 20–30 minutes on Zoom. What's your email?"
+        </div>
+<div class="script-divider">If they ask again</div>
+<div class="script-text">
+          "Totally fair question. It's an educational platform about money — things most families were never taught growing up. I'm not here to make you do anything. I just believe in what I'm doing and I thought of you. If nothing else, you'll walk away with information you can actually use. What's your schedule like for a quick Zoom?"
+        </div>
+</div>
+</div>
+<div style="margin-top: 6px; margin-bottom: 12px; font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--navy)">Response Branches</div>
+<div class="branch branch-yes">
+<div class="branch-label">✓ They say yes</div>
+<div class="branch-text">"Cool — no pressure at all. I can walk you through exactly what I've been doing in about 20–30 minutes. You can decide then if it even makes sense for your life. What works better — evenings or daytime?"</div>
+</div>
+<div class="branch branch-maybe">
+<div class="branch-label">~ Still hesitant</div>
+<div class="branch-text">"Totally understand — a lot of people feel the same way at first. What would need to be true for you to even be curious about something like this?"<br/><br/>
+<span style="font-size:13px;color:var(--gray)">Or simply: "No worries at all — I respect that. If anything changes, you know where to find me."</span></div>
+</div>
+<div class="branch branch-no">
+<div class="branch-label">✗ Clean no</div>
+<div class="branch-text">"No problem whatsoever — I'm genuinely glad we reconnected either way. Let's keep in touch."<br/><br/>
+<span style="font-size:13px;color:var(--gray);font-style:italic">Never push past a clean no. Your integrity is your brand.</span></div>
+</div>
+</div>
+</div>
+<div class="tpanel exp-only" id="tp-compare">
 <div class="tab-panel" id="cs-compare">
 <div class="quick-key">
 <div class="qk-icon">⚡</div>
@@ -3212,8 +3067,8 @@ hcgRenderRules();
 <div class="coach-item">Your listening and tonality ARE the script. The words are just scaffolding.</div>
 </div>
 </div>
-
-<!-- ===== TAB: GX BPM INVITE ===== -->
+</div>
+<div class="tpanel exp-only" id="tp-bpminvite">
 <div class="tab-panel" id="cs-bpminvite">
 
 <div class="quick-key">
@@ -3324,19 +3179,539 @@ hcgRenderRules();
   </div>
 </div>
 
-</div><!-- end cs-bpminvite -->
-</div><!-- end .content -->
+</div>
+</div>
+</div>
 <script>
-  function csShowTab(name) {
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
-    document.getElementById('cs-' + name).classList.add('active');
-    const pills = document.querySelectorAll('.nav-pill');
-    const map = { callguide:0, quick:1, reconnect:2, hesitancy:3, compare:4, bpminvite:5 };
-    if (map[name] !== undefined) pills[map[name]].classList.add('active');
-  }
+const hcgStages=[
+  {
+    id:0,label:'New associate',sub:'Week 1–2 · just started',dot:'#B4B2A9',
+    open:' "Hey [Name]! It\'s [you] — how are you doing?"',
+    open_coach:'Let them talk 30–60 seconds. Actually listen. Trust is built here — before a single word about the event.',
+    bridge:' "Hey — I\'m really glad I caught you. I just started something new and honestly you were one of the first people I thought of. I wanted to personally invite you."',
+    bridge_coach:'"I just started something new" creates instant curiosity. Your excitement is real — that\'s your edge. Mean every word.',
+    ask:' "The company I just partnered with is hosting a free Zoom this week — Thursday at 6PM or Saturday at 9AM Pacific. It covers things most financial professionals never bother to explain to everyday families. From everything I\'ve seen so far, I walked away thinking — why didn\'t anyone teach us this sooner. I want you to see it too. Which works better — Thursday or Saturday?"',
+    ask_coach:'Then stop. Full stop. The silence belongs to them. Don\'t fill it.',
+    yes_them:' "Sure, I can do Saturday."',
+    yes_you:' "Perfect. What\'s your email? I\'m sending you the link right now. I\'m really glad you\'re coming — I think you\'re going to get a lot out of it."',
+    yes_coach:'Warm. Short. Send the link within 5 minutes. Don\'t add more.',
+    tip:'Your newness is your hook, not your weakness. When someone you trust calls excited about something new — you pay attention. Lead with that energy.',
+    alt_title:'Lean on your mentor',
+    alt:' "Hey [Name]! It\'s [you] — how are you doing?"\n\n[Listen 30–60 sec]\n\n"Hey — I just partnered with a company and we are hosting a free Zoom this week. Thursday at 6PM or Saturday at 9AM Pacific. It covers things most families were never taught. I want you to meet them and see why I walked away thinking — why didn\'t anyone teach us this sooner. Which works better — Thursday or Saturday?"',
+    alt_tip:' "I want you to meet them and see why I walked away thinking — why didn\'t anyone teach us this sooner. — one of the most honest and disarming lines a new associate can say.',
+    vm_text:' "Hey [Name], it\'s [you]. I just started something new and you were honestly one of the first people I thought of. Nothing crazy — I just wanted to personally reach out. Give me a call back when you get a sec, or I\'ll shoot you a text."',
+    vm_time:'~15 sec',
+    text_text:' "Hey [Name] — just left you a voicemail. I just partnered with company and they\'re hosting a free Zoom this Thursday at 6PM or Saturday at 9AM Pacific — About things we never learned about money. I walked away thinking — why didn\'t anyone teach us this sooner.. Thought of you personally. Want me to send the link?"',
+  },
+  {
+    id:1,label:'Growing',sub:'Week 3–4 · attended the session',dot:'#378ADD',
+    open:' "Hey [Name]! It\'s [you] — how are you doing?"',
+    open_coach:'Let them talk 30–60 seconds. You\'ve done a few calls now — the listen feels more natural. Use it.',
+    bridge:' "Hey — your name came to mind and I wanted to personally reach out."',
+    bridge_coach:'For close contacts: "I was thinking about you." For everyone else: "your name came to mind." Both honest. Both personal.',
+    ask:'"My company is hosting a free Zoom this week — Thursday at 6PM or Saturday at 9AM Pacific. It covers things most financial professionals never bother to explain to everyday families — Risk Mitigation, Tax Efficiency, and Generational Wealth. I went through this myself and walked away thinking — why didn\'t anyone show me this sooner. I genuinely want you there. Which works better — Thursday or Saturday?"',
+    ask_coach:'You\'ve now attended. That line is yours — say it with the weight of actually having experienced it.',
+    yes_them:' "Sure, I can do Saturday."',
+    yes_you:' "Perfect. What\'s your email? I\'m sending you the link right now. I\'m really glad you\'re coming — I think you\'re going to get a lot out of it."',
+    yes_coach:'Same close. Always. Warm, short, send the link.',
+    tip:'You now have your own genuine reaction to the session. "I walked away thinking — why didn\'t anyone show me this sooner" is the most powerful social proof you have — because it\'s yours.',
+    vm_text:' "Hey [Name], it\'s [you]. Your name came to mind and I wanted to personally reach out — I went through something recently that honestly had me thinking why didn\'t anyone teach us this sooner. I want you to see it. Call me back or I\'ll text you the details."',
+    vm_time:'~18 sec',
+    text_text:' "Hey [Name] — just left you a voicemail. My company is hosting a free Zoom this Thursday at 6PM or Saturday at 9AM Pacific on things we never learned about money. I went through it and walked away thinking — why didn\'t anyone show me this sooner. Want me to send the link?"',
+  },
+  {
+    id:2,label:'Building',sub:'Month 2+ · first recruits',dot:'#7F77DD',
+    open:'"Hey [Name]! It\'s [you] — how are you doing?"',
+    open_coach:'The listen is automatic now. You genuinely want to know. That\'s where trust lives.',
+    bridge:'"Hey — I\'m really glad I caught you. Your name came to mind and I wanted to reach out personally."',
+    bridge_coach:'Now "my team" is true — you have people working with you. Use it. Don\'t use it before it\'s earned.',
+    ask:' "My team is putting on a free Zoom this week — Thursday at 6PM or Saturday at 9AM Pacific. It covers things most financial professionals never bother to explain to everyday families — Risk Mitigation, Tax Efficiency, and Generational Wealth. People just like you walk away saying they wish they\'d learned this ten years ago. I genuinely want you there. Which works better — Thursday or Saturday?"',
+    ask_coach:'The identity social proof is now real — you\'ve seen it yourself from families you\'ve helped. Say it like you mean it because you do.',
+    yes_them:' "Sure, I can do Saturday."',
+    yes_you:' "Perfect. What\'s your email? I\'m sending you the link right now. I\'m really glad you\'re coming — I think you\'re going to get a lot out of it."',
+    yes_coach:'Identical close. Never changes. Warm, settled, send within 5 minutes.',
+    tip:'The double factor is working for you now. For every 3 people you invite, 1–2 will come regardless of polish. Volume plus consistency plus this script is the formula.',
+    vm_text:' "Hey [Name], it\'s [you]. Your name came to mind and I wanted to reach out personally about something I think you\'d genuinely get a lot out of. Nothing heavy. Give me a call back when you get a sec or I\'ll shoot you a text."',
+    vm_time:'~17 sec',
+    text_text:' "Hey [Name] — just left you a voicemail. My team is hosting a free Zoom this Thursday at 6PM or Saturday at 9AM Pacific on Risk Mitigation, Tax Efficiency, and Generational Wealth. Thought of you personally. Want me to send the link?"',
+  },
+  {
+    id:3,label:'Experienced',sub:'GX1+ · full script',dot:'#1D9E75',
+    open:' "Hey [Name]! It\'s [you] — how are you doing?"',
+    open_coach:'The listen is your superpower now. You\'re not waiting for your turn — you\'re gathering the personal hook you\'ll use in the bridge.',
+    bridge:' "Hey — I\'m actually really glad I caught you. I was thinking about you, and honestly with [what you heard in the listen], I think this is perfectly timed."',
+    bridge_coach:'"I was thinking about you" — earned at this stage. You know your people. Use what they told you in the open to make the bridge feel specific and personal.',
+    ask:' "My team is hosting a free Zoom this week — Thursday at 6PM or Saturday at 9AM Pacific. It covers things most financial professionals never bother to explain to everyday families — Risk Mitigation, Tax Efficiency, and Generational Wealth. People just like you walk away saying they wish they\'d learned this ten years ago. I genuinely want you there. Which works better — Thursday or Saturday?"',
+    ask_coach:'40 seconds max from "my team is hosting" to "Thursday or Saturday." Every word earns its place. Then silence.',
+    yes_them:' "Sure, I can do Saturday."',
+    yes_you:' "Perfect. What\'s your email? I\'m sending you the link right now. I\'m really glad you\'re coming — I think you\'re going to get a lot out of it."',
+    yes_coach:'Warm. Settled. Confident. You expected the yes — because you believe in the value. That energy is audible.',
+    tip:'At this stage your language and your conviction are fully aligned. You\'re not delivering a script — you\'re having a genuine conversation that happens to follow a proven structure.',
+    vm_text:' "Hey [Name], it\'s [you]. I was thinking about you and wanted to personally reach out — my team is doing something this week I think you\'d genuinely get a lot out of. Nothing heavy. Give me a call back when you get a sec or I\'ll shoot you a text."',
+    vm_time:'~18 sec',
+    text_text:' "Hey [Name] — just left you a voicemail. My team is hosting a free Zoom on Risk Mitigation, Tax Efficiency, and Generational Wealth — Thursday at 6PM or Saturday at 9AM Pacific. Thought of you personally. Want me to send the link?"',
+  },
+];
+const hcgObjections=[
+  {q:'"What is it exactly?"',urgent:false,
+   a:'"It\'s a free educational session — covers how to protect your income, keep more of what you earn from taxes, and build something that actually passes down to your family. Things most people were never taught. It\'s 45 minutes on Zoom. Thursday or Saturday?"',
+   tip:'Brief answer, then immediately re-close with "Thursday or Saturday?" Don\'t lecture.'},
+  {q:'"Is there a business side to this?"',urgent:false,
+   a:'"Yes — and I\'ll tell you everything about that after the session if you\'re interested. The education itself stands completely on its own. Come and see for yourself. Thursday or Saturday?"',
+   tip:'Always answer this directly. Transparency is your competitive advantage. Sequencing is not deception.'},
+  {q:'"Is this MLM / a sales thing?"',urgent:false,
+   a:'"I get why you\'d ask. No — we\'re licensed financial professionals with Revolution Financial Management, a Transamerica company. Been around since the 1800s, over $700 billion in assets. Come and form your own opinion — it\'s 45 minutes, it\'s free, and I wouldn\'t call you personally if I didn\'t think it was worth your time. Thursday or Saturday?"',
+   tip:'Lead with the credibility (Transamerica, 1800s, $700B). Let them form their own opinion.'},
+  {q:'"I\'ve seen WFG — it doesn\'t work."',urgent:true,
+   a:'"I hear you — and I respect that you\'ve got a perspective on it. Can I ask what you saw? Because your experience might be totally valid, and I\'d rather hear it than talk past it." [Listen.] "What I\'d ask is — come to this session for the financial education, not for the business side. The content on Risk Mitigation, Tax Efficiency, and Generational Wealth stands completely on its own. If after 45 minutes you still feel the same way, tell me honestly. I\'d rather you see it for yourself than take my word for it. Thursday or Saturday?"',
+   tip:'Don\'t defend WFG before you know what they saw. Ask first. Listen. Then redirect to the education — not the business. The session does the convincing, not you.'},
+  {q:'"Run away — they\'ll take your money."',urgent:true,
+   a:'"I appreciate you looking out for me — genuinely. Tell me what you heard, because I want to understand where that\'s coming from." [Listen.] "Here\'s what I know: it\'s Revolution Financial Management, a Transamerica company — $700 billion in assets, been around since the 1800s. And here\'s what I can tell you about my own experience: I haven\'t paid them a dollar. The families we help don\'t pay us either. We\'re paid by the carriers. Come to the free session and see for yourself — bring your skepticism. I actually want your honest opinion after."',
+   tip:'"Bring your skepticism" disarms the objection completely. You\'re not running from the pushback — you\'re inviting it. That\'s trustworthy.'},
+  {q:'"I\'m really busy."',urgent:false,
+   a:'"I hear you — it\'s only 45 minutes on Zoom, you don\'t have to go anywhere. Thursday at 6 or Saturday at 9 — which is the less crazy one for you?"',
+   tip:'Acknowledge it once. Then re-close immediately with the binary choice.'},
+  {q:'"Just send me the info."',urgent:false,
+   a:'"I\'ll send you the link — but honestly it doesn\'t do it justice on paper. It\'s one of those things you have to experience. Can I put you down for Thursday or Saturday and you decide closer to the time?"',
+   tip:'Always redirect from "send me info" to the live event. Reading about it is not attending it.'},
+  {q:'"I can\'t afford financial services."',urgent:false,
+   a:'"That\'s exactly why I thought of you — it\'s completely free. No fee ever to sit down with us. The families who need this most are the ones the traditional industry ignores. That\'s who we built this for. Thursday or Saturday?"',
+   tip:'This objection is actually your best opening. The "990 out of 1,000" framing was made for this moment.'},
+  {q:'"Let me think about it."',urgent:false,
+   a:'"Of course — let me send you the link now and you decide closer to the time. Thursday at 6 or Saturday at 9 — which should I put you down for tentatively?"',
+   tip:'"Tentatively" reduces the commitment. They\'re not locked in — they just have a link and a time. That\'s enough.'},
+  {q:'"Are you trying to recruit me?"',urgent:false,
+   a:'"I\'ll be straight with you — eventually I\'d love to share the business side if you\'re open to it. But that\'s not why I\'m inviting you right now. The financial education is genuinely valuable on its own. Come for that first. Everything else is a conversation for after."',
+   tip:'Answer it directly every time. The person who answers this honestly is the person you trust with your money.'},
+  {q:'"I\'m not really into financial stuff."',urgent:false,
+   a:'"Most people feel that way — honestly because it was never explained in a way that made sense. That\'s kind of the whole point of this session. It\'s not complicated or dry. I think it\'d surprise you. Just 45 minutes — Thursday or Saturday?"',
+   tip:'Validate the feeling. Then reframe why this is different. Then close.'},
+  {q:'"I already have a financial advisor."',urgent:false,
+   a:'"That\'s great — honestly most people don\'t. I\'m not here to replace anyone. I\'d just love to show you what we do for families and let you decide if there\'s a gap we could help fill. It\'s completely free and there\'s no obligation. What do you have to lose by taking 45 minutes? Thursday or Saturday?"',
+   tip:'Never compete with their current advisor. Position this as complementary.'},
+];
+const hcgMindset=[
+  {n:1,title:'Your newness is not a weakness.',body:'When someone you personally know and trust calls you excited about something new — you pay attention. That\'s not a liability. That\'s a personal introduction. It\'s the most powerful thing in Trustworthy Selling.'},
+  {n:2,title:'You are the bridge, not the expert.',body:'You don\'t need to know everything. Your job is to get them in the room. Your mentor or SMD is the expert. Edify them honestly and let the event do the work.'},
+  {n:3,title:'Consistency theory — applied to you.',body:'Your internal belief has to match your ask. Before every call: "I am calling because I genuinely believe this will help this person." If you believe it, they\'ll hear it. If you don\'t yet — go back to the session until you do.'},
+  {n:4,title:'30 calls a week from your warm list gets GX1.',body:'You don\'t need cold leads. You need your phone, your contacts, and this script. Six calls a day, five days. The people who know you are the easiest yes — because trust is already there.'},
+];
+const hcgRules=[
+  {icon:'ti-ear',title:'Listen before you ask.',body:'The 30–60 seconds in the open is not filler. It\'s where trust is built. Every word of the ask lands harder because of it.'},
+  {icon:'ti-hand-stop',title:'Stop after "Thursday or Saturday?"',body:'Every word after the close costs you a yes. The silence is theirs — let them use it. Count to five if you have to. Do not fill the gap.'},
+  {icon:'ti-shield-check',title:'Answer "is there a business side?" directly.',body:'Always. Every time. Transparency is your competitive advantage. No one in this industry does it — you will.'},
+  {icon:'ti-clock',title:'Send the link within 5 minutes of the yes.',body:'Don\'t let them cool off. A warm yes turns cold quickly. Text them the link before you dial the next person.'},
+  {icon:'ti-message',title:'Voicemail + text is always better than either alone.',body:'They see your name twice in two minutes while you\'re still fresh. Send the text within 2 minutes of hanging up.'},
+  {icon:'ti-repeat',title:'One follow-up after a no-answer. One.',body:'"Hey [Name] — wanted to make sure you got my message. Still want me to send the link?" One follow-up is persistence. Two is pressure.'},
+];
 
-  function csToggleCard(header) {
+var hSt = 0;
+
+function showTab(id, btn) {
+  document.querySelectorAll('.tpanel').forEach(function(p){p.classList.remove('act');});
+  document.querySelectorAll('.npill').forEach(function(b){b.classList.remove('act');});
+  var p = document.getElementById('tp-'+id); if(p) p.classList.add('act');
+  if(btn) btn.classList.add('act');
+}
+
+function hTab(id, btn) {
+  document.querySelectorAll('.hcg-pane').forEach(function(p){p.classList.remove('on');});
+  document.querySelectorAll('.hcg-tab').forEach(function(b){b.classList.remove('on');});
+  var p = document.getElementById('hp-'+id); if(p) p.classList.add('on');
+  if(btn) btn.classList.add('on');
+}
+
+function hRenderStages() {
+  var bar = document.getElementById('hcg-stg-bar'); if(!bar) return;
+  bar.innerHTML = '';
+  hcgStages.forEach(function(s,i){
+    var b = document.createElement('button');
+    b.className='hcg-stg'+(i===hSt?' on':'');
+    b.textContent = s.label;
+    b.onclick=(function(n){return function(){hSetStage(n);};})(i);
+    bar.appendChild(b);
+  });
+}
+
+function hRenderScript() {
+  var s=hcgStages[hSt], el=document.getElementById('hcg-sc'); if(!el) return;
+  var h='<div class="hcg-si"><div class="hcg-si-dot"></div><div><div class="hcg-si-name">'+s.label+'</div><div class="hcg-si-sub">'+s.sub+'</div></div></div>';
+  function blk(lbl,txt,coach){
+    if(!txt) return '';
+    var r='<div class="hcg-sec"><div class="hcg-lbl">'+lbl+'</div><div class="hcg-txt">'+txt+'</div>';
+    if(coach) r+='<button class="hcg-cn-btn" onclick="hCoach(this)">💡 Coach note</button><div class="hcg-cn">'+coach+'</div>';
+    return r+'</div>';
+  }
+  h+=blk('Open',s.open,s.open_coach);
+  h+=blk('Bridge',s.bridge,s.bridge_coach);
+  h+=blk('The Ask',s.ask,s.ask_coach);
+  if(s.yes_them&&s.yes_you){
+    h+='<div class="hcg-sec"><div class="hcg-lbl">When they say yes</div><div class="hcg-exch">';
+    h+='<div class="hcg-bbl"><span class="hcg-who hcg-them">Them</span><div class="hcg-bbl-txt">'+s.yes_them+'</div></div>';
+    h+='<div class="hcg-bbl"><span class="hcg-who hcg-you">You</span><div class="hcg-bbl-txt">'+s.yes_you+'</div></div>';
+    h+='</div>';
+    if(s.yes_coach) h+='<button class="hcg-cn-btn" onclick="hCoach(this)" style="margin-top:8px">💡 Coach note</button><div class="hcg-cn">'+s.yes_coach+'</div>';
+    h+='</div>';
+  }
+  if(s.tip) h+='<div class="hcg-tip"><span style="font-size:18px;flex-shrink:0">⭐</span><div class="hcg-tip-txt">'+s.tip+'</div></div>';
+  if(s.alt) h+='<div style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.1em;margin:14px 0 8px">Alternative: '+(s.alt_title||'Variation')+'</div><div style="background:#0c1528;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px 16px;font-size:14px;line-height:1.75;white-space:pre-line;color:rgba(255,255,255,.85);">'+s.alt+'</div>';
+  if(s.alt_tip) h+='<div class="hcg-tip" style="margin-top:8px"><span style="font-size:18px;flex-shrink:0">💡</span><div class="hcg-tip-txt">'+s.alt_tip+'</div></div>';
+  el.innerHTML=h;
+}
+
+function hRenderVM() {
+  var s=hcgStages[hSt], el=document.getElementById('hcg-vm'); if(!el) return;
+  var h='';
+  if(s.vm_text) h+='<div class="hcg-vm"><div class="hcg-vm-lbl">Voicemail Script</div><div class="hcg-vm-txt">'+s.vm_text+'</div>'+(s.vm_time?'<div class="hcg-vm-meta">⏱ '+s.vm_time+'</div>':'')+'</div>';
+  if(s.text_text) h+='<div class="hcg-vm"><div class="hcg-vm-lbl">Follow-Up Text</div><div class="hcg-vm-txt">'+s.text_text+'</div></div>';
+  el.innerHTML=h;
+}
+
+function hRenderMindset() {
+  var el=document.getElementById('hcg-ms'); if(!el) return;
+  var h='';
+  hcgMindset.forEach(function(m){ h+='<div class="hcg-mind"><div class="hcg-mind-n">'+(m.n||'')+'</div><div><div class="hcg-mind-h">'+(m.title||m.t||'')+'</div><div class="hcg-mind-b">'+(m.body||m.b||'')+'</div></div></div>'; });
+  el.innerHTML=h;
+}
+
+function hRenderRules() {
+  var el=document.getElementById('hcg-rl'); if(!el) return;
+  var h='';
+  hcgRules.forEach(function(r){ h+='<div class="hcg-rule"><div class="hcg-rule-ic">'+(r.icon?'<i class="ti '+r.icon+'"></i>':'📌')+'</div><div><div class="hcg-rule-h">'+(r.title||r.t||'')+'</div><div class="hcg-rule-b">'+(r.body||r.b||'')+'</div></div></div>'; });
+  el.innerHTML=h;
+}
+
+function hRenderObj() {
+  var el=document.getElementById('hcg-olist'); if(!el) return;
+  var h='';
+  hcgObjections.forEach(function(o,i){
+    h+='<div class="hcg-oi"><div class="hcg-oq'+(o.urgent?' urg':'')+'" onclick="hObjToggle(this,'+i+')">';
+    h+='<span>'+o.q+'</span><div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">';
+    if(o.urgent) h+='<span class="urg-badge">Handle now</span>';
+    h+='<span class="arr">⌄</span></div></div>';
+    h+='<div class="hcg-oa" id="hoa-'+i+'">'+o.a+(o.tip?'<div class="hcg-otip">💡 '+o.tip+'</div>':'')+'</div></div>';
+  });
+  el.innerHTML=h;
+}
+
+function hCoach(btn) {
+  var cn=btn.nextElementSibling; cn.classList.toggle('on');
+  btn.style.borderRadius=cn.classList.contains('on')?'8px 8px 0 0':'8px';
+}
+
+function hObjToggle(q,i) {
+  var a=document.getElementById('hoa-'+i), open=a.classList.contains('on');
+  document.querySelectorAll('.hcg-oa').forEach(function(e){e.classList.remove('on');});
+  document.querySelectorAll('.hcg-oq').forEach(function(e){e.classList.remove('open');});
+  if(!open){a.classList.add('on');q.classList.add('open');}
+}
+
+function hObjOpen(){var ov=document.getElementById('hcg-ov');if(ov){ov.classList.add('on');document.body.style.overflow='hidden';}}
+function hObjClose(){var ov=document.getElementById('hcg-ov');if(ov){ov.classList.remove('on');document.body.style.overflow='';}}
+function hObjBg(e){if(e.target===document.getElementById('hcg-ov'))hObjClose();}
+
+function hSetStage(i) {
+  hSt=i; hRenderStages(); hRenderScript(); hRenderVM();
+  var prev=document.getElementById('hcg-prev'),next=document.getElementById('hcg-next');
+  if(prev) prev.disabled=(i===0); if(next) next.disabled=(i===hcgStages.length-1);
+}
+function hMove(d){var n=hSt+d;if(n>=0&&n<hcgStages.length)hSetStage(n);}
+
+// Role/nav
+(function(){
+  var r=sessionStorage.getItem('hyperion_role')||'experienced';
+  var cn=document.getElementById('chip-new'),ce=document.getElementById('chip-exp');
+  if(r==='new_associate'){if(cn)cn.style.display='inline-block';}
+  else{if(ce)ce.style.display='inline-block';}
+  if(r==='new_associate'){
+    document.querySelectorAll('#sys-nav a[data-roles="experienced"]').forEach(function(a){a.style.display='none';});
+    document.querySelectorAll('.exp-only').forEach(function(el){el.style.display='none';});
+  }
+})();
+
+// Init
+hRenderStages(); hSetStage(0); hRenderMindset(); hRenderRules(); hRenderObj();
+</script>
+
+<!-- SWITCH ROLE MODAL -->
+<div id="sw-overlay" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(8,15,30,.85);backdrop-filter:blur(6px);align-items:center;justify-content:center;" onclick="swClose(event)">
+  <div id="sw-box" style="background:#0c1d30;border:1px solid rgba(201,168,76,.3);border-radius:16px;padding:36px 32px;width:100%;max-width:360px;box-shadow:0 24px 60px rgba(0,0,0,.5);position:relative;">
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c9a84c,transparent);border-radius:16px 16px 0 0;"></div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(201,168,76,.6);margin-bottom:10px;">Hyperion System</div>
+    <div style="font-size:20px;font-weight:800;color:#fff;margin-bottom:6px;">Switch Role</div>
+    <div style="font-size:13px;color:rgba(255,255,255,.4);margin-bottom:24px;line-height:1.5;">Enter your access code to switch roles.</div>
+    <input id="sw-input" type="password" placeholder="Enter access code" autocomplete="off"
+      style="width:100%;padding:13px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.25);border-radius:10px;color:#fff;font-size:15px;font-family:inherit;outline:none;letter-spacing:.1em;margin-bottom:8px;"
+      onkeydown="if(event.key==='Enter')swSubmit()"/>
+    <div id="sw-err" style="display:none;font-size:12px;color:#e05555;margin-bottom:10px;padding:8px 12px;background:rgba(224,85,85,.1);border-radius:6px;">⚠ Incorrect code. Try again.</div>
+    <button onclick="swSubmit()" style="width:100%;padding:13px;background:#c9a84c;color:#0c1d30;border:none;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:.04em;transition:background .2s;">Confirm Switch</button>
+    <button onclick="swClose()" style="width:100%;padding:10px;background:transparent;color:rgba(255,255,255,.3);border:none;border-radius:10px;font-size:13px;cursor:pointer;font-family:inherit;margin-top:6px;">Cancel</button>
+  </div>
+</div>
+<script>
+function swOpen(){
+  var ov=document.getElementById('sw-overlay');
+  ov.style.display='flex';
+  var inp=document.getElementById('sw-input');
+  inp.value='';
+  document.getElementById('sw-err').style.display='none';
+  setTimeout(function(){inp.focus();},100);
+}
+function swClose(e){
+  if(!e||e.target===document.getElementById('sw-overlay'))
+    document.getElementById('sw-overlay').style.display='none';
+}
+function swSubmit(){
+  var val=document.getElementById('sw-input').value.trim().toUpperCase();
+  var err=document.getElementById('sw-err');
+  if(val==='LEGACY'){
+    sessionStorage.setItem('hyperion_role','new_associate');
+    location.reload();
+  } else if(val==='1437'){
+    sessionStorage.setItem('hyperion_role','experienced');
+    location.reload();
+  } else {
+    err.style.display='block';
+    var box=document.getElementById('sw-box');
+    box.style.animation='none';
+    setTimeout(function(){
+      box.style.animation='swShake .35s ease';
+    },10);
+    document.getElementById('sw-input').value='';
+    document.getElementById('sw-input').focus();
+  }
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape') document.getElementById('sw-overlay').style.display='none';
+});
+</script>
+<style>
+@keyframes swShake{0%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}100%{transform:translateX(0)}}
+#sw-input:focus{border-color:rgba(201,168,76,.6);background:rgba(255,255,255,.07);}
+</style>
+
+<style>
+/* ═══ CONTRAST FIX — force dark on ALL white/light backgrounds ═══ */
+/* Override inline white backgrounds */
+.card, .card *, .warn-chip, .signal-chip, .step-item,
+.qualify-item, .contact-item, .resource-item,
+[style*="background:#fff"], [style*="background: #fff"],
+[style*="background:#ffffff"], [style*="background:white"],
+[style*="background:var(--white)"], [style*="background:var(--off-white)"],
+[style*="background:var(--bg)"], [style*="background:var(--surface)"],
+[style*="background:#faf"], [style*="background:#f9f"],
+[style*="background:#f4f"], [style*="background:#f0f"],
+[style*="background:#eff"], [style*="background:rgba(255,255,255"] {
+  color: rgba(255,255,255,.8) !important;
+}
+
+/* Force card backgrounds dark */
+.card { background: #0c1528 !important; }
+.card-accent-green, .card-accent-blue, .card-accent-amber,
+.card-accent-purple, .card-accent-coral, .card-accent-coral,
+.card-green, .card-navy, .card-gold {
+  background: #0c1528 !important;
+}
+
+/* Warn chips */
+.warn-chip { background: rgba(255,255,255,.04) !important; }
+.warn-chip span, .warn-chip div { color: rgba(255,255,255,.8) !important; }
+.warn-icon { background: rgba(201,168,76,.2) !important; color: #c9a84c !important; }
+
+/* Step items */
+.step-item .step-body h4 { color: #fff !important; }
+.step-item .step-body p { color: rgba(255,255,255,.7) !important; }
+
+/* EMA / contact cards */
+.contact-card, .resource-card, .qualify-list, .qualify-item {
+  background: rgba(255,255,255,.04) !important;
+  color: rgba(255,255,255,.8) !important;
+}
+.qualify-item { border-color: rgba(255,255,255,.08) !important; }
+
+/* Grid cards */
+.grid2 .card, .grid3 .card, .grid4 .card { background: #0c1528 !important; }
+
+/* All headings in cards */
+.card h3, .card h4, .card h5 { color: #fff !important; }
+.card p, .card li, .card span { color: rgba(255,255,255,.7) !important; }
+.card strong { color: rgba(255,255,255,.9) !important; }
+.card a { color: #c9a84c !important; }
+
+/* Key contacts / email links */
+.cta-btn {
+  background: rgba(201,168,76,.12) !important;
+  color: #c9a84c !important;
+  border: 1px solid rgba(201,168,76,.3) !important;
+}
+
+/* Score / metric cards */
+.metric-card, .metric-box {
+  background: #0c1528 !important;
+  border-color: rgba(201,168,76,.15) !important;
+}
+.metric-value, .metric-label, .metric-sub { color: rgba(255,255,255,.7) !important; }
+.metric-value { color: #c9a84c !important; font-weight: 700 !important; }
+
+/* Signal chips */
+.signal-chip {
+  background: rgba(255,255,255,.04) !important;
+  border: 1px solid rgba(255,255,255,.07) !important;
+  color: rgba(255,255,255,.75) !important;
+}
+
+/* Badge colors */
+.badge-gold { background: rgba(201,168,76,.15) !important; color: #e8c97a !important; }
+.badge-navy { background: rgba(255,255,255,.08) !important; color: rgba(255,255,255,.8) !important; }
+.badge-green { background: rgba(26,100,68,.25) !important; color: #4ade80 !important; }
+
+/* Truth cards, qualify items */
+.truth-card { background: #0c1528 !important; color: rgba(255,255,255,.8) !important; }
+.truth-num { background: rgba(201,168,76,.15) !important; color: #c9a84c !important; }
+
+/* Income rows / bars */
+.income-label { color: rgba(255,255,255,.75) !important; }
+.income-bar { background: rgba(255,255,255,.08) !important; }
+.income-val { color: #c9a84c !important; }
+
+/* Tags */
+.tag, .tag-navy, .tag-gold {
+  color: rgba(255,255,255,.7) !important;
+  background: rgba(255,255,255,.06) !important;
+  border: 1px solid rgba(255,255,255,.1) !important;
+}
+.tag-gold { background: rgba(201,168,76,.12) !important; color: #c9a84c !important; border-color: rgba(201,168,76,.2) !important; }
+
+/* Week blocks, day cells */
+.week-block .card { background: #0a1020 !important; }
+.day-cell { background: #0c1528 !important; border-color: rgba(255,255,255,.07) !important; color: rgba(255,255,255,.7) !important; }
+.day-cell.active { border-color: #c9a84c !important; background: rgba(201,168,76,.08) !important; }
+
+/* Checklist items */
+.checklist-item, .esg-check-item {
+  background: #0c1528 !important;
+  border-color: rgba(255,255,255,.07) !important;
+  color: rgba(255,255,255,.8) !important;
+}
+.esg-check-item.esg-done { background: rgba(26,100,68,.15) !important; }
+
+/* Nav pills / tab navs */
+.tab-nav { border-color: rgba(255,255,255,.08) !important; }
+
+/* RFM flip chart close */
+.rfm-close-btn { background: #c9a84c !important; color: #080f1e !important; }
+
+/* Section headers */
+.section-header h2 { color: #fff !important; }
+.section-header p { color: rgba(255,255,255,.55) !important; }
+.eyebrow { color: #c9a84c !important; }
+
+/* Fix any remaining white inline backgrounds via universal override */
+* { transition: none !important; }
+</style>
+
+<style>
+/* KEY CONTACTS - target inline background:var(--white) */
+[style*="background:var(--white)"] {
+  background: #0c1528 !important;
+  color: rgba(255,255,255,.85) !important;
+  border-color: rgba(255,255,255,.08) !important;
+}
+[style*="background:var(--navy-subtle)"] { background: rgba(201,168,76,.12) !important; }
+[style*="background:var(--gold-pale)"] { background: rgba(201,168,76,.08) !important; }
+[style*="background:var(--green-light)"] { background: rgba(26,100,68,.15) !important; }
+[style*="background:var(--off-white)"] { background: #0a1020 !important; }
+[style*="background:var(--cream)"] { background: #0a1020 !important; }
+[style*="background:var(--surface)"] { background: #0c1528 !important; }
+[style*="background:var(--gray-50)"] { background: #0a1020 !important; }
+[style*="background:var(--bg)"] { background: #080f1e !important; }
+[style*="background:#fff"], [style*="background: #fff"],
+[style*="background:#ffffff"], [style*="background:#FFFFFF"] {
+  background: #0c1528 !important;
+}
+[style*="background:white"] { background: #0c1528 !important; }
+
+/* All inline text colors on var(--text) */
+[style*="color:var(--text)"] { color: rgba(255,255,255,.85) !important; }
+[style*="color:var(--gray)"] { color: rgba(255,255,255,.55) !important; }
+[style*="color:var(--navy)"] { color: rgba(255,255,255,.85) !important; }
+[style*="color:var(--text-2)"] { color: rgba(255,255,255,.7) !important; }
+[style*="color:var(--text-3)"] { color: rgba(255,255,255,.5) !important; }
+[style*="color:var(--gray-500)"] { color: rgba(255,255,255,.5) !important; }
+[style*="color:var(--gray-700)"] { color: rgba(255,255,255,.7) !important; }
+
+/* GX inner section backgrounds */
+.gxp-body { background: #080f1e !important; }
+.gxp-card { background: #0c1528 !important; border-color: rgba(255,255,255,.07) !important; }
+.gxp-card h3 { color: #fff !important; }
+.gxp-card p { color: rgba(255,255,255,.7) !important; }
+.section { background: transparent !important; }
+[id*="why"] > *, [id*="mindset"] > *, [id*="m12"] > *, [id*="m3"] > * {
+  background: transparent !important;
+}
+.gxp-sec { background: #080f1e !important; }
+.gxp-month-body { background: #080f1e !important; }
+.gxp-quote p { color: rgba(255,255,255,.8) !important; }
+.gxp-quote-attr { color: rgba(255,255,255,.4) !important; }
+.gxp-warn { background: rgba(192,57,43,.12) !important; color: rgba(255,255,255,.8) !important; }
+.gxp-step .gxp-stept { color: rgba(255,255,255,.75) !important; }
+.gxp-truth { background: #0c1528 !important; }
+.gxp-truth p { color: rgba(255,255,255,.7) !important; }
+
+/* GX iframe-style content from original gx CSS */
+.main { background: transparent !important; }
+.card { background: #0c1528 !important; }
+.card .quote-text { color: rgba(255,255,255,.75) !important; }
+.card .quote-attr { color: rgba(255,255,255,.4) !important; }
+.card .step-text { color: rgba(255,255,255,.7) !important; }
+.card-accent-green, .card-accent-blue, .card-accent-amber,
+.card-accent-purple, .card-accent-coral { background: #0c1528 !important; }
+.income-row { border-color: rgba(255,255,255,.07) !important; }
+.income-bar { background: rgba(255,255,255,.08) !important; }
+.grid2 .card, .grid2 > div { background: #0c1528 !important; }
+.grid3 .card, .grid3 > div { background: #0c1528 !important; }
+.truth-card { background: #0c1528 !important; }
+
+/* Objections */
+.obj-item { background: #0c1528 !important; }
+.obj-q { color: rgba(255,255,255,.9) !important; background: #0c1528 !important; }
+.obj-a { background: #0a1020 !important; color: rgba(255,255,255,.75) !important; border-color: rgba(201,168,76,.15) !important; }
+.obj-a.open { display: block !important; }
+
+/* RFM / RM module */
+.rm-wrap { background: #080f1e !important; }
+.rm-panel { background: #0c1528 !important; color: rgba(255,255,255,.8) !important; }
+.rm-panel * { color: rgba(255,255,255,.75) !important; }
+
+/* Contact item icons */
+[style*="background:var(--navy-subtle)"] { background: rgba(201,168,76,.1) !important; }
+</style>
+<style>
+.hcg { background: #080f1e !important; }
+.hcg-body { background: #080f1e !important; }
+.hcg-pane { background: #080f1e !important; }
+.hcg-pane.on { background: #080f1e !important; }
+.hcg-cn { background: rgba(201,168,76,.05) !important; color: rgba(255,255,255,.75) !important; }
+.hcg-cn-btn { background: rgba(201,168,76,.06) !important; }
+.hcg-bbl-txt { background: #0f1d38 !important; color: rgba(255,255,255,.85) !important; border-color: rgba(255,255,255,.08) !important; }
+.hcg-them { background: rgba(255,255,255,.07) !important; color: rgba(255,255,255,.55) !important; }
+.hcg-you { background: rgba(201,168,76,.15) !important; color: #c9a84c !important; }
+/* Quick scripts & other tabs dark */
+.script-card { background: #0c1528 !important; border-color: rgba(255,255,255,.07) !important; }
+.script-card-header { background: #0c1528 !important; }
+.script-text { color: rgba(255,255,255,.8) !important; background: #0a1020 !important; border-color: rgba(201,168,76,.15) !important; }
+.script-body { background: transparent !important; }
+.quick-key { background: rgba(201,168,76,.06) !important; border-color: rgba(201,168,76,.15) !important; color: rgba(255,255,255,.8) !important; }
+.script-divider { border-color: rgba(255,255,255,.06) !important; }
+.script-card-label { color: rgba(255,255,255,.4) !important; }
+.script-card-title { color: #fff !important; }
+.call-type-btn { background: rgba(255,255,255,.05) !important; color: rgba(255,255,255,.5) !important; border-color: rgba(255,255,255,.08) !important; }
+.call-type-btn.active { background: rgba(201,168,76,.15) !important; color: #c9a84c !important; border-color: rgba(201,168,76,.3) !important; }
+.call-panel { background: transparent !important; }
+.hcg-bar { background: #0c1d30 !important; border-top-color: rgba(255,255,255,.08) !important; }
+</style>
+</body>
+</htmlfunction csToggleCard(header) {
     const body = header.nextElementSibling;
     const chevron = header.querySelector('.chevron');
     const isOpen = body.classList.contains('open');
@@ -3344,16 +3719,13 @@ hcgRenderRules();
     header.classList.toggle('expanded', !isOpen);
     chevron.classList.toggle('open', !isOpen);
   }
-
-  function csShowCall(id, btn) {
+function csShowCall(id, btn) {
     document.querySelectorAll('.call-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.call-tab').forEach(t => t.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     btn.classList.add('active');
   }
-
-  var currentType = 'warm';
-  function csSetType(type) {
+function csSetType(type) {
     currentType = type;
     document.getElementById('btn-warm').classList.toggle('active', type === 'warm');
     document.getElementById('btn-cold').classList.toggle('active', type === 'cold');
@@ -3364,20 +3736,6 @@ hcgRenderRules();
       if (c) c.style.display = type === 'cold' ? '' : 'none';
     });
   }
-</script>
-</div>
-</div>
 
-
-
-
-<script>
-// Show role chip
-(function(){
-  var r = sessionStorage.getItem('hyperion_role');
-  if(r === 'new_associate') document.getElementById('chip-new').style.display='inline-flex';
-  else document.getElementById('chip-exp').style.display='inline-flex';
-})();
-</script>
-</body>
-</html>
+// Init
+>
