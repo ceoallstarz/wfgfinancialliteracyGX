@@ -2650,7 +2650,7 @@ h1, h2, h3, h4, h5, h6,
 <div class="section-header">
 <div class="eyebrow">Mindset &amp; Success</div>
 <h2>Big Thinking Success Field Guide</h2>
-<p>Glenn&#39;s personal success framework — faith, vision, daily disciplines, and leadership principles for the mission-driven builder.</p>
+<p>Your personal success framework — faith, vision, daily disciplines, and leadership principles for the mission-driven builder.</p>
 </div>
 <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(0,0,0,.1);box-shadow:0 4px 24px rgba(0,0,0,.08)">
 <iframe sandbox="allow-scripts allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;
@@ -4134,7 +4134,7 @@ h1, h2, h3, h4, h5, h6,
 &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-" style="width:100%;height:860px;border:none;display:block" title="Big Thinking Success Field Guide"></iframe>
+" style="width:100%;height:860px;border:none;display:block"></iframe>
 </div>
 </div>
 </div>
@@ -5229,7 +5229,7 @@ trainingPhases.forEach((ph, pi) => {
 &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-" style="width:100%;height:860px;border:none;display:block" title="Trustworthy Selling New Agent Kit"></iframe>
+" style="width:100%;height:860px;border:none;display:block"></iframe>
 </div>
 </div>
 </div>
@@ -5314,5 +5314,87 @@ html, body {
 .ti-lang-col { display: block !important; }
 .ti-lang-no { border-right: 1px solid rgba(201,168,76,.1) !important; }
 </style>
+<style>
+/* Fix nav hover visibility + cursor */
+#sys-nav a { cursor: pointer !important; color: rgba(255,255,255,.45) !important; }
+#sys-nav a:hover { color: #fff !important; background: rgba(255,255,255,.05) !important; cursor: pointer !important; }
+#sys-nav a.active { color: #c9a84c !important; border-bottom-color: #c9a84c !important; }
+
+/* Fix ALL cursors — crosshair was leaking from somewhere */
+a, button, [onclick], .sub-pill, .nav-pill, .npill, label { cursor: pointer !important; }
+* { cursor: auto; }
+a, button, [onclick], .sub-pill, .ti-gloss-item, .ti-pillar { cursor: pointer !important; }
+input, textarea { cursor: text !important; }
+
+/* Fix topbar switch role button hover */
+#sys-topbar button:hover, #sys-topbar a:hover {
+  background: rgba(201,168,76,.1) !important;
+  color: #c9a84c !important;
+  cursor: pointer !important;
+}
+</style>
+<style>
+/* Fix nav hover + crosshair cursor */
+#sys-nav a { cursor: pointer !important; color: rgba(255,255,255,.45) !important; }
+#sys-nav a:hover { color: #fff !important; background: rgba(255,255,255,.04) !important; cursor: pointer !important; }
+#sys-nav a.active { color: #c9a84c !important; border-bottom-color: #c9a84c !important; }
+a, button, [onclick], .sub-pill, .nav-pill, .ti-gloss-item { cursor: pointer !important; }
+#sys-topbar button:hover, #sys-topbar a:hover { background: rgba(201,168,76,.1) !important; color: #c9a84c !important; }
+</style>
+<style>
+/* Hide redundant section-header title strips */
+.sub-section > .section-header { display: none !important; }
+
+/* Trustworthy Selling — dark theme the entire s-tru section */
+#s-tru { background: transparent !important; }
+#s-tru .sub-section { background: transparent !important; }
+
+/* The Trustworthy Selling competence kit has its own light-bg components */
+#s-tru [style*="background:#f"], 
+#s-tru [style*="background: #f"],
+#s-tru [style*="background:var(--surface)"],
+#s-tru [style*="background:var(--white)"],
+#s-tru [style*="background:white"],
+#s-tru [style*="background:#fff"] {
+  background: #0c1528 !important;
+  color: rgba(255,255,255,.8) !important;
+}
+#s-tru .card { background: #0c1528 !important; border-color: rgba(255,255,255,.08) !important; }
+#s-tru h1, #s-tru h2, #s-tru h3, #s-tru h4 { color: #fff !important; }
+#s-tru p, #s-tru li { color: rgba(255,255,255,.7) !important; }
+#s-tru strong { color: rgba(255,255,255,.9) !important; }
+#s-tru .tab-btn, #s-tru .tab-nav a { background: rgba(255,255,255,.04) !important; color: rgba(255,255,255,.5) !important; border-color: rgba(255,255,255,.08) !important; }
+#s-tru .tab-btn.active, #s-tru .tab-nav a.active { background: rgba(201,168,76,.12) !important; color: #c9a84c !important; border-color: rgba(201,168,76,.3) !important; }
+#s-tru .tab-panel { background: transparent !important; }
+#s-tru .progress-bar { background: rgba(255,255,255,.08) !important; }
+#s-tru .progress-fill { background: #c9a84c !important; }
+#s-tru .badge { background: rgba(201,168,76,.12) !important; color: #c9a84c !important; }
+
+/* Big Thinking field guide dark fix */
+#s-big { background: transparent !important; }
+#s-big .card { background: #0c1528 !important; border-color: rgba(255,255,255,.07) !important; }
+#s-big [style*="background:#f"],
+#s-big [style*="background: #f"],
+#s-big [style*="background:var(--surface)"],
+#s-big [style*="background:var(--white)"],
+#s-big [style*="background:white"],
+#s-big [style*="background:#fff"] {
+  background: #0c1528 !important;
+  color: rgba(255,255,255,.8) !important;
+}
+#s-big h1, #s-big h2, #s-big h3, #s-big h4 { color: #fff !important; }
+#s-big p, #s-big li { color: rgba(255,255,255,.7) !important; }
+
+/* Also kill any tooltip-like hover previews from sub-nav */
+.sub-pill:hover::after, .sub-pill:hover::before { display: none !important; }
+</style>
+
+<!-- DISCLOSURE FOOTER -->
+<div style="background:#040a14;border-top:1px solid rgba(201,168,76,.1);padding:18px 24px;text-align:center;margin-top:60px;">
+  <p style="font-family:'DM Sans',system-ui,sans-serif;font-size:11px;color:rgba(255,255,255,.25);line-height:1.7;max-width:800px;margin:0 auto;">
+    <span style="color:rgba(201,168,76,.4);font-weight:700;letter-spacing:.1em;text-transform:uppercase;">For Training Purposes Only</span><br/>
+    This material is intended exclusively for licensed associates and team members of Hyperion Legacy Builders / Revolution Financial Management. It is not for public distribution. Content is provided for internal education and field training only. Not financial, legal, or investment advice.
+  </p>
+</div>
 </body>
 </html>
