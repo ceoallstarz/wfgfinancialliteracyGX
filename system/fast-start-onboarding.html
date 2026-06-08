@@ -15,7 +15,7 @@
 .chip-new{background:rgba(201,168,76,.15);color:#c9a84c;border-color:rgba(201,168,76,.4);}
 .chip-exp{background:rgba(26,150,100,.15);color:#4ade80;border-color:rgba(26,150,100,.4);}
 #sys-nav{background:#faf8f4;border-bottom:1px solid rgba(201,168,76,.3);overflow-x:auto;position:sticky;top:52px;z-index:99998;}
-#sys-nav-inner{display:flex;max-width:1200px;margin:0 auto;padding:0 16px;}
+#sys-nav-inner{display:flex;max-width:1200px;margin:0 auto;padding:0 16px;justify-content:center;}
 #sys-nav a{display:inline-block;padding:11px 9px;font-size:11px;font-weight:500;color:#4b5563;text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;}
 #sys-nav a:hover{color:#0c1d30;}
 #sys-nav a.active{color:#0c1d30;border-bottom-color:#c9a84c;font-weight:700;}
@@ -4724,6 +4724,8 @@ document.addEventListener('keydown',function(e){
 #s-smd .step-body h4 { color: #fff !important; }
 </style>
 
+</html>
+
 <!-- DISCLOSURE FOOTER -->
 <div style="background:#040a14;border-top:1px solid rgba(201,168,76,.1);padding:18px 24px;text-align:center;margin-top:60px;">
   <p style="font-family:'DM Sans',system-ui,sans-serif;font-size:11px;color:rgba(255,255,255,.25);line-height:1.7;max-width:800px;margin:0 auto;">
@@ -4731,5 +4733,93 @@ document.addEventListener('keydown',function(e){
     This material is intended exclusively for licensed associates and team members of Hyperion Legacy Builders / Revolution Financial Management. It is not for public distribution. Content is provided for internal education and field training only. Not financial, legal, or investment advice.
   </p>
 </div>
+<style>#sys-nav-inner{justify-content:center !important;} #sys-nav a{flex-shrink:0;}</style>
+<style>
+/* ── GX PROGRAM HIGH CONTRAST FIX ── */
+/* Cards */
+.gxp-card { background: #0f1e35 !important; border-color: rgba(201,168,76,.2) !important; }
+.gxp-card h3 { color: #fff !important; font-size: 16px !important; }
+.gxp-card p { color: rgba(255,255,255,.85) !important; }
+.gxp-card-gold { border-left-color: #c9a84c !important; }
+
+/* Steps */
+.gxp-step { border-bottom-color: rgba(255,255,255,.08) !important; }
+.gxp-stepn { color: #c9a84c !important; background: rgba(201,168,76,.15) !important; border-color: rgba(201,168,76,.3) !important; font-weight: 800 !important; }
+.gxp-stept { color: rgba(255,255,255,.9) !important; font-size: 14px !important; }
+.gxp-stept strong { color: #e8c97a !important; }
+
+/* Schedule time-of-day labels */
+.gxp-time { color: #c9a84c !important; font-weight: 700 !important; }
+.gxp-sched-row { color: rgba(255,255,255,.85) !important; border-bottom-color: rgba(255,255,255,.07) !important; }
+
+/* Section headers */
+.gxp-sec-title { color: #fff !important; font-size: 18px !important; font-weight: 700 !important; }
+.gxp-sec-sub { color: rgba(255,255,255,.6) !important; }
+.gxp-label { color: #c9a84c !important; font-weight: 700 !important; }
+
+/* Quote blocks */
+.gxp-quote { background: rgba(201,168,76,.08) !important; border-left-color: #c9a84c !important; }
+.gxp-quote p { color: rgba(255,255,255,.92) !important; font-style: italic; }
+.gxp-quote-attr { color: rgba(201,168,76,.8) !important; }
+
+/* Truth/mindset cards */
+.gxp-truth { background: #0f1e35 !important; border-color: rgba(255,255,255,.08) !important; }
+.gxp-truth p { color: rgba(255,255,255,.85) !important; }
+.gxp-truth strong { color: #e8c97a !important; }
+.gxp-truth-n { color: #c9a84c !important; font-weight: 800 !important; font-size: 28px !important; }
+
+/* Metric cards in GX */
+.gxp-metric { background: #0f1e35 !important; border-color: rgba(201,168,76,.2) !important; }
+.gxp-metric .num { color: #c9a84c !important; }
+.gxp-metric .lbl { color: rgba(255,255,255,.7) !important; }
+
+/* Warning/caution blocks */
+.gxp-warn { background: rgba(192,57,43,.1) !important; border-left-color: #f87171 !important; color: rgba(255,255,255,.85) !important; }
+.gxp-warn strong { color: #fca5a5 !important; }
+
+/* Sub-tabs */
+.gxp-stab { color: rgba(255,255,255,.55) !important; border-color: rgba(255,255,255,.12) !important; background: rgba(255,255,255,.04) !important; }
+.gxp-stab.active { background: rgba(201,168,76,.15) !important; color: #c9a84c !important; border-color: rgba(201,168,76,.4) !important; }
+
+/* Person cards (Alicia/Lillian) */
+.gxp-person { background: #0f1e35 !important; border-color: rgba(255,255,255,.08) !important; }
+.gxp-pname { color: #fff !important; font-weight: 700 !important; }
+.gxp-ptitle { color: rgba(255,255,255,.55) !important; }
+.gxp-pbody p { color: rgba(255,255,255,.82) !important; }
+
+/* Month phase cards */
+.gxp-month { background: #0f1e35 !important; border-color: rgba(201,168,76,.2) !important; }
+.gxp-month-title { color: #c9a84c !important; font-weight: 700 !important; }
+.gxp-month-body p { color: rgba(255,255,255,.85) !important; }
+.gxp-month-body strong { color: #e8c97a !important; }
+
+/* Phase header banners */
+.gxp-phase-header { background: rgba(12,21,40,.8) !important; border-color: rgba(201,168,76,.2) !important; }
+.gxp-phase-header h3 { color: #fff !important; }
+
+/* Daily schedule */
+[class*="gxp-time"] { color: #c9a84c !important; font-weight: 700 !important; }
+[class*="Morning"], [class*="Noon"], [class*="Afternoon"], [class*="Evening"] { color: #c9a84c !important; }
+
+/* Income bars */
+.gxp-income-label { color: rgba(255,255,255,.85) !important; }
+.gxp-income-val { color: #c9a84c !important; font-weight: 700 !important; }
+
+/* General text boost inside GX section */
+#s-gx p { color: rgba(255,255,255,.82) !important; }
+#s-gx li { color: rgba(255,255,255,.82) !important; }
+#s-gx h3, #s-gx h4 { color: #fff !important; }
+#s-gx strong { color: rgba(255,255,255,.95) !important; }
+#s-gx .card { background: #0f1e35 !important; border-color: rgba(255,255,255,.08) !important; }
+
+/* Morning/Noon/Afternoon/Evening time badges */
+.gxp-time-badge, [class*="time-badge"] { 
+  background: rgba(201,168,76,.15) !important; 
+  color: #e8c97a !important; 
+  font-weight: 700 !important; 
+  padding: 2px 10px !important;
+  border-radius: 10px !important;
+}
+</style>
 </body>
 </html>

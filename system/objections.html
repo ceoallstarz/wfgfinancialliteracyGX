@@ -16,7 +16,7 @@ html,body{margin:0;padding:0;overflow-y:auto!important;overflow-x:hidden;height:
 .chip-new{background:rgba(201,168,76,.15);color:#c9a84c;border-color:rgba(201,168,76,.4);}
 .chip-exp{background:rgba(26,150,100,.15);color:#4ade80;border-color:rgba(26,150,100,.4);}
 #sys-nav{background:#faf8f4;border-bottom:1px solid rgba(201,168,76,.3);overflow-x:auto;position:sticky;top:52px;z-index:99998;}
-#sys-nav-inner{display:flex;max-width:1200px;margin:0 auto;padding:0 16px;}
+#sys-nav-inner{display:flex;max-width:1200px;margin:0 auto;padding:0 16px;justify-content:center;}
 #sys-nav a{display:inline-block;padding:11px 9px;font-size:11px;font-weight:500;color:#4b5563;text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;}
 #sys-nav a:hover{color:#0c1d30;}
 #sys-nav a.active{color:#0c1d30;border-bottom-color:#c9a84c;font-weight:700;}
@@ -3332,6 +3332,8 @@ document.addEventListener('keydown',function(e){
 [style*="background:var(--navy-subtle)"] { background: rgba(201,168,76,.1) !important; }
 </style>
 
+</html>
+
 <!-- DISCLOSURE FOOTER -->
 <div style="background:#040a14;border-top:1px solid rgba(201,168,76,.1);padding:18px 24px;text-align:center;margin-top:60px;">
   <p style="font-family:'DM Sans',system-ui,sans-serif;font-size:11px;color:rgba(255,255,255,.25);line-height:1.7;max-width:800px;margin:0 auto;">
@@ -3339,5 +3341,109 @@ document.addEventListener('keydown',function(e){
     This material is intended exclusively for licensed associates and team members of Hyperion Legacy Builders / Revolution Financial Management. It is not for public distribution. Content is provided for internal education and field training only. Not financial, legal, or investment advice.
   </p>
 </div>
+<style>#sys-nav-inner{justify-content:center !important;} #sys-nav a{flex-shrink:0;}</style>
+<style>
+/* ── OBJECTIONS PAGE HIGH CONTRAST FIX ── */
+
+/* Reddit module — Their Tactic / Your Truth cards */
+.card { background: #0f1e35 !important; border-color: rgba(255,255,255,.08) !important; }
+.card h3, .card h4 { color: #fff !important; }
+.card p { color: rgba(255,255,255,.85) !important; }
+.card strong { color: rgba(255,255,255,.95) !important; }
+
+/* Tactic / Truth badges */
+.badge-red   { background: rgba(192,57,43,.25) !important; color: #fca5a5 !important; font-weight: 700 !important; }
+.badge-green { background: rgba(26,100,68,.3)  !important; color: #6ee7b7 !important; font-weight: 700 !important; }
+.badge-navy  { background: rgba(255,255,255,.1)  !important; color: rgba(255,255,255,.85) !important; font-weight: 700 !important; }
+.badge-gold  { background: rgba(201,168,76,.2)  !important; color: #e8c97a !important; font-weight: 700 !important; }
+
+/* Objection accordion */
+.obj-card { background: #0f1e35 !important; border-color: rgba(255,255,255,.08) !important; }
+.obj-hdr { background: #0f1e35 !important; color: rgba(255,255,255,.9) !important; }
+.obj-hdr:hover { background: rgba(201,168,76,.08) !important; }
+.obj-hdr strong { color: rgba(255,255,255,.95) !important; }
+.obj-bdy { background: #0a1020 !important; color: rgba(255,255,255,.8) !important; border-top-color: rgba(255,255,255,.07) !important; }
+.obj-bdy.open { display: block !important; }
+.rm-chevron { color: rgba(201,168,76,.7) !important; }
+
+/* Trustworthy Selling / RM module tabs */
+.rm-tab { background: rgba(255,255,255,.05) !important; color: rgba(255,255,255,.55) !important; border-color: rgba(255,255,255,.1) !important; }
+.rm-tab.active { background: rgba(201,168,76,.15) !important; color: #c9a84c !important; border-color: rgba(201,168,76,.35) !important; }
+.rm-tab:hover { background: rgba(255,255,255,.08) !important; color: rgba(255,255,255,.8) !important; }
+
+/* Panel headers and content */
+.rm-panel h2 { color: #fff !important; font-size: 18px !important; font-weight: 700 !important; }
+.rm-panel h3 { color: #e8c97a !important; font-size: 15px !important; font-weight: 600 !important; }
+.rm-panel p  { color: rgba(255,255,255,.82) !important; line-height: 1.7 !important; }
+
+/* Script blocks inside RM */
+.script-block { background: rgba(12,29,48,.6) !important; border-left-color: #c9a84c !important; color: rgba(255,255,255,.88) !important; }
+.script-block.alt { border-left-color: #6ee7b7 !important; }
+.script-block.warn { border-left-color: #f87171 !important; }
+
+/* Step rows */
+.rm-step-row .rm-step-num { background: #c9a84c !important; color: #080f1e !important; font-weight: 800 !important; }
+.rm-step-body { color: rgba(255,255,255,.85) !important; }
+.rm-step-body strong { color: #fff !important; }
+
+/* Field checklist */
+.check-circle { border-color: rgba(255,255,255,.25) !important; background: rgba(255,255,255,.05) !important; }
+.check-circle.done { background: #c9a84c !important; border-color: #c9a84c !important; color: #080f1e !important; }
+.checklist-item { color: rgba(255,255,255,.85) !important; }
+
+/* Drill boxes */
+.drill-box { background: rgba(12,29,48,.6) !important; border-color: rgba(255,255,255,.08) !important; }
+.drill-prompt { color: #e8c97a !important; font-weight: 700 !important; }
+.drill-input { background: rgba(255,255,255,.06) !important; border-color: rgba(255,255,255,.12) !important; color: #fff !important; }
+
+/* Reveal content */
+.reveal-content { background: rgba(12,29,48,.5) !important; }
+.reveal-content p { color: rgba(255,255,255,.85) !important; }
+
+/* Tags */
+.rm-tag-ts     { background: rgba(100,80,180,.25) !important; color: #c4b5fd !important; }
+.rm-tag-client { background: rgba(12,68,124,.3) !important; color: #93c5fd !important; }
+.rm-tag-recruit{ background: rgba(8,80,65,.3) !important; color: #6ee7b7 !important; }
+
+/* Section headings */
+h2 { color: #fff !important; }
+h3 { color: rgba(255,255,255,.95) !important; }
+
+/* General page text boost */
+p { color: rgba(255,255,255,.82) !important; }
+strong { color: rgba(255,255,255,.95) !important; }
+li { color: rgba(255,255,255,.82) !important; }
+</style>
+<style>
+/* ── rm-card NUCLEAR FIX ── */
+.rm-card {
+  background: #0f1e35 !important;
+  border: 1px solid rgba(201,168,76,.2) !important;
+  border-radius: 10px !important;
+}
+.rm-card p {
+  color: rgba(255,255,255,.88) !important;
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+  margin: 0 !important;
+}
+.rm-card h3 { color: #fff !important; margin-bottom: 8px !important; }
+.rm-card h4 { color: #e8c97a !important; margin-bottom: 6px !important; }
+.rm-card strong { color: #fff !important; }
+.rm-card .badge-red   { background: rgba(192,57,43,.3) !important; color: #fca5a5 !important; }
+.rm-card .badge-green { background: rgba(26,100,68,.3) !important; color: #6ee7b7 !important; }
+/* rm-wrap all text */
+.rm-wrap, .rm-wrap * { color: rgba(255,255,255,.85) !important; }
+.rm-wrap h2 { color: #fff !important; font-size: 18px !important; font-weight: 700 !important; }
+.rm-wrap h3 { color: #e8c97a !important; }
+.rm-wrap p  { color: rgba(255,255,255,.85) !important; }
+.rm-wrap .badge-red   { background: rgba(192,57,43,.3) !important; color: #fca5a5 !important; }
+.rm-wrap .badge-green { background: rgba(26,100,68,.3) !important; color: #6ee7b7 !important; }
+.rm-wrap .badge-navy  { background: rgba(255,255,255,.1) !important; color: rgba(255,255,255,.8) !important; }
+.rm-wrap .badge-gold  { background: rgba(201,168,76,.2) !important; color: #e8c97a !important; }
+.rm-wrap .script-block { background: rgba(12,29,48,.8) !important; border-left-color: #c9a84c !important; color: rgba(255,255,255,.9) !important; }
+.rm-wrap .rm-divider { background: rgba(255,255,255,.08) !important; }
+.rm-grid2 { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important; gap: 12px !important; }
+</style>
 </body>
 </html>

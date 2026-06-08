@@ -15,7 +15,7 @@ html,body{margin:0;padding:0;overflow-y:auto!important;height:auto!important;bac
 .chip-new{background:rgba(201,168,76,.15);color:#c9a84c;border-color:rgba(201,168,76,.4);}
 .chip-exp{background:rgba(26,150,100,.15);color:#4ade80;border-color:rgba(26,150,100,.4);}
 #sys-nav{background:#faf8f4;border-bottom:1px solid rgba(201,168,76,.3);overflow-x:auto;position:sticky;top:52px;z-index:99998;}
-#sys-nav-inner{display:flex;max-width:1200px;margin:0 auto;padding:0 16px;}
+#sys-nav-inner{display:flex;max-width:1200px;margin:0 auto;padding:0 16px;justify-content:center;}
 #sys-nav a{display:inline-block;padding:11px 9px;font-size:11px;font-weight:500;color:#4b5563;text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;}
 #sys-nav a.active{color:#0c1d30;border-bottom-color:#c9a84c;font-weight:700;}
 #sys-content{max-width:900px;margin:0 auto;padding:20px 16px 100px;}
@@ -3711,15 +3711,8 @@ document.addEventListener('keydown',function(e){
 .hcg-bar { background: #0c1d30 !important; border-top-color: rgba(255,255,255,.08) !important; }
 </style>
 
-<!-- DISCLOSURE FOOTER -->
-<div style="background:#040a14;border-top:1px solid rgba(201,168,76,.1);padding:18px 24px;text-align:center;margin-top:60px;">
-  <p style="font-family:'DM Sans',system-ui,sans-serif;font-size:11px;color:rgba(255,255,255,.25);line-height:1.7;max-width:800px;margin:0 auto;">
-    <span style="color:rgba(201,168,76,.4);font-weight:700;letter-spacing:.1em;text-transform:uppercase;">For Training Purposes Only</span><br/>
-    This material is intended exclusively for licensed associates and team members of Hyperion Legacy Builders / Revolution Financial Management. It is not for public distribution. Content is provided for internal education and field training only. Not financial, legal, or investment advice.
-  </p>
-</div>
-</body>
-</htmlfunction csToggleCard(header) {
+<script>
+function csToggleCard(header) {
     const body = header.nextElementSibling;
     const chevron = header.querySelector('.chevron');
     const isOpen = body.classList.contains('open');
@@ -3746,4 +3739,15 @@ function csSetType(type) {
   }
 
 // Init
->
+</script>
+
+<!-- DISCLOSURE FOOTER -->
+<div style="background:#040a14;border-top:1px solid rgba(201,168,76,.1);padding:18px 24px;text-align:center;margin-top:60px;">
+  <p style="font-family:'DM Sans',system-ui,sans-serif;font-size:11px;color:rgba(255,255,255,.25);line-height:1.7;max-width:800px;margin:0 auto;">
+    <span style="color:rgba(201,168,76,.4);font-weight:700;letter-spacing:.1em;text-transform:uppercase;">For Training Purposes Only</span><br/>
+    This material is intended exclusively for licensed associates and team members of Hyperion Legacy Builders / Revolution Financial Management. It is not for public distribution. Content is provided for internal education and field training only. Not financial, legal, or investment advice.
+  </p>
+</div>
+<style>#sys-nav-inner{justify-content:center !important;} #sys-nav a{flex-shrink:0;}</style>
+</body>
+</html>
