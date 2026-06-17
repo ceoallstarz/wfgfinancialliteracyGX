@@ -4117,36 +4117,42 @@ strong { color: #1a2332 !important; }
 <div class="tpanel exp-only" id="tp-ltc">
 <div class="tab-panel" id="cs-ltc">
 
-<div class="section-header" style="margin-bottom:20px">
-  <div>
-    <div class="eyebrow">Healthcare Professional Outreach</div>
-    <h2>LTC Outreach Console</h2>
-    <p>A live call console for reaching out to your OR network about long-term care planning — step-by-step script, field reference, and a daily mission log, all in one screen.</p>
-  </div>
+<div class="quick-key" style="margin-bottom:16px">
+  <div class="qk-icon">🩺</div>
+  <div class="qk-text"><strong>LTC Outreach Console — Healthcare Professional Outreach</strong> A live call console for reaching out to your OR network about long-term care planning — step-by-step script, field reference, and a daily mission log, all in one screen.</div>
 </div>
 
-<div style="text-align:center;padding:40px;background:#f9f7f4;border-radius:12px;border:1px solid rgba(12,29,48,.1);margin-bottom:24px">
-  <p style="font-size:16px;margin-bottom:8px;color:#0c1d30;font-weight:600">🩺 LTC Outreach Console</p>
-  <p style="font-size:13px;color:#6b7280;margin-bottom:20px">Opens full-screen. Call timer, step-by-step script, objections, strategy comparisons, and a daily activity log. Press ESC or click ✕ Close to exit.</p>
-  <button onclick="openLTCConsole()" style="background:#0c1d30;color:#c9a84c;border:none;padding:12px 32px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">Launch Console →</button>
-</div>
-
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:8px">
-  <div style="background:#fff;border:1px solid #e2e6ea;border-radius:10px;padding:14px 16px">
-    <div style="font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8a6a1e;margin-bottom:4px">📞 7-Step Flow</div>
-    <div style="font-size:12.5px;color:#6b7280;line-height:1.5">Opening → Credibility Bridge → Discovery → Awareness Gap → Book the Sit-Down → The Sit-Down → Referral Ask</div>
+<div class="script-card">
+  <div class="script-card-header" style="cursor:default;pointer-events:none;">
+    <div class="card-icon icon-navy">🩺</div>
+    <div class="script-card-meta">
+      <div class="script-card-label">Live Call Console · 7 Steps · My Call or Team Call</div>
+      <div class="script-card-title">LTC Outreach Console</div>
+    </div>
   </div>
-  <div style="background:#fff;border:1px solid #e2e6ea;border-radius:10px;padding:14px 16px">
-    <div style="font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8a6a1e;margin-bottom:4px">🎯 Personal vs Team Mode</div>
-    <div style="font-size:12.5px;color:#6b7280;line-height:1.5">Toggle whether you're leading the call yourself, or warming up a lead for Glenn / his wife to take the sit-down.</div>
-  </div>
-  <div style="background:#fff;border:1px solid #e2e6ea;border-radius:10px;padding:14px 16px">
-    <div style="font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8a6a1e;margin-bottom:4px">📊 Field Reference</div>
-    <div style="font-size:12.5px;color:#6b7280;line-height:1.5">Quick facts, CareMatters II vs ForeCare comparison, objection handling, a forward text for referrals, and target priority list.</div>
-  </div>
-  <div style="background:#fff;border:1px solid #e2e6ea;border-radius:10px;padding:14px 16px">
-    <div style="font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8a6a1e;margin-bottom:4px">📈 Daily Mission Log</div>
-    <div style="font-size:12.5px;color:#6b7280;line-height:1.5">Track dials, conversations, sit-downs booked, and referrals against daily goals.</div>
+  <div style="padding:14px 18px 18px;border-top:1px solid #f0f0f0;">
+    <p style="font-size:13px;color:#6b7280;margin:0 0 14px">Opens full-screen. Call timer, step-by-step scripts, objections, CareMatters II vs ForeCare comparison, and a daily activity log. Press ESC or click ✕ Close to exit.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-bottom:20px">
+      <div style="background:#f9f7f4;border-radius:8px;padding:12px 14px">
+        <div style="font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8a6a1e;margin-bottom:4px">📞 7-Step Flow</div>
+        <div style="font-size:12.5px;color:#6b7280;line-height:1.5">Opening → Credibility Bridge → Discovery → Awareness Gap → Book Sit-Down → Sit-Down → Referral Ask</div>
+      </div>
+      <div style="background:#f9f7f4;border-radius:8px;padding:12px 14px">
+        <div style="font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8a6a1e;margin-bottom:4px">🎯 My Call / Team Call</div>
+        <div style="font-size:12.5px;color:#6b7280;line-height:1.5">Toggle between leading the call yourself or warming up a lead for Glenn / his wife to take the sit-down.</div>
+      </div>
+      <div style="background:#f9f7f4;border-radius:8px;padding:12px 14px">
+        <div style="font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8a6a1e;margin-bottom:4px">📊 Field Reference</div>
+        <div style="font-size:12.5px;color:#6b7280;line-height:1.5">Quick facts, CareMatters II vs ForeCare, objections, a forward text for referrals, and target priority list.</div>
+      </div>
+      <div style="background:#f9f7f4;border-radius:8px;padding:12px 14px">
+        <div style="font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8a6a1e;margin-bottom:4px">📈 Daily Mission Log</div>
+        <div style="font-size:12.5px;color:#6b7280;line-height:1.5">Track dials, conversations, sit-downs booked, and referrals against daily goals.</div>
+      </div>
+    </div>
+    <div style="text-align:center">
+      <button onclick="openLTCConsole()" style="background:#1a2a42;color:#c9a84c;border:none;padding:13px 36px;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;letter-spacing:.02em;box-shadow:0 4px 14px rgba(26,42,66,.25);transition:background .15s;" onmouseover="this.style.background='#0f1c30'" onmouseout="this.style.background='#1a2a42'">🩺 Launch LTC Outreach Console →</button>
+    </div>
   </div>
 </div>
 

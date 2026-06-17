@@ -3383,6 +3383,47 @@ strong { color: #1a2332 !important; }
 #sw-box { background: #ffffff !important; border-color: #e2e6ea !important; }
 #sw-box h3, #sw-box p { color: #1a2a42 !important; }
 #sw-input { background: #ffffff !important; border-color: #e2e6ea !important; color: #1a2332 !important; }
+
+/* ── TOP-LEVEL OBJECTION BANK (top-obj-wrap) ── */
+.top-obj-wrap .obj-jump { display:flex; gap:10px; flex-wrap:wrap; margin:14px 0 22px; }
+.top-obj-wrap .obj-jump a {
+  flex:1; min-width:220px; text-decoration:none; display:flex; align-items:center; gap:12px;
+  border:1px solid #e2e6ea; border-radius:10px; padding:13px 16px; background:#ffffff;
+  transition:all .15s; color:inherit;
+}
+.top-obj-wrap .obj-jump a:hover { border-color:#c9a84c; box-shadow:0 4px 14px rgba(201,168,76,.14); transform:translateY(-1px); }
+.top-obj-wrap .obj-jump .oj-ico { font-size:20px; flex-shrink:0; }
+.top-obj-wrap .obj-jump .oj-title { font-size:13.5px; font-weight:800; color:#1a2a42; display:block; }
+.top-obj-wrap .obj-jump .oj-count { font-size:11.5px; color:#9ca3af; display:block; }
+
+.top-obj-wrap .obj-section-head {
+  display:flex; align-items:center; gap:12px; padding:14px 16px; border-radius:10px;
+  margin:32px 0 14px;
+}
+.top-obj-wrap .obj-section-icon {
+  width:38px; height:38px; border-radius:10px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:18px;
+}
+.top-obj-wrap .obj-section-title { font-size:15px; font-weight:800; color:#1a2a42; display:block; }
+.top-obj-wrap .obj-section-sub { font-size:12px; color:#6b7280; margin-top:2px; display:block; }
+.top-obj-wrap .obj-section-head.cat-client { background:rgba(26,42,66,.05); }
+.top-obj-wrap .obj-section-head.cat-client .obj-section-icon { background:rgba(26,42,66,.10); color:#1a2a42; }
+.top-obj-wrap .obj-section-head.cat-recruit { background:rgba(124,58,237,.06); }
+.top-obj-wrap .obj-section-head.cat-recruit .obj-section-icon { background:rgba(124,58,237,.12); color:#7c3aed; }
+
+.top-obj-wrap .obj-card { border:1px solid #e2e6ea; border-radius:10px; margin:.85rem 0; overflow:hidden; background:#fff; }
+.top-obj-wrap .obj-hdr { padding:.9rem 1.1rem; cursor:pointer; display:flex; justify-content:space-between; align-items:center; background:#ffffff; transition:background .12s; }
+.top-obj-wrap .obj-hdr:hover { background:#f9f7f4; }
+.top-obj-wrap .obj-bdy { display:none; padding:1.1rem; border-top:1px solid #e2e6ea; background:#f8f9fa; }
+.top-obj-wrap .obj-bdy.open { display:block; }
+.top-obj-wrap .rm-chevron { transition:transform .2s; font-size:14px; color:#c9a84c; }
+.top-obj-wrap .rm-chevron.open { transform:rotate(180deg); }
+.top-obj-wrap .script-block { background:#fef9ec !important; border-left:3px solid #c9a84c; border-radius:0 8px 8px 0; padding:1rem 1.25rem; margin:1rem 0; font-size:13.5px; line-height:1.75; color:#1a2332; }
+.top-obj-wrap .coach-note { background:#f0f7ec; border-left:3px solid #639922; border-radius:0 8px 8px 0; padding:.75rem 1rem; margin:.75rem 0; font-size:13px; color:#2d5010; }
+.top-obj-wrap .gold-note { background:#fef9ec; border-left:3px solid #c9a84c; border-radius:0 8px 8px 0; padding:.75rem 1rem; margin:.75rem 0; font-size:13px; color:#8a6a1e; }
+.top-obj-wrap .warn-note { background:#fff0f0; border-left:3px solid #e24b4a; border-radius:0 8px 8px 0; padding:.75rem 1rem; margin:.75rem 0; font-size:13px; color:#7a1a1a; }
+.top-obj-wrap .badge-gray { background:#f3f4f6; color:#555; border:1px solid #e2e6ea; border-radius:5px; font-size:11px; padding:3px 9px; font-weight:700; display:inline-block; font-family:inherit; }
+
 </style>
 </head>
 <body>
@@ -3411,7 +3452,322 @@ strong { color: #1a2332 !important; }
 <h2>Objection Handling</h2>
 <p>Every objection is a question wrapped in fear or uncertainty. Validate first, redirect with curiosity — never pressure.</p>
 </div>
-<div id="obj-list"></div>
+<div id="obj-list" class="top-obj-wrap">
+<div class="obj-jump">
+  <a href="#obj-recruit"><span class="oj-ico">🤝</span><span><span class="oj-title">Recruiting-Side Objections</span><br/><span class="oj-count">12 objections — business opportunity concerns</span></span></a>
+  <a href="#obj-client"><span class="oj-ico">💼</span><span><span class="oj-title">Client-Side Objections</span><br/><span class="oj-count">12 objections — financial plan concerns</span></span></a>
+</div>
+
+<div class="obj-section-head cat-recruit" id="obj-recruit">
+  <div class="obj-section-icon">🤝</div>
+  <div>
+    <div class="obj-section-title">Recruiting-Side Objections</div>
+    <div class="obj-section-sub">Raised by someone considering the business opportunity itself</div>
+  </div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-purple" style="margin-right:8px">MLM</span><strong style="font-size:14px">"Isn't WFG just a pyramid scheme / MLM?"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">Most common. Stay calm — this is the easiest one to defuse with facts.</div>
+<div class="script-block">"That's one of the most common things I hear — and I totally get why people say it. Let me be direct with you. RFM/WFG is licensed in all 50 states, registered with FINRA, and regulated by state insurance departments. Our parent company is Aegon, nearly 200 years old, managing hundreds of billions of dollars in assets globally.<br/><br/>Now — what does MLM actually mean? It means agents can build teams and earn overrides. You know what else works that way? Keller Williams. State Farm. Every major insurance distribution company in the country. The model isn't the problem. Bad advice from bad agents is the problem — and that exists in every industry.<br/><br/>What specifically made you think pyramid when you heard about us?"</div>
+<div class="coach-note"><strong>Coaching note:</strong> End with a question. Get them talking. Their answer tells you exactly where the real fear is.</div>
+<div class="warn-note"><strong>Do not say:</strong> "We're not an MLM" as your only response. That sounds defensive and weak. Name the model, define it correctly, and compare it to respected companies.</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-purple" style="margin-right:8px">Cost</span><strong style="font-size:14px">"What does it cost to get licensed / get started / too expensive"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">Be upfront and specific — vague answers create suspicion. Use the actual numbers from the Licensing tab.</div>
+<div class="script-block">"Good question — I'd rather be upfront. All-in, getting licensed runs around $700 — background check, pre-licensing course, state exam, fingerprints, and license fee. You don't pay it all at once, and typically helping your first family puts about $1,000 back in your pocket — so you're already ahead before the end of your first month.<br/><br/>Compare that to any other business — franchise, storefront, food truck — we're talking hundreds versus tens of thousands. And once you're operating as an agency owner, everyday expenses can become legal business write-offs, which means potentially saving thousands a year in taxes you'd be paying anyway.<br/><br/>So it's less 'can I afford $700' and more 'can helping one family pay it back?' — and it does, every time. Does that make sense?"</div>
+<div class="coach-note"><strong>Coaching note:</strong> Always pair the dollar number with a comparison to other business startup costs — context makes a small number feel even smaller. See the Licensing tab for the exact line-item breakdown.</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-purple" style="margin-right:8px">Time</span><strong style="font-size:14px">"I don't have time for a side business"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">Usually really means "I don't see how this fits into my life." Show the part-time on-ramp — don't argue about their schedule.</div>
+<div class="script-block">"I hear that constantly, and honestly that's exactly why this is built the way it is — most people start part-time, 8-10 hours a week, around their existing job. Nobody's asking you to quit anything or rearrange your whole life on day one.<br/><br/>The real question is — if there was a way to build something on the side, on your schedule, using time you already have, would that be worth exploring? Because here's what I'd ask back: if nothing changes, what does your schedule look like in five years versus what you actually want it to look like? Sometimes 'no time' is really 'I haven't seen a reason yet to make time.' Is it the time, or is it that you're not sure this is worth your time?"</div>
+<div class="coach-note"><strong>Coaching note:</strong> End by separating "time" from "value" — almost everyone makes time for things they believe in. That's the real conversation.</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-purple" style="margin-right:8px">Online</span><strong style="font-size:14px">"I just Google WFG and all I see is negative / scam results"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">The research objection. This is actually a buying signal — they're doing due diligence, not shutting you out.</div>
+<div class="script-block">"I love that you're doing your research — that tells me you're a serious person and you take this seriously. Let me make that research more useful, because if you just Google us, you're going to end up on Reddit or a forum, and honestly, anyone can post anything there. We have 95,000 licensed agents, and not every experience is the same.<br/><br/>Here's where I'd actually point you. Pull up bbb.org — Better Business Bureau — and search World Financial Group, Johns Creek, GA. A+ rating. That's not bought, that's earned. Then bookmark aegon.com — nearly 200 years old, managing hundreds of billions of dollars globally. Also, tfaconnect.com — that's Transamerica, one of our main carriers. And worldfinancialgroup.com — our brokerage directly.<br/><br/>What I'd love to do is set up a second conversation — and I want you to come in ready to interview us. Bring every question, everything that concerned you, anything you saw. We'll go through it all. And then if you feel good, I'll have a few questions to see if it's a mutual fit. Sound fair?"</div>
+<div class="coach-note"><strong>Coaching note:</strong> Give them the exact URLs. Specificity builds credibility. Vague reassurances don't. Names and links do.</div>
+<div class="gold-note"><strong>Seasoned closer version:</strong> "Let me ask you something. When you research a surgeon before a procedure, do you read the one-star Yelp reviews and cancel the surgery — or do you check their board certifications and hospital affiliations? Google isn't a financial regulator. The BBB is."</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-purple" style="margin-right:8px">Sales</span><strong style="font-size:14px">"I'm not a salesperson, I'm bad at sales"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">A huge, common fear — especially with professionals who pride themselves on NOT being "salesy." Reframe away from selling entirely.</div>
+<div class="script-block">"Honestly, that's actually a good sign — because this isn't built around traditional sales. If anything, the people who struggle most are the ones who come in thinking they need to convince people of something. What actually works is the opposite — sharing something you believe in with people you already know and care about, and letting them decide for themselves.<br/><br/>Think about how you talk about a great doctor, a good restaurant, or a show you binged — you're not 'selling' it, you're just sharing something you think is valuable. That's really all this is. And on top of that, you're trained — you're never doing this alone, especially early on. What part feels more like the sticking point — talking to people, or worrying about being pushy?"</div>
+<div class="coach-note"><strong>Coaching note:</strong> "You're not selling, you're sharing" is the core reframe. Use the "great restaurant" analogy — it's relatable and instantly defuses the fear.</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-purple" style="margin-right:8px">Business</span><strong style="font-size:14px">"You just want me to recruit / you profit from bringing me in"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">This one stings because there's partial truth in it. Lean into the truth and then show the bigger picture.</div>
+<div class="script-block">"You're right that I earn an override if I bring someone on — I'm not going to pretend otherwise. But here's the reality: I earn far more if you stay, succeed, and build a team of your own. That only happens if you're actually helped. My incentive is your success, not your signature.<br/><br/>Every business operates this way. Your manager at work earns more when their team performs. A real estate broker earns when their agents close. The structure isn't the problem — the intention behind it is. And my intention is simple: I want to find people who are genuinely a fit for this and show them what's possible. If that's not you, I'll tell you. I don't want someone who isn't fully bought in — they make everyone's life harder.<br/><br/>So let me ask you honestly — what would need to be true for you to feel like this was worth one real conversation?"</div>
+<div class="coach-note"><strong>Coaching note:</strong> Ending with "I don't want someone who isn't fully bought in" is a power move. It reframes you from the one chasing to the one being selective. Use it with confidence.</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-purple" style="margin-right:8px">Network</span><strong style="font-size:14px">"My network is small, I don't know wealthy people"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">This isn't actually about wealth — it's about access to people who'll take your call. Reframe away from "wealthy" entirely.</div>
+<div class="script-block">"That's actually one of the most common misconceptions about this business — it's not about knowing wealthy people. Everyone needs this, regardless of income — protection, planning, a path forward. What actually matters more is trust, not net worth.<br/><br/>Think about it — do you know at least 10 people who'd take your call if you said 'hey, I'm doing something new, can I get your take'? That's it. That's the starting point. Most of the biggest builders in this business didn't start with wealthy networks — they started with people who trusted them, and it grew from there. So it's less 'who do you know that's rich' and more 'who do you know, period.' Does that change how you're thinking about it?"</div>
+<div class="coach-note"><strong>Coaching note:</strong> Redirect "wealthy" to "trust." This single reframe removes the most common self-disqualifying belief people have.</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-purple" style="margin-right:8px">History</span><strong style="font-size:14px">"I tried something like this before (MLM) and it didn't work"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">Validate the past experience completely — don't get defensive about "this is different." Ask what specifically went wrong first.</div>
+<div class="script-block">"I appreciate you sharing that — and I'm not going to tell you 'this one's different' right off the bat, because I get why that sounds like what everyone says. Can I ask, though — what was it about that experience that didn't work for you? Was it the product, the people, the income model, or just timing in your life? <em>[Listen]</em><br/><br/>Okay, that's really helpful — because what you're describing is actually a really common pattern, and it's worth understanding why. A lot of those models rely on you buying and reselling inventory, or recruiting being the only way to make money. This is licensed financial services — regulated, real products people actually need regardless of the economy. I'm not asking you to trust me on that — I'm asking if it'd be worth 20 minutes to see how it's actually structured, so you can judge for yourself."</div>
+<div class="coach-note"><strong>Coaching note:</strong> Diagnose before you defend. Their specific bad experience tells you exactly which fear to address — don't guess.</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-purple" style="margin-right:8px">Social</span><strong style="font-size:14px">"My spouse / friends think this is a scam"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">This is about social risk, not the business itself. Normalize the skepticism and give them an easy way to bring people along.</div>
+<div class="script-block">"That's one of the most common things I hear — and I totally get why people say it. Let me be direct with you. RFM/WFG is licensed in all 50 states, registered with FINRA, and regulated by state insurance departments. Our parent company is Aegon, nearly 200 years old, managing hundreds of billions of dollars in assets globally.<br/><br/>Now — what does MLM actually mean? It means agents can build teams and earn overrides. You know what else works that way? Keller Williams. State Farm. Every major insurance distribution company in the country. The model isn't the problem. Bad advice from bad agents is the problem — and that exists in every industry.<br/><br/>What specifically made you think pyramid when you heard about us?"</div>
+<div class="coach-note"><strong>Coaching note:</strong> Never let someone become the messenger for something they don't fully understand yet. Get the skeptic directly into a room or call.</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-purple" style="margin-right:8px">Timeline</span><strong style="font-size:14px">"How long until I'm actually making money"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">Be honest — don't oversell speed, but anchor to the GX 6-month roadmap so it doesn't feel vague.</div>
+<div class="script-block">"Honestly, I'd rather give you a real answer than a hyped one. It depends on effort and consistency, like anything else — but here's the framework: most people who follow the system, get licensed, and actually run the activity see their first real movement within their first one to two months, and the bigger income builds over the first six months as you build a team.<br/><br/>It's not a get-rich-quick thing, and if anyone tells you it is, that's a red flag. What it is is a real business with a real system, and the people who stick to the system tend to see results faster than the people who don't. Would it help to actually see the month-by-month roadmap, so you know exactly what 'on track' looks like?"</div>
+<div class="coach-note"><strong>Coaching note:</strong> Anchor to the actual GX 6-Month Plan in the GX Program tab — specificity beats hype every time, and it sets honest expectations from day one.</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-purple" style="margin-right:8px">Business?</span><strong style="font-size:14px">"Is this really a business, or just insurance sales with a fancy name"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">A legitimacy/identity objection. Lean into ownership, equity, and the team-building model — not just "selling insurance."</div>
+<div class="script-block">"Fair question — and yes, licensed insurance and financial products are part of how income is generated, that's true of any financial professional. But here's the difference: when you build this, you're not just making sales — you're building a business you own. You can build a team, create overrides, and eventually create income that doesn't depend only on your own activity.<br/><br/>Compare that to a traditional sales job — when you stop working, the income stops. Here, the goal is to build something that can outlast your day-to-day involvement. So it's less 'is this insurance sales' and more 'is insurance sales the vehicle, and ownership the destination.' Does that distinction make sense?"</div>
+<div class="coach-note"><strong>Coaching note:</strong> "Vehicle vs. destination" is a strong reframe — the product is the vehicle, business ownership is the destination. Most people are objecting to the vehicle without seeing the destination.</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-purple" style="margin-right:8px">Comp Plan</span><strong style="font-size:14px">"Another company offered me a higher comp percentage"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">Common when a recruit is being courted elsewhere with a flashier number. Don't badmouth the other company by name — let the structure speak for itself.</div>
+<div class="script-block">"That's a fair thing to look into — and I'd actually encourage you to compare carefully, because the headline number isn't the whole story. When another company advertises something like 130% or 150%, the real question is '130% of what?' — most of those numbers are quoted against a different baseline than the standard 100% table, so once you convert it to apples-to-apples, the gap usually disappears or even flips.<br/><br/>The other thing to look at is the override structure above you. With a lot of those plans, every time someone on your team gets promoted, you lose part or all of that override — so the comp looks great on paper until your team actually grows. Here, generational overrides above SMD are permanent and don't get taken away as your people get promoted.<br/><br/>And carrier access matters too — if a company only has one or two product carriers and that relationship changes, your whole pipeline can disappear overnight. We work with 189+ providers and 379+ products, so no single carrier relationship can take us down. A higher number on a smaller, less stable pizza isn't actually a bigger slice. Want me to walk through the real math side by side?"</div>
+<div class="coach-note"><strong>Coaching note:</strong> Always convert competing comp numbers to the same 100% baseline before comparing — that's the single move that defuses this objection. Never badmouth a specific competitor by name; let the structure speak for itself.</div>
+</div>
+</div>
+
+<div class="obj-section-head cat-client" id="obj-client">
+  <div class="obj-section-icon">💼</div>
+  <div>
+    <div class="obj-section-title">Client-Side Objections</div>
+    <div class="obj-section-sub">Raised by someone considering a financial plan, policy, or strategy</div>
+  </div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-navy" style="margin-right:8px">Products</span><strong style="font-size:14px">"IUL is bad / buy term and invest the difference is better"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">This one requires nuance. Don't argue against index funds — that's a losing battle. Reframe the question.</div>
+<div class="script-block">"That's actually a legitimate financial debate — and a good advisor should show you both. Here's the honest truth: buy term and invest the difference is the right answer if the person actually invests the difference. Statistically, most people don't. Discipline is the variable that never shows up in the Reddit math.<br/><br/>IUL isn't for everyone. I'd never put someone in an IUL who doesn't need it. But for someone in a higher tax bracket, who's maxed out their 401k, who wants protection and tax-free retirement income without the market risk — it's one of the best strategies available. A hammer isn't a bad tool because someone used it wrong.<br/><br/>Here's what I do differently from what you read about: I show you both scenarios, side by side, with real numbers. And then you decide. That's what a fiduciary mindset looks like."</div>
+<div class="coach-note"><strong>Coaching note:</strong> The phrase "I show you both scenarios" is critical. It positions you as an advisor, not a salesperson. Use it every time.</div>
+<div class="gold-note"><strong>Closer move:</strong> "Can I ask — has anyone ever shown you what an IUL would look like for your specific situation? Or are you going off what you read?" Most of the time — no. Now you have permission to show them.</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-navy" style="margin-right:8px">Trust</span><strong style="font-size:14px">"I read bad reviews / people lost money with WFG agents"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">Never throw the agent under the bus. But never defend bad advice either. Thread the needle.</div>
+<div class="script-block">"I hear you — and I won't dismiss that. If someone lost money because of bad advice from an agent, that's a real harm and it matters. Here's what I'll say: we have over 95,000 licensed agents. Not every experience is the same — just like not every doctor, attorney, or real estate agent gives the same quality of service. The solution isn't to avoid the industry. It's to find someone you trust.<br/><br/>I'd rather you walk away from me if you don't trust me than buy something because I pressured you. So here's what I'll offer — let's look at the Better Business Bureau together right now. WFG has an A+ rating. You can check every complaint, every response. And then you can decide whether to give me a shot.<br/><br/>What would it take for you to feel confident enough to have one real conversation?"</div>
+<div class="coach-note"><strong>Coaching note:</strong> The BBB offer — "let's look right now" — is powerful because it's transparent and immediate. Pull it up on your phone in the meeting.</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-navy" style="margin-right:8px">Advisor</span><strong style="font-size:14px">"I already have a financial advisor"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">Don't trash their current advisor — that's a red flag to them. Position this as a second opinion, never a replacement.</div>
+<div class="script-block">"That's great — having someone is better than having no one, so I'm not here to replace anyone. Here's what I've found, though: even people with advisors rarely get a true second opinion, because most advisors don't refer you out. Think of it like a second medical opinion — it doesn't mean your doctor is bad, it just means more eyes on something important.<br/><br/>I'm not asking you to switch anything. I'm asking — when's the last time someone actually walked through your numbers with you, just to compare notes? If everything checks out, great, you'll feel even more confident. If there's a gap, wouldn't you want to know?"</div>
+<div class="coach-note"><strong>Coaching note:</strong> "Second opinion," never "replacement." This single word swap removes the loyalty conflict entirely.</div>
+<div class="gold-note"><strong>Closer move:</strong> "Most people have never actually seen their full financial picture on one page — assets, protection, taxes, retirement — side by side. Even if nothing changes, would that be valuable to see?"</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-navy" style="margin-right:8px">Budget</span><strong style="font-size:14px">"I can't afford to invest anything right now"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">Often an "I don't see the value yet" objection wearing a money costume. Don't argue budget — reframe to awareness.</div>
+<div class="script-block">"I hear that a lot, and honestly, that's exactly why this conversation matters — because most people who say that have never actually looked at where their money is going. Sometimes it's not about finding new money, it's about redirecting money you're already spending without realizing it.<br/><br/>That's actually step one of what we do — before we ever talk about putting anything new in, we look at what's already there. If it turns out there's truly nothing to work with right now, I'll tell you that, and we just stay in touch until things change. But most people are surprised what shows up when we actually look. Fair enough to take a look together?"</div>
+<div class="coach-note"><strong>Coaching note:</strong> Never argue "you can afford it." Let the numbers do that work in the actual planning conversation — your job is just to get to the numbers.</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-navy" style="margin-right:8px">Stall</span><strong style="font-size:14px">"I need to talk to my spouse first / let me think about it"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">Rarely a true objection — usually a smokescreen for something unsaid, or a genuine two-person decision. Honor it, but don't let it become a dead end.</div>
+<div class="script-block">"Totally — that makes sense, and honestly I'd actually encourage that, because this should be a decision you both feel good about. Can I ask, though — is there something specific that came up tonight you'd want to run by them, or is it more just wanting to loop them in on something this big? <em>[Listen]</em><br/><br/>Here's what I'd suggest — let's set up a time, the three of us, so I can walk through it with both of you together. That way you're not stuck trying to explain something you just heard for the first time, and any questions they have, I can answer right there. What night works for you both?"</div>
+<div class="coach-note"><strong>Coaching note:</strong> Always try to convert "I'll ask my spouse" into a three-way follow-up. Letting them explain it alone is how good ideas die in translation.</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-navy" style="margin-right:8px">DIY</span><strong style="font-size:14px">"Why not just use Robinhood / an app and do it myself"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">Respect the DIY instinct — many people who say this are smart and capable. The gap isn't ability, it's bandwidth and blind spots.</div>
+<div class="script-block">"Honestly, if you enjoy that and you're disciplined about it, that's not a bad thing — some of my clients do both. The apps are great for what they're built for: buying and selling investments. What they're not built for is the bigger picture — tax strategy, protection if something happens to you, making sure your accounts actually work together instead of just sitting in separate silos.<br/><br/>Think of it like this: an app can help you build a house, but it won't tell you if you're building it on a bad foundation. My job isn't to compete with the app — it's to make sure everything you're doing, including what's in the app, is actually working toward the same goal. Would it be useful to see how everything fits together?"</div>
+<div class="coach-note"><strong>Coaching note:</strong> Never frame this as "apps are bad." Frame it as "apps are a piece — I look at the whole picture."</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-navy" style="margin-right:8px">Roth</span><strong style="font-size:14px">"I'll just do a Roth or Backdoor Roth"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">Good for clients already maxing a Roth/IRA. Don't disparage the Roth — show its ceiling, then show what fills the gap above it.</div>
+<div class="script-block">"Love it — a Roth is a great foundation, and I'd never talk anyone out of one. A couple of things worth knowing, though. If you have any pre-tax IRA money sitting around, the pro-rata rule can make a backdoor Roth conversion less clean than it looks — it could trigger a bigger tax bill than you'd expect.<br/><br/>Also — $7,000 a year is the ceiling. If you're serious about building meaningful tax-free retirement income, that cap gets hit fast. An IUL has no contribution limits, no RMDs, no market losses, and the same tax-free treatment on the way out. Wealthy people don't use it instead of a Roth — they use it because $7,000 a year isn't enough.<br/><br/>So it's not really Roth vs. IUL — it's whether $7,000 a year covers everything you're trying to build. Does it?"</div>
+<div class="coach-note"><strong>Coaching note:</strong> Never frame this as "Roth bad, IUL better." Frame it as "Roth is great — here's the ceiling, and here's what fills the gap above it."</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-navy" style="margin-right:8px">Fees</span><strong style="font-size:14px">"WFG products have high fees / MERs of 2–4%"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">This is a Canadian-specific critique (MERs / mutual funds). In the US context, redirect to the value of access and planning.</div>
+<div class="script-block">"Fees are a real conversation and I appreciate you bringing it up — because anyone who dismisses that question doesn't have your best interest in mind. Here's what I'll say: yes, some products have higher costs than a Vanguard index fund. And here's what that buys you: a licensed professional who is accountable, who meets with you in person, who helps you navigate the whole picture — income protection, tax strategy, retirement — not just one account.<br/><br/>The real question isn't the fee. It's what you get for it, and whether you'd actually execute a low-fee strategy on your own. Most people don't. That gap — between what they should do and what they actually do — costs far more than any MER.<br/><br/>We work with 200+ carriers. I don't have one shelf. My job is to find what's right for you — even if that means I recommend something outside of WFG. That's how I sleep at night."</div>
+<div class="coach-note"><strong>Coaching note:</strong> "That's how I sleep at night" is a closer line — use it only when the rapport is there. It signals integrity without sounding rehearsed.</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-navy" style="margin-right:8px">Need</span><strong style="font-size:14px">"I'm young and healthy, why do I need life insurance"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">Reframe from "death benefit" to "cheapest it will ever be" plus living benefits — especially relevant heading into an IUL conversation.</div>
+<div class="script-block">"Honestly, that's the best possible time to have this conversation — because being young and healthy is exactly what makes this affordable. The cost of coverage is based on your age and health today, not what they'll be in 10 or 20 years. Lock it in now, and you're protected at today's rates for life, even if your health changes later.<br/><br/>And depending on how it's structured, this isn't just about what happens if something happens to you — some of these strategies build cash value you can actually use while you're alive, for things like a future home, your kids' education, or supplementing retirement. So really, the question isn't 'why now' — it's 'why would I want to pay more for the same thing later?'"</div>
+<div class="coach-note"><strong>Coaching note:</strong> This is one of the easiest "math" objections — youth equals the lowest price it will ever be. Lead with that fact before anything else.</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-navy" style="margin-right:8px">401k</span><strong style="font-size:14px">"My 401k through work is already enough"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">Don't compete with their 401k — most people are emotionally attached to "I'm already doing something." Build on it, don't attack it.</div>
+<div class="script-block">"That's great — seriously, having something set up through work already puts you ahead of a lot of people, so don't discount that. Here's the thing though: a 401k is one tool, but it's usually just one type of account, with one type of tax treatment, and limited investment choices set by your employer.<br/><br/>The question I'd ask is — do you know what percentage of your retirement income will be taxable later, based on what you're contributing now? Most people have never actually run that number. That's really all we'd be looking at — not replacing what you have, just making sure it's working as hard as it can alongside everything else. Worth 20 minutes to see where you stand?"</div>
+<div class="coach-note"><strong>Coaching note:</strong> "One tool" framing works because it's true and non-threatening — you're adding to their toolbox, not criticizing their hammer.</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-navy" style="margin-right:8px">Annuities</span><strong style="font-size:14px">"Annuities are a scam, I read they're terrible"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">Same playbook as the IUL objection — don't argue the internet take. Differentiate old products from current strategies, and ask what they're actually picturing.</div>
+<div class="script-block">"Yeah, I get why people say that — and honestly, some of the older annuities from years ago deserved that reputation. High fees, long surrender periods, confusing terms. But 'annuity' is actually a huge category — it's like saying 'all cars are bad' because you had one bad experience with one model from 1995.<br/><br/>The strategies we look at today are built very differently — things like principal protection with upside tied to the market, or strategies specifically designed to multiply money for long-term care. Can I ask — when you picture an 'annuity,' what specifically comes to mind? <em>[Listen]</em> Got it — that's actually really different from what I'd be showing you. Want me to show you the difference side by side?"</div>
+<div class="coach-note"><strong>Coaching note:</strong> Get them to define what "annuity" means to them first. 90% of the time they're picturing one specific bad product, not the category.</div>
+</div>
+</div>
+
+<div class="obj-card">
+<div class="obj-hdr" onclick="topObjToggle(this)">
+<div><span class="badge badge-navy" style="margin-right:8px">Bank</span><strong style="font-size:14px">"How is this different from my bank's advisor"</strong></div>
+<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
+</div>
+<div class="obj-bdy">
+<div class="badge badge-gray" style="margin-bottom:.75rem">Most bank advisors are limited to in-house products. Position around access and independence — don't bash the bank.</div>
+<div class="script-block">"Good question — and the honest answer is, it really depends on the person, but here's the structural difference. Most bank advisors can really only offer you the bank's own products — that's what they're trained on and incentivized to sell. I work with over 200 different carriers, so I'm not limited to one shelf. That means if something doesn't fit you, I'm not stuck trying to make it fit anyway.<br/><br/>I'd compare it to going to a store that only sells one brand versus going somewhere that can actually shop around for you. Doesn't mean the bank's option is bad — just means you might not be seeing everything that's out there. Want me to show you what else is available for what you're trying to do?"</div>
+<div class="coach-note"><strong>Coaching note:</strong> "200+ carriers" is a real differentiator — repeat it. It's concrete and verifiable, unlike vague claims of "personalized service."</div>
+</div>
+</div>
+
+
+</div>
 <div style="margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--navy-subtle)">
 <div class="eyebrow" style="margin-bottom:4px">Reddit Objection Field Training</div>
 <h2 style="margin-bottom:4px">Handling the Reddit Objection</h2>
@@ -3616,7 +3972,7 @@ strong { color: #1a2332 !important; }
 </div>
 <div class="obj-bdy">
 <div class="badge badge-gray" style="margin-bottom:.75rem">Most common. Stay calm — this is the easiest one to defuse with facts.</div>
-<div class="script-block">"That's one of the most common things I hear — and I totally get why people say it. Let me be direct with you. WFG is licensed in all 50 states, registered with FINRA, and regulated by state insurance departments. Our parent company is Aegon, nearly 200 years old, managing over a trillion dollars in assets globally.<br/><br/>Now — what does MLM actually mean? It means agents can build teams and earn overrides. You know what else works that way? Keller Williams. State Farm. Every major insurance distribution company in the country. The model isn't the problem. Bad advice from bad agents is the problem — and that exists in every industry.<br/><br/>What specifically made you think pyramid when you heard about us?"</div>
+<div class="script-block">"That's one of the most common things I hear — and I totally get why people say it. Let me be direct with you. RFM/WFG is licensed in all 50 states, registered with FINRA, and regulated by state insurance departments. Our parent company is Aegon, nearly 200 years old, managing hundreds of billions of dollars in assets globally.<br/><br/>Now — what does MLM actually mean? It means agents can build teams and earn overrides. You know what else works that way? Keller Williams. State Farm. Every major insurance distribution company in the country. The model isn't the problem. Bad advice from bad agents is the problem — and that exists in every industry.<br/><br/>What specifically made you think pyramid when you heard about us?"</div>
 <div class="coach-note"><strong>Coaching note:</strong> End with a question. Get them talking. Their answer tells you exactly where the real fear is.</div>
 <div class="warn-note"><strong>Do not say:</strong> "We're not an MLM" as your only response. That sounds defensive and weak. Name the model, define it correctly, and compare it to respected companies.</div>
 </div>
@@ -3673,12 +4029,13 @@ strong { color: #1a2332 !important; }
 </div>
 <div class="obj-bdy">
 <div class="badge badge-gray" style="margin-bottom:.75rem">The research objection. This is actually a buying signal — they're doing due diligence, not shutting you out.</div>
-<div class="script-block">"I love that you're doing your research — that tells me you're a serious person and you take your finances seriously. Let me make that research more useful, because if you just Google us, you're going to end up on Reddit or a forum, and honestly, anyone can post anything there. We have 95,000 licensed agents and not every experience is the same.<br/><br/>Here's where I'd actually point you. Pull up bbb.org — Better Business Bureau — and search World Financial Group Johns Creek, GA. A+ rating. That's not bought, that's earned. Then bookmark aegon.com — nearly 200 years old, managing over a trillion dollars globally. Also tfaconnect.com — that's Transamerica, one of our main carriers. And worldfinancialgroup.com — our brokerage directly.<br/><br/>What I'd love to do is set up a second conversation — and I want you to come in ready to interview us. Bring every question, everything that concerned you, anything you saw. We'll go through it all. And then if you feel good, I'll have a few questions to see if it's a mutual fit. Sound fair?"</div>
+<div class="script-block">"I love that you're doing your research — that tells me you're a serious person and you take this seriously. Let me make that research more useful, because if you just Google us, you're going to end up on Reddit or a forum, and honestly, anyone can post anything there. We have 95,000 licensed agents, and not every experience is the same.<br/><br/>Here's where I'd actually point you. Pull up bbb.org — Better Business Bureau — and search World Financial Group, Johns Creek, GA. A+ rating. That's not bought, that's earned. Then bookmark aegon.com — nearly 200 years old, managing hundreds of billions of dollars globally. Also, tfaconnect.com — that's Transamerica, one of our main carriers. And worldfinancialgroup.com — our brokerage directly.<br/><br/>What I'd love to do is set up a second conversation — and I want you to come in ready to interview us. Bring every question, everything that concerned you, anything you saw. We'll go through it all. And then if you feel good, I'll have a few questions to see if it's a mutual fit. Sound fair?"</div>
 <div class="coach-note"><strong>Coaching note:</strong> Give them the exact URLs. Specificity builds credibility. Vague reassurances don't. Names and links do.</div>
 <div class="gold-note"><strong>Seasoned closer version:</strong> "Let me ask you something. When you research a surgeon before a procedure, do you read the one-star Yelp reviews and cancel the surgery — or do you check their board certifications and hospital affiliations? Google isn't a financial regulator. The BBB is."</div>
 </div>
 </div>
 </div>
+
 <div class="rm-panel" id="panel-master">
 <h2>The master response — memorize this</h2>
 <p>This is your complete field response when someone brings up a Reddit post, negative article, or general skepticism. Learn the structure cold, then make it yours.</p>
@@ -3825,51 +4182,25 @@ strong { color: #1a2332 !important; }
 </div></div>
 
 <script>
-// Objections data + renderer
-// ===== OBJECTIONS =====
-const objections = [
-  { q: '"I don\'t have time for this." / "I\'m too busy with my job."', a: 'Good — we work around life, not instead of it. The only question is whether what you\'re doing now is going to give you more time, income, and flexibility. Is it?' },
-  { q: '"Is this a pyramid scheme?"', a: '"Great question — and a fair one. Pyramid schemes are illegal. We\'re licensed in all 50 states, regulated federally by FINRA, and backed by Aegon — a company that\'s been around since the 1800s with hundreds of billions in assets. Nationwide, Pacific Life, and Transamerica wouldn\'t partner with us if that were true. Think Keller Williams or State Farm — independent agents, operating under a larger licensed organization. That\'s us. What made you ask? I want to make sure I\'m addressing what\'s really behind it."' },
-  { q: '"I just Google WFG and all I see is negative / scam results"', a: '"I love that you\'re doing your research — that tells me you\'re a serious person and you take your finances seriously. Let me make that research more useful, because if you just Google us, you\'re going to end up on Reddit or a forum, and honestly, anyone can post anything there. We have 95,000 licensed agents and not every experience is the same. Here\'s where I\'d actually point you. Pull up bbb.org — Better Business Bureau — and search World Financial Group Johns Creek, GA. A+ rating. That\'s not bought, that\'s earned. Then bookmark aegon.com — nearly 200 years old, managing hundreds of billions ofdollars globally. Also tfaconnect.com — that\'s Transamerica, one of our main carriers. And worldfinancialgroup.com — our brokerage directly. What I\'d love to do is set up a second conversation — and I want you to come in ready to interview us. Bring every question, everything that concerned you, anything you saw. We\'ll go through it all. And then if you feel good, I\'ll have a few questions to see if it\'s a mutual fit. Sound fair?"' },
-  { q: '"I\'m not a salesperson."', a: '"Good news — neither am I, really. We\'re a professional financial educators. We don\'t sell anything — we sit down with families, understand their situation, and help them design a plan. Most of our best people were teachers, nurses, coaches — people who care about others. That\'s the skillset here."' },
-  { q: '"I need to think about it."', a: '"Of course — this is a real decision. Can I ask what specifically you\'re thinking through? Is it the time, the investment, the uncertainty of income? Because I want to make sure I answer the right question for you, not just leave you hanging."' },
-  { q: '"I already have a financial advisor."', a: '"That\'s great — honestly, that means you already value this kind of work. Can I ask — are they helping you build income, or just managing what you already have? What we do isn’t meant to replace anything you’re already doing. From what I’ve seen, we typically complement what’s already working for someone like you. Would it make sense for us to get together so you can see if there’s anything here that might be helpful? If you like what you see, great. If not, no problem."' },
-  { q: '"I want to do research."', a: '"Good — you should. Here\'s where to look: BBB.org — search World Financial Group in Johns Creek, GA. A+ rating. Aegon.com — our parent company. Been around since the 1800\'s with hundreds of billions in assets. Transamerica.com — one of our primary carriers. Worldfinancialgroup.com — our brokerage directly. Avoid forming opinions from Reddit — anyone can post anything. The regulated sources tell the real story. When you\'ve had a chance to look, let\'s get back together. Come in like you\'re interviewing us — bring every question, every concern. We\'ll go through all of it. And if everything checks out, I\'ll have a few questions for you too, to make sure it\'s a good fit on both sides. Does that sound fair?"' },
-  { q: '"My spouse isn\'t on board."', a: '"I completely respect that. Can I ask — what\'s their top 2 main concerns? I\'d love to address it directly. Would it be okay if we got them on a quick call or even brought them to one of our events? Most spouses become the biggest supporters once they see the full picture."' },
-  { q: '"I\'ll just do a Roth or Back Door Roth."', a: 'Love it — a Roth is a great foundation. A few things worth knowing before you stop there though.\n\nAre you familiar with the pro-rata rule? If you have any pre-tax IRA money, your backdoor Roth conversion may not be as clean as you think — could trigger an unexpected tax bill.\n\nAlso — $7,000 a year. That\'s the ceiling. If you\'re serious about building a meaningful tax-free retirement income, that cap hits fast.\n\nAn IUL has no contribution limits, no RMDs, no market losses, and the same tax-free treatment on the way out. Wealthy people don\'t use it instead of a Roth — they use it because $7,000 a year isn\'t enough.\n\nThe question is whether it is for you. Is it?' },
-  { q: '"I don\'t need IUL life insurance."', a: 'That\'s the most common misconception about an IUL — people hear \'life insurance\' and tune out. But the death benefit is almost secondary to how most people actually use it.\n\nThink of it less as life insurance and more as a tax-free retirement account with a death benefit attached. The wealthy use it because it has no contribution limits, no RMDs, no market losses, and every dollar coming out in retirement is tax-free.\n\nThe death benefit is just a bonus — it\'s what makes the tax treatment possible.\n\nSo the real question isn\'t whether you need life insurance. It\'s whether you want another tax-free bucket with no ceiling and no downside risk. Do you?' },  { q: '"Candy Company, you\'re compensation is too low"', a: '"The financial services industry is full of traps — traditional companies that cap your growth and hand all the real money to a handful of regional managers, general agencies that just train their own competition until agents leave to open a shop at the other end of the strip mall, and now more than ever, candy companies flooding your phone promising flashy numbers designed to lure you away from something real. They know exactly how to make their offer look better, but just like candy, it\'s colorful on the outside and hollow — or worse, poisonous — on the inside. When a competitor claims to pay 133%, 152%, or 175%, the first question you ask is "133% of what?" — because they\'re quoting points, not your actual contract, and when you convert their numbers to a true 100% table, WFG wins every single time, because nobody can make 100 cents become 130 cents. Then look at their spread structure — most candy companies flank you all the way up to executive level, meaning every time someone on your team gets promoted you lose that override, while WFG\'s generational overrides above SMD are permanent, unchangeable, and you can even override someone with a higher title than you. Most of these companies also have one or two product carriers — one recruiting your people right now just had their only IUL carrier give them a 90-day cancellation notice for unethical behavior — while WFG has 189 providers, 379+ products, a full broker-dealer, and 25+ years of never missing a payout, with $1.37 billion paid to the field in 2023 alone. A higher contract number means nothing if it\'s on a smaller pizza, with a temporary structure, from a company that might not exist next year."'},
-  { q: '"I don\'t need an IUL."', a: 'That\'s possible — not everyone does. Help me understand, what\'s your current plan for tax-free retirement income? Do you have a pension, maxed-out 401k, or another tax-free vehicle in place?\n\nBecause here\'s what I see with a lot of people — they have pre-tax money stacked up in 401ks and IRAs, which is great, but every dollar coming out in retirement gets taxed as ordinary income. An IUL is just a separate tax-free bucket — no RMDs, no contribution limits tied to income, downside protection, and a death benefit on top.\n\nWealthy people don\'t use it because they have to. They use it because they\'ve maxed everything else and still want more tax-free growth.\n\nIf your current strategy already covers all of that — you\'re probably right, you don\'t need it. If there\'s any gap, it\'s worth at least understanding what you might be leaving on the table. So which is it?' },
-  { q: '"I don\'t need life insurance."', a: 'That\'s possible — not everyone does. Help me understand, what makes you feel that way? Is it that you have enough assets to self-insure, no dependents relying on your income, or something else?\n\nBecause life insurance means different things at different stages. For some people it\'s pure protection — replacing income if something happened. For others it\'s a tax-free retirement vehicle, estate planning, or leaving a legacy.\n\nIf you\'re fully covered on all of that — you\'re probably right. But if there\'s any gap in what happens to the people who depend on you, or how your wealth transfers, it\'s a conversation to know for sure. Which is it?' }
-];
-(function() {
-  var objList = document.getElementById('obj-list');
-  if (!objList) { console.warn('obj-list not found'); return; }
-  objList.innerHTML = '';
-  objections.forEach(function(obj, i) {
-    var item = document.createElement('div');
-    item.className = 'obj-item';
-    var q = document.createElement('div');
-    q.className = 'obj-q';
-    q.id = 'oq' + i;
-    q.innerHTML = obj.q + '<span class="arrow">&#10549;</span>';
-    q.onclick = (function(idx){ return function(){ toggleObj(idx); }; })(i);
-    var a = document.createElement('div');
-    a.className = 'obj-a';
-    a.id = 'oa' + i;
-    a.textContent = obj.a;
-    item.appendChild(q);
-    item.appendChild(a);
-    objList.appendChild(item);
-  });
-})();
 
-function toggleObj(i) {
-  var a = document.getElementById('oa' + i);
-  var q = document.getElementById('oq' + i);
-  var isOpen = (a.style.display === 'block');
-  document.querySelectorAll('.obj-a').forEach(function(el) { el.style.display = ''; el.classList.remove('open'); });
-  document.querySelectorAll('.obj-q').forEach(function(el) { el.classList.remove('open'); });
-  if (!isOpen) { a.style.display = 'block'; a.classList.add('open'); q.classList.add('open'); }
+
+
+// Top-level Objection Bank toggle (not scoped to .rm-wrap)
+function topObjToggle(header) {
+  var body = header.nextElementSibling;
+  var chev = header.querySelector('.rm-chevron');
+  var isOpen = body.classList.contains('open');
+  // close all open cards in top-obj-wrap
+  var wrap = document.getElementById('obj-list');
+  if (wrap) {
+    wrap.querySelectorAll('.obj-bdy').forEach(function(b){ b.classList.remove('open'); });
+    wrap.querySelectorAll('.rm-chevron').forEach(function(c){ c.classList.remove('open'); });
+  }
+  if (!isOpen) {
+    body.classList.add('open');
+    if (chev) chev.classList.add('open');
+    header.closest('.obj-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
 }
 
 // Reddit module — expose as both window.rm_* AND plain globals
