@@ -422,9 +422,9 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--cream
 <div class="page-top"><span class="t">⚙ RFM System — Hyperion</span></div>
 <div class="page-wrap">
 <div class="cg-pills">
+  <button class="cg-pill" onclick="cgShow('mhq',this)">🎯 Mission HQ</button>
   <button class="cg-pill on" onclick="cgShow('guide',this)">📞 Call Guide</button>
   <button class="cg-pill" onclick="cgShow('quick',this)">⚡ Quick Scripts</button>
-  <button class="cg-pill" onclick="cgShow('obj',this)">🛡 Objections</button>
 </div>
 <div class="cg-sec on" id="cg-guide">
 <div class="hcg">
@@ -601,324 +601,9 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--cream
 </div>
 </div>
 
-<div class="cg-sec" id="cg-obj">
-<div class="rm-wrap-lite">
-<div id="obj-list" class="top-obj-wrap">
-<div class="obj-jump">
-  <a href="#obj-recruit"><span class="oj-ico">🤝</span><span><span class="oj-title">Recruiting-Side Objections</span><br/><span class="oj-count">12 objections — business opportunity concerns</span></span></a>
-  <a href="#obj-client"><span class="oj-ico">💼</span><span><span class="oj-title">Client-Side Objections</span><br/><span class="oj-count">12 objections — financial plan concerns</span></span></a>
-</div>
-
-<div class="obj-section-head cat-recruit" id="obj-recruit">
-  <div class="obj-section-icon">🤝</div>
-  <div>
-    <div class="obj-section-title">Recruiting-Side Objections</div>
-    <div class="obj-section-sub">Raised by someone considering the business opportunity itself</div>
-  </div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-purple" style="margin-right:8px">MLM</span><strong style="font-size:14px">"Isn't WFG just a pyramid scheme / MLM?"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">Most common. Stay calm — this is the easiest one to defuse with facts.</div>
-<div class="script-block">"That's one of the most common things I hear — and I totally get why people say it. Let me be direct with you. RFM/WFG is licensed in all 50 states, registered with FINRA, and regulated by state insurance departments. Our parent company is Aegon, nearly 200 years old, managing hundreds of billions of dollars in assets globally.<br/><br/>Now — what does MLM actually mean? It means agents can build teams and earn overrides. You know what else works that way? Keller Williams. State Farm. Every major insurance distribution company in the country. The model isn't the problem. Bad advice from bad agents is the problem — and that exists in every industry.<br/><br/>What specifically made you think pyramid when you heard about us?"</div>
-<div class="coach-note"><strong>Coaching note:</strong> End with a question. Get them talking. Their answer tells you exactly where the real fear is.</div>
-<div class="warn-note"><strong>Do not say:</strong> "We're not an MLM" as your only response. That sounds defensive and weak. Name the model, define it correctly, and compare it to respected companies.</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-purple" style="margin-right:8px">Cost</span><strong style="font-size:14px">"What does it cost to get licensed / get started / too expensive"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">Be upfront and specific — vague answers create suspicion. Use the actual numbers from the Licensing tab.</div>
-<div class="script-block">"Good question — I'd rather be upfront. All-in, getting licensed runs around $700 — background check, pre-licensing course, state exam, fingerprints, and license fee. You don't pay it all at once, and typically helping your first family puts about $1,000 back in your pocket — so you're already ahead before the end of your first month.<br/><br/>Compare that to any other business — franchise, storefront, food truck — we're talking hundreds versus tens of thousands. And once you're operating as an agency owner, everyday expenses can become legal business write-offs, which means potentially saving thousands a year in taxes you'd be paying anyway.<br/><br/>So it's less 'can I afford $700' and more 'can helping one family pay it back?' — and it does, every time. Does that make sense?"</div>
-<div class="coach-note"><strong>Coaching note:</strong> Always pair the dollar number with a comparison to other business startup costs — context makes a small number feel even smaller. See the Licensing tab for the exact line-item breakdown.</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-purple" style="margin-right:8px">Time</span><strong style="font-size:14px">"I don't have time for a side business"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">Usually really means "I don't see how this fits into my life." Show the part-time on-ramp — don't argue about their schedule.</div>
-<div class="script-block">"I hear that constantly, and honestly that's exactly why this is built the way it is — most people start part-time, 8-10 hours a week, around their existing job. Nobody's asking you to quit anything or rearrange your whole life on day one.<br/><br/>The real question is — if there was a way to build something on the side, on your schedule, using time you already have, would that be worth exploring? Because here's what I'd ask back: if nothing changes, what does your schedule look like in five years versus what you actually want it to look like? Sometimes 'no time' is really 'I haven't seen a reason yet to make time.' Is it the time, or is it that you're not sure this is worth your time?"</div>
-<div class="coach-note"><strong>Coaching note:</strong> End by separating "time" from "value" — almost everyone makes time for things they believe in. That's the real conversation.</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-purple" style="margin-right:8px">Online</span><strong style="font-size:14px">"I just Google WFG and all I see is negative / scam results"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">The research objection. This is actually a buying signal — they're doing due diligence, not shutting you out.</div>
-<div class="script-block">"I love that you're doing your research — that tells me you're a serious person and you take this seriously. Let me make that research more useful, because if you just Google us, you're going to end up on Reddit or a forum, and honestly, anyone can post anything there. We have 95,000 licensed agents, and not every experience is the same.<br/><br/>Here's where I'd actually point you. Pull up bbb.org — Better Business Bureau — and search World Financial Group, Johns Creek, GA. A+ rating. That's not bought, that's earned. Then bookmark aegon.com — nearly 200 years old, managing hundreds of billions of dollars globally. Also, tfaconnect.com — that's Transamerica, one of our main carriers. And worldfinancialgroup.com — our brokerage directly.<br/><br/>What I'd love to do is set up a second conversation — and I want you to come in ready to interview us. Bring every question, everything that concerned you, anything you saw. We'll go through it all. And then if you feel good, I'll have a few questions to see if it's a mutual fit. Sound fair?"</div>
-<div class="coach-note"><strong>Coaching note:</strong> Give them the exact URLs. Specificity builds credibility. Vague reassurances don't. Names and links do.</div>
-<div class="gold-note"><strong>Seasoned closer version:</strong> "Let me ask you something. When you research a surgeon before a procedure, do you read the one-star Yelp reviews and cancel the surgery — or do you check their board certifications and hospital affiliations? Google isn't a financial regulator. The BBB is."</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-purple" style="margin-right:8px">Sales</span><strong style="font-size:14px">"I'm not a salesperson, I'm bad at sales"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">A huge, common fear — especially with professionals who pride themselves on NOT being "salesy." Reframe away from selling entirely.</div>
-<div class="script-block">"Honestly, that's actually a good sign — because this isn't built around traditional sales. If anything, the people who struggle most are the ones who come in thinking they need to convince people of something. What actually works is the opposite — sharing something you believe in with people you already know and care about, and letting them decide for themselves.<br/><br/>Think about how you talk about a great doctor, a good restaurant, or a show you binged — you're not 'selling' it, you're just sharing something you think is valuable. That's really all this is. And on top of that, you're trained — you're never doing this alone, especially early on. What part feels more like the sticking point — talking to people, or worrying about being pushy?"</div>
-<div class="coach-note"><strong>Coaching note:</strong> "You're not selling, you're sharing" is the core reframe. Use the "great restaurant" analogy — it's relatable and instantly defuses the fear.</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-purple" style="margin-right:8px">Business</span><strong style="font-size:14px">"You just want me to recruit / you profit from bringing me in"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">This one stings because there's partial truth in it. Lean into the truth and then show the bigger picture.</div>
-<div class="script-block">"You're right that I earn an override if I bring someone on — I'm not going to pretend otherwise. But here's the reality: I earn far more if you stay, succeed, and build a team of your own. That only happens if you're actually helped. My incentive is your success, not your signature.<br/><br/>Every business operates this way. Your manager at work earns more when their team performs. A real estate broker earns when their agents close. The structure isn't the problem — the intention behind it is. And my intention is simple: I want to find people who are genuinely a fit for this and show them what's possible. If that's not you, I'll tell you. I don't want someone who isn't fully bought in — they make everyone's life harder.<br/><br/>So let me ask you honestly — what would need to be true for you to feel like this was worth one real conversation?"</div>
-<div class="coach-note"><strong>Coaching note:</strong> Ending with "I don't want someone who isn't fully bought in" is a power move. It reframes you from the one chasing to the one being selective. Use it with confidence.</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-purple" style="margin-right:8px">Network</span><strong style="font-size:14px">"My network is small, I don't know wealthy people"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">This isn't actually about wealth — it's about access to people who'll take your call. Reframe away from "wealthy" entirely.</div>
-<div class="script-block">"That's actually one of the most common misconceptions about this business — it's not about knowing wealthy people. Everyone needs this, regardless of income — protection, planning, a path forward. What actually matters more is trust, not net worth.<br/><br/>Think about it — do you know at least 10 people who'd take your call if you said 'hey, I'm doing something new, can I get your take'? That's it. That's the starting point. Most of the biggest builders in this business didn't start with wealthy networks — they started with people who trusted them, and it grew from there. So it's less 'who do you know that's rich' and more 'who do you know, period.' Does that change how you're thinking about it?"</div>
-<div class="coach-note"><strong>Coaching note:</strong> Redirect "wealthy" to "trust." This single reframe removes the most common self-disqualifying belief people have.</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-purple" style="margin-right:8px">History</span><strong style="font-size:14px">"I tried something like this before (MLM) and it didn't work"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">Validate the past experience completely — don't get defensive about "this is different." Ask what specifically went wrong first.</div>
-<div class="script-block">"I appreciate you sharing that — and I'm not going to tell you 'this one's different' right off the bat, because I get why that sounds like what everyone says. Can I ask, though — what was it about that experience that didn't work for you? Was it the product, the people, the income model, or just timing in your life? <em>[Listen]</em><br/><br/>Okay, that's really helpful — because what you're describing is actually a really common pattern, and it's worth understanding why. A lot of those models rely on you buying and reselling inventory, or recruiting being the only way to make money. This is licensed financial services — regulated, real products people actually need regardless of the economy. I'm not asking you to trust me on that — I'm asking if it'd be worth 20 minutes to see how it's actually structured, so you can judge for yourself."</div>
-<div class="coach-note"><strong>Coaching note:</strong> Diagnose before you defend. Their specific bad experience tells you exactly which fear to address — don't guess.</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-purple" style="margin-right:8px">Social</span><strong style="font-size:14px">"My spouse / friends think this is a scam"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">This is about social risk, not the business itself. Normalize the skepticism and give them an easy way to bring people along.</div>
-<div class="script-block">"That's one of the most common things I hear — and I totally get why people say it. Let me be direct with you. RFM/WFG is licensed in all 50 states, registered with FINRA, and regulated by state insurance departments. Our parent company is Aegon, nearly 200 years old, managing hundreds of billions of dollars in assets globally.<br/><br/>Now — what does MLM actually mean? It means agents can build teams and earn overrides. You know what else works that way? Keller Williams. State Farm. Every major insurance distribution company in the country. The model isn't the problem. Bad advice from bad agents is the problem — and that exists in every industry.<br/><br/>What specifically made you think pyramid when you heard about us?"</div>
-<div class="coach-note"><strong>Coaching note:</strong> Never let someone become the messenger for something they don't fully understand yet. Get the skeptic directly into a room or call.</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-purple" style="margin-right:8px">Timeline</span><strong style="font-size:14px">"How long until I'm actually making money"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">Be honest — don't oversell speed, but anchor to the GX 6-month roadmap so it doesn't feel vague.</div>
-<div class="script-block">"Honestly, I'd rather give you a real answer than a hyped one. It depends on effort and consistency, like anything else — but here's the framework: most people who follow the system, get licensed, and actually run the activity see their first real movement within their first one to two months, and the bigger income builds over the first six months as you build a team.<br/><br/>It's not a get-rich-quick thing, and if anyone tells you it is, that's a red flag. What it is is a real business with a real system, and the people who stick to the system tend to see results faster than the people who don't. Would it help to actually see the month-by-month roadmap, so you know exactly what 'on track' looks like?"</div>
-<div class="coach-note"><strong>Coaching note:</strong> Anchor to the actual GX 6-Month Plan in the GX Program tab — specificity beats hype every time, and it sets honest expectations from day one.</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-purple" style="margin-right:8px">Business?</span><strong style="font-size:14px">"Is this really a business, or just insurance sales with a fancy name"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">A legitimacy/identity objection. Lean into ownership, equity, and the team-building model — not just "selling insurance."</div>
-<div class="script-block">"Fair question — and yes, licensed insurance and financial products are part of how income is generated, that's true of any financial professional. But here's the difference: when you build this, you're not just making sales — you're building a business you own. You can build a team, create overrides, and eventually create income that doesn't depend only on your own activity.<br/><br/>Compare that to a traditional sales job — when you stop working, the income stops. Here, the goal is to build something that can outlast your day-to-day involvement. So it's less 'is this insurance sales' and more 'is insurance sales the vehicle, and ownership the destination.' Does that distinction make sense?"</div>
-<div class="coach-note"><strong>Coaching note:</strong> "Vehicle vs. destination" is a strong reframe — the product is the vehicle, business ownership is the destination. Most people are objecting to the vehicle without seeing the destination.</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-purple" style="margin-right:8px">Comp Plan</span><strong style="font-size:14px">"Another company offered me a higher comp percentage"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">Common when a recruit is being courted elsewhere with a flashier number. Don't badmouth the other company by name — let the structure speak for itself.</div>
-<div class="script-block">"That's a fair thing to look into — and I'd actually encourage you to compare carefully, because the headline number isn't the whole story. When another company advertises something like 130% or 150%, the real question is '130% of what?' — most of those numbers are quoted against a different baseline than the standard 100% table, so once you convert it to apples-to-apples, the gap usually disappears or even flips.<br/><br/>The other thing to look at is the override structure above you. With a lot of those plans, every time someone on your team gets promoted, you lose part or all of that override — so the comp looks great on paper until your team actually grows. Here, generational overrides above SMD are permanent and don't get taken away as your people get promoted.<br/><br/>And carrier access matters too — if a company only has one or two product carriers and that relationship changes, your whole pipeline can disappear overnight. We work with 189+ providers and 379+ products, so no single carrier relationship can take us down. A higher number on a smaller, less stable pizza isn't actually a bigger slice. Want me to walk through the real math side by side?"</div>
-<div class="coach-note"><strong>Coaching note:</strong> Always convert competing comp numbers to the same 100% baseline before comparing — that's the single move that defuses this objection. Never badmouth a specific competitor by name; let the structure speak for itself.</div>
-</div>
-</div>
-
-<div class="obj-section-head cat-client" id="obj-client">
-  <div class="obj-section-icon">💼</div>
-  <div>
-    <div class="obj-section-title">Client-Side Objections</div>
-    <div class="obj-section-sub">Raised by someone considering a financial plan, policy, or strategy</div>
-  </div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-navy" style="margin-right:8px">Products</span><strong style="font-size:14px">"IUL is bad / buy term and invest the difference is better"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">This one requires nuance. Don't argue against index funds — that's a losing battle. Reframe the question.</div>
-<div class="script-block">"That's actually a legitimate financial debate — and a good advisor should show you both. Here's the honest truth: buy term and invest the difference is the right answer if the person actually invests the difference. Statistically, most people don't. Discipline is the variable that never shows up in the Reddit math.<br/><br/>IUL isn't for everyone. I'd never put someone in an IUL who doesn't need it. But for someone in a higher tax bracket, who's maxed out their 401k, who wants protection and tax-free retirement income without the market risk — it's one of the best strategies available. A hammer isn't a bad tool because someone used it wrong.<br/><br/>Here's what I do differently from what you read about: I show you both scenarios, side by side, with real numbers. And then you decide. That's what a fiduciary mindset looks like."</div>
-<div class="coach-note"><strong>Coaching note:</strong> The phrase "I show you both scenarios" is critical. It positions you as an advisor, not a salesperson. Use it every time.</div>
-<div class="gold-note"><strong>Closer move:</strong> "Can I ask — has anyone ever shown you what an IUL would look like for your specific situation? Or are you going off what you read?" Most of the time — no. Now you have permission to show them.</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-navy" style="margin-right:8px">Trust</span><strong style="font-size:14px">"I read bad reviews / people lost money with WFG agents"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">Never throw the agent under the bus. But never defend bad advice either. Thread the needle.</div>
-<div class="script-block">"I hear you — and I won't dismiss that. If someone lost money because of bad advice from an agent, that's a real harm and it matters. Here's what I'll say: we have over 95,000 licensed agents. Not every experience is the same — just like not every doctor, attorney, or real estate agent gives the same quality of service. The solution isn't to avoid the industry. It's to find someone you trust.<br/><br/>I'd rather you walk away from me if you don't trust me than buy something because I pressured you. So here's what I'll offer — let's look at the Better Business Bureau together right now. WFG has an A+ rating. You can check every complaint, every response. And then you can decide whether to give me a shot.<br/><br/>What would it take for you to feel confident enough to have one real conversation?"</div>
-<div class="coach-note"><strong>Coaching note:</strong> The BBB offer — "let's look right now" — is powerful because it's transparent and immediate. Pull it up on your phone in the meeting.</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-navy" style="margin-right:8px">Advisor</span><strong style="font-size:14px">"I already have a financial advisor"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">Don't trash their current advisor — that's a red flag to them. Position this as a second opinion, never a replacement.</div>
-<div class="script-block">"That's great — having someone is better than having no one, so I'm not here to replace anyone. Here's what I've found, though: even people with advisors rarely get a true second opinion, because most advisors don't refer you out. Think of it like a second medical opinion — it doesn't mean your doctor is bad, it just means more eyes on something important.<br/><br/>I'm not asking you to switch anything. I'm asking — when's the last time someone actually walked through your numbers with you, just to compare notes? If everything checks out, great, you'll feel even more confident. If there's a gap, wouldn't you want to know?"</div>
-<div class="coach-note"><strong>Coaching note:</strong> "Second opinion," never "replacement." This single word swap removes the loyalty conflict entirely.</div>
-<div class="gold-note"><strong>Closer move:</strong> "Most people have never actually seen their full financial picture on one page — assets, protection, taxes, retirement — side by side. Even if nothing changes, would that be valuable to see?"</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-navy" style="margin-right:8px">Budget</span><strong style="font-size:14px">"I can't afford to invest anything right now"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">Often an "I don't see the value yet" objection wearing a money costume. Don't argue budget — reframe to awareness.</div>
-<div class="script-block">"I hear that a lot, and honestly, that's exactly why this conversation matters — because most people who say that have never actually looked at where their money is going. Sometimes it's not about finding new money, it's about redirecting money you're already spending without realizing it.<br/><br/>That's actually step one of what we do — before we ever talk about putting anything new in, we look at what's already there. If it turns out there's truly nothing to work with right now, I'll tell you that, and we just stay in touch until things change. But most people are surprised what shows up when we actually look. Fair enough to take a look together?"</div>
-<div class="coach-note"><strong>Coaching note:</strong> Never argue "you can afford it." Let the numbers do that work in the actual planning conversation — your job is just to get to the numbers.</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-navy" style="margin-right:8px">Stall</span><strong style="font-size:14px">"I need to talk to my spouse first / let me think about it"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">Rarely a true objection — usually a smokescreen for something unsaid, or a genuine two-person decision. Honor it, but don't let it become a dead end.</div>
-<div class="script-block">"Totally — that makes sense, and honestly I'd actually encourage that, because this should be a decision you both feel good about. Can I ask, though — is there something specific that came up tonight you'd want to run by them, or is it more just wanting to loop them in on something this big? <em>[Listen]</em><br/><br/>Here's what I'd suggest — let's set up a time, the three of us, so I can walk through it with both of you together. That way you're not stuck trying to explain something you just heard for the first time, and any questions they have, I can answer right there. What night works for you both?"</div>
-<div class="coach-note"><strong>Coaching note:</strong> Always try to convert "I'll ask my spouse" into a three-way follow-up. Letting them explain it alone is how good ideas die in translation.</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-navy" style="margin-right:8px">DIY</span><strong style="font-size:14px">"Why not just use Robinhood / an app and do it myself"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">Respect the DIY instinct — many people who say this are smart and capable. The gap isn't ability, it's bandwidth and blind spots.</div>
-<div class="script-block">"Honestly, if you enjoy that and you're disciplined about it, that's not a bad thing — some of my clients do both. The apps are great for what they're built for: buying and selling investments. What they're not built for is the bigger picture — tax strategy, protection if something happens to you, making sure your accounts actually work together instead of just sitting in separate silos.<br/><br/>Think of it like this: an app can help you build a house, but it won't tell you if you're building it on a bad foundation. My job isn't to compete with the app — it's to make sure everything you're doing, including what's in the app, is actually working toward the same goal. Would it be useful to see how everything fits together?"</div>
-<div class="coach-note"><strong>Coaching note:</strong> Never frame this as "apps are bad." Frame it as "apps are a piece — I look at the whole picture."</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-navy" style="margin-right:8px">Roth</span><strong style="font-size:14px">"I'll just do a Roth or Backdoor Roth"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">Good for clients already maxing a Roth/IRA. Don't disparage the Roth — show its ceiling, then show what fills the gap above it.</div>
-<div class="script-block">"Love it — a Roth is a great foundation, and I'd never talk anyone out of one. A couple of things worth knowing, though. If you have any pre-tax IRA money sitting around, the pro-rata rule can make a backdoor Roth conversion less clean than it looks — it could trigger a bigger tax bill than you'd expect.<br/><br/>Also — $7,000 a year is the ceiling. If you're serious about building meaningful tax-free retirement income, that cap gets hit fast. An IUL has no contribution limits, no RMDs, no market losses, and the same tax-free treatment on the way out. Wealthy people don't use it instead of a Roth — they use it because $7,000 a year isn't enough.<br/><br/>So it's not really Roth vs. IUL — it's whether $7,000 a year covers everything you're trying to build. Does it?"</div>
-<div class="coach-note"><strong>Coaching note:</strong> Never frame this as "Roth bad, IUL better." Frame it as "Roth is great — here's the ceiling, and here's what fills the gap above it."</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-navy" style="margin-right:8px">Fees</span><strong style="font-size:14px">"WFG products have high fees / MERs of 2–4%"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">This is a Canadian-specific critique (MERs / mutual funds). In the US context, redirect to the value of access and planning.</div>
-<div class="script-block">"Fees are a real conversation and I appreciate you bringing it up — because anyone who dismisses that question doesn't have your best interest in mind. Here's what I'll say: yes, some products have higher costs than a Vanguard index fund. And here's what that buys you: a licensed professional who is accountable, who meets with you in person, who helps you navigate the whole picture — income protection, tax strategy, retirement — not just one account.<br/><br/>The real question isn't the fee. It's what you get for it, and whether you'd actually execute a low-fee strategy on your own. Most people don't. That gap — between what they should do and what they actually do — costs far more than any MER.<br/><br/>We work with 200+ carriers. I don't have one shelf. My job is to find what's right for you — even if that means I recommend something outside of WFG. That's how I sleep at night."</div>
-<div class="coach-note"><strong>Coaching note:</strong> "That's how I sleep at night" is a closer line — use it only when the rapport is there. It signals integrity without sounding rehearsed.</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-navy" style="margin-right:8px">Need</span><strong style="font-size:14px">"I'm young and healthy, why do I need life insurance"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">Reframe from "death benefit" to "cheapest it will ever be" plus living benefits — especially relevant heading into an IUL conversation.</div>
-<div class="script-block">"Honestly, that's the best possible time to have this conversation — because being young and healthy is exactly what makes this affordable. The cost of coverage is based on your age and health today, not what they'll be in 10 or 20 years. Lock it in now, and you're protected at today's rates for life, even if your health changes later.<br/><br/>And depending on how it's structured, this isn't just about what happens if something happens to you — some of these strategies build cash value you can actually use while you're alive, for things like a future home, your kids' education, or supplementing retirement. So really, the question isn't 'why now' — it's 'why would I want to pay more for the same thing later?'"</div>
-<div class="coach-note"><strong>Coaching note:</strong> This is one of the easiest "math" objections — youth equals the lowest price it will ever be. Lead with that fact before anything else.</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-navy" style="margin-right:8px">401k</span><strong style="font-size:14px">"My 401k through work is already enough"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">Don't compete with their 401k — most people are emotionally attached to "I'm already doing something." Build on it, don't attack it.</div>
-<div class="script-block">"That's great — seriously, having something set up through work already puts you ahead of a lot of people, so don't discount that. Here's the thing though: a 401k is one tool, but it's usually just one type of account, with one type of tax treatment, and limited investment choices set by your employer.<br/><br/>The question I'd ask is — do you know what percentage of your retirement income will be taxable later, based on what you're contributing now? Most people have never actually run that number. That's really all we'd be looking at — not replacing what you have, just making sure it's working as hard as it can alongside everything else. Worth 20 minutes to see where you stand?"</div>
-<div class="coach-note"><strong>Coaching note:</strong> "One tool" framing works because it's true and non-threatening — you're adding to their toolbox, not criticizing their hammer.</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-navy" style="margin-right:8px">Annuities</span><strong style="font-size:14px">"Annuities are a scam, I read they're terrible"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">Same playbook as the IUL objection — don't argue the internet take. Differentiate old products from current strategies, and ask what they're actually picturing.</div>
-<div class="script-block">"Yeah, I get why people say that — and honestly, some of the older annuities from years ago deserved that reputation. High fees, long surrender periods, confusing terms. But 'annuity' is actually a huge category — it's like saying 'all cars are bad' because you had one bad experience with one model from 1995.<br/><br/>The strategies we look at today are built very differently — things like principal protection with upside tied to the market, or strategies specifically designed to multiply money for long-term care. Can I ask — when you picture an 'annuity,' what specifically comes to mind? <em>[Listen]</em> Got it — that's actually really different from what I'd be showing you. Want me to show you the difference side by side?"</div>
-<div class="coach-note"><strong>Coaching note:</strong> Get them to define what "annuity" means to them first. 90% of the time they're picturing one specific bad product, not the category.</div>
-</div>
-</div>
-
-<div class="obj-card">
-<div class="obj-hdr" onclick="topObjToggle(this)">
-<div><span class="badge badge-navy" style="margin-right:8px">Bank</span><strong style="font-size:14px">"How is this different from my bank's advisor"</strong></div>
-<span class="rm-chevron"><i class="ti ti-chevron-down"></i></span>
-</div>
-<div class="obj-bdy">
-<div class="badge badge-gray" style="margin-bottom:.75rem">Most bank advisors are limited to in-house products. Position around access and independence — don't bash the bank.</div>
-<div class="script-block">"Good question — and the honest answer is, it really depends on the person, but here's the structural difference. Most bank advisors can really only offer you the bank's own products — that's what they're trained on and incentivized to sell. I work with over 200 different carriers, so I'm not limited to one shelf. That means if something doesn't fit you, I'm not stuck trying to make it fit anyway.<br/><br/>I'd compare it to going to a store that only sells one brand versus going somewhere that can actually shop around for you. Doesn't mean the bank's option is bad — just means you might not be seeing everything that's out there. Want me to show you what else is available for what you're trying to do?"</div>
-<div class="coach-note"><strong>Coaching note:</strong> "200+ carriers" is a real differentiator — repeat it. It's concrete and verifiable, unlike vague claims of "personalized service."</div>
-</div>
-</div>
-
-
-</div>
+<div class="cg-sec" id="cg-mhq">
+<div style="background:#fff;border:1px solid #e2e6ea;border-radius:12px;overflow:hidden">
+<iframe id="mhq-frame" style="width:100%;height:78vh;border:none;display:block" srcdoc=""></iframe>
 </div>
 </div>
 
@@ -940,22 +625,6 @@ function csToggleCard(header){
   body.classList.toggle('open', !isOpen);
   header.classList.toggle('expanded', !isOpen);
   if(chevron) chevron.classList.toggle('open', !isOpen);
-}
-function topObjToggle(header) {
-  var body = header.nextElementSibling;
-  var chev = header.querySelector('.rm-chevron');
-  var isOpen = body.classList.contains('open');
-  // close all open cards in top-obj-wrap
-  var wrap = document.getElementById('obj-list');
-  if (wrap) {
-    wrap.querySelectorAll('.obj-bdy').forEach(function(b){ b.classList.remove('open'); });
-    wrap.querySelectorAll('.rm-chevron').forEach(function(c){ c.classList.remove('open'); });
-  }
-  if (!isOpen) {
-    body.classList.add('open');
-    if (chev) chev.classList.add('open');
-    header.closest('.obj-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
 }
 
 
@@ -1197,5 +866,859 @@ function hMove(d){var n=hSt+d;if(n>=0&&n<hcgStages.length)hSetStage(n);}
 hRenderStages(); hSetStage(0); hRenderMindset(); hRenderRules(); hRenderObj();
 
 </script>
+<template id="mhq-tpl">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Mission HQ — Hyperion Legacy Builders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════════════════
+   HYPERION LIGHT THEME — Mission HQ
+   Palette: Warm cream · Deep navy · WFG Gold · Pure white
+   Type: Playfair Display (display) · Inter (UI)
+   ═══════════════════════════════════════════════════════ */
+:root {
+  --cream:      #ffffff;
+  --cream-dark: #f0f2f5;
+  --white:      #ffffff;
+  --navy:       #1a2a42;
+  --navy-mid:   #243d5c;
+  --navy-light: #345a82;
+  --gold:       #c9a84c;
+  --gold-dark:  #8a6a1e;
+  --gold-bg:    #fef9ec;
+  --text:       #1a2332;
+  --text-2:     #374151;
+  --text-3:     #6b7280;
+  --border:     #e2e6ea;
+  --border-light: #f0f2f5;
+  --shadow-s:   0 1px 4px rgba(0,0,0,.06), 0 2px 8px rgba(0,0,0,.04);
+  --shadow-m:   0 2px 12px rgba(0,0,0,.08), 0 4px 20px rgba(0,0,0,.05);
+  --shadow-l:   0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
+  --r:          12px;
+  --r-sm:       8px;
+  --max-w:      1100px;
+  --serif:      'Plus Jakarta Sans', system-ui, sans-serif;
+  --sans:       'Plus Jakarta Sans', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: #f4f6f8;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── SYSTEM TOPBAR ─────────────────────────────────────── */
+#sys-topbar {
+  background: #1a2a42;
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  border-bottom: 2px solid var(--gold);
+}
+.brand { color: var(--gold); font-weight: 700; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+.topbar-actions { display: flex; gap: 8px; align-items: center; }
+.topbar-actions a,
+.topbar-actions button {
+  background: transparent;
+  color: rgba(255,255,255,.65);
+  border: 1px solid rgba(255,255,255,.2);
+  padding: 5px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--sans);
+  transition: all .15s;
+}
+.topbar-actions a:hover,
+.topbar-actions button:hover {
+  background: rgba(255,255,255,.1);
+  color: #fff;
+}
+.role-chip { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; border: 1px solid; }
+.chip-new { background: rgba(201,168,76,.15); color: var(--gold); border-color: rgba(201,168,76,.4); }
+.chip-exp { background: rgba(26,150,100,.15); color: #2d9e6b; border-color: rgba(26,150,100,.4); }
+
+/* ── SYSTEM NAV ────────────────────────────────────────── */
+#sys-nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 44px;
+  z-index: 9998;
+  box-shadow: var(--shadow-s);
+}
+#sys-nav-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+#sys-nav a {
+  display: inline-block;
+  padding: 12px 10px;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-3);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color .14s;
+}
+#sys-nav a:hover { color: var(--navy); }
+#sys-nav a.active { color: var(--navy); border-bottom-color: var(--gold); font-weight: 700; }
+
+/* ── PAGE LAYOUT ───────────────────────────────────────── */
+.page { max-width: var(--max-w); margin: 0 auto; padding: 0 24px 96px; }
+
+/* ── HERO ──────────────────────────────────────────────── */
+.hero {
+  background: #1a2a42;
+  margin: 0 -24px;
+  padding: 64px 24px 56px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23c9a84c' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+.hero-inner { max-width: var(--max-w); margin: 0 auto; position: relative; z-index: 1; }
+.hero-eyebrow {
+  font-size: 10px; font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 18px; display: flex; align-items: center; gap: 10px;
+}
+.hero-eyebrow::before { content: ''; width: 24px; height: 1.5px; background: var(--gold); }
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(42px, 6vw, 72px);
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.05;
+  margin-bottom: 20px;
+  letter-spacing: -.03em;
+}
+.hero h1 span { color: var(--gold); font-style: italic; }
+.hero-sub {
+  font-size: 16px;
+  color: rgba(255,255,255,.72);
+  max-width: 580px;
+  line-height: 1.75;
+  margin-bottom: 40px;
+}
+
+/* ── METRICS STRIP ─────────────────────────────────────── */
+.metrics-strip {
+  display: flex;
+  gap: 0;
+  border-top: 1px solid rgba(255,255,255,.1);
+  padding-top: 32px;
+  flex-wrap: wrap;
+}
+.metric {
+  flex: 1;
+  min-width: 120px;
+  padding-right: 32px;
+  border-right: 1px solid rgba(255,255,255,.1);
+  margin-right: 32px;
+}
+.metric:last-child { border-right: none; padding-right: 0; margin-right: 0; }
+.metric-num {
+  font-family: var(--serif);
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1;
+  display: block;
+  margin-bottom: 4px;
+}
+.metric-label { font-size: 11px; font-weight: 600; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: .08em; }
+.metric-sub { font-size: 11px; color: rgba(255,255,255,.35); margin-top: 2px; }
+
+/* ── SECTION HEADERS ───────────────────────────────────── */
+.sec-header { margin: 56px 0 28px; }
+.sec-eyebrow {
+  font-size: 10px; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--gold-dark);
+  margin-bottom: 8px; display: flex; align-items: center; gap: 10px;
+}
+.sec-eyebrow::before { content: ''; width: 20px; height: 1.5px; background: var(--gold); }
+.sec-header h2 {
+  font-family: var(--serif);
+  font-size: clamp(26px, 3.5vw, 38px);
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.15;
+  margin-bottom: 10px;
+  letter-spacing: -.01em;
+}
+.sec-header p { font-size: 16px; color: var(--text-2); max-width: 600px; line-height: 1.75; }
+
+/* ── CARDS ─────────────────────────────────────────────── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px 30px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-s);
+  transition: box-shadow .18s, transform .18s;
+}
+.card:hover { box-shadow: var(--shadow-m); transform: translateY(-1px); }
+.card h3 {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+.card p { font-size: 15px; color: var(--text-2); line-height: 1.75; }
+.card-navy { background: #1a2a42; border-color: #1a2a42; }
+.card-navy h3 { color: var(--white); }
+.card-navy p { color: rgba(255,255,255,.78); }
+.card-gold { background: var(--gold-bg); border-color: rgba(201,168,76,.3); }
+.card-gold h3 { color: var(--navy); }
+
+/* ── BADGE ─────────────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 4px;
+  margin-bottom: 12px;
+}
+.badge-navy { background: #1a2a42; color: var(--gold); }
+.badge-gold { background: var(--gold); color: var(--navy); }
+.badge-green { background: #d4eddf; color: #1a5c3a; }
+.badge-red   { background: #fdeaea; color: #7b1c1c; }
+
+/* ── FOUNDATION QUOTE ──────────────────────────────────── */
+.foundation-block {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 28px 32px;
+  box-shadow: var(--shadow-s);
+}
+.foundation-quote {
+  font-family: var(--serif);
+  font-size: clamp(17px, 2vw, 21px);
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+.foundation-quote em { color: var(--gold-dark); font-style: italic; }
+.foundation-body { font-size: 14px; color: var(--text-2); line-height: 1.8; }
+
+/* ── TEAM ENGINE ───────────────────────────────────────── */
+.engine-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.engine-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 20px;
+  box-shadow: var(--shadow-s);
+}
+.engine-card.lead { border-top: 3px solid var(--navy); }
+.engine-card.ride { border-top: 3px solid var(--gold); }
+.engine-card.coord { border-top: 3px solid #6b7280; }
+.engine-card.team { border-top: 3px solid #1a6644; }
+.engine-role {
+  font-size: 10px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.engine-card.lead .engine-role { color: var(--navy); }
+.engine-card.ride .engine-role { color: var(--gold-dark); }
+.engine-card.coord .engine-role { color: #6b7280; }
+.engine-card.team .engine-role { color: #1a6644; }
+.engine-card h4 { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+.engine-card p { font-size: 12.5px; color: var(--text-3); line-height: 1.6; }
+
+/* ── PLATFORM COMPARISON ───────────────────────────────── */
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media(max-width:600px){ .compare-grid { grid-template-columns: 1fr; } }
+.compare-col { border-radius: var(--r); overflow: hidden; box-shadow: var(--shadow-s); }
+.compare-header { padding: 18px 22px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.compare-col.no .compare-header { background: #fdeaea; color: #7b1c1c; border-bottom: 1px solid #f3c6c6; }
+.compare-col.yes .compare-header { background: #fdf6e3; color: #8a6a1e; border-bottom: 1px solid rgba(201,168,76,.3); }
+.compare-body { background: var(--white); border: 1px solid var(--border); border-top: none; padding: 6px 0; }
+.compare-item { display: flex; align-items: flex-start; gap: 10px; padding: 12px 22px; border-bottom: 1px solid var(--border-light); font-size: 14.5px; }
+.compare-item:last-child { border-bottom: none; }
+.compare-col.no .compare-icon { color: #c0392b; font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.compare-col.yes .compare-icon { color: #1a6644; font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.compare-col.no .compare-item { color: var(--text-2); }
+.compare-col.yes .compare-item { color: var(--text-2); }
+
+/* ── SOCIAL PROOF ──────────────────────────────────────── */
+.proof-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.proof-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  box-shadow: var(--shadow-s);
+  transition: box-shadow .18s;
+}
+.proof-card:hover { box-shadow: var(--shadow-m); }
+.proof-badge { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 8px; display: block; }
+.proof-name { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+.proof-title { font-size: 11px; color: var(--text-3); margin-bottom: 12px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; }
+.proof-body { font-size: 13.5px; color: var(--text-2); line-height: 1.7; }
+.proof-stat {
+  background: var(--gold-bg);
+  border-radius: var(--r-sm);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.proof-stat-num { font-family: var(--serif); font-size: 32px; font-weight: 900; color: var(--navy); line-height: 1; flex-shrink: 0; }
+.proof-stat-info .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--gold-dark); margin-bottom: 3px; }
+.proof-stat-info .desc { font-size: 12.5px; color: var(--text-2); line-height: 1.55; }
+
+/* ── 5 LEVELS DEEP ─────────────────────────────────────── */
+.levels-list { display: flex; flex-direction: column; gap: 0; }
+.level-item {
+  display: flex;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border-light);
+  align-items: flex-start;
+}
+.level-item:last-child { border-bottom: none; }
+.level-num {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: #1a2a42;
+  color: var(--gold);
+  font-family: var(--serif);
+  font-size: 16px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.level-num.final { background: var(--gold); color: var(--navy); }
+.level-body {}
+.level-tag { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); margin-bottom: 4px; }
+.level-q { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+.level-a { font-size: 14.5px; color: var(--text-2); line-height: 1.65; font-style: italic; }
+.level-a strong { font-style: normal; color: var(--navy); }
+
+/* ── WHAT DO YOU DO ────────────────────────────────────── */
+.script-block {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+.script-label { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 8px; display: block; }
+.script-text { font-size: 15px; color: var(--text); line-height: 1.75; font-style: italic; }
+.script-note { font-size: 12px; color: var(--text-3); margin-top: 8px; font-style: normal; }
+
+/* ── COMMAND CENTER ────────────────────────────────────── */
+.cmd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+.cmd-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 22px 24px;
+  text-decoration: none;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  box-shadow: var(--shadow-s);
+  transition: all .18s;
+}
+.cmd-card:hover { box-shadow: var(--shadow-m); transform: translateY(-2px); border-color: var(--gold); }
+.cmd-icon { font-size: 26px; flex-shrink: 0; margin-top: 2px; }
+.cmd-info {}
+.cmd-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.cmd-desc { font-size: 12px; color: var(--text-3); line-height: 1.55; }
+.cmd-arrow { margin-left: auto; color: var(--gold); font-size: 16px; align-self: center; flex-shrink: 0; }
+
+/* ── CONVICTION CLOSE ──────────────────────────────────── */
+.conviction {
+  background: #1a2a42;
+  border-radius: var(--r);
+  padding: 48px 40px;
+  text-align: center;
+  margin-top: 56px;
+  position: relative;
+  overflow: hidden;
+}
+.conviction::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(201,168,76,.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.conviction-quote {
+  font-family: var(--serif);
+  font-size: clamp(18px, 2.5vw, 26px);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.5;
+  margin-bottom: 16px;
+  position: relative;
+  max-width: 700px;
+  margin-left: auto; margin-right: auto;
+}
+.conviction-attr { font-size: 12px; color: var(--gold); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; position: relative; }
+
+/* ── DIVIDER ────────────────────────────────────────────── */
+.divider { height: 1px; background: var(--border); margin: 48px 0; }
+.divider-gold { height: 2px; background: linear-gradient(90deg, var(--gold), transparent); margin: 48px 0; }
+
+/* ── GX MATH ────────────────────────────────────────────── */
+.gx-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+.gx-box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 20px;
+  text-align: center;
+  box-shadow: var(--shadow-s);
+}
+.gx-box.highlight { background: #fdf6e3; border-color: rgba(201,168,76,.35); }
+.gx-num { font-family: var(--serif); font-size: 32px; font-weight: 900; color: var(--gold); display: block; margin-bottom: 4px; }
+.gx-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--navy); }
+.gx-box.highlight .gx-label { color: #1a2a42; }
+.gx-sub { font-size: 11px; color: var(--text-3); margin-top: 3px; }
+.gx-box.highlight .gx-sub { color: #6b7280; }
+.gx-box.highlight .gx-num { color: #1a2a42; }
+.gx-box.highlight .gx-label { color: #1a2a42; font-weight: 700; }
+
+/* ── FOOTER ─────────────────────────────────────────────── */
+.page-footer {
+  background: #1a2a42;
+  margin: 0 -24px;
+  padding: 24px 24px;
+  text-align: center;
+  border-top: 2px solid var(--gold);
+}
+.page-footer p { font-size: 11px; color: rgba(255,255,255,.35); max-width: 720px; margin: 0 auto; line-height: 1.7; }
+.page-footer .footer-label { color: var(--gold); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; font-size: 10px; display: block; margin-bottom: 6px; }
+
+/* ── SWITCH ROLE MODAL ──────────────────────────────────── */
+#sw-overlay { display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);align-items:center;justify-content:center; }
+#sw-box { background:var(--white);border:1px solid var(--border);border-radius:16px;padding:36px 32px;width:100%;max-width:360px;box-shadow:var(--shadow-l);position:relative; }
+#sw-box h3 { font-family:var(--serif);font-size:22px;font-weight:700;color:var(--navy);margin-bottom:6px; }
+#sw-box p { font-size:13px;color:var(--text-3);margin-bottom:20px; }
+#sw-input { width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:15px;font-family:var(--sans);outline:none;transition:border-color .15s;color:var(--text);background:var(--white); }
+#sw-input:focus { border-color:var(--gold); }
+#sw-err { display:none;font-size:12px;color:#c0392b;margin:8px 0 0;padding:8px 12px;background:#fdeaea;border-radius:6px; }
+.sw-btn { width:100%;padding:13px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--sans);margin-top:10px;border:none;transition:all .15s; }
+.sw-btn-primary { background:var(--navy);color:var(--white); }
+.sw-btn-primary:hover { background:var(--navy-mid); }
+.sw-btn-secondary { background:transparent;color:var(--text-3);border:1px solid var(--border) !important;margin-top:6px; }
+.sw-btn-secondary:hover { background:var(--cream); }
+
+/* ── RESPONSIVE ─────────────────────────────────────────── */
+@media(max-width:768px){
+  .hero { padding: 44px 20px 40px; }
+  .metrics-strip { gap: 0; }
+  .metric { min-width: 50%; padding: 14px 0; border-right: none; margin-right: 0; border-bottom: 1px solid rgba(255,255,255,.1); }
+  .metric:last-child { border-bottom: none; }
+  .proof-grid { grid-template-columns: 1fr; }
+  .cmd-grid { grid-template-columns: 1fr 1fr; }
+  .conviction { padding: 36px 24px; }
+  .page { padding: 0 16px 80px; }
+}
+</style>
+<style>
+/* ── BLACKROCK-STYLE CLEANUP ── */
+
+/* Bolder, cleaner headings */
+.sec-header h2 {
+  font-size: clamp(28px, 4vw, 44px) !important;
+  font-weight: 800 !important;
+  letter-spacing: -.02em !important;
+  color: #1a2a42 !important;
+}
+
+/* Cleaner eyebrow — no decorative line, just pure label */
+.sec-eyebrow {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: .14em !important;
+  color: #8a6a1e !important;
+  margin-bottom: 10px !important;
+}
+.sec-eyebrow::before { display: none !important; }
+
+/* More breathing room between sections */
+.sec-header { margin: 72px 0 32px !important; }
+
+/* Cleaner cards — less radius, sharper */
+.card {
+  border-radius: 8px !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 8px rgba(0,0,0,.04) !important;
+}
+.card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.1) !important; transform: none !important; }
+
+/* Card headings bolder */
+.card h3 {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  letter-spacing: -.01em !important;
+  color: #1a2a42 !important;
+}
+.card p { font-size: 15px !important; line-height: 1.7 !important; }
+
+/* Foundation quote — cleaner */
+.foundation-quote {
+  font-size: clamp(18px, 2.2vw, 24px) !important;
+  font-weight: 700 !important;
+  letter-spacing: -.01em !important;
+  line-height: 1.45 !important;
+}
+.foundation-block {
+  border-radius: 8px !important;
+  padding: 36px 40px !important;
+  border-left-width: 5px !important;
+}
+
+/* Compare items larger */
+.compare-item { font-size: 15px !important; padding: 14px 24px !important; }
+.compare-header { font-size: 12px !important; padding: 18px 24px !important; letter-spacing: .1em !important; }
+.compare-col { border-radius: 8px !important; }
+.compare-body { border-radius: 0 0 8px 8px !important; }
+
+/* Proof cards */
+.proof-name { font-size: 22px !important; font-weight: 800 !important; letter-spacing: -.01em !important; }
+.proof-body { font-size: 14.5px !important; line-height: 1.7 !important; }
+.proof-card { border-radius: 8px !important; padding: 28px 26px !important; }
+
+/* Level items */
+.level-q { font-size: 15px !important; font-weight: 700 !important; }
+.level-a { font-size: 15px !important; line-height: 1.7 !important; }
+.level-item { padding: 24px 0 !important; }
+
+/* Script blocks */
+.script-block { padding: 20px 24px !important; margin-bottom: 14px !important; }
+.script-text { font-size: 15.5px !important; line-height: 1.8 !important; }
+.script-note { font-size: 13px !important; }
+
+/* Engine cards */
+.engine-card { border-radius: 8px !important; padding: 24px !important; }
+.engine-card h4 { font-size: 16px !important; font-weight: 700 !important; }
+.engine-card p { font-size: 14px !important; }
+
+/* GX boxes */
+.gx-box { border-radius: 8px !important; padding: 28px 20px !important; }
+.gx-num { font-size: 38px !important; font-weight: 800 !important; }
+.gx-label { font-size: 12px !important; font-weight: 700 !important; letter-spacing: .08em !important; }
+.gx-sub { font-size: 13px !important; }
+
+/* Conviction block */
+.conviction { border-radius: 8px !important; }
+.conviction-quote { font-size: clamp(19px, 2.5vw, 27px) !important; font-weight: 700 !important; letter-spacing: -.01em !important; }
+
+/* Command center */
+.cmd-card { border-radius: 8px !important; }
+.cmd-title { font-size: 15px !important; font-weight: 700 !important; }
+.cmd-desc { font-size: 13px !important; }
+.cmd-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.1) !important; transform: none !important; border-color: #c9a84c !important; }
+
+/* Dividers — thinner, cleaner */
+.divider { background: #e8eaed !important; margin: 56px 0 !important; }
+
+/* Proof stats */
+.proof-stat { border-radius: 8px !important; }
+.proof-stat-num { font-size: 36px !important; font-weight: 800 !important; }
+
+/* Hero eyebrow — clean */
+.hero-eyebrow { font-size: 11px !important; font-weight: 600 !important; letter-spacing: .14em !important; }
+.hero-eyebrow::before { display: none !important; }
+
+/* Remove hero texture pattern */
+.hero::before { display: none !important; }
+
+/* Hero sub text */
+.hero-sub { font-size: 17px !important; line-height: 1.7 !important; }
+
+/* Metric labels */
+.metric-label { font-size: 12px !important; font-weight: 700 !important; }
+.metric-sub { font-size: 12px !important; }
+
+/* Nav */
+#sys-nav a { font-size: 12px !important; font-weight: 600 !important; }
+
+/* Proof badge */
+.proof-badge { font-size: 11px !important; font-weight: 700 !important; }
+.proof-title { font-size: 12px !important; }
+
+/* Engine role labels */
+.engine-role { font-size: 11px !important; font-weight: 700 !important; }
+
+/* Level nums */
+.level-num { font-size: 15px !important; font-weight: 800 !important; }
+
+/* Script label */
+.script-label { font-size: 11px !important; font-weight: 700 !important; letter-spacing: .1em !important; }
+
+/* Badge */
+.badge { font-size: 11px !important; padding: 4px 10px !important; border-radius: 4px !important; }
+</style>
+</head>
+<body>
+
+
+
+<div class="page">
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Hyperion Legacy Builders · Revolution Financial Management</div>
+    <h1>No Family<br/><span>Left Behind.</span></h1>
+    <p class="hero-sub">We exist to deliver the financial strategies that <strong style="color:#fff">wealthy families have used for generations</strong> — to every doctor, teacher, immigrant family, and professional who was never given a seat at the table.</p>
+    <div class="metrics-strip">
+      <div class="metric"><span class="metric-num">9</span><div class="metric-label">GX Team Target</div><div class="metric-sub">People doing GX1 monthly</div></div>
+      <div class="metric"><span class="metric-num">90K</span><div class="metric-label">Points → SMD</div><div class="metric-sub">3-month qualification</div></div>
+      <div class="metric"><span class="metric-num">3</span><div class="metric-label">SMDs → EMD</div><div class="metric-sub">Build three, promote once</div></div>
+      <div class="metric"><span class="metric-num">500K</span><div class="metric-label">Points → EMD</div><div class="metric-sub">6-month qualification</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── OUR FOUNDATION ── -->
+<div class="sec-header">
+  <div class="sec-eyebrow">Our Foundation</div>
+  <h2>Why This Business Exists</h2>
+</div>
+<div class="foundation-block">
+  <div class="foundation-quote">"Most families — including highly educated professionals — have never accessed the financial strategies <em>wealthy families</em> have used for generations. We exist to close that gap. Permanently."</div>
+  <p class="foundation-body">Every doctor, teacher, immigrant family, and professional who never got a seat at the table deserves a real plan, real protection, and a real shot at financial independence. This is not a sales business. It is a stewardship mission. <strong>The income is the byproduct of the impact.</strong></p>
+</div>
+
+<!-- ── FAMILY ENGINE ── -->
+<div class="sec-header">
+  <div class="sec-eyebrow">Your Core Unit</div>
+  <h2>The Family Engine</h2>
+  <p>Your immediate team structure — built to scale together from day one.</p>
+</div>
+<div class="engine-grid">
+  <div class="engine-card lead">
+    <div class="engine-role">Lead Builder</div>
+    <h4>You</h4>
+    <p>Recruiting, closing, field leadership, SMD development, community outreach</p>
+  </div>
+  <div class="engine-card ride">
+    <div class="engine-role">Culture & Care</div>
+    <h4>Ride or Die</h4>
+    <p>Follow-up, client nurture, team culture, admin, recognition</p>
+  </div>
+  <div class="engine-card coord">
+    <div class="engine-role">Operations</div>
+    <h4>Base Shop Coordinator</h4>
+    <p>Scheduling, BPM logistics, licensing tracking, systems</p>
+  </div>
+  <div class="engine-card team">
+    <div class="engine-role">Your Team</div>
+    <h4>Builders</h4>
+    <p>Associates doing GX, serving families, building their own legacy</p>
+  </div>
+</div>
+
+<!-- ── GX MATH ── -->
+<div class="sec-header">
+  <div class="sec-eyebrow">GX Math → SMD</div>
+  <h2>The System That Builds Itself</h2>
+</div>
+<div class="gx-row">
+  <div class="gx-box"><span class="gx-num">3</span><div class="gx-label">GX1 Standard</div><div class="gx-sub">3 recruits · 15K pts per person/month</div></div>
+  <div class="gx-box highlight"><span class="gx-num">9</span><div class="gx-label">SMD Qualification</div><div class="gx-sub">9 people on GX1 = 90K pts · 3 months</div></div>
+  <div class="gx-box"><span class="gx-num">$100K–$900K</span><div class="gx-label">Income Proof</div><div class="gx-sub">1 GX/mo → 9 GX/mo in base shop</div></div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── PLATFORM COMPARISON ── -->
+<div class="sec-header">
+  <div class="sec-eyebrow">Platform & Credibility</div>
+  <h2>Why This Platform Wins</h2>
+  <p>Side by side — what you're asking someone to compare when they push back.</p>
+</div>
+<div class="compare-grid">
+  <div class="compare-col no">
+    <div class="compare-header">✕ Traditional Financial Services</div>
+    <div class="compare-body">
+      <div class="compare-item"><span class="compare-icon">✕</span>$50K–$200K+ just to open a practice</div>
+      <div class="compare-item"><span class="compare-icon">✕</span>Locked to one company's strategies</div>
+      <div class="compare-item"><span class="compare-icon">✕</span>Income stops when you stop working</div>
+      <div class="compare-item"><span class="compare-icon">✕</span>Wealthy clients only — most families excluded</div>
+      <div class="compare-item"><span class="compare-icon">✕</span>Years before real momentum builds</div>
+      <div class="compare-item"><span class="compare-icon">✕</span>No team leverage — it's all on you</div>
+      <div class="compare-item"><span class="compare-icon">✕</span>One company's agenda, not the client's</div>
+    </div>
+  </div>
+  <div class="compare-col yes">
+    <div class="compare-header">✓ WFG / Revolution Financial</div>
+    <div class="compare-body">
+      <div class="compare-item"><span class="compare-icon">✓</span>~$700 in CA · $200–300 most states</div>
+      <div class="compare-item"><span class="compare-icon">✓</span>200+ firms — always the best solution for the client</div>
+      <div class="compare-item"><span class="compare-icon">✓</span>Residual income scales through your team</div>
+      <div class="compare-item"><span class="compare-icon">✓</span>Built for every family — inclusion is the mission</div>
+      <div class="compare-item"><span class="compare-icon">✓</span>Full training infrastructure from day one</div>
+      <div class="compare-item"><span class="compare-icon">✓</span>Business asset that outlasts your personal effort</div>
+      <div class="compare-item"><span class="compare-icon">✓</span>Independent — we work for the family, not the carrier</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SOCIAL PROOF ── -->
+<div class="sec-header">
+  <div class="sec-eyebrow">Names & Institutions That Validate the Platform</div>
+  <h2>Who Stands Behind This</h2>
+</div>
+<div class="proof-grid">
+  <div class="proof-card">
+    <span class="proof-badge">Built His Foundation Here</span>
+    <div class="proof-name">Ed Mylett</div>
+    <div class="proof-title">Top Global Podcast · Wealth & Growth</div>
+    <p class="proof-body">Ed Mylett didn't discover WFG — he built his entire foundation here, starting as an associate with no track record. That origin story is not a coincidence. It is the proof of what this platform can do when someone goes all in.</p>
+  </div>
+  <div class="proof-card">
+    <span class="proof-badge">Former NFL Champion</span>
+    <div class="proof-name">Marshall Faulk</div>
+    <div class="proof-title">Hall of Fame · Financial Advocate</div>
+    <p class="proof-body">Marshall Faulk chose this platform not for a check but because he believes in what it does for families. When a Hall of Famer puts his name on something, he's staking his reputation. He staked it here.</p>
+  </div>
+  <div class="proof-card">
+    <span class="proof-badge">Our Parent Company</span>
+    <div class="proof-name">Aegon / Transamerica</div>
+    <div class="proof-title">Est. 1800s · $700B+ in Assets</div>
+    <p class="proof-body">Nearly 200 years of operation. Hundreds of billions in assets under management. This is not a startup. The financial weight behind every policy we write is one of the most trusted institutions in global finance.</p>
+  </div>
+</div>
+<div class="gx-row" style="margin-top:14px">
+  <div class="proof-stat"><div class="proof-stat-num">200+</div><div class="proof-stat-info"><div class="label">Elite Partner Firms</div><div class="desc">Never locked in — always the best solution for the family.</div></div></div>
+  <div class="proof-stat"><div class="proof-stat-num">$1.37B</div><div class="proof-stat-info"><div class="label">Paid to Field in 2023</div><div class="desc">25+ years without missing a single payout.</div></div></div>
+  <div class="proof-stat"><div class="proof-stat-num">A+</div><div class="proof-stat-info"><div class="label">BBB Rating</div><div class="desc">Johns Creek, GA — earned through 95,000+ agents and decades of integrity.</div></div></div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── 5 LEVELS DEEP ── -->
+<div class="sec-header">
+  <div class="sec-eyebrow">Trustworthy Selling · EPR Framework</div>
+  <h2>The 5 Levels Deep Why</h2>
+  <p>Surface answers don't build lasting motivation. Go five levels deep with every associate and prospect to find the real reason they're here — the one they'll fight for when things get hard.</p>
+</div>
+<div class="card" style="padding:0;overflow:hidden">
+  <div class="levels-list" style="padding:0 28px">
+    <div class="level-item"><div class="level-num">L1</div><div class="level-body"><div class="level-tag">Surface Level</div><div class="level-q">"Why did you join RFM?"</div><div class="level-a">Common: <strong>"To make extra money."</strong> — Not enough to sustain action when things get hard.</div></div></div>
+    <div class="level-item"><div class="level-num">L2</div><div class="level-body"><div class="level-tag">Going Deeper</div><div class="level-q">"Why do you need the extra money?"</div><div class="level-a">Typical: <strong>"To pay off debt / help my family."</strong> — Still general. Keep going.</div></div></div>
+    <div class="level-item"><div class="level-num">L3</div><div class="level-body"><div class="level-tag">Getting Specific</div><div class="level-q">"What does helping your family look like — specifically?"</div><div class="level-a">Getting real: <strong>"My mom is struggling. I want to buy her a house."</strong></div></div></div>
+    <div class="level-item"><div class="level-num">L4</div><div class="level-body"><div class="level-tag">Emotional Core</div><div class="level-q">"What would that mean to you?"</div><div class="level-a">The feeling: <strong>"She sacrificed everything for me. She's never had financial security."</strong></div></div></div>
+    <div class="level-item" style="border-bottom:none"><div class="level-num final">L5</div><div class="level-body"><div class="level-tag">The Real Why — Write This on Your Mirror</div><div class="level-q">"So when things get hard — what are you <em>really</em> fighting for?"</div><div class="level-a"><strong>"I'm fighting to change the story for my family — forever."</strong></div></div></div>
+  </div>
+</div>
+<div class="gx-row" style="margin-top:14px">
+  <div class="card card-gold" style="margin-bottom:0"><div class="badge badge-navy">New Associates</div><h3 style="font-size:15px">Time & Freedom</h3><p style="font-size:13px">Motivated by escaping the 9–5, being present for kids, early debt freedom. Anchor to a vivid future moment — not a number.</p></div>
+  <div class="card" style="margin-bottom:0"><div class="badge badge-gold">Seasoned Builders</div><h3 style="font-size:15px">Legacy & Leadership</h3><p style="font-size:13px">Motivated by team legacy, generational wealth, proving something. Connect prospecting to a team that outlasts them.</p></div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── WHAT DO YOU DO ── -->
+<div class="sec-header">
+  <div class="sec-eyebrow">Field-Ready · Social Events & Strangers</div>
+  <h2>Handling "What Do You Do?"</h2>
+  <p>You will get this question everywhere. Have one clean answer ready — then stop talking and let them reveal themselves.</p>
+</div>
+<div class="script-block">
+  <span class="script-label">Short Version — Social Event, Stranger</span>
+  <div class="script-text">"I have an agency where I get people licensed and trained to do complimentary financial plans for businesses and families — saving on taxes, building wealth, anything to do with money."</div>
+  <div class="script-note">Then ask: "What do you do?" — and stop. Let them talk. The silence after your answer is intentional. Don't fill it.</div>
+</div>
+<div class="script-block">
+  <span class="script-label">When they ask "Like what?"</span>
+  <div class="script-text">"Most people are paying more in taxes than they need to, or they have life insurance that's working against them. We look at the full picture and fix whatever's broken."</div>
+</div>
+<div class="script-block">
+  <span class="script-label">When they seem interested</span>
+  <div class="script-text">"Honestly it's easier to show you than explain it. I do a free 20-minute financial review — what does your schedule look like next week?"</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── COMMAND CENTER ── -->
+<div class="sec-header">
+  <div class="sec-eyebrow">Your System</div>
+  <h2>Command Center</h2>
+  <p>Every tool, script, and training resource — one click away.</p>
+</div>
+<div class="cmd-grid">
+  <a class="cmd-card" href="fast-start-onboarding.html"><span class="cmd-icon">🚀</span><div class="cmd-info"><div class="cmd-title">Fast Start Onboarding</div><div class="cmd-desc">Licensing, Fast Start, GX Program, SMD Path, Business Plan</div></div><span class="cmd-arrow">→</span></a>
+  <a class="cmd-card" href="prospecting.html"><span class="cmd-icon">📋</span><div class="cmd-info"><div class="cmd-title">Prospecting</div><div class="cmd-desc">Build the List, Lock Appointments, Referral Mastery, Recruit Profiles</div></div><span class="cmd-arrow">→</span></a>
+  <a class="cmd-card" href="contact-scripts.html"><span class="cmd-icon">📞</span><div class="cmd-info"><div class="cmd-title">Contact Scripts</div><div class="cmd-desc">Hyperion Call Guide, Quick Scripts, 3-Call System, Invites</div></div><span class="cmd-arrow">→</span></a>
+  <a class="cmd-card" href="objections.html"><span class="cmd-icon">🛡️</span><div class="cmd-info"><div class="cmd-title">Objections</div><div class="cmd-desc">Full objection accordion, Reddit module, word-for-word responses</div></div><span class="cmd-arrow">→</span></a>
+  <a class="cmd-card" href="presentations.html"><span class="cmd-icon">🎞</span><div class="cmd-info"><div class="cmd-title">Presentations</div><div class="cmd-desc">RFM Flip Chart, BPM Presentation, Zoom Script, External Links</div></div><span class="cmd-arrow">→</span></a>
+  <a class="cmd-card" href="closing.html"><span class="cmd-icon">🤝</span><div class="cmd-info"><div class="cmd-title">Closing / Helping Family</div><div class="cmd-desc">Close & Partner, Help a Family, LTC Campaign</div></div><span class="cmd-arrow">→</span></a>
+  <a class="cmd-card" href="identity-shift.html"><span class="cmd-icon">💡</span><div class="cmd-info"><div class="cmd-title">Identity Shift</div><div class="cmd-desc">Big Thinking Guide, Trustworthy Selling, Terms & Identity</div></div><span class="cmd-arrow">→</span></a>
+</div>
+
+<!-- ── CONVICTION CLOSE ── -->
+<div class="conviction">
+  <div class="conviction-quote">"Every conversation is a service, not a pitch. Every family we protect is a legacy secured. Every associate we develop is a life transformed. This is not a job. This is stewardship."</div>
+  <div class="conviction-attr">— Hyperion Legacy Builders · South Bay Los Angeles · SMD in 90 days. EMD in 6 months.</div>
+</div>
+
+<!-- ── FOOTER ── -->
+<div class="page-footer">
+  <span class="footer-label">For Training Purposes Only</span>
+  <p>This material is intended exclusively for licensed associates and team members of Hyperion Legacy Builders / Revolution Financial Management. It is not for public distribution. Content is provided for internal education and field training only. Not financial, legal, or investment advice.</p>
+</div>
+
+</div><!-- /page -->
+
+<!-- SWITCH ROLE MODAL -->
+
+</body>
+</html>
+
+</template>
+<script>
+(function(){
+  var loaded=false;
+  var orig = window.cgShow;
+  window.cgShow = function(id, btn){
+    orig(id, btn);
+    if(id==='mhq' && !loaded){
+      var fr=document.getElementById('mhq-frame');
+      fr.srcdoc = document.getElementById('mhq-tpl').innerHTML;
+      loaded=true;
+    }
+  };
+})();
+</script>
+
 </body>
 </html>
