@@ -416,6 +416,12 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--cream
 .badge-gold  { background: #fdf6e3 !important; color: #8a6a1e !important; }
 .rm-wrap-lite .rm-chevron{transition:transform .2s;font-size:14px;color:#c9a84c}
 
+
+/* copy button */
+.copy-btn{background:#fff;border:1px solid #e2e6ea;border-radius:6px;padding:4px 10px;font-size:11.5px;font-weight:700;color:#1a2a42;cursor:pointer;margin-right:10px;flex-shrink:0;font-family:inherit;transition:all .15s;white-space:nowrap}
+.copy-btn:hover{border-color:#c9a84c;color:#8a6a1e}
+.copy-btn.done{background:#f0f7ec;border-color:#639922;color:#2d5010}
+
 </style>
 </head>
 <body>
@@ -472,6 +478,7 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--cream
 <div class="script-card-label">Program Script · Call / They'll Answer</div>
 <div class="script-card-title">New Associate - Hot Market</div>
 </div>
+<button class="copy-btn" onclick="csCopy(event,this)">📋 Copy</button>
 <span class="chevron">▾</span>
 </div>
 <div class="script-body">
@@ -495,6 +502,7 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--cream
 <div class="script-card-label">Partnered Up - New Associate Invitation</div>
 <div class="script-card-title">New Associate — Hot Market</div>
 </div>
+<button class="copy-btn" onclick="csCopy(event,this)">📋 Copy</button>
 <span class="chevron">▾</span>
 </div>
 <div class="script-body">
@@ -514,6 +522,7 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--cream
 <div class="script-card-label">New Associate · Text Intro</div>
 <div class="script-card-title">3-Way Text — Hot Market</div>
 </div>
+<button class="copy-btn" onclick="csCopy(event,this)">📋 Copy</button>
 <span class="chevron">▾</span>
 </div>
 <div class="script-body">
@@ -532,6 +541,7 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--cream
 <div class="script-card-label">BPM Invitation · Hot / Warm</div>
 <div class="script-card-title">BPM Invite — Webinar</div>
 </div>
+<button class="copy-btn" onclick="csCopy(event,this)">📋 Copy</button>
 <span class="chevron">▾</span>
 </div>
 <div class="script-body">
@@ -554,6 +564,7 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--cream
 <div class="script-card-label">Experienced Associate · Hot / Warm</div>
 <div class="script-card-title">Experienced Associate Invite</div>
 </div>
+<button class="copy-btn" onclick="csCopy(event,this)">📋 Copy</button>
 <span class="chevron">▾</span>
 </div>
 <div class="script-body">
@@ -565,6 +576,95 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--cream
           "Hey, when are you free for like 20–30 minutes? I just want to show you what we're building and what we're looking for. No pressure at all — I genuinely just thought of you. That's it."
         </div>
 <div class="tip-box"><span class="tip-icon">💡</span> Genuine, no-pressure. Quick conversation only.</div>
+</div>
+<!-- The scripts — warm market blitz pack -->
+<div class="quick-key" style="margin-top:18px">
+<div class="qk-icon">📲</div>
+<div class="qk-text"><strong>The scripts.</strong> Nothing fancy. Screenshot these, adapt the blanks, and blitz. The best market is your warm market — that's where the trust already lives.</div>
+</div>
+<!-- Project Invite -->
+<div class="script-card">
+<div class="script-card-header" onclick="csToggleCard(this)">
+<div class="card-icon icon-navy">🔥</div>
+<div class="script-card-meta">
+<div class="script-card-label">Warm Market · One-on-One</div>
+<div class="script-card-title">The Project Invite</div>
+</div>
+<button class="copy-btn" onclick="csCopy(event,this)">📋 Copy</button>
+<span class="chevron">▾</span>
+</div>
+<div class="script-body">
+<div class="script-text">"Hey [Name]! How was work this past week? How are the kids?<br/><br/>Hey — I'm working on a project with a friend of mine and I want to share it with you. When's a good time to hop on a quick Zoom, maybe later today or tomorrow?"</div>
+<div class="script-divider">They ask: "What are you working on?"</div>
+<div class="script-text">"Glad you asked — it's financial education, the stuff they never taught us in school, plus a way to open another stream of income. So — are you better in the morning or the afternoon? Three or four?"</div>
+</div>
+</div>
+<!-- Soft Re-Take -->
+<div class="script-card">
+<div class="script-card-header" onclick="csToggleCard(this)">
+<div class="card-icon icon-gold">🌊</div>
+<div class="script-card-meta">
+<div class="script-card-label">When They Hesitate</div>
+<div class="script-card-title">The Soft Re-Take</div>
+</div>
+<button class="copy-btn" onclick="csCopy(event,this)">📋 Copy</button>
+<span class="chevron">▾</span>
+</div>
+<div class="script-body">
+<div class="script-divider">They stall: "I'll check my schedule and let you know."</div>
+<div class="script-text">"Hey, you know what — I don't even know if it'll resonate with you, but it's valuable. And you might know someone who could benefit, so you could always just refer me. Want to do this evening after dinner, or tomorrow after church?"</div>
+</div>
+</div>
+<!-- New Venture -->
+<div class="script-card">
+<div class="script-card-header" onclick="csToggleCard(this)">
+<div class="card-icon icon-green">🚀</div>
+<div class="script-card-meta">
+<div class="script-card-label">Experienced Associate</div>
+<div class="script-card-title">The New Venture</div>
+</div>
+<button class="copy-btn" onclick="csCopy(event,this)">📋 Copy</button>
+<span class="chevron">▾</span>
+</div>
+<div class="script-body">
+<div class="script-text">"Hey [Name], hoping you're doing great. I'm starting a new venture and I'm really excited about it. I'd love to share how I'm helping people outside of [nursing / teaching / real estate] — you might know someone who could benefit. How's your schedule [day] or [day] for a quick Zoom?"</div>
+</div>
+</div>
+<!-- Webinar Drop -->
+<div class="script-card">
+<div class="script-card-header" onclick="csToggleCard(this)">
+<div class="card-icon icon-navy">🖥</div>
+<div class="script-card-meta">
+<div class="script-card-label">Invite to the BPM</div>
+<div class="script-card-title">The Webinar Drop</div>
+</div>
+<button class="copy-btn" onclick="csCopy(event,this)">📋 Copy</button>
+<span class="chevron">▾</span>
+</div>
+<div class="script-body">
+<div class="script-text">"Hey [Name], working on a project with a friend of mine and I want to share it with you. We've got a free webinar this Saturday at 9am Pacific — are you free to tune in?"</div>
+<div class="script-divider">Not available? Book a Zoom instead:</div>
+<div class="script-text">"All good! How's your schedule Monday or Tuesday for a quick Zoom?"</div>
+</div>
+</div>
+<!-- Three Good Qualities -->
+<div class="script-card">
+<div class="script-card-header" onclick="csToggleCard(this)">
+<div class="card-icon icon-red">🤝</div>
+<div class="script-card-meta">
+<div class="script-card-label">Referral Call · Advanced</div>
+<div class="script-card-title">The Three Good Qualities</div>
+</div>
+<button class="copy-btn" onclick="csCopy(event,this)">📋 Copy</button>
+<span class="chevron">▾</span>
+</div>
+<div class="script-body">
+<div class="script-text">"Hey [Name], this is [You]. I'm calling on behalf of [Referrer] — did she mention I'd be calling?"</div>
+<div class="script-divider">"No" — that's fine.</div>
+<div class="script-text">"No worries, I'm sure she's just been busy. She mentioned you two are co-workers and that you're one of her best. Here's why I'm calling — she's making a big move into entrepreneurship. Based on what she said about you — reliable, hardworking, great with people — I figured it made sense to reach out. I don't know too much about you, though — what do you do?"</div>
+<div class="script-divider">They share.</div>
+<div class="script-text">"Wonderful. I'd love to share what we do and see if there's a good fit — and if not, no worries, you might know someone who'd benefit. How's your schedule for a quick Zoom, after work today or tomorrow?"</div>
+</div>
 </div>
 </div>
 <!-- WHY -->
@@ -597,6 +697,8 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--cream
 <p>Often motivated by building a team, creating generational wealth, or proving something to themselves. Connect prospecting to building a team that outlasts them.</p>
 </div>
 </div>
+
+
 </div>
 </div>
 </div>
@@ -627,6 +729,17 @@ function csToggleCard(header){
   if(chevron) chevron.classList.toggle('open', !isOpen);
 }
 
+
+
+function csCopy(ev, btn){
+  ev.stopPropagation();
+  var card = btn.closest('.script-card');
+  var parts = card.querySelectorAll('.script-text');
+  var txt = Array.prototype.map.call(parts, function(p){ var t=document.createElement('div'); t.innerHTML=p.innerHTML.replace(/<br\s*\/?>/gi,'\n'); return t.textContent.trim(); }).join('\n\n');
+  function done(){ btn.textContent='\u2713 Copied'; btn.classList.add('done'); setTimeout(function(){ btn.textContent='\ud83d\udccb Copy'; btn.classList.remove('done'); },1600); }
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done, done); }
+  else{ var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); done(); }
+}
 
 const hcgStages=[
   {
