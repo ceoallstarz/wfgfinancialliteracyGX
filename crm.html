@@ -106,6 +106,20 @@
   .empty{text-align:center;color:var(--muted);padding:40px 16px;font-size:13px}
   .ref-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px}
   .ref-row b{color:var(--navy)}
+  #pendingScreen{position:fixed;inset:0;background:var(--navy);display:flex;align-items:center;justify-content:center;z-index:101;padding:20px}
+  .login-swap{margin-top:12px;font-size:13px;color:#5b6b7f}
+  .login-swap a{color:var(--navy);font-weight:700}
+  .scope-wrap{display:flex;align-items:center;gap:6px;margin-left:auto}
+  .scope-wrap select{background:var(--navy-soft);color:var(--gold-soft);border:1px solid #3a4d6c;
+    border-radius:8px;padding:7px 10px;font-size:13px;font-weight:600;font-family:inherit}
+  .mem-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #eee7d8;flex-wrap:wrap}
+  .mem-row b{font-size:14px}
+  .mem-row .who{flex:1;min-width:140px}
+  .mem-row small{color:var(--muted);display:block}
+  .badge{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+    padding:3px 8px;border-radius:20px;background:#eee7d8;color:#6b6350}
+  .badge.leader{background:#1a2a42;color:#c9a84c}
+  .badge.pending{background:#f4d9a0;color:#7a5a10}
   #loginScreen{position:fixed;inset:0;background:var(--navy);display:flex;align-items:center;justify-content:center;z-index:100;padding:20px}
   .login-card{background:var(--white);border-radius:16px;padding:30px;width:100%;max-width:380px;text-align:center}
   .login-card .logo{margin:0 auto 12px;width:52px;height:52px;font-size:22px;border-color:var(--gold);color:var(--gold);background:var(--navy)}
@@ -124,6 +138,14 @@
   max-height:280px;overflow:auto;margin:0 0 10px;
 }
 .dna-empty{font-size:13px;color:var(--muted);margin-bottom:8px}
+.brief{border:1px solid #1a2a42;border-radius:10px;overflow:hidden;margin-bottom:10px}
+.brief-head{background:#1a2a42;color:#c9a84c;font-size:11px;font-weight:800;
+  letter-spacing:.12em;text-transform:uppercase;padding:7px 12px}
+.brief-body{white-space:pre-wrap;font-size:13px;line-height:1.6;padding:12px 14px;
+  max-height:340px;overflow:auto;background:#fff}
+.dna-raw{margin-bottom:6px}
+.dna-raw summary{cursor:pointer;font-size:12px;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.1em;padding:4px 0}
 .dna-link{
   width:100%;font-size:12px;font-family:ui-monospace,Menlo,monospace;
   padding:9px 11px;border:1px solid #e2dccd;border-radius:8px;background:#faf7f0;
@@ -137,15 +159,29 @@
 </head>
 <body>
 
+<div id="pendingScreen" style="display:none">
+  <div class="login-card">
+    <div class="logo">HL</div>
+    <h2>You're in the queue</h2>
+    <p style="color:#5b6b7f;font-size:14px;margin:10px 0 16px">
+      Your account is created. A team leader has to approve it before your
+      pipeline opens up. You'll be able to sign in normally once that's done.</p>
+    <button class="btn sm" style="background:var(--navy);color:#fff" onclick="signOutUser()">Sign out</button>
+  </div>
+</div>
+
 <div id="loginScreen">
   <div class="login-card">
     <div class="logo">HL</div>
     <h2>Hyperion Pipeline Command</h2>
     <div class="tag" style="color:var(--gold)">NO FAMILY LEFT BEHIND</div>
+    <input type="text" id="signupName" placeholder="Your full name" style="display:none">
     <input type="email" id="loginEmail" placeholder="Email" autocomplete="username">
     <input type="password" id="loginPass" placeholder="Password" autocomplete="current-password">
-    <button class="btn gold" style="width:100%" onclick="doLogin()">Sign In</button>
+    <button class="btn gold" style="width:100%" id="authBtn" onclick="doLogin()">Sign In</button>
     <div class="login-err" id="loginErr"></div>
+    <div class="login-swap"><span id="swapText">New associate?</span>
+      <a href="#" onclick="swapAuth();return false" id="swapLink">Create an account</a></div>
     <div class="setup-note" id="setupNote" style="display:none"><b>Setup needed:</b> Firebase config has not been pasted in yet. Open this file and follow the setup guide to connect your free Firebase project.</div>
   </div>
 </div>
@@ -156,6 +192,9 @@
     <div class="tag">No Family Left Behind</div>
   </div>
   <div class="save-dot" id="saveDot">Saved</div>
+  <div class="scope-wrap" id="scopeWrap" style="display:none">
+    <select id="scopeSel" onchange="setScope(this.value)"></select>
+  </div>
   <div style="display:flex;gap:8px">
     <button class="btn sm" style="background:var(--navy-soft);color:var(--gold-soft)" onclick="exportData()">Export backup</button>
     <button class="btn sm" style="background:var(--navy-soft);color:var(--gold-soft)" onclick="document.getElementById('importFile').click()">Import</button>
@@ -170,6 +209,7 @@
   <button data-tab="recruits">Recruits <span class="cnt" id="cntRecruits">0</span></button>
   <button data-tab="today" id="navToday">Contact Today <span class="cnt" id="cntToday">0</span></button>
   <button data-tab="power">Power Hour</button>
+  <button data-tab="team" id="navTeam" style="display:none">Team</button>
 </nav>
 
 <main>
@@ -227,6 +267,23 @@
   </section>
 
   <!-- POWER HOUR -->
+  <section id="tab-team" hidden>
+    <div class="card">
+      <h3>Waiting for approval</h3>
+      <div id="teamPending"></div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h3>The team</h3>
+      <div id="teamList"></div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h3>Unassigned contacts</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:10px">
+        Contacts added before ownership existed. Claiming puts them in your pipeline.</p>
+      <div id="teamOrphans"></div>
+    </div>
+  </section>
+
   <section id="tab-power">
     <div class="card" style="max-width:560px;margin:0 auto">
       <h3 id="phDate">Daily Power Hour</h3>
@@ -329,8 +386,12 @@ const firebaseConfig = {
 };
 const TEAM = "hyperion"; // shared team workspace name
 
+/* Coaching brief generator — paste your Cloudflare Worker URL here
+   (looks like https://hyperion-brief.YOURNAME.workers.dev) */
+const BRIEF_URL = "PASTE_WORKER_URL";
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const STAGES = {
@@ -345,7 +406,8 @@ const PH_TARGETS = [
   {key:'refs', label:'Referral requests', target:2}
 ];
 
-let db = { contacts: [], power: {}, dna: [] };
+let db = { contacts: [], power: {}, dna: [], members: [] };
+let me = null, scopeUid = 'all', unsubMembers = null;
 let editingId = null, modalType = 'client';
 let filters = { clients:'All', recruits:'All' };
 let currentTab = 'dash';
@@ -365,8 +427,8 @@ if(configured){
   enableIndexedDbPersistence(fs).catch(()=>{});
   onAuthStateChanged(auth, u => {
     user = u;
-    if(u){ $('loginScreen').style.display='none'; startSync(); }
-    else { $('loginScreen').style.display='flex'; stopSync(); }
+    if(u){ $('loginScreen').style.display='none'; watchMembership(); }
+    else { $('loginScreen').style.display='flex'; $('pendingScreen').style.display='none'; stopSync(); }
   });
 } else {
   $('setupNote').style.display='block';
@@ -382,6 +444,139 @@ window.doLogin = async function(){
   }
 };
 window.signOutUser = function(){ if(auth) signOut(auth); };
+
+let syncing = false;
+function watchMembership(){
+  if(unsubMembers) unsubMembers();
+  unsubMembers = onSnapshot(collection(fs,'teams',TEAM,'members'), snap => {
+    db.members = snap.docs.map(d => ({ uid:d.id, ...d.data() }));
+    me = db.members.find(m => m.uid === user.uid) || null;
+    const ok = me && me.status === 'active';
+    $('pendingScreen').style.display = ok ? 'none' : 'flex';
+    if(ok && !syncing){ syncing = true; startSync(); }
+    if(ok){ renderScope(); renderTeam(); renderAll(); }
+  }, err => {
+    // no members collection yet, or blocked — fall back to working solo
+    $('pendingScreen').style.display = 'none';
+    if(!syncing){ syncing = true; startSync(); }
+  });
+}
+function isLeader(){ return !!me && me.role === 'leader'; }
+function myLineage(){ return (me && me.lineage) ? me.lineage : (user ? [user.uid] : []); }
+function memberName(uid){
+  const m = db.members.find(x => x.uid === uid);
+  return m ? (m.name || m.email || 'Unnamed') : 'Unknown';
+}
+
+window.swapAuth = function(){
+  const signup = $('signupName').style.display === 'none';
+  $('signupName').style.display = signup ? 'block' : 'none';
+  $('authBtn').textContent = signup ? 'Create Account' : 'Sign In';
+  $('authBtn').setAttribute('onclick', signup ? 'doSignup()' : 'doLogin()');
+  $('swapText').textContent = signup ? 'Already have an account?' : 'New associate?';
+  $('swapLink').textContent = signup ? 'Sign in' : 'Create an account';
+  $('loginErr').textContent = '';
+};
+
+window.doSignup = async function(){
+  $('loginErr').textContent = '';
+  const name = $('signupName').value.trim();
+  const email = $('loginEmail').value.trim();
+  const pass = $('loginPass').value;
+  if(!name){ $('loginErr').textContent = 'Put your full name in.'; return; }
+  if(pass.length < 6){ $('loginErr').textContent = 'Password needs 6+ characters.'; return; }
+  try{
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    await setDoc(doc(fs,'teams',TEAM,'members', cred.user.uid), {
+      name, email, role: 'associate', status: 'pending',
+      uplineId: null, lineage: [], created: new Date().toISOString()
+    });
+  }catch(e){
+    $('loginErr').textContent = (e.code === 'auth/email-already-in-use')
+      ? 'That email already has an account — sign in instead.'
+      : 'Could not create the account. ' + (e.message || '');
+  }
+};
+
+/* ---------- team management (leaders) ---------- */
+window.setScope = function(v){ scopeUid = v; renderAll(); };
+
+function renderScope(){
+  const mine = db.members.filter(m => m.status === 'active');
+  const canSeeOthers = isLeader() || mine.some(m => (m.lineage||[]).includes(user.uid) && m.uid !== user.uid);
+  $('scopeWrap').style.display = canSeeOthers ? 'flex' : 'none';
+  $('navTeam').style.display = isLeader() ? 'inline-flex' : 'none';
+  if(!canSeeOthers){ scopeUid = 'all'; return; }
+  const pool = isLeader() ? mine : mine.filter(m => (m.lineage||[]).includes(user.uid));
+  const sel = $('scopeSel');
+  const keep = sel.value || scopeUid;
+  sel.innerHTML = '<option value="all">Everyone\u2019s pipeline</option>' +
+    '<option value="' + user.uid + '">Just mine</option>' +
+    pool.filter(m => m.uid !== user.uid)
+        .map(m => '<option value="' + m.uid + '">' + esc(m.name || m.email) + '</option>').join('');
+  sel.value = keep;
+}
+
+function renderTeam(){
+  if(!isLeader()) return;
+  const pend = db.members.filter(m => m.status !== 'active');
+  const leaders = db.members.filter(m => m.status === 'active');
+  const uplineOpts = leaders.map(m =>
+    '<option value="' + m.uid + '">' + esc(m.name || m.email) + '</option>').join('');
+
+  $('teamPending').innerHTML = pend.length ? pend.map(m =>
+    '<div class="mem-row"><div class="who"><b>' + esc(m.name || '(no name)') + '</b>' +
+    '<small>' + esc(m.email || '') + '</small></div>' +
+    '<span class="badge pending">Pending</span>' +
+    '<select id="up_' + m.uid + '"><option value="">Upline\u2026</option>' + uplineOpts + '</select>' +
+    '<button class="btn sm gold" onclick="approveMember(\'' + m.uid + '\')">Approve</button></div>'
+  ).join('') : '<p style="color:var(--muted);font-size:13px">Nobody waiting.</p>';
+
+  $('teamList').innerHTML = leaders.map(m =>
+    '<div class="mem-row"><div class="who"><b>' + esc(m.name || m.email) + '</b>' +
+    '<small>' + (m.uplineId ? 'Under ' + esc(memberName(m.uplineId)) : 'Top of the house') + ' \u00b7 ' +
+    db.contacts.filter(c => c.ownerId === m.uid).length + ' contacts</small></div>' +
+    '<span class="badge ' + (m.role === 'leader' ? 'leader' : '') + '">' + esc(m.role || 'associate') + '</span>' +
+    (m.uid === user.uid ? '' :
+      '<button class="btn sm" style="background:#eee7d8;color:#4a5568" onclick="toggleLeader(\'' + m.uid + '\')">' +
+      (m.role === 'leader' ? 'Make associate' : 'Make leader') + '</button>') +
+    '</div>').join('');
+
+  const orphans = db.contacts.filter(c => !c.ownerId);
+  $('teamOrphans').innerHTML = orphans.length
+    ? '<p style="font-size:14px;margin-bottom:10px"><b>' + orphans.length + '</b> contacts have no owner yet.</p>' +
+      '<button class="btn gold sm" onclick="claimOrphans()">Claim all as mine</button>'
+    : '<p style="color:var(--muted);font-size:13px">All contacts are assigned.</p>';
+}
+
+window.approveMember = async function(uid){
+  const up = $('up_' + uid).value;
+  if(!up){ alert('Pick who they came in under first.'); return; }
+  const upline = db.members.find(m => m.uid === up);
+  const lineage = [uid].concat(upline && upline.lineage ? upline.lineage : [up]);
+  await setDoc(doc(fs,'teams',TEAM,'members', uid),
+    { status: 'active', uplineId: up, lineage: [...new Set(lineage)] }, { merge: true });
+  flash('Approved');
+};
+
+window.toggleLeader = async function(uid){
+  const m = db.members.find(x => x.uid === uid); if(!m) return;
+  await setDoc(doc(fs,'teams',TEAM,'members', uid),
+    { role: m.role === 'leader' ? 'associate' : 'leader' }, { merge: true });
+};
+
+window.claimOrphans = async function(){
+  const orphans = db.contacts.filter(c => !c.ownerId);
+  if(!orphans.length) return;
+  if(!confirm('Assign ' + orphans.length + ' contacts to you?')) return;
+  setDot('Claiming\u2026');
+  for(const c of orphans){
+    c.ownerId = user.uid; c.visibleTo = myLineage();
+    await pushContact(c);
+  }
+  flash('Claimed');
+  renderAll();
+};
 $('loginPass').addEventListener('keydown', e=>{ if(e.key==='Enter') window.doLogin(); });
 
 /* ---------- Live sync ---------- */
@@ -408,6 +603,7 @@ function startSync(){
 }
 function stopSync(){
   if(unsubContacts) unsubContacts(); if(unsubPower) unsubPower(); if(unsubDna) unsubDna();
+  syncing = false; me = null; scopeUid = 'all';
   db = { contacts: [], power: {}, dna: [] };
 }
 async function pushContact(c){
@@ -471,7 +667,7 @@ function contactCard(c){
 
 function renderRail(type){
   const el = $(type==='client'?'railClients':'railRecruits');
-  const list = db.contacts.filter(c=>c.type===type);
+  const list = pool().filter(c=>c.type===type);
   const fkey = type==='client'?'clients':'recruits';
   let html = '<span class="stage-pill '+(filters[fkey]==='All'?'active':'')+'" onclick="setFilter(\''+fkey+'\',\'All\')">All<span class="n">'+list.length+'</span></span>';
   STAGES[type].forEach(s=>{
@@ -485,7 +681,7 @@ window.setFilter = function(fkey, val){ filters[fkey]=val; renderAll(); };
 function renderList(type){
   const fkey = type==='client'?'clients':'recruits';
   const q = $(type==='client'?'searchClients':'searchRecruits').value.toLowerCase();
-  let list = db.contacts.filter(c=>c.type===type);
+  let list = pool().filter(c=>c.type===type);
   if(filters[fkey]!=='All') list = list.filter(c=>c.stage===filters[fkey]);
   if(q) list = list.filter(c=>[c.name,c.phone,c.occupation,(c.tags||[]).join(' '),c.notes,c.referredBy].join(' ').toLowerCase().includes(q));
   list.sort((a,b)=> (a.next||'9999') < (b.next||'9999') ? -1 : 1);
@@ -495,7 +691,7 @@ function renderList(type){
 }
 
 function renderToday(){
-  const due = db.contacts.filter(c=>{const f=followState(c);return f==='overdue'||f==='today'||f==='none';});
+  const due = pool().filter(c=>{const f=followState(c);return f==='overdue'||f==='today'||f==='none';});
   due.sort((a,b)=>(a.next||'0')<(b.next||'0')?-1:1);
   $('listToday').innerHTML = due.length ? due.map(contactCard).join('') :
     '<div class="empty">Zero red. Pipeline is clean — go pour into someone anyway. 🙌</div>';
@@ -504,10 +700,10 @@ function renderToday(){
 }
 
 function renderDash(){
-  const overdue = db.contacts.filter(c=>followState(c)==='overdue'||followState(c)==='none').length;
-  const hot = db.contacts.filter(c=>(c.tags||[]).includes('Hot ⭐')||c.interest>=5).length;
-  const cl = db.contacts.filter(c=>c.type==='client').length;
-  const rc = db.contacts.filter(c=>c.type==='recruit').length;
+  const overdue = pool().filter(c=>followState(c)==='overdue'||followState(c)==='none').length;
+  const hot = pool().filter(c=>(c.tags||[]).includes('Hot ⭐')||c.interest>=5).length;
+  const cl = pool().filter(c=>c.type==='client').length;
+  const rc = pool().filter(c=>c.type==='recruit').length;
   $('dOverdue').textContent = overdue;
   $('dHot').textContent = hot;
   $('dClients').textContent = cl;
@@ -515,7 +711,7 @@ function renderDash(){
   $('cntClients').textContent = cl;
   $('cntRecruits').textContent = rc;
 
-  const due = db.contacts.filter(c=>{const f=followState(c);return f==='overdue'||f==='today';}).slice(0,6);
+  const due = pool().filter(c=>{const f=followState(c);return f==='overdue'||f==='today';}).slice(0,6);
   $('dashDue').innerHTML = due.length ? due.map(contactCard).join('') : '<div class="empty" style="padding:20px">Nothing due — schedule tomorrow\'s touches now.</div>';
 
   const refCount = {};
@@ -678,7 +874,9 @@ window.renderDnaBox = function(id){
   if(p){
     const when = p.submittedAt && p.submittedAt.toDate ? p.submittedAt.toDate().toLocaleDateString() : '';
     html = '<div class="dna-head">Completed' + (when ? ' ' + when : '') + '</div>' +
-           '<pre class="dna-pre">' + esc(p.plainText || '') + '</pre>' +
+           briefBlock(p) +
+           '<details class="dna-raw"><summary>Their raw answers</summary>' +
+           '<pre class="dna-pre">' + esc(p.plainText || '') + '</pre></details>' +
            '<div class="dna-btns">' +
              '<button type="button" class="btn gold sm" onclick="copyDnaText(\'' + p.id + '\', this)">Copy for coaching brief</button>' +
              '<button type="button" class="btn ghost sm" onclick="copyDnaLink(\'' + id + '\', this)">Copy link again</button>' +
@@ -722,6 +920,47 @@ function copyish(text, btn, okLabel, fallbackEl){
     navigator.clipboard.writeText(text).then(done).catch(legacy);
   } else legacy();
 }
+function briefBlock(p){
+  const ready = BRIEF_URL.indexOf('PASTE') === -1;
+  if(p.brief){
+    const when = p.briefAt && p.briefAt.toDate ? p.briefAt.toDate().toLocaleDateString() : '';
+    return '<div class="brief"><div class="brief-head">Coaching brief' + (when ? ' \u00b7 ' + when : '') + '</div>' +
+           '<div class="brief-body">' + esc(p.brief) + '</div></div>' +
+           '<div class="dna-btns" style="margin-bottom:12px">' +
+             '<button type="button" class="btn ghost sm" onclick="copyBrief(\'' + p.id + '\', this)">Copy brief</button>' +
+             (ready ? '<button type="button" class="btn ghost sm" onclick="genBrief(\'' + p.id + '\', this)">Regenerate</button>' : '') +
+           '</div>';
+  }
+  if(!ready) return '';
+  return '<div class="dna-btns" style="margin-bottom:12px">' +
+         '<button type="button" class="btn gold sm" onclick="genBrief(\'' + p.id + '\', this)">Generate coaching brief</button></div>';
+}
+window.genBrief = async function(pid, btn){
+  const p = db.dna.find(x => x.id === pid); if(!p) return;
+  if(!user){ flash('Sign in again'); return; }
+  const label = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Reading the profile\u2026';
+  try{
+    const idToken = await user.getIdToken();
+    const res = await fetch(BRIEF_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ idToken, profile: p.plainText || '' })
+    });
+    const data = await res.json();
+    if(!res.ok || !data.brief) throw new Error(data.error || 'Generator failed');
+    await setDoc(doc(fs,'teams',TEAM,'dnaProfiles', pid),
+                 { brief: data.brief, briefAt: new Date() }, { merge: true });
+    flash('Brief ready');
+  }catch(e){
+    btn.disabled = false; btn.textContent = label;
+    alert('Could not generate the brief.\n\n' + e.message);
+  }
+};
+window.copyBrief = function(pid, btn){
+  const p = db.dna.find(x => x.id === pid); if(!p) return;
+  copyish(p.brief || '', btn, 'Copied \u2713', null);
+};
 window.copyDnaLink = function(id, btn){
   copyish(dnaLink(id), btn, 'Copied \u2713', $('dnaLinkField'));
 };
@@ -801,7 +1040,9 @@ window.saveContact = async function(){
   };
   const id = editingId || uid();
   const existing = editingId ? db.contacts.find(x=>x.id===editingId) : null;
-  const record = { id, created: existing ? (existing.created||todayStr()) : todayStr(), ...data };
+  const record = { id, created: existing ? (existing.created||todayStr()) : todayStr(), ...data,
+    ownerId: (existing && existing.ownerId) ? existing.ownerId : user.uid,
+    visibleTo: (existing && existing.visibleTo) ? existing.visibleTo : myLineage() };
   if(existing){ Object.assign(existing, record); } else { db.contacts.push(record); }
   window.closeModal(); renderAll();
   try{ await pushContact(record); }catch(e){ setDot('Save failed — check connection'); }
@@ -856,7 +1097,7 @@ $('nav').addEventListener('click', e=>{
   const b = e.target.closest('button'); if(!b || !b.dataset.tab) return;
   currentTab = b.dataset.tab;
   document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active', x===b));
-  ['dash','clients','recruits','today','power'].forEach(t=>{
+  ['dash','clients','recruits','today','power','team'].forEach(t=>{
     $('tab-'+t).hidden = (t!==currentTab);
   });
   renderAll();
@@ -866,7 +1107,11 @@ $('searchRecruits').addEventListener('input', ()=>renderList('recruit'));
 $('overlay').addEventListener('click', e=>{ if(e.target.id==='overlay') window.closeModal(); });
 $('qaOverlay').addEventListener('click', e=>{ if(e.target.id==='qaOverlay') window.closeQuickAdd(); });
 
+function inScope(c){ return scopeUid === 'all' || c.ownerId === scopeUid; }
+function pool(){ return db.contacts.filter(inScope); }
+
 function renderAll(){
+  renderScope(); renderTeam();
   renderRail('client'); renderRail('recruit');
   renderList('client'); renderList('recruit');
   renderToday(); renderDash(); renderPower();
