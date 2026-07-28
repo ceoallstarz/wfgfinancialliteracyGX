@@ -131,6 +131,7 @@
   .verse{font-size:12px;color:var(--muted);font-style:italic;text-align:center;margin-top:30px}
 
 .chip.dna{background:#1a2a42;color:#c9a84c;border-color:#1a2a42}
+.chip.owner{background:#e6eef8;color:#33507a;border-color:#c9d8ee;font-weight:700}
 .dna-head{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 .dna-pre{
   white-space:pre-wrap;word-break:break-word;font-family:inherit;font-size:13px;line-height:1.55;
@@ -333,6 +334,9 @@
       <div><label>Last contact</label><input type="date" id="fLast"></div>
       <div><label>Next follow-up *</label><input type="date" id="fNext"></div>
     </div>
+    <div class="frow" id="ownerRow" style="display:none">
+      <div><label>Whose contact is this?</label><select id="fOwner"></select></div>
+    </div>
     <div class="frow">
       <div><label>Tags</label><div class="tagpick" id="fTags"></div></div>
     </div>
@@ -533,6 +537,27 @@ window.doSignup = async function(){
 /* ---------- team management (leaders) ---------- */
 window.setScope = function(v){ scopeUid = v; renderAll(); };
 
+/* who this user is allowed to assign contacts to */
+function assignable(){
+  const active = db.members.filter(m => m.status === 'active');
+  if(isLeader()) return active;
+  return active.filter(m => m.uid === user.uid || (m.lineage||[]).includes(user.uid));
+}
+function buildOwnerPick(ownerId){
+  const list = assignable();
+  const row = $('ownerRow');
+  if(list.length < 2){ row.style.display = 'none'; return; }
+  row.style.display = 'block';
+  const chosen = ownerId || (scopeUid !== 'all' ? scopeUid : user.uid);
+  $('fOwner').innerHTML = list.map(m =>
+    '<option value="' + m.uid + '"' + (m.uid === chosen ? ' selected' : '') + '>' +
+    esc(m.name || m.email) + (m.uid === user.uid ? ' (me)' : '') + '</option>').join('');
+}
+function lineageOf(uid){
+  const m = db.members.find(x => x.uid === uid);
+  return (m && m.lineage && m.lineage.length) ? m.lineage : [uid];
+}
+
 function renderScope(){
   const mine = db.members.filter(m => m.status === 'active');
   const canSeeOthers = isLeader() || mine.some(m => (m.lineage||[]).includes(user.uid) && m.uid !== user.uid);
@@ -694,12 +719,14 @@ function esc(s){ return (s||'').replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','
 
 function contactCard(c){
   const hot = (c.tags||[]).includes('Hot ⭐') || c.interest>=5;
+  const ownerTag = (scopeUid === 'all' && c.ownerId && c.ownerId !== user.uid && db.members.length > 1)
+    ? '<span class="chip owner">' + esc(memberName(c.ownerId)) + '</span>' : '';
   const tags = (c.tags||[]).map(t=>'<span class="chip'+(t==='Hot ⭐'?' hot':'')+'">'+esc(t)+'</span>').join('');
   const sub = [c.occupation, c.phone, c.referredBy?('via '+c.referredBy):''].filter(Boolean).map(esc).join(' · ');
   return '<div class="contact '+cardClass(c)+'" onclick="editContact(\''+c.id+'\')">'+
     '<div class="c-main"><div class="c-name">'+(hot?'<span class="star">⭐ </span>':'')+esc(c.name)+'</div>'+
     '<div class="c-sub">'+sub+'</div>'+
-    ((tags||dnaFor(c.id))?'<div class="tags">'+(dnaFor(c.id)?'<span class="chip dna">DNA</span>':'')+tags+'</div>':'')+'</div>'+
+    ((tags||dnaFor(c.id)||ownerTag)?'<div class="tags">'+ownerTag+(dnaFor(c.id)?'<span class="chip dna">DNA</span>':'')+tags+'</div>':'')+'</div>'+
     '<div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">'+
     '<span class="c-stage">'+esc(c.stage)+'</span>'+followLabel(c)+'</div></div>';
 }
@@ -1025,6 +1052,7 @@ window.openModal = function(type){
   $('fNext').value=nx.toISOString().slice(0,10);
   fillStages(type, STAGES[type][0]);
   buildTagPicker([]);
+  buildOwnerPick(null);
   $('mDelete').style.display='none';
   $('dnaRow').style.display='none';
   $('overlay').classList.add('open');
@@ -1045,6 +1073,7 @@ window.editContact = function(id){
   $('fNotes').value=c.notes||'';
   fillStages(c.type, c.stage);
   buildTagPicker(c.tags||[]);
+  buildOwnerPick(c.ownerId || user.uid);
   $('mDelete').style.display='inline-block';
   $('dnaRow').style.display = c.type==='recruit' ? 'block' : 'none';
   if(c.type==='recruit') renderDnaBox(id);
@@ -1080,9 +1109,11 @@ window.saveContact = async function(){
   };
   const id = editingId || uid();
   const existing = editingId ? db.contacts.find(x=>x.id===editingId) : null;
+  const ownerPicked = ($('ownerRow').style.display !== 'none' && $('fOwner').value)
+    ? $('fOwner').value
+    : ((existing && existing.ownerId) ? existing.ownerId : user.uid);
   const record = { id, created: existing ? (existing.created||todayStr()) : todayStr(), ...data,
-    ownerId: (existing && existing.ownerId) ? existing.ownerId : user.uid,
-    visibleTo: (existing && existing.visibleTo) ? existing.visibleTo : myLineage() };
+    ownerId: ownerPicked, visibleTo: lineageOf(ownerPicked) };
   if(existing){ Object.assign(existing, record); } else { db.contacts.push(record); }
   window.closeModal(); renderAll();
   try{ await pushContact(record); }catch(e){ setDot('Save failed — check connection'); }
