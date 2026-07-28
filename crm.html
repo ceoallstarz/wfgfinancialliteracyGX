@@ -183,6 +183,7 @@
   <section id="tab-clients" hidden>
     <div class="toolbar">
       <input type="text" id="searchClients" placeholder="Search name, phone, tag, occupation…">
+      <button class="btn ghost" onclick="openQuickAdd('client')">📇 From Contacts</button>
       <button class="btn gold" onclick="openModal('client')">+ Add Client Prospect</button>
     </div>
     <div class="stage-rail" id="railClients"></div>
@@ -193,6 +194,7 @@
   <section id="tab-recruits" hidden>
     <div class="toolbar">
       <input type="text" id="searchRecruits" placeholder="Search name, phone, tag, occupation…">
+      <button class="btn ghost" onclick="openQuickAdd('recruit')">📇 From Contacts</button>
       <button class="btn gold" onclick="openModal('recruit')">+ Add Recruit Prospect</button>
     </div>
     <div class="stage-rail" id="railRecruits"></div>
@@ -260,6 +262,33 @@
       <div class="spacer"></div>
       <button class="btn ghost" onclick="closeModal()">Cancel</button>
       <button class="btn gold" onclick="saveContact()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- QUICK ADD MODAL -->
+<div class="overlay" id="qaOverlay">
+  <div class="modal">
+    <h2 id="qaTitle">Add from Contacts</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Two ways to bring someone in from your iPhone Contacts:</p>
+    <div style="background:var(--cream);border-radius:10px;padding:12px;margin-bottom:14px;font-size:13px">
+      <b style="color:var(--navy)">Option A — Pick the contact file</b><br>
+      In Contacts: tap the person → <b>Share Contact</b> → <b>Save to Files</b>. Then tap below.
+      <div style="margin-top:8px">
+        <button class="btn gold sm" onclick="document.getElementById('vcfFile').click()">Choose contact file (.vcf)</button>
+        <input type="file" id="vcfFile" accept=".vcf,text/vcard" style="display:none" onchange="importVcfFile(this)">
+      </div>
+    </div>
+    <div style="background:var(--cream);border-radius:10px;padding:12px;margin-bottom:6px;font-size:13px">
+      <b style="color:var(--navy)">Option B — Paste it</b><br>
+      Copy the contact (or its details) and paste here:
+      <textarea id="qaPaste" style="margin-top:8px" placeholder="Paste contact card or details here…"></textarea>
+      <button class="btn gold sm" style="margin-top:8px" onclick="parsePasted()">Read pasted contact</button>
+    </div>
+    <div id="qaError" style="display:none;color:var(--red);font-size:13px;font-weight:600;margin-top:6px"></div>
+    <div class="modal-actions">
+      <div class="spacer"></div>
+      <button class="btn ghost" onclick="closeQuickAdd()">Cancel</button>
     </div>
   </div>
 </div>
@@ -519,6 +548,93 @@ function buildTagPicker(selected){
 function fillStages(type, current){
   $('fStage').innerHTML = STAGES[type].map(s=>'<option'+(s===current?' selected':'')+'>'+s+'</option>').join('');
 }
+/* ---------- Quick Add from Contacts (vCard) ---------- */
+let quickAddType = 'client';
+window.openQuickAdd = function(type){
+  quickAddType = type;
+  $('qaTitle').textContent = type==='client' ? 'Add Client from Contacts' : 'Add Recruit from Contacts';
+  $('qaPaste').value=''; $('qaError').style.display='none';
+  $('qaOverlay').classList.add('open');
+};
+window.closeQuickAdd = function(){ $('qaOverlay').classList.remove('open'); $('qaError').style.display='none'; };
+function qaErr(msg){ const e=$('qaError'); e.textContent=msg; e.style.display='block'; }
+
+function unfold(text){
+  // vCard folds long lines with CRLF + space/tab; join them back
+  return text.replace(/\r\n[ \t]/g,'').replace(/\n[ \t]/g,'');
+}
+function decodeVal(v){
+  // handle common encodings lightly; strip type params already removed by caller
+  return (v||'').replace(/\\n/gi,' ').replace(/\\,/g,',').replace(/\\;/g,';').trim();
+}
+function parseVCard(raw){
+  const text = unfold(raw);
+  const lines = text.split(/\r\n|\n|\r/);
+  const out = { name:'', phone:'', email:'', address:'', note:'' };
+  for(const line of lines){
+    const idx = line.indexOf(':'); if(idx<0) continue;
+    const left = line.slice(0,idx); const val = line.slice(idx+1);
+    const key = left.split(';')[0].toUpperCase();
+    if(key==='FN' && !out.name) out.name = decodeVal(val);
+    else if(key==='N' && !out.name){
+      const p = val.split(';'); // Family;Given;Additional;Prefix;Suffix
+      out.name = [p[1],p[2],p[0]].filter(Boolean).join(' ').trim();
+    }
+    else if(key==='TEL' && !out.phone) out.phone = decodeVal(val).replace(/[^\d+()\-\s]/g,'').trim();
+    else if(key==='EMAIL' && !out.email) out.email = decodeVal(val);
+    else if(key==='ADR' && !out.address){
+      const p = val.split(';').slice(2); // skip PO box + extended
+      out.address = p.filter(Boolean).join(', ').trim();
+    }
+    else if(key==='NOTE') out.note = decodeVal(val);
+  }
+  return out.name ? out : null;
+}
+function parseLoose(text){
+  // fallback: plain pasted text (e.g. just a name, or name + number lines)
+  const lines = text.split(/\r\n|\n|\r/).map(s=>s.trim()).filter(Boolean);
+  const out = { name:'', phone:'', email:'', address:'', note:'' };
+  for(const l of lines){
+    const em = l.match(/[\w.+-]+@[\w-]+\.[\w.-]+/);
+    const ph = l.match(/(\+?\d[\d()\-\s]{6,}\d)/);
+    if(em && !out.email){ out.email = em[0]; continue; }
+    if(ph && !out.phone){ out.phone = ph[1].trim(); continue; }
+    if(!out.name){ out.name = l; }
+  }
+  return out.name ? out : null;
+}
+function prefillFromContact(c){
+  // open the normal add form pre-filled so Glenn reviews before saving
+  window.openModal(quickAddType);
+  $('fName').value = c.name || '';
+  $('fPhone').value = c.phone || '';
+  $('fEmail').value = c.email || '';
+  const noteBits = [];
+  if(c.note) noteBits.push(c.note);
+  if(c.address) noteBits.push('Address: ' + c.address);
+  $('fNotes').value = noteBits.join(' | ');
+}
+window.parsePasted = function(){
+  const raw = $('qaPaste').value.trim();
+  if(!raw){ qaErr('Paste a contact first.'); return; }
+  let c = raw.toUpperCase().includes('BEGIN:VCARD') ? parseVCard(raw) : parseLoose(raw);
+  if(!c){ qaErr('Could not read a name from that. Try Option A (the .vcf file).'); return; }
+  closeQuickAdd();
+  prefillFromContact(c);
+};
+window.importVcfFile = function(input){
+  const file = input.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    const c = parseVCard(reader.result);
+    input.value='';
+    if(!c){ qaErr('That file did not contain a readable contact.'); return; }
+    closeQuickAdd();
+    prefillFromContact(c);
+  };
+  reader.readAsText(file);
+};
+
 window.openModal = function(type){
   modalType=type; editingId=null;
   $('mTitle').textContent = type==='client'?'Add Client Prospect':'Add Recruit Prospect';
@@ -645,6 +761,7 @@ $('nav').addEventListener('click', e=>{
 $('searchClients').addEventListener('input', ()=>renderList('client'));
 $('searchRecruits').addEventListener('input', ()=>renderList('recruit'));
 $('overlay').addEventListener('click', e=>{ if(e.target.id==='overlay') window.closeModal(); });
+$('qaOverlay').addEventListener('click', e=>{ if(e.target.id==='qaOverlay') window.closeQuickAdd(); });
 
 function renderAll(){
   renderRail('client'); renderRail('recruit');
