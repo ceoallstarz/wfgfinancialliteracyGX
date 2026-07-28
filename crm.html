@@ -115,6 +115,19 @@
   .login-err{color:var(--red);font-size:12px;font-weight:600;margin-top:8px;min-height:16px}
   .setup-note{background:var(--yellow-bg);border:1px solid var(--gold-soft);border-radius:10px;padding:12px;font-size:12px;text-align:left;margin-top:14px;color:#7a6320}
   .verse{font-size:12px;color:var(--muted);font-style:italic;text-align:center;margin-top:30px}
+
+.chip.dna{background:#1a2a42;color:#c9a84c;border-color:#1a2a42}
+.dna-head{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.dna-pre{
+  white-space:pre-wrap;word-break:break-word;font-family:inherit;font-size:13px;line-height:1.55;
+  background:#faf7f0;border:1px solid #e2dccd;border-radius:10px;padding:12px 14px;
+  max-height:280px;overflow:auto;margin:0 0 10px;
+}
+.dna-empty{font-size:13px;color:var(--muted);margin-bottom:10px}
+.dna-btns{display:flex;gap:8px;flex-wrap:wrap}
+.dna-attach{margin-top:12px;padding-top:12px;border-top:1px solid #e2dccd;display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
+.dna-attach label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:4px}
+.dna-attach select{min-width:180px}
 </style>
 </head>
 <body>
@@ -256,6 +269,9 @@
     <div class="frow">
       <div><label>Notes / current need</label><textarea id="fNotes" placeholder="Family status, income notes, what they care about, next step…"></textarea></div>
     </div>
+    <div class="frow" id="dnaRow" style="display:none">
+      <div><label>Leadership DNA Profile</label><div id="dnaBox"></div></div>
+    </div>
     <div id="mError" style="display:none;color:var(--red);font-size:13px;font-weight:600;margin-top:10px"></div>
     <div class="modal-actions">
       <button class="btn danger sm" id="mDelete" onclick="deleteContact()" style="display:none">Delete</button>
@@ -324,11 +340,11 @@ const PH_TARGETS = [
   {key:'refs', label:'Referral requests', target:2}
 ];
 
-let db = { contacts: [], power: {} };
+let db = { contacts: [], power: {}, dna: [] };
 let editingId = null, modalType = 'client';
 let filters = { clients:'All', recruits:'All' };
 let currentTab = 'dash';
-let user = null, fs = null, unsubContacts = null, unsubPower = null;
+let user = null, fs = null, unsubContacts = null, unsubPower = null, unsubDna = null;
 
 const todayStr = () => new Date().toISOString().slice(0,10);
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
@@ -371,6 +387,11 @@ function startSync(){
     db.contacts = snap.docs.map(d => ({ id:d.id, ...d.data() }));
     setDot('Live · synced'); renderAll();
   }, err => setDot('Sync error'));
+  unsubDna = onSnapshot(collection(fs,'teams',TEAM,'dnaProfiles'), snap => {
+    db.dna = snap.docs.map(d => ({ id:d.id, ...d.data() }));
+    renderAll();
+    if(editingId) renderDnaBox(editingId);
+  }, err => setDot('Sync error'));
   unsubPower = onSnapshot(collection(fs,'teams',TEAM,'power'), snap => {
     db.power = {};
     snap.docs.forEach(d => {
@@ -381,8 +402,8 @@ function startSync(){
   });
 }
 function stopSync(){
-  if(unsubContacts) unsubContacts(); if(unsubPower) unsubPower();
-  db = { contacts: [], power: {} };
+  if(unsubContacts) unsubContacts(); if(unsubPower) unsubPower(); if(unsubDna) unsubDna();
+  db = { contacts: [], power: {}, dna: [] };
 }
 async function pushContact(c){
   setDot('Saving…');
@@ -437,7 +458,8 @@ function contactCard(c){
   const sub = [c.occupation, c.phone, c.referredBy?('via '+c.referredBy):''].filter(Boolean).map(esc).join(' · ');
   return '<div class="contact '+cardClass(c)+'" onclick="editContact(\''+c.id+'\')">'+
     '<div class="c-main"><div class="c-name">'+(hot?'<span class="star">⭐ </span>':'')+esc(c.name)+'</div>'+
-    '<div class="c-sub">'+sub+'</div>'+(tags?'<div class="tags">'+tags+'</div>':'')+'</div>'+
+    '<div class="c-sub">'+sub+'</div>'+
+    ((tags||dnaFor(c.id))?'<div class="tags">'+(dnaFor(c.id)?'<span class="chip dna">DNA</span>':'')+tags+'</div>':'')+'</div>'+
     '<div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">'+
     '<span class="c-stage">'+esc(c.stage)+'</span>'+followLabel(c)+'</div></div>';
 }
@@ -635,6 +657,54 @@ window.importVcfFile = function(input){
   reader.readAsText(file);
 };
 
+/* ---------- Leadership DNA Profile ---------- */
+function dnaFor(id){ return db.dna.find(p => p.recruitId === id); }
+function dnaLink(id){
+  return location.origin + location.pathname.replace(/[^\/]*$/, 'dna.html') + '?r=' + id;
+}
+function flash(msg){
+  setDot(msg);
+  setTimeout(()=>setDot('Live \u00b7 synced'), 2000);
+}
+window.renderDnaBox = function(id){
+  const box = $('dnaBox'); if(!box) return;
+  const p = dnaFor(id);
+  let html = '';
+  if(p){
+    const when = p.submittedAt && p.submittedAt.toDate ? p.submittedAt.toDate().toLocaleDateString() : '';
+    html = '<div class="dna-head">Completed' + (when ? ' ' + when : '') + '</div>' +
+           '<pre class="dna-pre">' + esc(p.plainText || '') + '</pre>' +
+           '<div class="dna-btns">' +
+             '<button type="button" class="btn gold sm" onclick="copyDnaText(\'' + p.id + '\')">Copy for coaching brief</button>' +
+             '<button type="button" class="btn ghost sm" onclick="copyDnaLink(\'' + id + '\')">Copy link again</button>' +
+           '</div>';
+  } else {
+    const loose = db.dna.filter(x => !x.recruitId);
+    html = '<div class="dna-empty">No profile yet \u2014 send them their link.</div>' +
+           '<div class="dna-btns"><button type="button" class="btn gold sm" onclick="copyDnaLink(\'' + id + '\')">Copy DNA link</button></div>';
+    if(loose.length){
+      html += '<div class="dna-attach"><label>Came in without a link</label>' +
+              '<select id="dnaPick">' +
+              loose.map(x => '<option value="' + x.id + '">' + esc(x.name || '(no name)') + '</option>').join('') +
+              '</select>' +
+              '<button type="button" class="btn ghost sm" onclick="attachDna(\'' + id + '\')">Attach to this person</button></div>';
+    }
+  }
+  box.innerHTML = html;
+};
+window.copyDnaLink = function(id){
+  navigator.clipboard.writeText(dnaLink(id)).then(()=>flash('DNA link copied'));
+};
+window.copyDnaText = function(pid){
+  const p = db.dna.find(x => x.id === pid); if(!p) return;
+  navigator.clipboard.writeText(p.plainText || '').then(()=>flash('Profile copied'));
+};
+window.attachDna = async function(id){
+  const pick = $('dnaPick'); if(!pick || !pick.value) return;
+  await setDoc(doc(fs,'teams',TEAM,'dnaProfiles', pick.value), { recruitId: id }, { merge: true });
+  flash('Profile attached');
+};
+
 window.openModal = function(type){
   modalType=type; editingId=null;
   $('mTitle').textContent = type==='client'?'Add Client Prospect':'Add Recruit Prospect';
@@ -647,6 +717,7 @@ window.openModal = function(type){
   fillStages(type, STAGES[type][0]);
   buildTagPicker([]);
   $('mDelete').style.display='none';
+  $('dnaRow').style.display='none';
   $('overlay').classList.add('open');
 };
 window.editContact = function(id){
@@ -666,6 +737,8 @@ window.editContact = function(id){
   fillStages(c.type, c.stage);
   buildTagPicker(c.tags||[]);
   $('mDelete').style.display='inline-block';
+  $('dnaRow').style.display = c.type==='recruit' ? 'block' : 'none';
+  if(c.type==='recruit') renderDnaBox(id);
   $('overlay').classList.add('open');
 };
 window.closeModal = function(){
