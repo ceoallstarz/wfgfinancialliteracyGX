@@ -277,6 +277,14 @@
       <div id="teamList"></div>
     </div>
     <div class="card" style="margin-top:14px">
+      <h3>Coaching brief prompt</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:10px">
+        Paste this into Claude, then paste a profile under it. Leaders only.</p>
+      <pre class="dna-pre" id="promptText"></pre>
+      <button class="btn gold sm" onclick="copyPrompt(this)">Copy prompt</button>
+    </div>
+
+    <div class="card" style="margin-top:14px">
       <h3>Unassigned contacts</h3>
       <p style="color:var(--muted);font-size:13px;margin-bottom:10px">
         Contacts added before ownership existed. Claiming puts them in your pipeline.</p>
@@ -389,6 +397,30 @@ const TEAM = "hyperion"; // shared team workspace name
 /* Coaching brief generator — paste your Cloudflare Worker URL here
    (looks like https://hyperion-brief.YOURNAME.workers.dev) */
 const BRIEF_URL = "PASTE_WORKER_URL";
+
+/* The coaching-brief prompt. Edit here and it updates everywhere in the CRM.
+   (If you also run the Cloudflare Worker, its copy is separate — change both.) */
+const BRIEF_PROMPT = `You're helping me prepare for a one-on-one with a new business partner on my team. Below is a profile they filled out themselves.
+
+Give me a one-page brief with these sections:
+
+1. THEIR WHY, IN ONE LINE \u2014 pull it from their deepest answer, in their own words. Quote it exactly. If a shallower answer is actually more specific than the deepest one, say so and quote that one instead.
+2. WHAT THEY'RE ACTUALLY BUILDING TOWARD \u2014 the specific thing, not the category.
+3. HOW TO COACH THEM \u2014 base this only on what they said about a coach who got the best out of them. Tell me what to do, concretely.
+4. HOW TO RECOGNIZE THEM \u2014 and what to avoid doing.
+5. WHAT THEIR TOP TWO NEEDS MEAN IN PRACTICE \u2014 one sentence each, in terms of what I should actually do differently.
+6. THREE QUESTIONS FOR OUR FIRST SIT-DOWN \u2014 open questions I couldn't have asked before reading this.
+7. WHERE THIS IS THIN \u2014 which answers were short, skipped, or generic, and what I should learn in person instead of assuming.
+
+Rules:
+- Quote their words wherever you can. Don't paraphrase their why.
+- Don't assign them a personality type or label. Describe what they said, not what category they're in.
+- Don't invent motivations they didn't state. If something isn't in there, say it isn't in there.
+- Their pain and fears are for serving them, not for pressuring them. Never suggest I use something they wrote as leverage to push them.
+- Keep it under one page. I'm reading this in the car before we meet.
+
+PROFILE:
+`;
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -542,12 +574,19 @@ function renderTeam(){
       (m.role === 'leader' ? 'Make associate' : 'Make leader') + '</button>') +
     '</div>').join('');
 
+  $('promptText').textContent = BRIEF_PROMPT;
   const orphans = db.contacts.filter(c => !c.ownerId);
   $('teamOrphans').innerHTML = orphans.length
     ? '<p style="font-size:14px;margin-bottom:10px"><b>' + orphans.length + '</b> contacts have no owner yet.</p>' +
       '<button class="btn gold sm" onclick="claimOrphans()">Claim all as mine</button>'
     : '<p style="color:var(--muted);font-size:13px">All contacts are assigned.</p>';
 }
+
+window.copyPrompt = function(btn){ copyish(BRIEF_PROMPT, btn, 'Copied \u2713', null); };
+window.copyBoth = function(pid, btn){
+  const p = db.dna.find(x => x.id === pid); if(!p) return;
+  copyish(BRIEF_PROMPT + (p.plainText || ''), btn, 'Copied \u2713', null);
+};
 
 window.approveMember = async function(uid){
   const up = $('up_' + uid).value;
@@ -878,7 +917,8 @@ window.renderDnaBox = function(id){
            '<details class="dna-raw"><summary>Their raw answers</summary>' +
            '<pre class="dna-pre">' + esc(p.plainText || '') + '</pre></details>' +
            '<div class="dna-btns">' +
-             '<button type="button" class="btn gold sm" onclick="copyDnaText(\'' + p.id + '\', this)">Copy for coaching brief</button>' +
+             (isLeader() ? '<button type="button" class="btn gold sm" onclick="copyBoth(\'' + p.id + '\', this)">Copy prompt + profile</button>' : '') +
+             '<button type="button" class="btn ghost sm" onclick="copyDnaText(\'' + p.id + '\', this)">Copy answers only</button>' +
              '<button type="button" class="btn ghost sm" onclick="copyDnaLink(\'' + id + '\', this)">Copy link again</button>' +
            '</div>';
   } else {
