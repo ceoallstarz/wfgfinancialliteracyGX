@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hyperion Pipeline Command</title>
+<meta name="theme-color" content="#1a2a42">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Hyperion CRM">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1a2a42; --navy-soft:#2a3d5c; --gold:#c9a84c; --gold-soft:#e8dcc0;
+    --cream:#f4f6f8; --white:#ffffff; --ink:#22303f; --muted:#6b7a8d;
+    --red:#c0392b; --red-bg:#fdf0ee; --yellow:#b8860b; --yellow-bg:#fdf8e8;
+    --green:#2e7d51; --green-bg:#ecf7f0; --blue:#2c5f8a; --blue-bg:#edf4fa;
+    --line:#e3e8ee; --radius:12px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--cream);color:var(--ink);font-size:14px;line-height:1.5}
+
+  header{background:var(--navy);color:var(--white);padding:14px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .logo{width:34px;height:34px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--gold);font-size:15px;letter-spacing:.5px}
+  header h1{font-size:17px;font-weight:700;letter-spacing:.3px}
+  header .tag{font-size:11px;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;font-weight:600}
+  .save-dot{margin-left:auto;font-size:11px;color:#9fb0c5;display:flex;align-items:center;gap:6px}
+  .save-dot::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block}
+
+  nav{background:var(--white);border-bottom:1px solid var(--line);display:flex;overflow-x:auto;padding:0 12px}
+  nav button{background:none;border:none;font-family:inherit;font-size:13px;font-weight:600;color:var(--muted);padding:13px 16px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
+  nav button.active{color:var(--navy);border-bottom-color:var(--gold)}
+  nav button .cnt{background:var(--cream);border-radius:10px;padding:1px 7px;font-size:11px;margin-left:5px;color:var(--muted)}
+  nav button.alert .cnt{background:var(--red-bg);color:var(--red)}
+
+  main{max-width:1100px;margin:0 auto;padding:20px 16px 60px}
+  .grid{display:grid;gap:14px}
+  @media(min-width:720px){.grid.cols4{grid-template-columns:repeat(4,1fr)}.grid.cols2{grid-template-columns:1fr 1fr}}
+
+  .card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+  .card h3{font-size:12px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);font-weight:700;margin-bottom:10px}
+  .stat{font-size:30px;font-weight:800;color:var(--navy)}
+  .stat small{font-size:12px;font-weight:600;color:var(--muted);display:block;margin-top:2px}
+  .stat.red{color:var(--red)}
+
+  .toolbar{display:flex;gap:10px;margin:18px 0 12px;flex-wrap:wrap;align-items:center}
+  .toolbar input[type=text]{flex:1;min-width:180px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:13px;background:var(--white)}
+  .btn{background:var(--navy);color:var(--white);border:none;border-radius:8px;padding:10px 16px;font-family:inherit;font-weight:700;font-size:13px;cursor:pointer}
+  .btn.gold{background:var(--gold);color:var(--navy)}
+  .btn.ghost{background:var(--white);color:var(--navy);border:1px solid var(--line)}
+  .btn.sm{padding:6px 10px;font-size:12px}
+  .btn.danger{background:var(--red-bg);color:var(--red)}
+
+  .contact{background:var(--white);border:1px solid var(--line);border-left:5px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:10px;cursor:pointer;display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+  .contact:hover{border-color:var(--gold);border-left-color:var(--gold)}
+  .contact.overdue{border-left-color:var(--red)}
+  .contact.today{border-left-color:var(--red)}
+  .contact.soon{border-left-color:var(--yellow)}
+  .contact.appt{border-left-color:var(--green)}
+  .contact.client{border-left-color:var(--blue)}
+  .c-main{flex:1;min-width:200px}
+  .c-name{font-weight:700;font-size:15px;color:var(--navy)}
+  .c-name .star{color:var(--gold)}
+  .c-sub{font-size:12px;color:var(--muted);margin-top:2px}
+  .c-stage{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:4px 10px;border-radius:20px;background:var(--cream);color:var(--navy);white-space:nowrap}
+  .c-follow{font-size:12px;font-weight:600;white-space:nowrap}
+  .c-follow.overdue{color:var(--red)}
+  .c-follow.today{color:var(--red)}
+  .c-follow.soon{color:var(--yellow)}
+  .c-follow.ok{color:var(--muted)}
+  .tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+  .chip{font-size:11px;background:var(--cream);border-radius:12px;padding:2px 9px;color:var(--muted);font-weight:600}
+  .chip.hot{background:var(--gold-soft);color:#8a6d1f}
+
+  .stage-rail{display:flex;gap:6px;overflow-x:auto;padding:4px 0 10px;margin-bottom:6px}
+  .stage-pill{font-size:12px;font-weight:600;white-space:nowrap;padding:7px 12px;border-radius:20px;background:var(--white);border:1px solid var(--line);color:var(--muted);cursor:pointer}
+  .stage-pill.active{background:var(--navy);color:var(--gold);border-color:var(--navy)}
+  .stage-pill .n{opacity:.7;margin-left:4px}
+
+  /* Modal */
+  .overlay{position:fixed;inset:0;background:rgba(26,42,66,.55);display:none;align-items:flex-start;justify-content:center;padding:24px 12px;overflow-y:auto;z-index:50}
+  .overlay.open{display:flex}
+  .modal{background:var(--white);border-radius:14px;width:100%;max-width:620px;padding:22px}
+  .modal h2{font-size:18px;color:var(--navy);margin-bottom:16px}
+  .frow{display:grid;gap:12px;margin-bottom:12px}
+  @media(min-width:560px){.frow.two{grid-template-columns:1fr 1fr}.frow.three{grid-template-columns:1fr 1fr 1fr}}
+  label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);display:block;margin-bottom:4px}
+  input,select,textarea{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:13px;background:var(--white);color:var(--ink)}
+  textarea{resize:vertical;min-height:70px}
+  .tagpick{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+  .tagpick .chip{cursor:pointer;user-select:none}
+  .tagpick .chip.on{background:var(--navy);color:var(--gold)}
+  .modal-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+  .modal-actions .spacer{flex:1}
+
+  /* Power hour */
+  .ph-item{margin-bottom:16px}
+  .ph-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+  .ph-top b{color:var(--navy);font-size:14px}
+  .ph-count{font-weight:800;font-size:15px;color:var(--navy)}
+  .bar{height:10px;background:var(--cream);border-radius:6px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--gold);border-radius:6px;transition:width .25s}
+  .bar i.done{background:var(--green)}
+  .ph-btns{display:flex;gap:8px;margin-top:8px}
+  .empty{text-align:center;color:var(--muted);padding:40px 16px;font-size:13px}
+  .ref-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .ref-row b{color:var(--navy)}
+  #loginScreen{position:fixed;inset:0;background:var(--navy);display:flex;align-items:center;justify-content:center;z-index:100;padding:20px}
+  .login-card{background:var(--white);border-radius:16px;padding:30px;width:100%;max-width:380px;text-align:center}
+  .login-card .logo{margin:0 auto 12px;width:52px;height:52px;font-size:22px;border-color:var(--gold);color:var(--gold);background:var(--navy)}
+  .login-card h2{color:var(--navy);font-size:19px;margin-bottom:4px}
+  .login-card .tag{margin-bottom:18px}
+  .login-card input{margin-bottom:10px;text-align:left}
+  .login-err{color:var(--red);font-size:12px;font-weight:600;margin-top:8px;min-height:16px}
+  .setup-note{background:var(--yellow-bg);border:1px solid var(--gold-soft);border-radius:10px;padding:12px;font-size:12px;text-align:left;margin-top:14px;color:#7a6320}
+  .verse{font-size:12px;color:var(--muted);font-style:italic;text-align:center;margin-top:30px}
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="logo">HL</div>
+    <h2>Hyperion Pipeline Command</h2>
+    <div class="tag" style="color:var(--gold)">NO FAMILY LEFT BEHIND</div>
+    <input type="email" id="loginEmail" placeholder="Email" autocomplete="username">
+    <input type="password" id="loginPass" placeholder="Password" autocomplete="current-password">
+    <button class="btn gold" style="width:100%" onclick="doLogin()">Sign In</button>
+    <div class="login-err" id="loginErr"></div>
+    <div class="setup-note" id="setupNote" style="display:none"><b>Setup needed:</b> Firebase config has not been pasted in yet. Open this file and follow the setup guide to connect your free Firebase project.</div>
+  </div>
+</div>
+<header>
+  <div class="logo">HL</div>
+  <div>
+    <h1>Hyperion Pipeline Command</h1>
+    <div class="tag">No Family Left Behind</div>
+  </div>
+  <div class="save-dot" id="saveDot">Saved</div>
+  <div style="display:flex;gap:8px">
+    <button class="btn sm" style="background:var(--navy-soft);color:var(--gold-soft)" onclick="exportData()">Export backup</button>
+    <button class="btn sm" style="background:var(--navy-soft);color:var(--gold-soft)" onclick="document.getElementById('importFile').click()">Import</button>
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
+    <button class="btn sm" style="background:transparent;color:#9fb0c5;border:1px solid #3a4d6c" onclick="signOutUser()">Sign out</button>
+  </div>
+</header>
+
+<nav id="nav">
+  <button data-tab="dash" class="active">Dashboard</button>
+  <button data-tab="clients">Clients <span class="cnt" id="cntClients">0</span></button>
+  <button data-tab="recruits">Recruits <span class="cnt" id="cntRecruits">0</span></button>
+  <button data-tab="today" id="navToday">Contact Today <span class="cnt" id="cntToday">0</span></button>
+  <button data-tab="power">Power Hour</button>
+</nav>
+
+<main>
+  <!-- DASHBOARD -->
+  <section id="tab-dash">
+    <div class="grid cols4">
+      <div class="card"><div class="stat red" id="dOverdue">0</div><small style="color:var(--muted);font-weight:600">Overdue follow-ups</small></div>
+      <div class="card"><div class="stat" id="dHot">0</div><small style="color:var(--muted);font-weight:600">Hot prospects ⭐</small></div>
+      <div class="card"><div class="stat" id="dClients">0</div><small style="color:var(--muted);font-weight:600">Client pipeline</small></div>
+      <div class="card"><div class="stat" id="dRecruits">0</div><small style="color:var(--muted);font-weight:600">Recruit pipeline</small></div>
+    </div>
+
+    <div class="grid cols2" style="margin-top:14px">
+      <div class="card">
+        <h3>Needs contact today</h3>
+        <div id="dashDue"></div>
+      </div>
+      <div class="card">
+        <h3>Referral engine — top sources</h3>
+        <div id="dashRefs"></div>
+        <h3 style="margin-top:18px">This week's activity</h3>
+        <div id="dashWeek" style="font-size:13px;color:var(--muted)"></div>
+      </div>
+    </div>
+    <div class="verse">"Let us not become weary in doing good, for at the proper time we will reap a harvest if we do not give up." — Galatians 6:9</div>
+  </section>
+
+  <!-- CLIENTS -->
+  <section id="tab-clients" hidden>
+    <div class="toolbar">
+      <input type="text" id="searchClients" placeholder="Search name, phone, tag, occupation…">
+      <button class="btn gold" onclick="openModal('client')">+ Add Client Prospect</button>
+    </div>
+    <div class="stage-rail" id="railClients"></div>
+    <div id="listClients"></div>
+  </section>
+
+  <!-- RECRUITS -->
+  <section id="tab-recruits" hidden>
+    <div class="toolbar">
+      <input type="text" id="searchRecruits" placeholder="Search name, phone, tag, occupation…">
+      <button class="btn gold" onclick="openModal('recruit')">+ Add Recruit Prospect</button>
+    </div>
+    <div class="stage-rail" id="railRecruits"></div>
+    <div id="listRecruits"></div>
+  </section>
+
+  <!-- TODAY -->
+  <section id="tab-today" hidden>
+    <div class="card" style="margin-bottom:14px"><h3>Rule of the house</h3>
+    <div style="font-size:13px">Never leave "Next Follow-Up" blank. Everything red on this page gets touched before the day ends.</div></div>
+    <div id="listToday"></div>
+  </section>
+
+  <!-- POWER HOUR -->
+  <section id="tab-power">
+    <div class="card" style="max-width:560px;margin:0 auto">
+      <h3 id="phDate">Daily Power Hour</h3>
+      <div id="phList"></div>
+      <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+        <button class="btn ghost sm" onclick="resetPH()">Reset today</button>
+        <div style="flex:1"></div>
+        <div id="phDone" style="font-weight:700;color:var(--green);align-self:center"></div>
+      </div>
+    </div>
+    <div class="card" style="max-width:560px;margin:14px auto 0">
+      <h3>Last 7 days</h3>
+      <div id="phWeek" style="font-size:13px"></div>
+    </div>
+  </section>
+</main>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <h2 id="mTitle">Add Prospect</h2>
+    <div class="frow two">
+      <div><label>Full name *</label><input id="fName"></div>
+      <div><label>Phone</label><input id="fPhone"></div>
+    </div>
+    <div class="frow two">
+      <div><label>Email</label><input id="fEmail"></div>
+      <div><label>Occupation</label><input id="fOcc"></div>
+    </div>
+    <div class="frow three">
+      <div><label>Source</label><select id="fSource">
+        <option>Referral</option><option>Warm market</option><option>Church</option><option>Sovereignty</option><option>Event / VGO</option><option>Social media</option><option>Healthcare network</option><option>Cold</option><option>Other</option>
+      </select></div>
+      <div><label>Referred by</label><input id="fRef" placeholder="Name of referrer"></div>
+      <div><label>Interest (1–5)</label><select id="fInterest"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select></div>
+    </div>
+    <div class="frow three">
+      <div><label>Pipeline stage</label><select id="fStage"></select></div>
+      <div><label>Last contact</label><input type="date" id="fLast"></div>
+      <div><label>Next follow-up *</label><input type="date" id="fNext"></div>
+    </div>
+    <div class="frow">
+      <div><label>Tags</label><div class="tagpick" id="fTags"></div></div>
+    </div>
+    <div class="frow">
+      <div><label>Notes / current need</label><textarea id="fNotes" placeholder="Family status, income notes, what they care about, next step…"></textarea></div>
+    </div>
+    <div id="mError" style="display:none;color:var(--red);font-size:13px;font-weight:600;margin-top:10px"></div>
+    <div class="modal-actions">
+      <button class="btn danger sm" id="mDelete" onclick="deleteContact()" style="display:none">Delete</button>
+      <div class="spacer"></div>
+      <button class="btn ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn gold" onclick="saveContact()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+/* ============================================================
+   FIREBASE SETUP — paste your config from the Firebase console
+   (Project settings > Your apps > Web app > firebaseConfig)
+   ============================================================ */
+const firebaseConfig = {
+  apiKey: "AIzaSyC5jXI140Z9f618dFk8JwGhHyOzU6Q6Jek",
+  authDomain: "hyperion-crm-ea994.firebaseapp.com",
+  projectId: "hyperion-crm-ea994",
+  storageBucket: "hyperion-crm-ea994.firebasestorage.app",
+  messagingSenderId: "651443980689",
+  appId: "1:651443980689:web:eaed1f15d21c306616b230"
+};
+const TEAM = "hyperion"; // shared team workspace name
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const STAGES = {
+  client: ['New Referral','Contacted','Appointment Set','FNA Done','Solutions Presented','App Submitted','Policy Issued','Annual Review'],
+  recruit: ['Warm Contact','Invited','BPM/VGO Attended','Follow-Up','1-on-1','Licensing','Fast Start','Active Associate','Leadership Dev']
+};
+const TAG_OPTIONS = ['Hot ⭐','Nurse','Healthcare','Teacher','Engineer','Military','Business Owner','Church','Sovereignty','Parent','Spanish','Tagalog','IUL','LTC','Retirement','College Planning','Mortgage','Homeowner'];
+const PH_TARGETS = [
+  {key:'calls', label:'Calls', target:30},
+  {key:'texts', label:'Texts', target:20},
+  {key:'confirms', label:'Appointment confirmations', target:5},
+  {key:'refs', label:'Referral requests', target:2}
+];
+
+let db = { contacts: [], power: {} };
+let editingId = null, modalType = 'client';
+let filters = { clients:'All', recruits:'All' };
+let currentTab = 'dash';
+let user = null, fs = null, unsubContacts = null, unsubPower = null;
+
+const todayStr = () => new Date().toISOString().slice(0,10);
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+const $ = id => document.getElementById(id);
+
+/* ---------- Auth ---------- */
+const configured = !firebaseConfig.apiKey.includes('PASTE');
+let auth = null;
+if(configured){
+  const app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  fs = getFirestore(app);
+  enableIndexedDbPersistence(fs).catch(()=>{});
+  onAuthStateChanged(auth, u => {
+    user = u;
+    if(u){ $('loginScreen').style.display='none'; startSync(); }
+    else { $('loginScreen').style.display='flex'; stopSync(); }
+  });
+} else {
+  $('setupNote').style.display='block';
+}
+
+window.doLogin = async function(){
+  $('loginErr').textContent='';
+  if(!configured){ $('loginErr').textContent='Firebase not configured yet — see setup guide.'; return; }
+  try{
+    await signInWithEmailAndPassword(auth, $('loginEmail').value.trim(), $('loginPass').value);
+  }catch(e){
+    $('loginErr').textContent = 'Sign-in failed. Check email and password.';
+  }
+};
+window.signOutUser = function(){ if(auth) signOut(auth); };
+$('loginPass').addEventListener('keydown', e=>{ if(e.key==='Enter') window.doLogin(); });
+
+/* ---------- Live sync ---------- */
+function setDot(t){ $('saveDot').textContent = t; }
+function startSync(){
+  setDot('Syncing…');
+  unsubContacts = onSnapshot(collection(fs,'teams',TEAM,'contacts'), snap => {
+    db.contacts = snap.docs.map(d => ({ id:d.id, ...d.data() }));
+    setDot('Live · synced'); renderAll();
+  }, err => setDot('Sync error'));
+  unsubPower = onSnapshot(collection(fs,'teams',TEAM,'power'), snap => {
+    db.power = {};
+    snap.docs.forEach(d => {
+      const data = d.data();
+      if(data.uid === user.uid) db.power[data.date] = data;
+    });
+    renderPower(); renderDash();
+  });
+}
+function stopSync(){
+  if(unsubContacts) unsubContacts(); if(unsubPower) unsubPower();
+  db = { contacts: [], power: {} };
+}
+async function pushContact(c){
+  setDot('Saving…');
+  const {id, ...data} = c;
+  await setDoc(doc(fs,'teams',TEAM,'contacts', id), data);
+}
+async function removeContact(id){ await deleteDoc(doc(fs,'teams',TEAM,'contacts', id)); }
+let phTimer=null;
+function pushPower(){
+  clearTimeout(phTimer);
+  phTimer = setTimeout(async ()=>{
+    const t = todayStr(); const day = db.power[t];
+    if(!day || !user) return;
+    await setDoc(doc(fs,'teams',TEAM,'power', user.uid + '_' + t), { ...day, uid:user.uid, date:t });
+  }, 500);
+}
+
+/* ---------- Helpers ---------- */
+function followState(c){
+  if(!c.next) return 'none';
+  const t = todayStr();
+  if(c.next < t) return 'overdue';
+  if(c.next === t) return 'today';
+  const in3 = new Date(); in3.setDate(in3.getDate()+3);
+  if(c.next <= in3.toISOString().slice(0,10)) return 'soon';
+  return 'ok';
+}
+function cardClass(c){
+  const f = followState(c);
+  if(f==='overdue') return 'overdue';
+  if(f==='today') return 'today';
+  if(c.stage==='Policy Issued'||c.stage==='Annual Review'||c.stage==='Active Associate'||c.stage==='Leadership Dev') return 'client';
+  if(c.stage==='Appointment Set'||c.stage==='1-on-1') return 'appt';
+  if(f==='soon') return 'soon';
+  return '';
+}
+function followLabel(c){
+  const f = followState(c);
+  if(f==='none') return '<span class="c-follow overdue">No follow-up set!</span>';
+  const d = new Date(c.next+'T12:00');
+  const label = d.toLocaleDateString(undefined,{month:'short',day:'numeric'});
+  if(f==='overdue') return '<span class="c-follow overdue">Overdue · '+label+'</span>';
+  if(f==='today') return '<span class="c-follow today">Today</span>';
+  if(f==='soon') return '<span class="c-follow soon">'+label+'</span>';
+  return '<span class="c-follow ok">'+label+'</span>';
+}
+function esc(s){ return (s||'').replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function contactCard(c){
+  const hot = (c.tags||[]).includes('Hot ⭐') || c.interest>=5;
+  const tags = (c.tags||[]).map(t=>'<span class="chip'+(t==='Hot ⭐'?' hot':'')+'">'+esc(t)+'</span>').join('');
+  const sub = [c.occupation, c.phone, c.referredBy?('via '+c.referredBy):''].filter(Boolean).map(esc).join(' · ');
+  return '<div class="contact '+cardClass(c)+'" onclick="editContact(\''+c.id+'\')">'+
+    '<div class="c-main"><div class="c-name">'+(hot?'<span class="star">⭐ </span>':'')+esc(c.name)+'</div>'+
+    '<div class="c-sub">'+sub+'</div>'+(tags?'<div class="tags">'+tags+'</div>':'')+'</div>'+
+    '<div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">'+
+    '<span class="c-stage">'+esc(c.stage)+'</span>'+followLabel(c)+'</div></div>';
+}
+
+function renderRail(type){
+  const el = $(type==='client'?'railClients':'railRecruits');
+  const list = db.contacts.filter(c=>c.type===type);
+  const fkey = type==='client'?'clients':'recruits';
+  let html = '<span class="stage-pill '+(filters[fkey]==='All'?'active':'')+'" onclick="setFilter(\''+fkey+'\',\'All\')">All<span class="n">'+list.length+'</span></span>';
+  STAGES[type].forEach(s=>{
+    const n = list.filter(c=>c.stage===s).length;
+    html += '<span class="stage-pill '+(filters[fkey]===s?'active':'')+'" onclick="setFilter(\''+fkey+'\',\''+s+'\')">'+s+'<span class="n">'+n+'</span></span>';
+  });
+  el.innerHTML = html;
+}
+window.setFilter = function(fkey, val){ filters[fkey]=val; renderAll(); };
+
+function renderList(type){
+  const fkey = type==='client'?'clients':'recruits';
+  const q = $(type==='client'?'searchClients':'searchRecruits').value.toLowerCase();
+  let list = db.contacts.filter(c=>c.type===type);
+  if(filters[fkey]!=='All') list = list.filter(c=>c.stage===filters[fkey]);
+  if(q) list = list.filter(c=>[c.name,c.phone,c.occupation,(c.tags||[]).join(' '),c.notes,c.referredBy].join(' ').toLowerCase().includes(q));
+  list.sort((a,b)=> (a.next||'9999') < (b.next||'9999') ? -1 : 1);
+  const el = $(type==='client'?'listClients':'listRecruits');
+  el.innerHTML = list.length ? list.map(contactCard).join('') :
+    '<div class="empty">No one here yet. Every name you add is a family that won\'t be left behind.</div>';
+}
+
+function renderToday(){
+  const due = db.contacts.filter(c=>{const f=followState(c);return f==='overdue'||f==='today'||f==='none';});
+  due.sort((a,b)=>(a.next||'0')<(b.next||'0')?-1:1);
+  $('listToday').innerHTML = due.length ? due.map(contactCard).join('') :
+    '<div class="empty">Zero red. Pipeline is clean — go pour into someone anyway. 🙌</div>';
+  $('cntToday').textContent = due.length;
+  $('navToday').classList.toggle('alert', due.length>0);
+}
+
+function renderDash(){
+  const overdue = db.contacts.filter(c=>followState(c)==='overdue'||followState(c)==='none').length;
+  const hot = db.contacts.filter(c=>(c.tags||[]).includes('Hot ⭐')||c.interest>=5).length;
+  const cl = db.contacts.filter(c=>c.type==='client').length;
+  const rc = db.contacts.filter(c=>c.type==='recruit').length;
+  $('dOverdue').textContent = overdue;
+  $('dHot').textContent = hot;
+  $('dClients').textContent = cl;
+  $('dRecruits').textContent = rc;
+  $('cntClients').textContent = cl;
+  $('cntRecruits').textContent = rc;
+
+  const due = db.contacts.filter(c=>{const f=followState(c);return f==='overdue'||f==='today';}).slice(0,6);
+  $('dashDue').innerHTML = due.length ? due.map(contactCard).join('') : '<div class="empty" style="padding:20px">Nothing due — schedule tomorrow\'s touches now.</div>';
+
+  const refCount = {};
+  db.contacts.forEach(c=>{ if(c.referredBy){ const k=c.referredBy.trim(); if(k) refCount[k]=(refCount[k]||0)+1; }});
+  const top = Object.entries(refCount).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  $('dashRefs').innerHTML = top.length ?
+    top.map(([n,ct])=>'<div class="ref-row"><b>'+esc(n)+'</b><span>'+ct+' referral'+(ct>1?'s':'')+'</span></div>').join('') :
+    '<div style="font-size:13px;color:var(--muted)">Log "Referred by" on new prospects and your best referral sources appear here. Every appointment ends with: "Who are three people you care about that would benefit from this?"</div>';
+
+  let week = {calls:0,texts:0,confirms:0,refs:0};
+  for(let i=0;i<7;i++){
+    const d=new Date(); d.setDate(d.getDate()-i);
+    const day = db.power[d.toISOString().slice(0,10)];
+    if(day) PH_TARGETS.forEach(t=> week[t.key]+= (day[t.key]||0));
+  }
+  $('dashWeek').innerHTML =
+    '<b style="color:var(--navy)">'+week.calls+'</b> calls · <b style="color:var(--navy)">'+week.texts+'</b> texts · <b style="color:var(--navy)">'+week.confirms+'</b> confirmations · <b style="color:var(--navy)">'+week.refs+'</b> referral asks';
+}
+
+/* ---------- Power Hour ---------- */
+function phToday(){ const t=todayStr(); if(!db.power[t]) db.power[t]={calls:0,texts:0,confirms:0,refs:0}; return db.power[t]; }
+function renderPower(){
+  const day = phToday();
+  const d = new Date();
+  $('phDate').textContent = 'Power Hour — ' + d.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'});
+  let html=''; let allDone=true;
+  PH_TARGETS.forEach(t=>{
+    const v = day[t.key]||0; const pct = Math.min(100, v/t.target*100);
+    if(v<t.target) allDone=false;
+    html += '<div class="ph-item"><div class="ph-top"><b>'+t.label+'</b><span class="ph-count">'+v+' / '+t.target+'</span></div>'+
+      '<div class="bar"><i class="'+(v>=t.target?'done':'')+'" style="width:'+pct+'%"></i></div>'+
+      '<div class="ph-btns"><button class="btn sm gold" onclick="phAdd(\''+t.key+'\',1)">+1</button>'+
+      '<button class="btn sm ghost" onclick="phAdd(\''+t.key+'\',5)">+5</button>'+
+      '<button class="btn sm ghost" onclick="phAdd(\''+t.key+'\',-1)">−1</button></div></div>';
+  });
+  $('phList').innerHTML = html;
+  $('phDone').textContent = allDone ? '✓ Power Hour complete!' : '';
+  let wk='';
+  for(let i=0;i<7;i++){
+    const dd=new Date(); dd.setDate(dd.getDate()-i);
+    const k=dd.toISOString().slice(0,10); const dday=db.power[k];
+    if(dday){
+      const done = PH_TARGETS.every(t=>(dday[t.key]||0)>=t.target);
+      wk += '<div class="ref-row"><b>'+dd.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'})+'</b>'+
+        '<span>'+(dday.calls||0)+'c · '+(dday.texts||0)+'t · '+(dday.confirms||0)+'a · '+(dday.refs||0)+'r '+(done?' ✓':'')+'</span></div>';
+    }
+  }
+  $('phWeek').innerHTML = wk || '<div style="color:var(--muted)">Log your first Power Hour above.</div>';
+}
+window.phAdd = function(key, n){ const day=phToday(); day[key]=Math.max(0,(day[key]||0)+n); pushPower(); renderPower(); renderDash(); };
+window.resetPH = function(){ db.power[todayStr()]={calls:0,texts:0,confirms:0,refs:0}; pushPower(); renderPower(); renderDash(); };
+
+/* ---------- Modal ---------- */
+function buildTagPicker(selected){
+  $('fTags').innerHTML = TAG_OPTIONS.map(t=>'<span class="chip '+((selected||[]).includes(t)?'on':'')+'" onclick="this.classList.toggle(\'on\')" data-tag="'+t+'">'+t+'</span>').join('');
+}
+function fillStages(type, current){
+  $('fStage').innerHTML = STAGES[type].map(s=>'<option'+(s===current?' selected':'')+'>'+s+'</option>').join('');
+}
+window.openModal = function(type){
+  modalType=type; editingId=null;
+  $('mTitle').textContent = type==='client'?'Add Client Prospect':'Add Recruit Prospect';
+  ['fName','fPhone','fEmail','fOcc','fRef','fNotes'].forEach(id=>$(id).value='');
+  $('fSource').value='Referral';
+  $('fInterest').value='3';
+  $('fLast').value=todayStr();
+  const nx=new Date(); nx.setDate(nx.getDate()+2);
+  $('fNext').value=nx.toISOString().slice(0,10);
+  fillStages(type, STAGES[type][0]);
+  buildTagPicker([]);
+  $('mDelete').style.display='none';
+  $('overlay').classList.add('open');
+};
+window.editContact = function(id){
+  const c = db.contacts.find(x=>x.id===id); if(!c) return;
+  modalType=c.type; editingId=id;
+  $('mTitle').textContent='Edit — '+c.name;
+  $('fName').value=c.name||'';
+  $('fPhone').value=c.phone||'';
+  $('fEmail').value=c.email||'';
+  $('fOcc').value=c.occupation||'';
+  $('fSource').value=c.source||'Referral';
+  $('fRef').value=c.referredBy||'';
+  $('fInterest').value=c.interest||3;
+  $('fLast').value=c.last||'';
+  $('fNext').value=c.next||'';
+  $('fNotes').value=c.notes||'';
+  fillStages(c.type, c.stage);
+  buildTagPicker(c.tags||[]);
+  $('mDelete').style.display='inline-block';
+  $('overlay').classList.add('open');
+};
+window.closeModal = function(){
+  $('overlay').classList.remove('open');
+  $('mError').style.display='none';
+  deleteArmed=false; $('mDelete').textContent='Delete';
+};
+function showErr(msg){ const e=$('mError'); e.textContent=msg; e.style.display='block'; }
+window.saveContact = async function(){
+  $('mError').style.display='none';
+  const name = $('fName').value.trim();
+  if(!name){ showErr('Name is required.'); return; }
+  const next = $('fNext').value;
+  if(!next){ showErr('Never leave Next Follow-Up blank. Set a date.'); return; }
+  if(!user){ showErr('Not signed in.'); return; }
+  const tags = [...document.querySelectorAll('#fTags .chip.on')].map(x=>x.dataset.tag);
+  const data = {
+    type: modalType, name,
+    phone: $('fPhone').value.trim(),
+    email: $('fEmail').value.trim(),
+    occupation: $('fOcc').value.trim(),
+    source: $('fSource').value,
+    referredBy: $('fRef').value.trim(),
+    interest: parseInt($('fInterest').value),
+    stage: $('fStage').value,
+    last: $('fLast').value,
+    next, tags,
+    notes: $('fNotes').value.trim(),
+    updatedBy: user.email || '', updatedAt: new Date().toISOString()
+  };
+  const id = editingId || uid();
+  const existing = editingId ? db.contacts.find(x=>x.id===editingId) : null;
+  const record = { id, created: existing ? (existing.created||todayStr()) : todayStr(), ...data };
+  if(existing){ Object.assign(existing, record); } else { db.contacts.push(record); }
+  window.closeModal(); renderAll();
+  try{ await pushContact(record); }catch(e){ setDot('Save failed — check connection'); }
+};
+let deleteArmed=false;
+window.deleteContact = async function(){
+  if(!editingId) return;
+  const btn = $('mDelete');
+  if(!deleteArmed){
+    deleteArmed=true;
+    btn.textContent='Tap again to confirm delete';
+    setTimeout(()=>{ deleteArmed=false; btn.textContent='Delete'; }, 3000);
+    return;
+  }
+  deleteArmed=false; btn.textContent='Delete';
+  const id = editingId;
+  db.contacts = db.contacts.filter(x=>x.id!==id);
+  window.closeModal(); renderAll();
+  try{ await removeContact(id); }catch(e){ setDot('Delete failed — check connection'); }
+};
+
+/* ---------- Backup ---------- */
+window.exportData = function(){
+  const blob = new Blob([JSON.stringify(db, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'hyperion-crm-backup-' + todayStr() + '.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+};
+window.importData = function(input){
+  const file = input.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = async () => {
+    try{
+      const data = JSON.parse(reader.result);
+      if(!data.contacts) throw new Error('bad file');
+      setDot('Importing…');
+      for(const c of data.contacts){
+        const id = c.id || uid();
+        await pushContact({...c, id});
+      }
+      setDot('Backup restored');
+    }catch(e){ setDot('Import failed — wrong file'); }
+  };
+  reader.readAsText(file);
+  input.value='';
+};
+
+/* ---------- Tabs ---------- */
+$('nav').addEventListener('click', e=>{
+  const b = e.target.closest('button'); if(!b || !b.dataset.tab) return;
+  currentTab = b.dataset.tab;
+  document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active', x===b));
+  ['dash','clients','recruits','today','power'].forEach(t=>{
+    $('tab-'+t).hidden = (t!==currentTab);
+  });
+  renderAll();
+});
+$('searchClients').addEventListener('input', ()=>renderList('client'));
+$('searchRecruits').addEventListener('input', ()=>renderList('recruit'));
+$('overlay').addEventListener('click', e=>{ if(e.target.id==='overlay') window.closeModal(); });
+
+function renderAll(){
+  renderRail('client'); renderRail('recruit');
+  renderList('client'); renderList('recruit');
+  renderToday(); renderDash(); renderPower();
+}
+$('tab-power').hidden = true;
+renderAll();
+</script>
+
+</body>
+</html>
