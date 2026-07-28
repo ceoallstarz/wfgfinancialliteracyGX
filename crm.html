@@ -123,7 +123,12 @@
   background:#faf7f0;border:1px solid #e2dccd;border-radius:10px;padding:12px 14px;
   max-height:280px;overflow:auto;margin:0 0 10px;
 }
-.dna-empty{font-size:13px;color:var(--muted);margin-bottom:10px}
+.dna-empty{font-size:13px;color:var(--muted);margin-bottom:8px}
+.dna-link{
+  width:100%;font-size:12px;font-family:ui-monospace,Menlo,monospace;
+  padding:9px 11px;border:1px solid #e2dccd;border-radius:8px;background:#faf7f0;
+  color:#1a2a42;margin-bottom:10px;
+}
 .dna-btns{display:flex;gap:8px;flex-wrap:wrap}
 .dna-attach{margin-top:12px;padding-top:12px;border-top:1px solid #e2dccd;display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
 .dna-attach label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:4px}
@@ -675,13 +680,14 @@ window.renderDnaBox = function(id){
     html = '<div class="dna-head">Completed' + (when ? ' ' + when : '') + '</div>' +
            '<pre class="dna-pre">' + esc(p.plainText || '') + '</pre>' +
            '<div class="dna-btns">' +
-             '<button type="button" class="btn gold sm" onclick="copyDnaText(\'' + p.id + '\')">Copy for coaching brief</button>' +
-             '<button type="button" class="btn ghost sm" onclick="copyDnaLink(\'' + id + '\')">Copy link again</button>' +
+             '<button type="button" class="btn gold sm" onclick="copyDnaText(\'' + p.id + '\', this)">Copy for coaching brief</button>' +
+             '<button type="button" class="btn ghost sm" onclick="copyDnaLink(\'' + id + '\', this)">Copy link again</button>' +
            '</div>';
   } else {
     const loose = db.dna.filter(x => !x.recruitId);
     html = '<div class="dna-empty">No profile yet \u2014 send them their link.</div>' +
-           '<div class="dna-btns"><button type="button" class="btn gold sm" onclick="copyDnaLink(\'' + id + '\')">Copy DNA link</button></div>';
+           '<input class="dna-link" id="dnaLinkField" readonly value="' + esc(dnaLink(id)) + '" onclick="this.select()">' +
+           '<div class="dna-btns"><button type="button" class="btn gold sm" onclick="copyDnaLink(\'' + id + '\', this)">Copy DNA link</button></div>';
     if(loose.length){
       html += '<div class="dna-attach"><label>Came in without a link</label>' +
               '<select id="dnaPick">' +
@@ -692,12 +698,36 @@ window.renderDnaBox = function(id){
   }
   box.innerHTML = html;
 };
-window.copyDnaLink = function(id){
-  navigator.clipboard.writeText(dnaLink(id)).then(()=>flash('DNA link copied'));
+function copyish(text, btn, okLabel, fallbackEl){
+  const done = () => {
+    if(btn){ const t = btn.dataset.label || btn.textContent; btn.dataset.label = t;
+             btn.textContent = okLabel; setTimeout(()=>{ btn.textContent = t; }, 2200); }
+    flash(okLabel);
+  };
+  const manual = () => {
+    if(fallbackEl){ fallbackEl.focus(); fallbackEl.select(); }
+    if(btn) btn.textContent = 'Copy it from the box \u2191';
+  };
+  const legacy = () => {
+    try{
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      ok ? done() : manual();
+    }catch(e){ manual(); }
+  };
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(done).catch(legacy);
+  } else legacy();
+}
+window.copyDnaLink = function(id, btn){
+  copyish(dnaLink(id), btn, 'Copied \u2713', $('dnaLinkField'));
 };
-window.copyDnaText = function(pid){
+window.copyDnaText = function(pid, btn){
   const p = db.dna.find(x => x.id === pid); if(!p) return;
-  navigator.clipboard.writeText(p.plainText || '').then(()=>flash('Profile copied'));
+  copyish(p.plainText || '', btn, 'Copied \u2713', null);
 };
 window.attachDna = async function(id){
   const pick = $('dnaPick'); if(!pick || !pick.value) return;
