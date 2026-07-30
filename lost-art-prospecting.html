@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Lost Art — In-Person Prospecting Field Guide | Hyperion Legacy Builders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1a2a42;
+    --navy-deep:#111d2e;
+    --navy-soft:#2b3d58;
+    --gold:#c9a84c;
+    --gold-soft:#e0c880;
+    --cream:#f7f3e9;
+    --cream-dim:#ebe4d3;
+    --ink:#1c1c1c;
+    --muted:#6b7280;
+    --line:rgba(26,42,66,.14);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 22px}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    background:
+      radial-gradient(900px 420px at 78% -10%, rgba(201,168,76,.20), transparent 60%),
+      linear-gradient(160deg,var(--navy) 0%, var(--navy-deep) 100%);
+    color:var(--cream);
+    padding:64px 0 56px;
+    border-bottom:3px solid var(--gold);
+  }
+  .eyebrow{
+    font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;margin:0 0 18px;
+  }
+  h1{
+    font-size:clamp(2.1rem,6vw,3.4rem);line-height:1.05;margin:0 0 18px;
+    font-weight:800;letter-spacing:-.02em;
+  }
+  h1 em{font-style:normal;color:var(--gold-soft)}
+  .hero p.lede{font-size:1.08rem;max-width:56ch;color:rgba(247,243,233,.86);margin:0 0 26px}
+  .hero .creed{
+    display:inline-block;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
+    font-weight:700;color:var(--cream);border:1px solid rgba(201,168,76,.5);
+    padding:8px 14px;border-radius:2px;
+  }
+
+  /* ---------- NAV ---------- */
+  nav.jump{
+    position:sticky;top:0;z-index:20;background:rgba(17,29,46,.97);
+    border-bottom:1px solid rgba(201,168,76,.28);
+  }
+  nav.jump .wrap{display:flex;gap:6px;overflow-x:auto;padding:10px 22px;scrollbar-width:none}
+  nav.jump .wrap::-webkit-scrollbar{display:none}
+  nav.jump a{
+    flex:0 0 auto;color:rgba(247,243,233,.78);text-decoration:none;font-size:.78rem;
+    font-weight:600;letter-spacing:.04em;padding:6px 11px;border-radius:3px;white-space:nowrap;
+  }
+  nav.jump a:hover,nav.jump a:focus-visible{color:var(--navy);background:var(--gold)}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:52px 0 8px}
+  .stage-tag{
+    display:flex;align-items:center;gap:12px;margin-bottom:10px;
+    font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:var(--gold);
+  }
+  .stage-tag span.rule{height:1px;flex:1;background:var(--line)}
+  h2{font-size:clamp(1.5rem,4vw,2.1rem);line-height:1.15;margin:0 0 12px;font-weight:800;letter-spacing:-.015em;color:var(--navy)}
+  h3{font-size:1.05rem;margin:30px 0 8px;font-weight:700;color:var(--navy)}
+  p{margin:0 0 14px}
+  .sub{color:var(--muted);font-size:1rem;max-width:62ch}
+
+  .pull{
+    border-left:3px solid var(--gold);padding:4px 0 4px 16px;margin:22px 0;
+    font-size:1.12rem;font-weight:600;color:var(--navy);line-height:1.4;
+  }
+
+  /* ---------- CARDS ---------- */
+  .grid{display:grid;gap:14px;margin:18px 0 6px}
+  .grid.two{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .card{
+    background:#fff;border:1px solid var(--line);border-radius:4px;padding:18px 18px 16px;
+    border-top:3px solid var(--navy);
+  }
+  .card.gold{border-top-color:var(--gold)}
+  .card h4{margin:0 0 6px;font-size:.98rem;font-weight:700;color:var(--navy)}
+  .card p{margin:0;font-size:.93rem;color:#3c4655}
+  .card .tell{display:block;margin-top:9px;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--gold)}
+
+  /* ---------- STEP LIST (real sequence) ---------- */
+  ol.steps{list-style:none;counter-reset:s;padding:0;margin:18px 0}
+  ol.steps li{
+    counter-increment:s;position:relative;padding:0 0 16px 46px;margin:0;
+    border-left:1px solid var(--line);
+  }
+  ol.steps li:last-child{border-left-color:transparent;padding-bottom:0}
+  ol.steps li::before{
+    content:counter(s);position:absolute;left:-15px;top:-2px;
+    width:30px;height:30px;border-radius:50%;background:var(--navy);color:var(--gold);
+    display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:800;
+  }
+  ol.steps b{display:block;color:var(--navy);font-size:1rem}
+  ol.steps span{font-size:.94rem;color:#3c4655}
+
+  /* ---------- SCRIPT LINES ---------- */
+  .lines{margin:16px 0}
+  .line{
+    background:#fff;border:1px solid var(--line);border-left:3px solid var(--gold);
+    padding:13px 15px;margin-bottom:9px;border-radius:3px;
+  }
+  .line q{display:block;font-size:1rem;font-weight:600;color:var(--navy);quotes:none;line-height:1.45}
+  .line small{display:block;margin-top:6px;color:var(--muted);font-size:.82rem}
+
+  /* ---------- ANSWER LADDER ---------- */
+  .ladder{margin:18px 0}
+  .rung{display:flex;gap:14px;margin-bottom:12px;align-items:flex-start}
+  .rung .lvl{
+    flex:0 0 auto;width:74px;padding-top:11px;text-align:right;
+    font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--gold);line-height:1.3;
+  }
+  .rung .say{
+    flex:1;background:#fff;border:1px solid var(--line);border-left:3px solid var(--navy);
+    border-radius:0 4px 4px 0;padding:12px 15px;
+  }
+  .rung .say q{quotes:none;display:block;font-size:1rem;font-weight:600;color:var(--navy);line-height:1.45}
+  .rung .say small{display:block;margin-top:7px;color:var(--muted);font-size:.83rem}
+  .rung.stop .say{border-left-color:var(--gold);background:var(--cream-dim)}
+
+  /* ---------- FIELD NOTES ---------- */
+  .fn{background:#fff;border:1px solid var(--line);border-radius:5px;margin:16px 0;overflow:hidden}
+  .fn>header{
+    background:var(--navy);color:var(--cream);padding:11px 16px;
+    display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+  }
+  .fn>header b{font-size:.95rem;font-weight:700}
+  .fn>header span{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  .fn .body{padding:15px 16px 16px}
+  .fn .setup{font-size:.92rem;color:var(--muted);margin:0 0 12px}
+  .fn .said{
+    border-left:3px solid var(--gold);background:var(--cream);
+    padding:11px 14px;margin:0 0 12px;border-radius:0 3px 3px 0;
+  }
+  .fn .said q{quotes:none;display:block;font-size:1rem;font-weight:600;color:var(--navy);line-height:1.45}
+  .fn .said q+q{margin-top:8px}
+  .fn .said em{font-style:normal;color:var(--muted);font-weight:500}
+  .fn .why,.fn .after{font-size:.9rem;margin:0 0 6px;color:#3c4655}
+  .fn .why b,.fn .after b{
+    font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);
+    display:inline-block;margin-right:7px;
+  }
+  .fn .after{margin-bottom:0}
+
+  .warn{background:#fff;border:1px dashed var(--gold);border-radius:4px;padding:16px 18px;margin:20px 0}
+  .warn strong{color:var(--navy)}
+
+  /* ---------- COURAGE TOOL ---------- */
+  .courage{
+    background:linear-gradient(155deg,var(--navy) 0%,var(--navy-deep) 100%);
+    color:var(--cream);border-radius:6px;padding:26px 22px;text-align:center;margin:26px 0;
+    border:1px solid rgba(201,168,76,.35);
+  }
+  .courage h3{color:var(--cream);margin:0 0 4px;font-size:1.15rem}
+  .courage p{color:rgba(247,243,233,.75);font-size:.9rem;margin:0 auto 18px;max-width:44ch}
+  #count{
+    font-size:clamp(3.4rem,14vw,5.4rem);font-weight:800;line-height:1;color:var(--gold);
+    letter-spacing:-.03em;min-height:1em;transition:transform .16s ease;
+  }
+  #cue{font-size:.95rem;font-weight:600;color:var(--cream);min-height:1.5em;margin-top:8px}
+  button{
+    font-family:inherit;cursor:pointer;border:none;border-radius:3px;
+    background:var(--gold);color:var(--navy);font-weight:800;font-size:.86rem;
+    letter-spacing:.1em;text-transform:uppercase;padding:13px 26px;margin-top:16px;
+  }
+  button:hover{background:var(--gold-soft)}
+  button:focus-visible{outline:3px solid var(--cream);outline-offset:2px}
+
+  /* ---------- SCOREBOARD ---------- */
+  .board{background:#fff;border:1px solid var(--line);border-radius:5px;overflow:hidden;margin:20px 0}
+  .board .row{display:flex;align-items:center;gap:14px;padding:15px 16px;border-bottom:1px solid var(--line)}
+  .board .row:last-child{border-bottom:none}
+  .board .meta{flex:1;min-width:0}
+  .board .meta b{display:block;color:var(--navy);font-size:.98rem}
+  .board .meta small{color:var(--muted);font-size:.82rem}
+  .board .tally{font-size:1.4rem;font-weight:800;color:var(--navy);min-width:62px;text-align:right;font-variant-numeric:tabular-nums}
+  .board .tally i{font-style:normal;color:var(--muted);font-size:.9rem;font-weight:600}
+  .board button{margin:0;padding:9px 15px;font-size:.8rem}
+  .board .reset{background:transparent;color:var(--muted);border:1px solid var(--line);letter-spacing:.06em}
+  .board .reset:hover{background:var(--cream-dim);color:var(--navy)}
+  .note{font-size:.82rem;color:var(--muted);margin-top:-4px}
+
+  /* ---------- LEADER BLOCK ---------- */
+  .leader{background:var(--navy);color:var(--cream);margin-top:56px;padding:52px 0 46px;border-top:3px solid var(--gold)}
+  .leader h2,.leader h3{color:var(--cream)}
+  .leader .sub{color:rgba(247,243,233,.72)}
+  .leader .card{background:rgba(247,243,233,.05);border-color:rgba(201,168,76,.3);border-top-color:var(--gold)}
+  .leader .card h4{color:var(--gold-soft)}
+  .leader .card p{color:rgba(247,243,233,.8)}
+  .leader ol.steps li{border-left-color:rgba(201,168,76,.25)}
+  .leader ol.steps li::before{background:var(--gold);color:var(--navy)}
+  .leader ol.steps b{color:var(--cream)}
+  .leader ol.steps span{color:rgba(247,243,233,.78)}
+  .agenda-time{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700}
+
+  footer{background:var(--navy-deep);color:rgba(247,243,233,.6);text-align:center;padding:30px 22px;font-size:.82rem}
+  footer strong{color:var(--gold);letter-spacing:.16em;font-size:.76rem;display:block;margin-bottom:6px}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+  @media print{
+    nav.jump,.courage button,.board button{display:none}
+    body{background:#fff}
+    header.hero,.leader{background:var(--navy)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Hyperion Legacy Builders · Field Guide 01</p>
+    <h1>The lost art:<br>walk in cold,<br><em>walk out with momentum.</em></h1>
+    <p class="lede">Anybody can build off a phone. This is the skill that means you could be dropped in a city with no leads, no list, no following — and still build. Four stages: get your head right, use your eyes, open your mouth, get the contact.</p>
+    <span class="creed">Rooted. Rising. Unstoppable.</span>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Sections">
+  <div class="wrap">
+    <a href="#standard">The Standard</a>
+    <a href="#mindset">1 · Mindset</a>
+    <a href="#eyes">2 · Eyes</a>
+    <a href="#convo">3 · Conversation</a>
+    <a href="#flip">When They Ask You</a>
+    <a href="#field">Field Notes</a>
+    <a href="#contact">4 · The Contact</a>
+    <a href="#scoreboard">Scoreboard</a>
+    <a href="#teach">Leader's Page</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section id="standard">
+    <div class="stage-tag">Before anything else<span class="rule"></span></div>
+    <h2>This is CEO work</h2>
+    <p class="sub">A $30-an-hour employee waits to be handed people. A CEO goes and finds talent. Same person, same city, same Starbucks — different job description in their own head. That's the whole difference, and it shows up in your posture before you say a word.</p>
+    <div class="pull">You are not out here looking for bodies. You are out here recognizing talent.</div>
+    <div class="grid two">
+      <div class="card gold">
+        <h4>The only two wins that count</h4>
+        <p>Did you have the conversation, and did you leave with a way to reach them. That's it. Nobody is graded on who signs, who shows, or who buys.</p>
+      </div>
+      <div class="card gold">
+        <h4>Volume beats talent</h4>
+        <p>The person who talks to the most people wins every time. You don't need to be smooth. You need reps, and reps hand you confidence for free.</p>
+      </div>
+      <div class="card gold">
+        <h4>You're collecting people</h4>
+        <p>Every person you meet is a door. Some are locked today and open in two years. You're not closing anybody — you're building a list of humans who like you.</p>
+      </div>
+      <div class="card gold">
+        <h4>Recruiting sharpens the leader</h4>
+        <p>Every conversation trains your radar for what greatness looks like. You can't lead people you never learned how to see.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="mindset">
+    <div class="stage-tag">Stage 1<span class="rule"></span></div>
+    <h2>Mindset: five seconds is the whole ask</h2>
+    <p class="sub">You don't need to be brave all day. You need to be brave long enough to open your mouth. After the first sentence, it's just two people talking.</p>
+
+    <h3>Name the fear honestly</h3>
+    <p>The fear isn't them. The fear is you — worried about looking stupid, worried what a stranger thinks of you for nine seconds. That's ego, and ego is the most selfish thing you can bring into a room. Flip the camera around: this one conversation could be the day somebody's life changed and they had no idea it was available. If you stay quiet, they never find out.</p>
+    <div class="pull">Fear is ego. Ego points at you. Courage points at them.</div>
+
+    <h3>The pre-approach ritual — run it every single time</h3>
+    <ol class="steps">
+      <li><b>Body first</b><span>Shoulders back, chin up, hands out of pockets, phone away. Your body sets your state, not the other way around.</span></li>
+      <li><b>Pick one</b><span>Choose the actual human before you start walking. "That lady at the counter." Vague intention dies at the door.</span></li>
+      <li><b>Smile before you speak</b><span>Smile a half second early. It changes your voice, and it tells them you're safe before they hear a word.</span></li>
+      <li><b>Say the line in your head</b><span>"They already like me — they just don't know me yet." Every friend you have started as a stranger.</span></li>
+      <li><b>Go on five</b><span>Don't negotiate with yourself. Five seconds, then feet move.</span></li>
+    </ol>
+
+    <div class="courage">
+      <h3>The 5-Second Courage Button</h3>
+      <p>Standing in the parking lot talking yourself out of it? Hit it, walk on zero.</p>
+      <div id="count" aria-live="off">5</div>
+      <div id="cue" role="status" aria-live="polite">Pick your person first.</div>
+      <button id="go" type="button">Start the five</button>
+    </div>
+
+    <h3>Your baseline energy is the real script</h3>
+    <p>Baseline energy is your default setting when nobody's watching — how you walk into a building alone. Slouched and scrolling reads as low confidence and low standards. Walk in like you own the place, even when you're by yourself, and 85% of the communication is done before you talk. Confident, not arrogant. Eye contact, not staring. Warm, not needy.</p>
+  </section>
+
+  <section id="eyes">
+    <div class="stage-tag">Stage 2<span class="rule"></span></div>
+    <h2>Eyes: it's not what you say, it's what you see</h2>
+    <p class="sub">Scripts are the easy part. The skill is recognition — spotting the one person in the room who is bigger than the room they're standing in.</p>
+
+    <h3>Five things I'm looking for</h3>
+    <div class="grid two">
+      <div class="card">
+        <h4>The one the group follows</h4>
+        <p>Five friends, one decision-maker. Watch who the others check with, who orders first, who tells the story while the rest listen.</p>
+        <span class="tell">Tell: everyone's eyes go to them</span>
+      </div>
+      <div class="card">
+        <h4>Too sharp for the room</h4>
+        <p>People skills and presence way beyond the job they're doing. There's no way that role pays what they're worth.</p>
+        <span class="tell">Tell: "you don't belong here"</span>
+      </div>
+      <div class="card">
+        <h4>Service they weren't paid for</h4>
+        <p>Remembers your name, fixes a problem nobody asked them to fix, hustles when the manager isn't looking. That's character showing up for free.</p>
+        <span class="tell">Tell: extra effort, no audience</span>
+      </div>
+      <div class="card">
+        <h4>Carriage and eye contact</h4>
+        <p>Head up, steady eyes, moves with intent. Ambition has a posture, and you can read it across a room.</p>
+        <span class="tell">Tell: they take up their space</span>
+      </div>
+      <div class="card">
+        <h4>Real warmth</h4>
+        <p>Smiles at strangers, easy with people, energy that lifts the counter instead of draining it. Coachable people are usually warm people.</p>
+        <span class="tell">Tell: you liked them in 10 seconds</span>
+      </div>
+      <div class="card gold">
+        <h4>Get clear or you'll clone yourself</h4>
+        <p>If you don't know what you're looking for, you default to recruiting whoever will say yes. Decide before you leave the house.</p>
+        <span class="tell">Standard, not desperation</span>
+      </div>
+    </div>
+
+    <h3>Where the talent already is</h3>
+    <div class="grid two">
+      <div class="card">
+        <h4>A gym people pay extra for</h4>
+        <p>They're spending three times more because they take something in their life seriously. Serious is the trait; fitness is just where it's showing.</p>
+      </div>
+      <div class="card">
+        <h4>Local coffee shops, weekday mornings</h4>
+        <p>Working people fueling up before a shift or on lunch. Sit with a book, keep your head up, let the room come to you.</p>
+      </div>
+      <div class="card">
+        <h4>Airports and planes</h4>
+        <p>Travel costs money. Briefcases, laptops, career people with time to talk and nowhere to go for two hours.</p>
+      </div>
+      <div class="card">
+        <h4>Networking events outside our industry</h4>
+        <p>Skip the finance rooms. Go where real estate, health, fitness, and trades people gather — you're the only one of you there.</p>
+      </div>
+      <div class="card">
+        <h4>Your regular spots</h4>
+        <p>Same restaurant, same barber, same counter. Tip well, learn names, be a bright spot. Three visits in, they ask what you do — and you didn't have to open.</p>
+      </div>
+      <div class="card">
+        <h4>Anywhere, honestly</h4>
+        <p>Stop waiting for perfect timing and the perfect setting. It doesn't exist. Everyone is busy. Good recruiters find the opening in ordinary moments.</p>
+      </div>
+    </div>
+
+    <div class="warn">
+      <strong>The honest-compliment rule.</strong> If you can't name one true thing you like about them, don't prospect them. Fake compliments about shoes they hate is exactly why people think this is cheesy. Genuine or nothing.
+    </div>
+  </section>
+
+  <section id="convo">
+    <div class="stage-tag">Stage 3<span class="rule"></span></div>
+    <h2>Conversation: tone carries it, not wording</h2>
+    <p class="sub">Here's the biggest secret in the whole guide: greet a total stranger in the same tone you'd use for a friend you're happy to run into. Same words, that tone — it lands genuine every time.</p>
+    <div class="pull">"Do you mind if I ask what you do?" said flat is a survey. Said warm, it's a compliment.</div>
+
+    <h3>Three moves, in order</h3>
+    <ol class="steps">
+      <li><b>Compliment — something true</b><span>Name the thing you actually noticed. Specific beats clever. Ten words, max.</span></li>
+      <li><b>Curiosity — one honest question</b><span>Ask about them and then shut up and listen. Nod, react, follow the thread they give you. You're not steering yet.</span></li>
+      <li><b>Connect — leave with a way to reach them</b><span>You're not pitching, presenting, or closing. You're exchanging contact info like two people who enjoyed a conversation.</span></li>
+    </ol>
+
+    <h3>Openers that work — steal these</h3>
+    <div class="lines">
+      <div class="line"><q>You probably get asked this all the time — do you mind if I ask what you do for work?</q><small>Universal. Works anywhere, on anybody.</small></div>
+      <div class="line"><q>I have to ask — how'd you end up working here? You're way sharper than this job pays for.</q><small>Retail, restaurant, front counter. Say it warm, not slick.</small></div>
+      <div class="line"><q>You've got great energy. Are you in business, or is this the day job?</q><small>Great for someone with real customer-service presence.</small></div>
+      <div class="line"><q>You're clearly consistent in here — do you mind if I ask what you do outside the gym?</q><small>Gym. Compliment the discipline, not the body.</small></div>
+      <div class="line"><q>Watching your group for a minute, it's pretty obvious you're the one running the show. What do you do?</q><small>The leader in a friend group. They'll smile — nobody ever tells them.</small></div>
+      <div class="line"><q>You handled that better than most people twice your pay grade. Who taught you that?</q><small>After you watch them fix a problem or handle a rude customer.</small></div>
+      <div class="line"><q>Do you see yourself doing this five years from now, or is something else the plan?</q><small>Use after the small talk is already flowing.</small></div>
+    </div>
+    <p class="note">Don't memorize seven. Pick two, run them a hundred times, make them yours.</p>
+  </section>
+
+  <section id="flip">
+    <div class="stage-tag">Stage 3.5<span class="rule"></span></div>
+    <h2>When they flip it back on you</h2>
+    <p class="sub">Party, wedding, gym floor, backyard barbecue — sooner or later they ask what <i>you</i> do. This is where most people lose the room: they get excited and explain the whole business standing up. Don't. Your answer is a door, not a presentation.</p>
+    <div class="pull">Answer short. Hand it back. Every answer ends with a question.</div>
+
+    <h3>The answer ladder — only climb when they make you</h3>
+    <p>Start on rung one. You only go to rung two if they ask again, and rung three if they ask a third time. Their curiosity pulls the information out of you — that's what makes them lean in instead of back up.</p>
+
+    <div class="ladder">
+      <div class="rung">
+        <div class="lvl">Rung 1</div>
+        <div class="say"><q>I have a business. What do you do?</q><small>Five words, then it's back on them. Most conversations never leave this rung — and that's fine.</small></div>
+      </div>
+      <div class="rung">
+        <div class="lvl">Rung 2<br>they asked again</div>
+        <div class="say"><q>I have an agency where I get people licensed and trained to do complimentary financial plans for businesses and families. What do you do exactly?</q><small>Notice you described the agency, not the products. Then straight back to them.</small></div>
+      </div>
+      <div class="rung">
+        <div class="lvl">Rung 3<br>still asking</div>
+        <div class="say"><q>We help them save on taxes, build wealth — anything to do with money.</q><small>Broad on purpose. Specific answers invite debate; broad answers invite questions.</small></div>
+      </div>
+      <div class="rung stop">
+        <div class="lvl">Then stop</div>
+        <div class="say"><q>How long have you been doing that type of work?</q><small><b>Say it and shut up.</b> The silence after your answer is the tool. Do not fill it, do not add a sentence, do not explain. Let them talk.</small></div>
+      </div>
+    </div>
+
+    <h3>If they say "like what?"</h3>
+    <div class="lines">
+      <div class="line"><q>Most people are paying more in taxes than they need to, or they've got life insurance that's working against them. We look at the full picture and fix whatever's broken.</q><small>One sentence of problem, one sentence of solution. Then stop again.</small></div>
+    </div>
+
+    <h3>When they're actually interested — two invites</h3>
+    <div class="lines">
+      <div class="line"><q>Honestly, it's easier to show you than explain it. We do a free 20 to 30-minute financial review — what does your schedule look like next week?</q><small>Use this when it's personal and they're leaning in.</small></div>
+      <div class="line"><q>My company's hosting a free Zoom this week — Thursday at 6PM or Saturday at 9AM Pacific. It covers the financial stuff most of us were never taught. Practical, eye-opening, and most people walk away wishing they'd learned it years ago. I'd genuinely like you there — which works better, Thursday or Saturday?</q><small>Lower commitment than a sit-down, and the two-option close means the answer is a day, not a yes or no.</small></div>
+    </div>
+    <p class="note">Either way, still get the contact before you walk away. An invite they don't confirm is worth nothing without a number.</p>
+
+    <div class="warn">
+      <strong>The discipline here is silence.</strong> Every one of these lines is built to end and leave a gap. New people fill the gap with nervous talking and give away the whole presentation in a driveway. If you say your line and it feels uncomfortably quiet — you did it right.
+    </div>
+  </section>
+
+  <section id="field">
+    <div class="stage-tag">Field notes<span class="rule"></span></div>
+    <h2>How it actually sounds in the wild</h2>
+    <p class="sub">These are real moments, real words, real results — including the ones that went nowhere. Read the outcomes carefully: most of these people didn't stay in the business, and every one of them was still worth the conversation. That's the point.</p>
+
+    <div class="fn">
+      <header><b>The drive-thru window</b><span>Too sharp for the room</span></header>
+      <div class="body">
+        <p class="setup">Pulls up to a McDonald's window. The woman working it is polished, well-spoken, clearly overqualified for the headset.</p>
+        <div class="said">
+          <q>You're way too sharp to be working at McDonald's.</q>
+          <q><em>She said people probably think she hears that constantly — nobody ever actually says it.</em></q>
+          <q>So why are you here?</q>
+          <q><em>"I just needed money. It was the first place that hired me."</em></q>
+          <q>Let me get your contact info.</q>
+        </div>
+        <p class="why"><b>Why it works</b> He named the gap between her and her job out loud. People working overlooked positions almost never get told they're bigger than the role.</p>
+        <p class="after"><b>What happened</b> Recruited her later. She didn't stick — and it was still a rep worth taking, at a window he was sitting at anyway.</p>
+      </div>
+    </div>
+
+    <div class="fn">
+      <header><b>The coffee shop, with a book</b><span>Weekday morning</span></header>
+      <div class="body">
+        <p class="setup">Sat in a local coffee shop with <i>The Magic of Thinking Big</i> open in front of him. Barely read a page — he watched the door. A sharp-looking couple walks in and asks about the book.</p>
+        <div class="said">
+          <q>Hey, do you mind if I ask you a question — what do you do for work? You look sharp.</q>
+        </div>
+        <p class="why"><b>Why it works</b> The book gave them a reason to open <i>him</i>, so his first line landed mid-conversation instead of cold. Sitting somewhere on purpose beats walking around hunting.</p>
+        <p class="after"><b>What happened</b> Traded info, recruited them roughly six weeks later, made about six figures training them. They didn't stay in the business — they're still friends today.</p>
+      </div>
+    </div>
+
+    <div class="fn">
+      <header><b>The restaurant he goes to every week</b><span>They opened him</span></header>
+      <div class="body">
+        <p class="setup">Same spot near his house. Walks in, they know his order, he always tips well. No pitch, ever — just a good customer with good energy. Yesterday the server asked <i>him</i>.</p>
+        <div class="said">
+          <q><em>"Can I ask what you do, bro? What do you do?"</em></q>
+          <q><em>Five-minute conversation, got his social media.</em></q>
+        </div>
+        <p class="why"><b>Why it works</b> Presence over time did the prospecting. When you show up confident and generous in the same place repeatedly, people ask on their own — and you never had to open.</p>
+        <p class="after"><b>What happened</b> He'll be the next direct. Cost: zero courage, because the door opened from their side.</p>
+      </div>
+    </div>
+
+    <div class="fn">
+      <header><b>The gym</b><span>Compliment the discipline</span></header>
+      <div class="body">
+        <p class="setup">Upscale gym, mid-workout, a guy who obviously trains seriously.</p>
+        <div class="said">
+          <q>Excuse me brother, can I ask you a question? You're in great shape — obviously you train a lot. What do you do for work when you're not in here?</q>
+          <q><em>"I'm in law enforcement." Okay, got it.</em></q>
+        </div>
+        <p class="why"><b>Why it works</b> He complimented the consistency, not the body, then asked one honest question. Same room he was going to be in regardless.</p>
+        <p class="after"><b>What happened</b> His number one guy in the company came out of a gym conversation. So did his top couple.</p>
+      </div>
+    </div>
+
+    <div class="fn">
+      <header><b>A server, mid-shift</b><span>Short and human</span></header>
+      <div class="body">
+        <p class="setup">Waiting on a table turn, thirty seconds of the server's attention.</p>
+        <div class="said">
+          <q>Can I ask you a question — why do you work here? How'd you end up here?</q>
+          <q>You remind me of someone I work with. How long have you been here?</q>
+          <q>I can tell you love talking to people. Do you want to be working here for the rest of your career?</q>
+        </div>
+        <p class="why"><b>Why it works</b> Every one of these is short enough to fit in a shift and open-ended enough that the answer tells you whether to keep going.</p>
+        <p class="after"><b>What happened</b> This is his everyday rhythm — he isn't setting aside time to prospect anymore, he prospects as he moves through his day.</p>
+      </div>
+    </div>
+
+    <div class="fn">
+      <header><b>The leader in a friend group</b><span>The direct invite</span></header>
+      <div class="body">
+        <p class="setup">Watched a group for about twenty minutes. One person is clearly running the table — the others follow their lead.</p>
+        <div class="said">
+          <q>I watched you the last twenty minutes — the way you interact, the way your whole group follows you. If you were in business with me, I have no doubt you'd make six figures.</q>
+          <q>What do you do now? Are you open to learning something new, even part-time?</q>
+          <q>Let me get your contact info.</q>
+        </div>
+        <p class="why"><b>Why it works</b> The compliment is evidence-based — he says what he observed, which is impossible to dismiss as flattery. Then the ask is small: open to learning, not ready to join.</p>
+        <p class="after"><b>What happened</b> Some he invites directly like this. Most he just connects with on social and recruits weeks, months, or years later.</p>
+      </div>
+    </div>
+
+    <div class="fn">
+      <header><b>The low-pressure close he uses everywhere</b><span>Memorize this one</span></header>
+      <div class="body">
+        <p class="setup">The exit line, whenever the conversation has warmth but no time to go deeper.</p>
+        <div class="said">
+          <q>You want to work this job for twenty-five bucks an hour the rest of your life? I might have a shot for you. Let me get your contact — I'll have someone call you when I get back to the office. I can't guarantee you anything, but it's worth a conversation.</q>
+        </div>
+        <p class="why"><b>Why it works</b> "I can't guarantee you anything" removes every ounce of sales pressure and raises your status at the same time. You're not begging — you're offering one conversation.</p>
+        <p class="after"><b>What happened</b> This is the line that's been in circulation for 13 years for a reason. Say it warm, say it like you're doing them a favor, because you are.</p>
+      </div>
+    </div>
+
+    <div class="warn">
+      <strong>The counter-example — don't do this.</strong> "Hey, I really like your shoes" when they're wearing beat-up sneakers they hate. They know you don't mean it, and now you're the cheesy guy. If you can't name something you actually noticed, walk on by. There's another person thirty feet away.
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="stage-tag">Stage 4<span class="rule"></span></div>
+    <h2>The contact: how you actually leave with it</h2>
+    <p class="sub">This is where most people fold — good conversation, warm goodbye, no way to ever talk again. Ask for the contact out loud, every time. Two ways to do it.</p>
+
+    <h3>Option A · The soft connect (use this 80% of the time)</h3>
+    <div class="lines">
+      <div class="line"><q>Hey, I enjoyed this — are you on Instagram? Let's connect.</q><small>Zero pressure, nearly always yes. Follow them right there while you're standing together.</small></div>
+      <div class="line"><q>I've got to run, but let me get your number so I'm not that guy who says "we should talk" and disappears.</q><small>Honest and a little funny. People respect it.</small></div>
+    </div>
+    <p>Then you do nothing salesy. You reply to a story, congratulate a win, be a normal friend. Two weeks or two years later, the door opens on its own — and you're already in.</p>
+
+    <h3>Option B · The direct invite (when the talent is loud)</h3>
+    <div class="lines">
+      <div class="line"><q>I'll be straight with you — I've watched you the last twenty minutes and you've got something. I build people in the financial space and I'm always looking for talent. Are you open to hearing about something, even part-time?</q><small>Then wait. Let the silence sit.</small></div>
+      <div class="line"><q>Give me your number and I'll have someone reach out. I can't promise you anything — but it's worth one conversation.</q><small>Honest, low pressure, high status. Never oversell the ask.</small></div>
+    </div>
+
+    <h3>When it doesn't land</h3>
+    <p>"No thanks" costs you nothing and it isn't about you. Say "totally fair — good luck with everything," smile, and go. Locked doors unlock later, and the ones who watched you handle a no gracefully are often the ones who come back. The rep still counts. Log it.</p>
+
+    <div class="warn">
+      <strong>Same day, before bed:</strong> name into your phone or the CRM, where you met, one true detail about them, and one thing to say next time. A contact you can't remember anything about is a dead contact.
+    </div>
+
+    <div class="warn" style="border-style:solid;border-width:2px">
+      <strong>Where this guide ends.</strong> The second they agree to sit down with you — a Zoom, a coffee, a kitchen table — this guide is finished and you pick up <b>The Sit-Down</b> (sit-down.html). Different room, different job. Nothing on this page is meant to close anybody, and you should never try.
+    </div>
+  </section>
+
+  <section id="scoreboard">
+    <div class="stage-tag">The only scoreboard<span class="rule"></span></div>
+    <h2>Count activity. Nothing else.</h2>
+    <p class="sub">No recruit goals, no production goals, nothing you can't fully control. Hit these numbers and the outcomes take care of themselves — that part isn't your job this week.</p>
+
+    <div class="board" id="board">
+      <div class="row">
+        <div class="meta"><b>Conversations started</b><small>You opened your mouth to a stranger. Counts even if it went nowhere.</small></div>
+        <div class="tally"><span data-count="0">0</span><i>/10</i></div>
+        <button type="button" data-add>+1</button>
+      </div>
+      <div class="row">
+        <div class="meta"><b>Contacts collected</b><small>Number or social handle in your phone.</small></div>
+        <div class="tally"><span data-count="0">0</span><i>/5</i></div>
+        <button type="button" data-add>+1</button>
+      </div>
+      <div class="row">
+        <div class="meta"><b>Follow-ups sent</b><small>A reply, a check-in, a "great meeting you." Warm before you ask.</small></div>
+        <div class="tally"><span data-count="0">0</span><i>/5</i></div>
+        <button type="button" data-add>+1</button>
+      </div>
+      <div class="row">
+        <div class="meta"><b>Friends made</b><small>Somebody you'd honestly be glad to run into again.</small></div>
+        <div class="tally"><span data-count="0">0</span><i>/3</i></div>
+        <button type="button" data-add>+1</button>
+      </div>
+      <div class="row" style="justify-content:flex-end">
+        <button type="button" class="reset" id="reset">Reset week</button>
+      </div>
+    </div>
+    <p class="note">Tally resets when you close the page — screenshot it Sunday night and drop it in the team chat.</p>
+  </section>
+
+</div>
+
+<div class="leader" id="teach">
+  <div class="wrap">
+    <div class="stage-tag">Leader's page<span class="rule" style="background:rgba(201,168,76,.3)"></span></div>
+    <h2>How to teach this in 30 minutes</h2>
+    <p class="sub">Don't read the guide to them. Teach three ideas, make them do it in the room, send them out with a number to hit. Talking about courage doesn't build courage — reps do.</p>
+
+    <ol class="steps">
+      <li><b><span class="agenda-time">0–5 min</span> Tell on yourself</b><span>Open with your own story of a conversation you were too scared to start, or one you started that changed something. Real beats polished. This is what gives them permission.</span></li>
+      <li><b><span class="agenda-time">5–12 min</span> Teach the three ideas only</b><span>(1) This is CEO work — CEOs find talent. (2) Fear is ego; it's five seconds. (3) It's not what you say, it's what you see. Nothing else. Three ideas stick; twelve don't.</span></li>
+      <li><b><span class="agenda-time">12–20 min</span> Spot-the-talent drill</b><span>Pairs. Each person describes a real stranger they saw this week — barista, server, gym, gate agent — and names which of the five signals they showed. This trains eyes, which is the part nobody practices.</span></li>
+      <li><b><span class="agenda-time">20–27 min</span> Opener reps out loud</b><span>Standing, in threes: prospect, prospector, coach. Each person runs their two openers three times. Coach only gives feedback on tone and posture — never wording. Everyone rotates.</span></li>
+      <li><b><span class="agenda-time">27–30 min</span> Assign the number and close</b><span>Ten conversations, five contacts before next meeting. Everybody says their number out loud. Then send them out.</span></li>
+    </ol>
+
+    <div class="grid two">
+      <div class="card">
+        <h4>The team challenge</h4>
+        <p>"Walk out with momentum." Every gym trip, coffee run, and errand this week = one conversation. Post the win in the chat — the story, not the outcome.</p>
+      </div>
+      <div class="card">
+        <h4>Celebrate the reps, not the yeses</h4>
+        <p>Shout out the person who got told no three times and kept going. What you applaud is what duplicates. Applaud outcomes and the scared ones quit.</p>
+      </div>
+      <div class="card">
+        <h4>Read one field note out loud</h4>
+        <p>Pick a different one each week and read it word for word — then ask the room, "what did he notice before he said anything?" The examples teach the eyes faster than the theory does.</p>
+      </div>
+      <div class="card">
+        <h4>Go first, in front of them</h4>
+        <p>Prospect somebody live with a new associate standing next to you. One live rep from you is worth an hour of training.</p>
+      </div>
+      <div class="card">
+        <h4>Ask one question in every 1-on-1</h4>
+        <p>"How many conversations did you start?" Not how many signed. Coach the input and the confidence, and the output follows.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <strong>NO FAMILY LEFT BEHIND</strong>
+  Hyperion Legacy Builders · In-person prospecting field guide · For internal team training use
+</footer>
+
+<script>
+(function(){
+  // 5-second courage countdown
+  var cues = ["Shoulders back.","Pick your person.","Smile now.","They already like you.","Go."];
+  var countEl = document.getElementById('count');
+  var cueEl = document.getElementById('cue');
+  var btn = document.getElementById('go');
+  var timer = null;
+
+  btn.addEventListener('click', function(){
+    if (timer) return;
+    var n = 5;
+    btn.disabled = true;
+    btn.textContent = 'Counting…';
+    countEl.textContent = n;
+    cueEl.textContent = cues[0];
+    timer = setInterval(function(){
+      n--;
+      if (n > 0){
+        countEl.textContent = n;
+        cueEl.textContent = cues[5 - n] || '';
+      } else {
+        clearInterval(timer);
+        timer = null;
+        countEl.textContent = 'GO';
+        cueEl.textContent = 'Feet move. Talk to them.';
+        btn.disabled = false;
+        btn.textContent = 'Run it again';
+      }
+    }, 1000);
+  });
+
+  // Activity tally (session only, no storage)
+  document.querySelectorAll('#board [data-add]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var span = b.parentElement.previousElementSibling.querySelector('[data-count]');
+      var v = parseInt(span.getAttribute('data-count'), 10) + 1;
+      span.setAttribute('data-count', v);
+      span.textContent = v;
+    });
+  });
+  document.getElementById('reset').addEventListener('click', function(){
+    document.querySelectorAll('#board [data-count]').forEach(function(s){
+      s.setAttribute('data-count', 0);
+      s.textContent = '0';
+    });
+  });
+})();
+</script>
+</body>
+</html>
