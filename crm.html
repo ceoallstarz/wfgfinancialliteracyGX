@@ -131,6 +131,14 @@
   .verse{font-size:12px;color:var(--muted);font-style:italic;text-align:center;margin-top:30px}
 
 .chip.dna{background:#1a2a42;color:#c9a84c;border-color:#1a2a42}
+.reach{display:flex;gap:6px;margin-top:2px}
+.reach a{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:#eef2f8;color:#33507a;border:1px solid #d8e2f0;text-decoration:none}
+.reach a:active{background:#1a2a42;color:#c9a84c}
+.reach.big{gap:8px;margin:0 0 14px}
+.reach.big a{width:auto;height:auto;padding:10px 16px;border-radius:10px;gap:7px;
+  background:#1a2a42;color:#c9a84c;border:none;font-size:14px;font-weight:700}
+.reach.big a span{font-family:inherit}
 .chip.owner{background:#e6eef8;color:#33507a;border-color:#c9d8ee;font-weight:700}
 .dna-head{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 .dna-pre{
@@ -145,6 +153,11 @@
 .brief-body{white-space:pre-wrap;font-size:13px;line-height:1.6;padding:12px 14px;
   max-height:340px;overflow:auto;background:#fff}
 .dna-raw{margin-bottom:6px}
+.dna-vers{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.dna-vers span{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.dna-vers .ver{font-size:12px;font-weight:600;padding:5px 10px;border-radius:20px;cursor:pointer;
+  background:#f1ebdd;border:1px solid #ddd3c0;color:#5b6b7f;font-family:inherit}
+.dna-vers .ver.on{background:#1a2a42;border-color:#1a2a42;color:#c9a84c}
 .dna-raw summary{cursor:pointer;font-size:12px;font-weight:700;color:var(--muted);
   text-transform:uppercase;letter-spacing:.1em;padding:4px 0}
 .dna-link{
@@ -334,6 +347,7 @@
       <div><label>Last contact</label><input type="date" id="fLast"></div>
       <div><label>Next follow-up *</label><input type="date" id="fNext"></div>
     </div>
+    <div id="reachBar"></div>
     <div class="frow" id="ownerRow" style="display:none">
       <div><label>Whose contact is this?</label><select id="fOwner"></select></div>
     </div>
@@ -717,6 +731,24 @@ function followLabel(c){
 }
 function esc(s){ return (s||'').replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
+function telDigits(v){ return (v||'').replace(/[^\d+]/g,''); }
+function reachRow(c, big){
+  const t = telDigits(c.phone);
+  if(!t) return '';
+  const cls = big ? 'reach big' : 'reach';
+  return '<div class="' + cls + '">' +
+    '<a href="tel:' + t + '" onclick="event.stopPropagation()" title="Call">' +
+      '<svg viewBox="0 0 24 24" width="17" height="17"><path fill="currentColor" d="M6.6 10.8a15 15 0 006.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 013 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1l-2.3 2.2z"/></svg>' +
+      (big ? '<span>Call</span>' : '') + '</a>' +
+    '<a href="sms:' + t + '" onclick="event.stopPropagation()" title="Text">' +
+      '<svg viewBox="0 0 24 24" width="17" height="17"><path fill="currentColor" d="M20 2H4a2 2 0 00-2 2v18l4-4h14a2 2 0 002-2V4a2 2 0 00-2-2z"/></svg>' +
+      (big ? '<span>Text</span>' : '') + '</a>' +
+    (c.email ? '<a href="mailto:' + esc(c.email) + '" onclick="event.stopPropagation()" title="Email">' +
+      '<svg viewBox="0 0 24 24" width="17" height="17"><path fill="currentColor" d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5z"/></svg>' +
+      (big ? '<span>Email</span>' : '') + '</a>' : '') +
+  '</div>';
+}
+
 function contactCard(c){
   const hot = (c.tags||[]).includes('Hot ⭐') || c.interest>=5;
   const ownerTag = (scopeUid === 'all' && c.ownerId && c.ownerId !== user.uid && db.members.length > 1)
@@ -728,7 +760,7 @@ function contactCard(c){
     '<div class="c-sub">'+sub+'</div>'+
     ((tags||dnaFor(c.id)||ownerTag)?'<div class="tags">'+ownerTag+(dnaFor(c.id)?'<span class="chip dna">DNA</span>':'')+tags+'</div>':'')+'</div>'+
     '<div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">'+
-    '<span class="c-stage">'+esc(c.stage)+'</span>'+followLabel(c)+'</div></div>';
+    '<span class="c-stage">'+esc(c.stage)+'</span>'+followLabel(c)+reachRow(c,false)+'</div></div>';
 }
 
 function renderRail(type){
@@ -925,7 +957,20 @@ window.importVcfFile = function(input){
 };
 
 /* ---------- Leadership DNA Profile ---------- */
-function dnaFor(id){ return db.dna.find(p => p.recruitId === id); }
+let dnaView = null;   // which submission is being looked at
+function dnaTime(p){
+  if(p.submittedAt && p.submittedAt.toDate) return p.submittedAt.toDate().getTime();
+  return 0;
+}
+function dnaAll(id){
+  return db.dna.filter(p => p.recruitId === id).sort((a,b) => dnaTime(b) - dnaTime(a));
+}
+function dnaFor(id){
+  const list = dnaAll(id);
+  if(!list.length) return null;
+  return list.find(p => p.id === dnaView) || list[0];
+}
+window.viewDna = function(pid){ dnaView = pid; renderDnaBox(editingId); };
 function dnaLink(id){
   return location.origin + location.pathname.replace(/[^\/]*$/, 'dna.html') + '?r=' + id;
 }
@@ -936,10 +981,20 @@ function flash(msg){
 window.renderDnaBox = function(id){
   const box = $('dnaBox'); if(!box) return;
   const p = dnaFor(id);
+  const all = dnaAll(id);
   let html = '';
+  if(all.length > 1){
+    html += '<div class="dna-vers"><span>' + all.length + ' submissions</span>' +
+      all.map((x,n) => {
+        const d = x.submittedAt && x.submittedAt.toDate
+          ? x.submittedAt.toDate().toLocaleDateString() : 'undated';
+        return '<button type="button" class="ver' + (x.id === (p&&p.id) ? ' on' : '') +
+               '" onclick="viewDna(\'' + x.id + '\')">' + d + (n === 0 ? ' \u00b7 latest' : '') + '</button>';
+      }).join('') + '</div>';
+  }
   if(p){
     const when = p.submittedAt && p.submittedAt.toDate ? p.submittedAt.toDate().toLocaleDateString() : '';
-    html = '<div class="dna-head">Completed' + (when ? ' ' + when : '') + '</div>' +
+    html += '<div class="dna-head">Completed' + (when ? ' ' + when : '') + '</div>' +
            briefBlock(p) +
            '<details class="dna-raw"><summary>Their raw answers</summary>' +
            '<pre class="dna-pre">' + esc(p.plainText || '') + '</pre></details>' +
@@ -950,7 +1005,7 @@ window.renderDnaBox = function(id){
            '</div>';
   } else {
     const loose = db.dna.filter(x => !x.recruitId);
-    html = '<div class="dna-empty">No profile yet \u2014 send them their link.</div>' +
+    html += '<div class="dna-empty">No profile yet \u2014 send them their link.</div>' +
            '<input class="dna-link" id="dnaLinkField" readonly value="' + esc(dnaLink(id)) + '" onclick="this.select()">' +
            '<div class="dna-btns"><button type="button" class="btn gold sm" onclick="copyDnaLink(\'' + id + '\', this)">Copy DNA link</button></div>';
     if(loose.length){
@@ -1053,6 +1108,7 @@ window.openModal = function(type){
   fillStages(type, STAGES[type][0]);
   buildTagPicker([]);
   buildOwnerPick(null);
+  $('reachBar').innerHTML = '';
   $('mDelete').style.display='none';
   $('dnaRow').style.display='none';
   $('overlay').classList.add('open');
@@ -1076,6 +1132,8 @@ window.editContact = function(id){
   buildOwnerPick(c.ownerId || user.uid);
   $('mDelete').style.display='inline-block';
   $('dnaRow').style.display = c.type==='recruit' ? 'block' : 'none';
+  $('reachBar').innerHTML = reachRow(c, true);
+  dnaView = null;
   if(c.type==='recruit') renderDnaBox(id);
   $('overlay').classList.add('open');
 };
