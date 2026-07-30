@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0F1D2E">
+<title>Hyperion Hopper — Start Here</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Public+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0F1D2E;
+    --slate:#1A2A42;
+    --slate-line:#2C4162;
+    --cream:#F2EDE3;
+    --cream-dim:#A9B6C6;
+    --brass:#C9A227;
+    --moss:#6E8B5E;
+    --signal:#C2553F;
+    --display:"Fraunces",Georgia,"Times New Roman",serif;
+    --body:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--cream);
+    font-family:var(--body);
+    font-size:17px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:0 22px 72px}
+
+  /* ---------- eyebrow / label system ---------- */
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--brass);
+  }
+
+  /* ---------- masthead ---------- */
+  .mast{padding:38px 0 8px;text-align:center}
+  .monogram{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:46px;height:46px;
+    border:1.5px solid var(--brass);
+    border-radius:50%;
+    font-family:var(--display);font-weight:900;font-size:18px;
+    color:var(--brass);letter-spacing:.04em;
+    margin-bottom:16px;
+  }
+  h1{
+    font-family:var(--display);
+    font-weight:900;
+    font-size:clamp(38px,11vw,58px);
+    line-height:.95;
+    letter-spacing:-.02em;
+    margin:0;
+  }
+  .mantra{
+    font-family:var(--display);
+    font-style:italic;
+    font-weight:400;
+    font-size:clamp(19px,5.2vw,24px);
+    color:var(--brass);
+    margin:14px 0 0;
+  }
+  .standfirst{
+    color:var(--cream-dim);
+    margin:18px auto 0;
+    max-width:34ch;
+    font-size:16px;
+  }
+
+  /* ---------- signature: the hopper gauge ---------- */
+  .gauge{margin:34px auto 8px;display:block;width:196px;height:auto}
+  .gauge-cap{
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--cream-dim);text-align:center;margin:0 0 44px;
+  }
+  .fill{transform-origin:center bottom;animation:pour 1.9s cubic-bezier(.22,1,.36,1) .25s both}
+  @keyframes pour{from{transform:scaleY(.06)}to{transform:scaleY(1)}}
+  @media (prefers-reduced-motion:reduce){.fill{animation:none}}
+
+  /* ---------- sections ---------- */
+  section{
+    border-top:1px solid var(--slate-line);
+    padding-top:30px;
+    margin-top:38px;
+  }
+  h2{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(25px,6.5vw,32px);
+    line-height:1.1;
+    letter-spacing:-.01em;
+    margin:10px 0 6px;
+  }
+  .sub{color:var(--cream-dim);margin:0 0 22px;font-size:16px}
+
+  /* ---------- numbered setup sequence ---------- */
+  ol.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+  ol.steps > li{
+    counter-increment:s;
+    position:relative;
+    padding:0 0 22px 46px;
+    margin:0;
+  }
+  ol.steps > li::before{
+    content:counter(s,decimal-leading-zero);
+    position:absolute;left:0;top:1px;
+    font-family:var(--mono);font-size:13px;font-weight:600;
+    color:var(--brass);
+  }
+  ol.steps > li::after{
+    content:"";position:absolute;left:11px;top:24px;bottom:2px;width:1px;
+    background:var(--slate-line);
+  }
+  ol.steps > li:last-child::after{display:none}
+  ol.steps strong{display:block;font-weight:600;font-size:17px;margin-bottom:3px}
+  ol.steps p{margin:0;color:var(--cream-dim);font-size:15.5px}
+
+  /* ---------- cards ---------- */
+  .card{
+    background:var(--slate);
+    border:1px solid var(--slate-line);
+    border-radius:10px;
+    padding:18px 18px 16px;
+    margin-bottom:12px;
+  }
+  .card h3{
+    font-family:var(--body);font-weight:600;font-size:16px;
+    margin:0 0 5px;
+  }
+  .card p{margin:0;color:var(--cream-dim);font-size:15.5px}
+  .card .tag{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--brass);display:block;margin-bottom:8px;
+  }
+
+  /* ---------- field glossary ---------- */
+  dl{margin:0}
+  dt{
+    font-family:var(--mono);font-size:13px;font-weight:600;
+    color:var(--cream);
+    margin-top:20px;
+  }
+  dt .req{color:var(--signal);font-family:var(--body);font-size:12px;margin-left:6px;letter-spacing:0}
+  dd{margin:4px 0 0;color:var(--cream-dim);font-size:15.5px}
+
+  /* ---------- rules ---------- */
+  ul.rules{list-style:none;margin:0;padding:0}
+  ul.rules li{
+    position:relative;padding:0 0 14px 26px;color:var(--cream-dim);font-size:15.5px;
+  }
+  ul.rules li::before{
+    content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;
+    background:var(--brass);transform:rotate(45deg);
+  }
+  ul.rules strong{color:var(--cream);font-weight:600}
+
+  .callout{
+    border-left:3px solid var(--moss);
+    background:rgba(110,139,94,.09);
+    padding:14px 16px;
+    margin-top:22px;
+    font-size:15.5px;
+    color:var(--cream-dim);
+    border-radius:0 6px 6px 0;
+  }
+  .callout strong{color:var(--cream)}
+
+  /* ---------- sign-up call to action ---------- */
+  .gowrap{text-align:center;margin:8px 0 4px}
+  .gobtn{
+    display:block;
+    width:100%;
+    max-width:340px;
+    margin:0 auto;
+    padding:17px 20px;
+    background:var(--brass);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:17px;
+    font-weight:600;
+    text-decoration:none;
+    border-radius:8px;
+    border:1px solid #E0BE45;
+  }
+  .gobtn:active{background:#B08F1E}
+  .gonote{
+    font-family:var(--mono);
+    font-size:12px;
+    line-height:1.55;
+    letter-spacing:.02em;
+    color:var(--cream-dim);
+    margin:14px auto 0;
+    max-width:36ch;
+  }
+  .gonote strong{color:var(--brass);font-weight:600}
+
+  .gate{
+    border-left:3px solid var(--signal);
+    background:rgba(194,85,63,.1);
+    padding:16px;
+    margin:22px 0 0;
+    border-radius:0 6px 6px 0;
+    font-size:15.5px;
+    color:var(--cream-dim);
+  }
+  .gate h3{
+    font-family:var(--body);font-weight:600;font-size:16px;color:var(--cream);margin:0 0 5px;
+  }
+
+  footer{
+    border-top:1px solid var(--slate-line);
+    margin-top:46px;padding-top:28px;text-align:center;
+  }
+  .verse{
+    font-family:var(--display);font-style:italic;font-weight:400;
+    font-size:16.5px;color:var(--cream-dim);margin:0 auto;max-width:38ch;line-height:1.5;
+  }
+  .verse cite{display:block;font-style:normal;font-family:var(--mono);font-size:11px;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-top:12px}
+  .creed{
+    font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--slate-line);margin-top:34px;
+  }
+  a{color:var(--brass)}
+  a:focus-visible,li:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="mast">
+    <div class="monogram" aria-hidden="true">HL</div>
+    <h1>Hyperion<br>Hopper</h1>
+    <p class="mantra">Keep the hopper full.</p>
+    <p class="standfirst">Everyone you know, everyone you meet, and the next time you're supposed to talk to them. That's the whole tool.</p>
+
+    <svg class="gauge" viewBox="0 0 180 200" role="img" aria-label="Hopper filled to roughly eighty-five names out of one hundred">
+      <defs>
+        <clipPath id="hopperShape">
+          <path d="M14 14 H166 L108 140 V190 H72 V140 Z"/>
+        </clipPath>
+      </defs>
+      <g clip-path="url(#hopperShape)">
+        <rect x="0" y="0" width="180" height="200" fill="#16273E"/>
+        <g class="fill">
+          <rect x="0" y="34" width="180" height="166" fill="#C9A227"/>
+          <rect x="0" y="30" width="180" height="4" fill="#E0BE45"/>
+        </g>
+      </g>
+      <path d="M14 14 H166 L108 140 V190 H72 V140 Z" fill="none" stroke="#C9A227" stroke-width="2.5"/>
+      <g font-family="IBM Plex Mono, monospace" font-size="10" fill="#A9B6C6" letter-spacing="1">
+        <line x1="166" y1="14" x2="176" y2="14" stroke="#C9A227" stroke-width="1.5"/>
+        <text x="150" y="9" fill="#C9A227" font-size="11" font-weight="600" text-anchor="end">100</text>
+      </g>
+    </svg>
+    <p class="gauge-cap">Names live in the hopper</p>
+
+    <div class="gowrap">
+      <a class="gobtn" href="https://hyperionlegacy.com/crm.html">Create your account</a>
+      <p class="gonote">Opens Hopper. Tap <strong>Create an account</strong> under the sign-in button — then read step 3 below, because you can't sign in until a team leader approves you.</p>
+    </div>
+  </header>
+
+  <section>
+    <p class="eyebrow">Setup</p>
+    <h2>Your first ten minutes</h2>
+    <p class="sub">Do this once, on your phone — iPhone or Android — not on your laptop.</p>
+    <ol class="steps">
+      <li>
+        <strong>Open Hopper on your phone</strong>
+        <p><a href="https://hyperionlegacy.com/crm.html">hyperionlegacy.com/crm.html</a> — open it in your favorite web browser, not inside the text message preview window.</p>
+      </li>
+      <li>
+        <strong>Create an account</strong>
+        <p>Tap <em>Create an account</em> under the sign-in button. Use the email you actually check, and a password you'll remember.</p>
+      </li>
+      <li>
+        <strong>Wait to be approved — this part is not a bug</strong>
+        <p>You'll land on a screen saying you're in the queue. Everybody does. A team leader has to approve your account before your pipeline opens, so text them and let them know you signed up. Once they approve you, sign in normally and everything works.</p>
+      </li>
+      <li>
+        <strong>Put it on your home screen</strong>
+        <p><em>iPhone:</em> Share button → Add to Home Screen. <em>Android:</em> the ⋮ menu → Add to Home screen or Install app. Either way it installs as <em>Hopper</em> and opens full screen with no browser bars. If it isn't on your home screen, you won't open it daily. That's the whole ballgame.</p>
+      </li>
+      <li>
+        <strong>Load ten names before you close it</strong>
+        <p>Not perfect names. Ten real people. An empty hopper is the only way this fails.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <p class="eyebrow">Every day</p>
+    <h2>The rhythm</h2>
+    <p class="sub">Three screens, in this order. Ten minutes in the morning, an hour on the phone.</p>
+
+    <div class="card">
+      <span class="tag">Open first</span>
+      <h3>Dashboard</h3>
+      <p>Read the top four numbers. Overdue follow-ups is the only one that should ever be zero. Hot prospects, client pipeline, and recruit pipeline tell you what kind of day it is.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Then work</span>
+      <h3>Contact Today</h3>
+      <p>This is your call list, built automatically from the follow-up dates you set. You don't decide who to call — the hopper already did. Work top to bottom.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Then count</span>
+      <h3>Power Hour</h3>
+      <p>Tally dials, conversations, and appointments as they happen, not after. It resets each day and rolls into your last-7-days view, so a bad week is visible on Wednesday instead of Friday.</p>
+    </div>
+
+    <div class="callout">
+      <strong>The one habit:</strong> after every single conversation, set the next follow-up date before you put the phone down. Do that and the tool runs itself. Skip it and it's a spreadsheet.
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Input</p>
+    <h2>Getting people in</h2>
+    <p class="sub">Three doors. Use whichever is faster in the moment.</p>
+
+    <div class="card">
+      <h3>Add Prospect</h3>
+      <p>The full form. Name and next follow-up are the only required fields — fill the rest in later. Never let missing detail stop you from adding someone.</p>
+    </div>
+    <div class="card">
+      <h3>Add from Contacts</h3>
+      <p>Pull straight from the phone in your hand. <em>iPhone:</em> Contacts → tap the person → Share Contact → Save to Files, then choose that file in Hopper. <em>Android:</em> Contacts → tap the person → Share → save the .vcf, then choose it. Or skip all that and just copy their details and paste them in.</p>
+    </div>
+    <div class="card">
+      <h3>Import a backup</h3>
+      <p>For moving a list in from elsewhere, or restoring your own export. Ask your team leader before using this one — it's easy to create duplicates.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">The form</p>
+    <h2>What each field is really for</h2>
+    <p class="sub">Most are self-explanatory. These five aren't.</p>
+    <dl>
+      <dt>Next follow-up <span class="req">required</span></dt>
+      <dd>The engine of the whole system. This is what builds Contact Today and what feeds the overdue counter. There is no such thing as a prospect without a next date.</dd>
+
+      <dt>Source</dt>
+      <dd>Where they actually came from — referral, warm market, church, event, and so on. This is what powers the referral engine panel on the dashboard, which tells you which wells are producing and which ones you've stopped drawing from.</dd>
+
+      <dt>Referred by</dt>
+      <dd>Name the person who sent them. Fill this in every time. It's how you know who to thank, and who to go back to.</dd>
+
+      <dt>Interest 1–5</dt>
+      <dd>Your honest read, not your hope. Fours and fives surface as hot prospects. If everyone's a five, the star means nothing.</dd>
+
+      <dt>Client or recruit</dt>
+      <dd>Two different pipelines, two different conversations. If someone is genuinely both, pick the conversation you're having with them this month.</dd>
+    </dl>
+
+    <div class="callout">
+      <strong>Leadership DNA Profile</strong> is for the recruit side. Fill it in after a real conversation, not from a first impression.
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Together</p>
+    <h2>You can see each other's hoppers</h2>
+    <p class="sub">This isn't a private notebook. It's the team's board.</p>
+
+    <div class="card">
+      <span class="tag">Team tab</span>
+      <h3>Your business partners' lists are visible to you</h3>
+      <p>You'll see their people and their follow-up dates, and they'll see yours. Not to keep score — so nothing falls through. A family waiting on a callback doesn't care whose column they're in.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Why it matters</span>
+      <h3>Cover for each other</h3>
+      <p>Somebody's in a training all week, or out sick, or their appointments ran long and eight follow-ups went red. Anyone on the team can pick those up and make the call. That's the difference between a team and five people with lists.</p>
+    </div>
+
+    <div class="callout">
+      <strong>Before you call someone else's person:</strong> tell them first. A quick text — "want me to take your Tuesday follow-ups?" — takes ten seconds and keeps a helpful call from turning into two of us calling the same family in one afternoon. Then log the conversation on the record so they know what was said.
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Non-negotiable</p>
+    <h2>House rules</h2>
+    <ul class="rules">
+      <li><strong>Log it the same day.</strong> A conversation you didn't write down didn't happen.</li>
+      <li><strong>Never leave a next follow-up blank.</strong> If you truly have no reason to call again, move them out of the pipeline on purpose.</li>
+      <li><strong>Export a backup every Friday.</strong> Tap <em>Export backup</em>, save the file. It takes eight seconds and it's your insurance policy.</li>
+      <li><strong>One record per person.</strong> Search before you add. Duplicates are how a hopper starts lying to you.</li>
+      <li><strong>Your notes belong to a real family.</strong> Your teammates can read them and so could the person one day. Write what you'd be comfortable with them seeing over your shoulder.</li>
+      <li><strong>Watch for the "Saved" marker.</strong> If it doesn't appear after an edit, you lost signal — check the record before you move on.</li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="eyebrow">Start</p>
+    <h2>Go get in the queue</h2>
+    <p class="sub">Sign up now so your leader can approve you before the next meeting.</p>
+    <div class="gowrap">
+      <a class="gobtn" href="https://hyperionlegacy.com/crm.html">Create your account</a>
+    </div>
+    <div class="gate">
+      <h3>If it says you're in the queue, stop and text your team leader</h3>
+      Nothing is broken and you don't need to sign up again. Your account exists — it just isn't switched on yet. Signing up a second time only creates a duplicate for someone to clean up.
+    </div>
+  </section>
+
+  <footer>
+    <p class="verse">Let us not become weary in doing good, for at the proper time we will reap a harvest if we do not give up.<cite>Galatians 6:9</cite></p>
+    <p class="creed">No family left behind</p>
+  </footer>
+
+</div>
+</body>
+</html>
