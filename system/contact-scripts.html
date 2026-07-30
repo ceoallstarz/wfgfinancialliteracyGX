@@ -3566,6 +3566,10 @@ strong { color: #1a2332 !important; }
 .copy-btn:hover{border-color:#c9a84c;color:#8a6a1e}
 .copy-btn.done{background:#f0f7ec;border-color:#639922;color:#2d5010}
 
+
+.hcg-ready{background:var(--hcg-gold-pale,#fdf6e3);border:1px solid rgba(201,168,76,0.3);border-left:3px solid var(--hcg-gold,#c9a84c);border-radius:0 10px 10px 0;padding:9px 13px;margin:-4px 0 14px}
+.hcg-ready-lbl{font-size:9.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--hcg-gold-deep,#7a5800);display:block;margin-bottom:3px}
+.hcg-ready-txt{font-size:12.5px;line-height:1.6;color:#5a4a1e}
 </style>
 </head>
 <body>
@@ -4988,12 +4992,12 @@ function csCopy(ev, btn){
 
 const hcgStages=[
   {
-    id:0,label:'New associate',sub:'Week 1–2 · just started',dot:'#B4B2A9',
+    id:0,label:'New associate',sub:'Week 1–2 · just started',ready:'You\'re brand new — you haven\'t been to the session yet or written business. Lean on the company\'s credibility, stay humble and curious. “Come see what you found.”',dot:'#B4B2A9',
     open:' "Hey [Name]! It\'s [you] — how are you doing?"',
     open_coach:'Let them talk 30–60 seconds. Actually listen. Trust is built here — before a single word about the event.',
     bridge:' "Hey — I\'m really glad I caught you. I just started something new and honestly you were one of the first people I thought of. I wanted to personally invite you."',
     bridge_coach:'"I just started something new" creates instant curiosity. Your excitement is real — that\'s your edge. Mean every word.',
-    ask:' "The company I just partnered with is hosting a free Zoom this week — Thursday at 6PM or Saturday at 9AM Pacific. It covers things most financial professionals never bother to explain to everyday families. From everything I\'ve seen so far, I walked away thinking — why didn\'t anyone teach us this sooner. I want you to see it too. Which works better — Thursday or Saturday?"',
+    ask:' "The company I just partnered with is hosting a free Zoom this week — Thursday at 6PM or Saturday at 9AM Pacific. It covers the financial stuff most of us were never taught — practical, eye-opening, and honestly most people walk away wishing they\'d learned it years ago. I want you to see it too. Which works better — Thursday or Saturday?"',
     ask_coach:'Then stop. Full stop. The silence belongs to them. Don\'t fill it.',
     yes_them:' "Sure, I can do Saturday."',
     yes_you:' "Perfect. What\'s your email? I\'m sending you the link right now. I\'m really glad you\'re coming — I think you\'re going to get a lot out of it."',
@@ -5007,12 +5011,12 @@ const hcgStages=[
     text_text:' "Hey [Name] — just left you a voicemail. I just partnered with company and they\'re hosting a free Zoom this Thursday at 6PM or Saturday at 9AM Pacific — About things we never learned about money. I walked away thinking — why didn\'t anyone teach us this sooner.. Thought of you personally. Want me to send the link?"',
   },
   {
-    id:1,label:'Growing',sub:'Week 3–4 · attended the session',dot:'#378ADD',
+    id:1,label:'Growing',sub:'Week 3–4 · attended the session',ready:'You\'ve attended the session and maybe helped a family or two. It\'s “my company” now — more settled, still warm and curious.',dot:'#378ADD',
     open:' "Hey [Name]! It\'s [you] — how are you doing?"',
     open_coach:'Let them talk 30–60 seconds. You\'ve done a few calls now — the listen feels more natural. Use it.',
     bridge:' "Hey — your name came to mind and I wanted to personally reach out."',
     bridge_coach:'For close contacts: "I was thinking about you." For everyone else: "your name came to mind." Both honest. Both personal.',
-    ask:'"My company is hosting a free Zoom this week — Thursday at 6PM or Saturday at 9AM Pacific. It covers things most financial professionals never bother to explain to everyday families — Risk Mitigation, Tax Efficiency, and Generational Wealth. I went through this myself and walked away thinking — why didn\'t anyone show me this sooner. I genuinely want you there. Which works better — Thursday or Saturday?"',
+    ask:'"My company is hosting a free Zoom this week — Thursday at 6PM or Saturday at 9AM Pacific. It covers the financial stuff most of us were never taught — practical, eye-opening, and honestly most people walk away wishing they\'d learned it years ago. I genuinely want you there. Which works better — Thursday or Saturday?"',
     ask_coach:'You\'ve now attended. That line is yours — say it with the weight of actually having experienced it.',
     yes_them:' "Sure, I can do Saturday."',
     yes_you:' "Perfect. What\'s your email? I\'m sending you the link right now. I\'m really glad you\'re coming — I think you\'re going to get a lot out of it."',
@@ -5023,7 +5027,7 @@ const hcgStages=[
     text_text:' "Hey [Name] — just left you a voicemail. My company is hosting a free Zoom this Thursday at 6PM or Saturday at 9AM Pacific on things we never learned about money. I went through it and walked away thinking — why didn\'t anyone show me this sooner. Want me to send the link?"',
   },
   {
-    id:2,label:'Building',sub:'Month 2+ · first recruits',dot:'#7F77DD',
+    id:2,label:'Building',sub:'Month 2+ · first recruits',ready:'You\'ve got your own results AND your first recruits, so “my team” is now true. You can name the concepts — Risk Mitigation, Tax Efficiency, Generational Wealth — with real authority. You\'re teaching now, not discovering.',dot:'#7F77DD',
     open:'"Hey [Name]! It\'s [you] — how are you doing?"',
     open_coach:'The listen is automatic now. You genuinely want to know. That\'s where trust lives.',
     bridge:'"Hey — I\'m really glad I caught you. Your name came to mind and I wanted to reach out personally."',
@@ -5039,7 +5043,7 @@ const hcgStages=[
     text_text:' "Hey [Name] — just left you a voicemail. My team is hosting a free Zoom this Thursday at 6PM or Saturday at 9AM Pacific on Risk Mitigation, Tax Efficiency, and Generational Wealth. Thought of you personally. Want me to send the link?"',
   },
   {
-    id:3,label:'Experienced',sub:'GX1+ · full script',dot:'#1D9E75',
+    id:3,label:'Experienced',sub:'GX1+ · full script',ready:'You\'ve built, led, and seen it work across many families. Quiet, assumed confidence. You invite from a position of established success — no need to prove anything.',dot:'#1D9E75',
     open:' "Hey [Name]! It\'s [you] — how are you doing?"',
     open_coach:'The listen is your superpower now. You\'re not waiting for your turn — you\'re gathering the personal hook you\'ll use in the bridge.',
     bridge:' "Hey — I\'m actually really glad I caught you. I was thinking about you, and honestly with [what you heard in the listen], I think this is perfectly timed."',
@@ -5139,6 +5143,7 @@ function hRenderStages() {
 function hRenderScript() {
   var s=hcgStages[hSt], el=document.getElementById('hcg-sc'); if(!el) return;
   var h='<div class="hcg-si"><div class="hcg-si-dot"></div><div><div class="hcg-si-name">'+s.label+'</div><div class="hcg-si-sub">'+s.sub+'</div></div></div>';
+  if(s.ready){ h+='<div class="hcg-ready"><span class="hcg-ready-lbl">\u2705 Use this when</span><div class="hcg-ready-txt">'+s.ready+'</div></div>'; }
   function blk(lbl,txt,coach){
     if(!txt) return '';
     var r='<div class="hcg-sec"><div class="hcg-lbl">'+lbl+'</div><div class="hcg-txt">'+txt+'</div>';
