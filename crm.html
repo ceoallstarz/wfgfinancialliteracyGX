@@ -128,6 +128,7 @@
     <input type="password" id="loginPass" placeholder="Password" autocomplete="current-password">
     <button class="btn gold" style="width:100%" onclick="doLogin()">Sign In</button>
     <div class="login-err" id="loginErr"></div>
+    <button onclick="doReset()" style="background:none;border:none;color:var(--muted);font-family:inherit;font-size:12px;text-decoration:underline;cursor:pointer;margin-top:10px">Forgot password?</button>
     <div class="setup-note" id="setupNote" style="display:none"><b>Setup needed:</b> Firebase config has not been pasted in yet. Open this file and follow the setup guide to connect your free Firebase project.</div>
   </div>
 </div>
@@ -256,6 +257,12 @@
     <div class="frow">
       <div><label>Notes / current need</label><textarea id="fNotes" placeholder="Family status, income notes, what they care about, next step…"></textarea></div>
     </div>
+    <div class="frow" id="ownerRow" style="display:none">
+      <div><label>Owner (leaders only)</label><select id="fOwner">
+        <option value="kkQPkOWuWRbgUEq2djUH5ODh8Ir2">Glenn</option>
+        <option value="RbZMXdXnmcdeU3linwVscNas3wv1">Mitchelle</option>
+      </select></div>
+    </div>
     <div id="dnaPanel" style="display:none"></div>
     <div id="mError" style="display:none;color:var(--red);font-size:13px;font-weight:600;margin-top:10px"></div>
     <div class="modal-actions">
@@ -311,8 +318,8 @@ const TEAM = "hyperion"; // shared team workspace name
 const LEADER_UIDS = ["kkQPkOWuWRbgUEq2djUH5ODh8Ir2", "RbZMXdXnmcdeU3linwVscNas3wv1"]; // Glenn, Mitchelle
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, enableIndexedDbPersistence, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const STAGES = {
   client: ['New Referral','Contacted','Appointment Set','FNA Done','Solutions Presented','App Submitted','Policy Issued','Annual Review'],
@@ -339,6 +346,13 @@ let user = null, fs = null, unsubContacts = null, unsubPower = null;
 const todayStr = () => new Date().toISOString().slice(0,10);
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
 const $ = id => document.getElementById(id);
+
+// Which contacts the current user is allowed to see.
+// Leaders (Glenn, Mitch) see all. Associates see only contacts they own.
+function myContacts(){
+  if(isLeader) return db.contacts;
+  return db.contacts.filter(c => c.owner === (user && user.uid));
+}
 
 /* ---------- Auth ---------- */
 const configured = !firebaseConfig.apiKey.includes('PASTE');
@@ -368,6 +382,20 @@ window.doLogin = async function(){
 };
 window.signOutUser = function(){ if(auth) signOut(auth); };
 $('loginPass').addEventListener('keydown', e=>{ if(e.key==='Enter') window.doLogin(); });
+window.doReset = async function(){
+  $('loginErr').textContent='';
+  if(!configured){ $('loginErr').textContent='Not connected yet.'; return; }
+  const email = $('loginEmail').value.trim();
+  if(!email){ $('loginErr').style.color='var(--navy)'; $('loginErr').textContent='Type your email above first, then tap Forgot password.'; return; }
+  try{
+    await sendPasswordResetEmail(auth, email);
+    $('loginErr').style.color='var(--green)';
+    $('loginErr').textContent='Reset email sent. Check your inbox (and spam).';
+  }catch(e){
+    $('loginErr').style.color='var(--red)';
+    $('loginErr').textContent='Could not send reset. Check the email address.';
+  }
+};
 
 /* ---------- Live sync ---------- */
 function setDot(t){ $('saveDot').textContent = t; }
@@ -376,7 +404,9 @@ function startSync(){
   isLeader = LEADER_UIDS.includes(user.uid);
   document.body.classList.toggle('leader', isLeader);
   document.body.classList.toggle('associate', !isLeader);
-  unsubContacts = onSnapshot(collection(fs,'teams',TEAM,'contacts'), snap => {
+  const contactsRef = collection(fs,'teams',TEAM,'contacts');
+  const contactsQuery = isLeader ? contactsRef : query(contactsRef, where('owner','==', user.uid));
+  unsubContacts = onSnapshot(contactsQuery, snap => {
     db.contacts = snap.docs.map(d => ({ id:d.id, ...d.data() }));
     setDot('Live · synced'); renderAll();
   }, err => setDot('Sync error'));
@@ -468,7 +498,7 @@ function contactCard(c){
 
 function renderRail(type){
   const el = $(type==='client'?'railClients':'railRecruits');
-  const list = db.contacts.filter(c=>c.type===type);
+  const list = myContacts().filter(c=>c.type===type);
   const fkey = type==='client'?'clients':'recruits';
   let html = '<span class="stage-pill '+(filters[fkey]==='All'?'active':'')+'" onclick="setFilter(\''+fkey+'\',\'All\')">All<span class="n">'+list.length+'</span></span>';
   STAGES[type].forEach(s=>{
@@ -482,7 +512,7 @@ window.setFilter = function(fkey, val){ filters[fkey]=val; renderAll(); };
 function renderList(type){
   const fkey = type==='client'?'clients':'recruits';
   const q = $(type==='client'?'searchClients':'searchRecruits').value.toLowerCase();
-  let list = db.contacts.filter(c=>c.type===type);
+  let list = myContacts().filter(c=>c.type===type);
   if(filters[fkey]!=='All') list = list.filter(c=>c.stage===filters[fkey]);
   if(q) list = list.filter(c=>[c.name,c.phone,c.occupation,(c.tags||[]).join(' '),c.notes,c.referredBy].join(' ').toLowerCase().includes(q));
   list.sort((a,b)=> (a.next||'9999') < (b.next||'9999') ? -1 : 1);
@@ -492,7 +522,7 @@ function renderList(type){
 }
 
 function renderToday(){
-  const due = db.contacts.filter(c=>{const f=followState(c);return f==='overdue'||f==='today'||f==='none';});
+  const due = myContacts().filter(c=>{const f=followState(c);return f==='overdue'||f==='today'||f==='none';});
   due.sort((a,b)=>(a.next||'0')<(b.next||'0')?-1:1);
   $('listToday').innerHTML = due.length ? due.map(contactCard).join('') :
     '<div class="empty">Zero red. Pipeline is clean — go pour into someone anyway. 🙌</div>';
@@ -501,10 +531,11 @@ function renderToday(){
 }
 
 function renderDash(){
-  const overdue = db.contacts.filter(c=>followState(c)==='overdue'||followState(c)==='none').length;
-  const hot = db.contacts.filter(c=>(c.tags||[]).includes('Hot ⭐')||c.interest>=5).length;
-  const cl = db.contacts.filter(c=>c.type==='client').length;
-  const rc = db.contacts.filter(c=>c.type==='recruit').length;
+  const mine = myContacts();
+  const overdue = mine.filter(c=>followState(c)==='overdue'||followState(c)==='none').length;
+  const hot = mine.filter(c=>(c.tags||[]).includes('Hot ⭐')||c.interest>=5).length;
+  const cl = mine.filter(c=>c.type==='client').length;
+  const rc = mine.filter(c=>c.type==='recruit').length;
   $('dOverdue').textContent = overdue;
   $('dHot').textContent = hot;
   $('dClients').textContent = cl;
@@ -512,11 +543,11 @@ function renderDash(){
   $('cntClients').textContent = cl;
   $('cntRecruits').textContent = rc;
 
-  const due = db.contacts.filter(c=>{const f=followState(c);return f==='overdue'||f==='today';}).slice(0,6);
+  const due = mine.filter(c=>{const f=followState(c);return f==='overdue'||f==='today';}).slice(0,6);
   $('dashDue').innerHTML = due.length ? due.map(contactCard).join('') : '<div class="empty" style="padding:20px">Nothing due — schedule tomorrow\'s touches now.</div>';
 
   const refCount = {};
-  db.contacts.forEach(c=>{ if(c.referredBy){ const k=c.referredBy.trim(); if(k) refCount[k]=(refCount[k]||0)+1; }});
+  mine.forEach(c=>{ if(c.referredBy){ const k=c.referredBy.trim(); if(k) refCount[k]=(refCount[k]||0)+1; }});
   const top = Object.entries(refCount).sort((a,b)=>b[1]-a[1]).slice(0,5);
   $('dashRefs').innerHTML = top.length ?
     top.map(([n,ct])=>'<div class="ref-row"><b>'+esc(n)+'</b><span>'+ct+' referral'+(ct>1?'s':'')+'</span></div>').join('') :
@@ -671,6 +702,7 @@ window.openModal = function(type){
   fillStages(type, STAGES[type][0]);
   buildTagPicker([]);
   $('mDelete').style.display='none';
+  $('ownerRow').style.display='none';
   $('dnaPanel').style.display='none'; $('dnaPanel').innerHTML='';
   $('overlay').classList.add('open');
 };
@@ -690,6 +722,12 @@ window.editContact = function(id){
   $('fNotes').value=c.notes||'';
   fillStages(c.type, c.stage);
   buildTagPicker(c.tags||[]);
+  if(isLeader){
+    $('ownerRow').style.display='';
+    const ownerSel = $('fOwner');
+    const cur = c.owner || (user && user.uid);
+    if([...ownerSel.options].some(o=>o.value===cur)) ownerSel.value = cur;
+  } else { $('ownerRow').style.display='none'; }
   $('mDelete').style.display='inline-block';
   renderDnaPanel(c);
   $('overlay').classList.add('open');
@@ -786,7 +824,9 @@ window.saveContact = async function(){
   };
   const id = editingId || uid();
   const existing = editingId ? db.contacts.find(x=>x.id===editingId) : null;
-  const record = { id, created: existing ? (existing.created||todayStr()) : todayStr(), ...data };
+  let owner = existing ? (existing.owner || (user && user.uid)) : (user && user.uid);
+  if(isLeader && $('ownerRow').style.display!=='none') owner = $('fOwner').value;
+  const record = { id, owner, created: existing ? (existing.created||todayStr()) : todayStr(), ...data };
   if(existing){ Object.assign(existing, record); } else { db.contacts.push(record); }
   window.closeModal(); renderAll();
   try{ await pushContact(record); }catch(e){ setDot('Save failed — check connection'); }
