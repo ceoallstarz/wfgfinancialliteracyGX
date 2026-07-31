@@ -665,11 +665,20 @@ function startSync(){
     db.contacts = snap.docs.map(d => ({ id:d.id, ...d.data() }));
     setDot('Live · synced'); renderAll();
   }, err => setDot('Sync error'));
-  unsubDna = onSnapshot(collection(fs,'teams',TEAM,'dnaProfiles'), snap => {
-    db.dna = snap.docs.map(d => ({ id:d.id, ...d.data() }));
-    renderAll();
-    if(editingId) renderDnaBox(editingId);
-  }, err => setDot('Sync error'));
+  if(isLeader()){
+    unsubDna = onSnapshot(collection(fs,'teams',TEAM,'dnaProfiles'), snap => {
+      db.dna = snap.docs.map(d => ({ id:d.id, ...d.data() }));
+      renderAll();
+      if(editingId) renderDnaBox(editingId);
+    }, err => setDot('Sync error'));
+  } else {
+    // Associates: read only the needs summaries (name + six needs), never full profiles
+    unsubDna = onSnapshot(collection(fs,'teams',TEAM,'dnaNeeds'), snap => {
+      db.dna = snap.docs.map(d => ({ id:d.id, ...d.data() }));
+      renderAll();
+      if(editingId) renderDnaBox(editingId);
+    }, err => {/* associates may have no needs access; ignore */});
+  }
   unsubPower = onSnapshot(collection(fs,'teams',TEAM,'power'), snap => {
     db.power = {};
     snap.docs.forEach(d => {
@@ -983,7 +992,7 @@ window.renderDnaBox = function(id){
   const p = dnaFor(id);
   const all = dnaAll(id);
   let html = '';
-  if(all.length > 1){
+  if(all.length > 1 && isLeader()){
     html += '<div class="dna-vers"><span>' + all.length + ' submissions</span>' +
       all.map((x,n) => {
         const d = x.submittedAt && x.submittedAt.toDate
@@ -994,16 +1003,31 @@ window.renderDnaBox = function(id){
   }
   if(p){
     const when = p.submittedAt && p.submittedAt.toDate ? p.submittedAt.toDate().toLocaleDateString() : '';
-    html += '<div class="dna-head">Completed' + (when ? ' ' + when : '') + '</div>' +
+    if(!isLeader()){
+      // Associates: six human needs only — no brief, no raw answers, no link
+      const needs = Array.isArray(p.sixNeeds) ? p.sixNeeds : [];
+      html += '<div class="dna-head">Six human needs' + (when ? ' \u00b7 ' + when : '') + '</div>';
+      html += needs.length
+        ? '<ol style="margin:6px 0 0 18px;padding:0;font-size:14px;line-height:1.9">' +
+            needs.map(n => '<li>' + esc(n) + '</li>').join('') + '</ol>'
+        : '<div class="dna-empty">Profile in, but no needs ranking recorded.</div>';
+    } else {
+      html += '<div class="dna-head">Completed' + (when ? ' ' + when : '') + '</div>' +
            briefBlock(p) +
            '<details class="dna-raw"><summary>Their raw answers</summary>' +
            '<pre class="dna-pre">' + esc(p.plainText || '') + '</pre></details>' +
            '<div class="dna-btns">' +
-             (isLeader() ? '<button type="button" class="btn gold sm" onclick="copyBoth(\'' + p.id + '\', this)">Copy prompt + profile</button>' : '') +
+             '<button type="button" class="btn gold sm" onclick="copyBoth(\'' + p.id + '\', this)">Copy prompt + profile</button>' +
              '<button type="button" class="btn ghost sm" onclick="copyDnaText(\'' + p.id + '\', this)">Copy answers only</button>' +
              '<button type="button" class="btn ghost sm" onclick="copyDnaLink(\'' + id + '\', this)">Copy link again</button>' +
            '</div>';
+    }
   } else {
+    if(!isLeader()){
+      html += '<div class="dna-empty">No profile yet — ask your leader to send their link.</div>';
+      box.innerHTML = html;
+      return;
+    }
     const loose = db.dna.filter(x => !x.recruitId);
     html += '<div class="dna-empty">No profile yet \u2014 send them their link.</div>' +
            '<input class="dna-link" id="dnaLinkField" readonly value="' + esc(dnaLink(id)) + '" onclick="this.select()">' +
