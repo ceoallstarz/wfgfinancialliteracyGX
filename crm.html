@@ -442,7 +442,7 @@ PROFILE:
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, enableIndexedDbPersistence, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const STAGES = {
   client: ['New Referral','Contacted','Appointment Set','FNA Done','Solutions Presented','App Submitted','Policy Issued','Annual Review'],
@@ -661,7 +661,11 @@ $('loginPass').addEventListener('keydown', e=>{ if(e.key==='Enter') window.doLog
 function setDot(t){ $('saveDot').textContent = t; }
 function startSync(){
   setDot('Syncing…');
-  unsubContacts = onSnapshot(collection(fs,'teams',TEAM,'contacts'), snap => {
+  const contactsRef = collection(fs,'teams',TEAM,'contacts');
+  const contactsQ = isLeader()
+    ? contactsRef
+    : query(contactsRef, where('visibleTo','array-contains', user.uid));
+  unsubContacts = onSnapshot(contactsQ, snap => {
     db.contacts = snap.docs.map(d => ({ id:d.id, ...d.data() }));
     setDot('Live · synced'); renderAll();
   }, err => setDot('Sync error'));
@@ -1195,7 +1199,7 @@ window.saveContact = async function(){
     ? $('fOwner').value
     : ((existing && existing.ownerId) ? existing.ownerId : user.uid);
   const record = { id, created: existing ? (existing.created||todayStr()) : todayStr(), ...data,
-    ownerId: ownerPicked, visibleTo: lineageOf(ownerPicked) };
+    ownerId: ownerPicked, visibleTo: [...new Set([ownerPicked, ...lineageOf(ownerPicked)])] };
   if(existing){ Object.assign(existing, record); } else { db.contacts.push(record); }
   window.closeModal(); renderAll();
   try{ await pushContact(record); }catch(e){ setDot('Save failed — check connection'); }
