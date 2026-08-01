@@ -88,6 +88,7 @@
   label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);display:block;margin-bottom:4px}
   input,select,textarea{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:13px;background:var(--white);color:var(--ink)}
   textarea{resize:vertical;min-height:70px}
+  #fNotes{min-height:150px;line-height:1.6;font-size:14px;padding:12px 14px}
   .tagpick{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
   .tagpick .chip{cursor:pointer;user-select:none}
   .tagpick .chip.on{background:var(--navy);color:var(--gold)}
@@ -147,6 +148,18 @@
   max-height:280px;overflow:auto;margin:0 0 10px;
 }
 .dna-empty{font-size:13px;color:var(--muted);margin-bottom:8px}
+.log-add{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.log-add select,.log-add input{padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:13px}
+.log-add input{flex:1;min-width:140px}
+.log-list{display:flex;flex-direction:column;gap:6px;max-height:200px;overflow:auto}
+.log-item{background:#f7f9fc;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px}
+.log-item .lh{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.log-item .lo{font-weight:700;color:var(--navy);font-size:12px}
+.log-item .ld{font-size:11px;color:var(--muted)}
+.log-item .lr{margin-top:3px;color:var(--ink)}
+.log-item .lx{background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;line-height:1;padding:0 2px}
+.ql-btn{background:#1a2a42;color:#c9a84c;border:none;border-radius:16px;padding:5px 12px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
+.ql-btn:active{opacity:.85}
 .brief{border:1px solid #1a2a42;border-radius:10px;overflow:hidden;margin-bottom:10px}
 .brief-head{background:#1a2a42;color:#c9a84c;font-size:11px;font-weight:800;
   letter-spacing:.12em;text-transform:uppercase;padding:7px 12px}
@@ -357,6 +370,25 @@
     <div class="frow">
       <div><label>Notes / current need</label><textarea id="fNotes" placeholder="Family status, income notes, what they care about, next step…"></textarea></div>
     </div>
+    <div class="frow" id="logRow" style="display:none">
+      <div>
+        <label>Contact log — every touch &amp; result</label>
+        <div class="log-add">
+          <select id="logType">
+            <option>Called</option>
+            <option>Texted</option>
+            <option>Emailed</option>
+            <option>Met in person</option>
+            <option>Left voicemail</option>
+            <option>No answer</option>
+            <option>Other</option>
+          </select>
+          <input id="logResult" placeholder="What happened? (e.g. booked FNA for Fri)">
+          <button type="button" class="btn gold sm" onclick="addLog()">Log it</button>
+        </div>
+        <div class="log-list" id="logList"></div>
+      </div>
+    </div>
     <div class="frow" id="dnaRow" style="display:none">
       <div><label>Leadership DNA Profile</label><div id="dnaBox"></div></div>
     </div>
@@ -371,6 +403,31 @@
 </div>
 
 <!-- QUICK ADD MODAL -->
+<div class="overlay" id="qlOverlay">
+  <div class="modal" style="max-width:440px">
+    <h2 id="qlTitle" style="font-size:17px">How'd it go?</h2>
+    <div class="frow"><div><label>What did you do?</label>
+      <select id="qlType">
+        <option>Called</option>
+        <option>Texted</option>
+        <option>Emailed</option>
+        <option>Met in person</option>
+        <option>Left voicemail</option>
+        <option>No answer</option>
+        <option>Other</option>
+      </select></div></div>
+    <div class="frow"><div><label>Result</label>
+      <input id="qlResult" placeholder="e.g. booked FNA for Friday, call back next week…"></div></div>
+    <div class="frow"><div><label>Next follow-up (optional)</label>
+      <input type="date" id="qlNext"></div></div>
+    <div class="modal-actions">
+      <div class="spacer"></div>
+      <button class="btn ghost" onclick="closeQuickLog()">Cancel</button>
+      <button class="btn gold" onclick="saveQuickLog()">Save touch</button>
+    </div>
+  </div>
+</div>
+
 <div class="overlay" id="qaOverlay">
   <div class="modal">
     <h2 id="qaTitle">Add from Contacts</h2>
@@ -459,6 +516,7 @@ const PH_TARGETS = [
 let db = { contacts: [], power: {}, dna: [], members: [] };
 let me = null, scopeUid = 'all', unsubMembers = null;
 let editingId = null, modalType = 'client';
+let currentLog = [];
 let filters = { clients:'All', recruits:'All' };
 let currentTab = 'dash';
 let user = null, fs = null, unsubContacts = null, unsubPower = null, unsubDna = null;
@@ -759,6 +817,7 @@ function reachRow(c, big){
     (c.email ? '<a href="mailto:' + esc(c.email) + '" onclick="event.stopPropagation()" title="Email">' +
       '<svg viewBox="0 0 24 24" width="17" height="17"><path fill="currentColor" d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5z"/></svg>' +
       (big ? '<span>Email</span>' : '') + '</a>' : '') +
+    (big ? '' : '<button type="button" class="ql-btn" onclick="event.stopPropagation();openQuickLog(\'' + c.id + '\')" title="Log a touch">How\u2019d it go?</button>') +
   '</div>';
 }
 
@@ -768,9 +827,15 @@ function contactCard(c){
     ? '<span class="chip owner">' + esc(memberName(c.ownerId)) + '</span>' : '';
   const tags = (c.tags||[]).map(t=>'<span class="chip'+(t==='Hot ⭐'?' hot':'')+'">'+esc(t)+'</span>').join('');
   const sub = [c.occupation, c.phone, c.referredBy?('via '+c.referredBy):''].filter(Boolean).map(esc).join(' · ');
+  let lastTouch = '';
+  if(Array.isArray(c.log) && c.log.length){
+    const recent = c.log.slice().sort((a,b)=> (a.at<b.at?1:-1))[0];
+    const d = new Date(recent.at).toLocaleDateString(undefined,{month:'short',day:'numeric'});
+    lastTouch = '<div class="c-sub" style="color:var(--navy)">'+esc(recent.type)+' · '+d+(recent.result?(' — '+esc(recent.result)):'')+'</div>';
+  }
   return '<div class="contact '+cardClass(c)+'" onclick="editContact(\''+c.id+'\')">'+
     '<div class="c-main"><div class="c-name">'+(hot?'<span class="star">⭐ </span>':'')+esc(c.name)+'</div>'+
-    '<div class="c-sub">'+sub+'</div>'+
+    '<div class="c-sub">'+sub+'</div>'+lastTouch+
     ((tags||dnaFor(c.id)||ownerTag)?'<div class="tags">'+ownerTag+(dnaFor(c.id)?'<span class="chip dna">DNA</span>':'')+tags+'</div>':'')+'</div>'+
     '<div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">'+
     '<span class="c-stage">'+esc(c.stage)+'</span>'+followLabel(c)+reachRow(c,false)+'</div></div>';
@@ -991,6 +1056,16 @@ function flash(msg){
   setDot(msg);
   setTimeout(()=>setDot('Live \u00b7 synced'), 2000);
 }
+function dreamsBlock(p){
+  let d = p.dreams;
+  if(!d) return '';
+  if(!Array.isArray(d)) d = [d];
+  d = d.filter(Boolean);
+  if(!d.length) return '';
+  return '<div class="dna-head" style="margin-top:12px">Building toward</div>' +
+    '<ul style="margin:6px 0 0 18px;padding:0;font-size:14px;line-height:1.9">' +
+    d.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>';
+}
 window.renderDnaBox = function(id){
   const box = $('dnaBox'); if(!box) return;
   const p = dnaFor(id);
@@ -1008,15 +1083,17 @@ window.renderDnaBox = function(id){
   if(p){
     const when = p.submittedAt && p.submittedAt.toDate ? p.submittedAt.toDate().toLocaleDateString() : '';
     if(!isLeader()){
-      // Associates: six human needs only — no brief, no raw answers, no link
+      // Associates: six human needs + what they're building toward
       const needs = Array.isArray(p.sixNeeds) ? p.sixNeeds : [];
       html += '<div class="dna-head">Six human needs' + (when ? ' \u00b7 ' + when : '') + '</div>';
       html += needs.length
         ? '<ol style="margin:6px 0 0 18px;padding:0;font-size:14px;line-height:1.9">' +
             needs.map(n => '<li>' + esc(n) + '</li>').join('') + '</ol>'
         : '<div class="dna-empty">Profile in, but no needs ranking recorded.</div>';
+      html += dreamsBlock(p);
     } else {
       html += '<div class="dna-head">Completed' + (when ? ' ' + when : '') + '</div>' +
+           dreamsBlock(p) +
            briefBlock(p) +
            '<details class="dna-raw"><summary>Their raw answers</summary>' +
            '<pre class="dna-pre">' + esc(p.plainText || '') + '</pre></details>' +
@@ -1124,6 +1201,62 @@ window.attachDna = async function(id){
   flash('Profile attached');
 };
 
+let quickLogId = null;
+window.openQuickLog = function(id){
+  const c = db.contacts.find(x=>x.id===id); if(!c) return;
+  quickLogId = id;
+  $('qlTitle').textContent = 'How\u2019d it go with ' + (c.name || 'them') + '?';
+  $('qlType').value = 'Called';
+  $('qlResult').value = '';
+  $('qlNext').value = c.next || '';
+  $('qlOverlay').classList.add('open');
+  setTimeout(()=>$('qlResult').focus(), 50);
+};
+window.closeQuickLog = function(){ $('qlOverlay').classList.remove('open'); quickLogId = null; };
+window.saveQuickLog = async function(){
+  const c = db.contacts.find(x=>x.id===quickLogId); if(!c){ closeQuickLog(); return; }
+  const entry = { id: uid(), type: $('qlType').value, result: $('qlResult').value.trim(),
+                  at: new Date().toISOString(), by: (user && user.email) || '' };
+  c.log = Array.isArray(c.log) ? c.log : [];
+  c.log.push(entry);
+  c.last = todayStr();
+  const nx = $('qlNext').value;
+  if(nx) c.next = nx;
+  c.updatedBy = (user && user.email) || ''; c.updatedAt = new Date().toISOString();
+  closeQuickLog(); renderAll();
+  try{ await pushContact(c); }catch(e){ setDot('Save failed — check connection'); }
+};
+
+function fmtLogDate(iso){
+  const d = new Date(iso);
+  return d.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'}) +
+    ' · ' + d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});
+}
+function renderLog(){
+  const el = $('logList'); if(!el) return;
+  const list = (currentLog||[]).slice().sort((a,b)=> (a.at<b.at?1:-1));
+  el.innerHTML = list.length ? list.map((e,i) =>
+    '<div class="log-item"><div class="lh"><span class="lo">'+esc(e.type)+'</span>'+
+    '<span class="ld">'+fmtLogDate(e.at)+(e.by?(' · '+esc(e.by)):'')+'</span>'+
+    '<button type="button" class="lx" title="Remove" onclick="delLog(\''+e.id+'\')">×</button></div>'+
+    (e.result?('<div class="lr">'+esc(e.result)+'</div>'):'')+'</div>'
+  ).join('') : '<div class="dna-empty" style="margin:0">No touches logged yet. Log your first call or text above.</div>';
+}
+window.addLog = function(){
+  const type = $('logType').value;
+  const result = $('logResult').value.trim();
+  const entry = { id: uid(), type, result, at: new Date().toISOString(), by: (user && user.email) || '' };
+  currentLog.push(entry);
+  $('logResult').value = '';
+  // logging a touch updates "last contact" to today automatically
+  $('fLast').value = todayStr();
+  renderLog();
+};
+window.delLog = function(lid){
+  currentLog = (currentLog||[]).filter(e => e.id !== lid);
+  renderLog();
+};
+
 window.openModal = function(type){
   modalType=type; editingId=null;
   $('mTitle').textContent = type==='client'?'Add Client Prospect':'Add Recruit Prospect';
@@ -1139,6 +1272,8 @@ window.openModal = function(type){
   $('reachBar').innerHTML = '';
   $('mDelete').style.display='none';
   $('dnaRow').style.display='none';
+  currentLog = [];
+  $('logRow').style.display='none';
   $('overlay').classList.add('open');
 };
 window.editContact = function(id){
@@ -1161,6 +1296,9 @@ window.editContact = function(id){
   $('mDelete').style.display='inline-block';
   $('dnaRow').style.display = c.type==='recruit' ? 'block' : 'none';
   $('reachBar').innerHTML = reachRow(c, true);
+  currentLog = Array.isArray(c.log) ? c.log.slice() : [];
+  $('logRow').style.display='block';
+  renderLog();
   dnaView = null;
   if(c.type==='recruit') renderDnaBox(id);
   $('overlay').classList.add('open');
@@ -1191,6 +1329,7 @@ window.saveContact = async function(){
     last: $('fLast').value,
     next, tags,
     notes: $('fNotes').value.trim(),
+    log: currentLog || [],
     updatedBy: user.email || '', updatedAt: new Date().toISOString()
   };
   const id = editingId || uid();
@@ -1263,6 +1402,7 @@ $('searchClients').addEventListener('input', ()=>renderList('client'));
 $('searchRecruits').addEventListener('input', ()=>renderList('recruit'));
 $('overlay').addEventListener('click', e=>{ if(e.target.id==='overlay') window.closeModal(); });
 $('qaOverlay').addEventListener('click', e=>{ if(e.target.id==='qaOverlay') window.closeQuickAdd(); });
+$('qlOverlay').addEventListener('click', e=>{ if(e.target.id==='qlOverlay') window.closeQuickLog(); });
 
 function inScope(c){ return scopeUid === 'all' || c.ownerId === scopeUid; }
 function pool(){ return db.contacts.filter(inScope); }

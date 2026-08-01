@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backfill "Building Toward" — one time</title>
+<style>
+  body{font-family:system-ui,sans-serif;max-width:560px;margin:40px auto;padding:0 16px;color:#22303f}
+  h1{font-size:20px;color:#1a2a42}
+  .card{border:1px solid #e3e8ee;border-radius:12px;padding:20px;margin-top:16px}
+  input{width:100%;padding:9px;border:1px solid #ccc;border-radius:8px;margin-bottom:10px;font-size:14px}
+  button{background:#c9a84c;color:#1a2a42;border:none;border-radius:8px;padding:11px 18px;font-weight:700;font-size:14px;cursor:pointer}
+  #log{white-space:pre-wrap;font-size:13px;background:#f4f6f8;border-radius:8px;padding:12px;margin-top:14px;min-height:40px}
+  .warn{background:#fdf8e8;border:1px solid #e8dcc0;border-radius:8px;padding:12px;font-size:13px;color:#7a6320;margin-top:12px}
+</style>
+</head>
+<body>
+<h1>Add "Building toward" to existing DNA summaries</h1>
+<p style="font-size:14px;color:#6b7a8d">Run this <b>once</b> as a leader. It reads every full DNA profile, pulls the "building toward" answer, and writes it into the matching associate-visible summary — so associates can see it for people who filled out the form <b>before</b> the update, without anyone resubmitting.</p>
+
+<div class="card">
+  <label style="font-size:12px;font-weight:700">Leader email (Glenn or Mitch)</label>
+  <input id="email" type="email" placeholder="you@email.com">
+  <label style="font-size:12px;font-weight:700">Password</label>
+  <input id="pass" type="password" placeholder="password">
+  <button onclick="run()">Sign in &amp; backfill</button>
+  <div id="log"></div>
+</div>
+
+<div class="warn">Safe to run more than once — it only adds the "building toward" field where it's missing and never overwrites a summary that already has it. After it says "Done", delete this file from your repo.</div>
+
+<script type="module">
+const firebaseConfig = {
+  apiKey: "AIzaSyC5jXI140Z9f618dFk8JwGhHyOzU6Q6Jek",
+  authDomain: "hyperion-crm-ea994.firebaseapp.com",
+  projectId: "hyperion-crm-ea994",
+  storageBucket: "hyperion-crm-ea994.firebasestorage.app",
+  messagingSenderId: "651443980689",
+  appId: "1:651443980689:web:eaed1f15d21c306616b230"
+};
+const TEAM = "hyperion";
+const LEADER_UIDS = ["kkQPkOWuWRbgUEq2djUH5ODh8Ir2", "RbZMXdXnmcdeU3linwVscNas3wv1"];
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, getDocs, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const fs = getFirestore(app);
+const log = m => { document.getElementById('log').textContent += m + "\n"; };
+
+function normDreams(d){
+  if(!d) return [];
+  if(Array.isArray(d)) return d.filter(Boolean);
+  return [d].filter(Boolean);
+}
+function nameKey(s){ return (s||'').trim().toLowerCase(); }
+
+window.run = async function(){
+  document.getElementById('log').textContent='';
+  try{
+    await signInWithEmailAndPassword(auth, document.getElementById('email').value.trim(), document.getElementById('pass').value);
+    if(!LEADER_UIDS.includes(auth.currentUser.uid)){ log("That's not a leader account — stopping."); return; }
+    log("Signed in. Reading profiles and summaries…");
+
+    const profSnap = await getDocs(collection(fs,'teams',TEAM,'dnaProfiles'));
+    const needSnap = await getDocs(collection(fs,'teams',TEAM,'dnaNeeds'));
+
+    const profiles = profSnap.docs.map(d => ({ id:d.id, ...d.data() }));
+    const needs = needSnap.docs.map(d => ({ id:d.id, ...d.data() }));
+    log("Found " + profiles.length + " profiles and " + needs.length + " summaries.");
+
+    let updated = 0, already = 0, noMatch = 0, noDreams = 0;
+
+    for(const n of needs){
+      // skip if this summary already has dreams
+      if(Array.isArray(n.dreams) && n.dreams.length){ already++; continue; }
+
+      // find the matching profile: by recruitId first, else by name
+      let p = null;
+      if(n.recruitId) p = profiles.find(x => x.recruitId && x.recruitId === n.recruitId);
+      if(!p && n.name) {
+        const matches = profiles.filter(x => nameKey(x.name) === nameKey(n.name));
+        p = matches.length ? matches[matches.length-1] : null;
+      }
+      if(!p){ noMatch++; continue; }
+
+      const dreams = normDreams(p.dreams);
+      if(!dreams.length){ noDreams++; continue; }
+
+      await setDoc(doc(fs,'teams',TEAM,'dnaNeeds', n.id), { dreams }, { merge: true });
+      updated++;
+      log("  ✓ " + (n.name || n.id) + " — added " + dreams.length + " building-toward item(s)");
+    }
+
+    log("");
+    log("Done.");
+    log("Updated: " + updated + " | Already had it: " + already + " | No matching profile: " + noMatch + " | Profile had no dreams: " + noDreams);
+    log("You can delete this file now.");
+  }catch(e){
+    log("Error: " + (e.message||e));
+  }
+};
+</script>
+</body>
+</html>
