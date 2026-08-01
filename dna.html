@@ -588,11 +588,12 @@ async function save(){
       ...answers, recruitId: RECRUIT_ID, pass: 1,
       submittedAt: serverTimestamp(), plainText: asText()
     });
-    // 2) Needs summary — readable by the recruit's associate (name + six needs only)
+    // 2) Summary — readable by the recruit's associate: six needs + what they're building toward
     await addDoc(collection(db, "teams", TEAM, "dnaNeeds"), {
       name: answers.name || "",
       goesBy: answers.goesBy || "",
       sixNeeds: Array.isArray(answers.sixNeeds) ? answers.sixNeeds : [],
+      dreams: Array.isArray(answers.dreams) ? answers.dreams : (answers.dreams ? [answers.dreams] : []),
       recruitId: RECRUIT_ID,
       submittedAt: serverTimestamp()
     });
