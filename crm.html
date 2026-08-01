@@ -1337,6 +1337,8 @@ window.addLog = function(){
   // logging a touch updates "last contact" to today automatically
   $('fLast').value = todayStr();
   renderLog();
+  // save the whole form (dates, stage, tags, and this log) in one tap — keep editor open
+  saveContact(true);
 };
 window.delLog = function(lid){
   currentLog = (currentLog||[]).filter(e => e.id !== lid);
@@ -1395,7 +1397,7 @@ window.closeModal = function(){
   deleteArmed=false; $('mDelete').textContent='Delete';
 };
 function showErr(msg){ const e=$('mError'); e.textContent=msg; e.style.display='block'; }
-window.saveContact = async function(){
+window.saveContact = async function(keepOpen){
   $('mError').style.display='none';
   const name = $('fName').value.trim();
   if(!name){ showErr('Name is required.'); return; }
@@ -1426,7 +1428,14 @@ window.saveContact = async function(){
   const record = { id, created: existing ? (existing.created||todayStr()) : todayStr(), ...data,
     ownerId: ownerPicked, visibleTo: [...new Set([ownerPicked, ...lineageOf(ownerPicked)])] };
   if(existing){ Object.assign(existing, record); } else { db.contacts.push(record); }
-  window.closeModal(); renderAll();
+  if(keepOpen){
+    // logged-and-saved: keep editing, mark this as the editing record, refresh views
+    editingId = id;
+    renderAll();
+    setDot('Logged & saved ✓');
+  } else {
+    window.closeModal(); renderAll();
+  }
   try{ await pushContact(record); }catch(e){ setDot('Save failed — check connection'); }
 };
 let deleteArmed=false;
