@@ -1092,8 +1092,14 @@ window.renderDnaBox = function(id){
         : '<div class="dna-empty">Profile in, but no needs ranking recorded.</div>';
       html += dreamsBlock(p);
     } else {
-      html += '<div class="dna-head">Completed' + (when ? ' ' + when : '') + '</div>' +
-           dreamsBlock(p) +
+      const needs = Array.isArray(p.sixNeeds) ? p.sixNeeds : [];
+      html += '<div class="dna-head">Completed' + (when ? ' ' + when : '') + '</div>';
+      if(needs.length){
+        html += '<div class="dna-head" style="margin-top:10px">Six human needs</div>' +
+          '<ol style="margin:6px 0 0 18px;padding:0;font-size:14px;line-height:1.9">' +
+          needs.map(n => '<li>' + esc(n) + '</li>').join('') + '</ol>';
+      }
+      html += dreamsBlock(p) +
            briefBlock(p) +
            '<details class="dna-raw"><summary>Their raw answers</summary>' +
            '<pre class="dna-pre">' + esc(p.plainText || '') + '</pre></details>' +
