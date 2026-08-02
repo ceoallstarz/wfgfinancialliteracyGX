@@ -310,6 +310,11 @@
       'border:1px solid rgba(201,168,76,.45);color:#c9a84c;font-family:inherit;font-size:11.5px;',
       'font-weight:600;padding:5px 11px;border-radius:20px;cursor:pointer;white-space:nowrap;transition:.15s;}',
       '#hyq-btn:hover{background:rgba(201,168,76,.26);color:#e0c880;}',
+      '#hyq-hopper{display:inline-flex;align-items:center;gap:6px;background:rgba(201,168,76,.14);',
+      'border:1px solid rgba(201,168,76,.45);color:#c9a84c;font-family:inherit;font-size:11.5px;',
+      'font-weight:600;padding:5px 11px;border-radius:20px;cursor:pointer;white-space:nowrap;',
+      'text-decoration:none;transition:.15s;}',
+      '#hyq-hopper:hover{background:rgba(201,168,76,.26);color:#e0c880;}',
       '#hyq-btn kbd{font-family:inherit;font-size:10px;opacity:.65;border:1px solid currentColor;',
       'border-radius:3px;padding:0 4px;margin-left:2px;}',
       '#hyq-overlay{position:fixed;inset:0;z-index:99999;display:none;background:rgba(10,18,30,.72);',
@@ -556,16 +561,48 @@
     }
   });
 
-  /* ---------- mount the trigger button in the top bar ---------- */
+  /* ---------- mount the controls in the top bar ---------- */
+  /* Page headers are not identical across the portal:
+       most pages   -> #sys-topbar > .actions
+       mission-hq   -> #sys-topbar > .topbar-actions
+       call-guide   -> .page-top  (no actions wrapper at all)
+     Find whichever exists, and build a wrapper if there isn't one. */
+  function findHost() {
+    var direct = document.querySelector('#sys-topbar .actions')
+              || document.querySelector('#sys-topbar .topbar-actions');
+    if (direct) return direct;
+
+    var bar = document.querySelector('#sys-topbar') || document.querySelector('.page-top');
+    if (!bar) return null;
+
+    var wrap = document.getElementById('hyq-actions');
+    if (!wrap) {
+      wrap = document.createElement('div');
+      wrap.id = 'hyq-actions';
+      wrap.style.cssText = 'display:inline-flex;align-items:center;gap:8px;margin-left:auto;';
+      bar.appendChild(wrap);
+    }
+    return wrap;
+  }
+
   function mountButton() {
-    var host = document.querySelector('#sys-topbar .actions');
+    var host = findHost();
     if (!host || document.getElementById('hyq-btn')) return;
-    var b = document.createElement('button');
-    b.id = 'hyq-btn';
-    b.type = 'button';
-    b.innerHTML = '🔍 Search <kbd>⌘K</kbd>';
-    b.addEventListener('click', open);
-    host.insertBefore(b, host.firstChild);
+
+    var search = document.createElement('button');
+    search.id = 'hyq-btn';
+    search.type = 'button';
+    search.innerHTML = '🔍 Search <kbd>⌘K</kbd>';
+    search.addEventListener('click', open);
+
+    var hopper = document.createElement('a');
+    hopper.id = 'hyq-hopper';
+    hopper.href = 'https://hyperionlegacy.com/hopper-start.html';
+    hopper.innerHTML = '🔀 Hopper';
+    hopper.title = 'Hyperion Hopper — Pipeline';
+
+    host.insertBefore(hopper, host.firstChild);
+    host.insertBefore(search, host.firstChild);
   }
 
   /* ---------- handle arriving from another page ---------- */
