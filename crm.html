@@ -44,6 +44,30 @@
   .stat small{font-size:12px;font-weight:600;color:var(--muted);display:block;margin-top:2px}
   .stat.red{color:var(--red)}
 
+  /* GX board */
+  .gxrow{border:1px solid var(--line);border-left:5px solid var(--line);border-radius:10px;
+    padding:12px 14px;margin-bottom:10px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .gxrow.q{border-left-color:var(--green);background:var(--green-bg)}
+  .gxrow.nodeclare{border-left-color:var(--red)}
+  .gxrow.stalled{opacity:.65}
+  .gxrow .who{min-width:140px;flex:1}
+  .gxrow .who b{font-size:14px;color:var(--navy);display:block}
+  .gxrow .who small{color:var(--muted);font-size:11.5px}
+  .gxcol{min-width:110px}
+  .gxcol .lb{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);
+    font-weight:700;display:block;margin-bottom:4px}
+  .gxg{display:inline-block;width:18px;height:10px;background:var(--cream);
+    border:1px solid var(--line);margin-right:3px;border-radius:2px}
+  .gxg.on{background:var(--gold);border-color:var(--gold)}
+  .gxg.sm{width:9px}
+  .gxbar{width:110px;height:9px;background:var(--cream);border:1px solid var(--line);
+    border-radius:5px;overflow:hidden}
+  .gxbar i{display:block;height:100%;background:var(--gold)}
+  .gxpill{font-size:11px;font-weight:700;border-radius:10px;padding:2px 9px;white-space:nowrap}
+  .gxpill.q{background:var(--green-bg);color:var(--green)}
+  .gxpill.run{background:var(--yellow-bg);color:var(--yellow)}
+  .gxpill.no{background:var(--red-bg);color:var(--red)}
+
   .toolbar{display:flex;gap:10px;margin:18px 0 12px;flex-wrap:wrap;align-items:center}
   .toolbar input[type=text]{flex:1;min-width:180px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:13px;background:var(--white)}
   .btn{background:var(--navy);color:var(--white);border:none;border-radius:8px;padding:10px 16px;font-family:inherit;font-weight:700;font-size:13px;cursor:pointer}
@@ -237,6 +261,7 @@
   <button data-tab="recruits">Recruits <span class="cnt" id="cntRecruits">0</span></button>
   <button data-tab="today" id="navToday">Contact Today <span class="cnt" id="cntToday">0</span></button>
   <button data-tab="power">Power Hour</button>
+  <button data-tab="gx">GX Board <span class="cnt" id="cntGx">0</span></button>
   <button data-tab="team" id="navTeam" style="display:none">Team</button>
 </nav>
 
@@ -323,6 +348,24 @@
       <p style="color:var(--muted);font-size:13px;margin-bottom:10px">
         Contacts added before ownership existed. Claiming puts them in your pipeline.</p>
       <div id="teamOrphans"></div>
+    </div>
+  </section>
+
+  <!-- GX BOARD -->
+  <section id="tab-gx" hidden>
+    <div class="grid cols4" id="gxStats"></div>
+    <div class="card" style="margin-top:14px">
+      <h3 id="gxMonthHead">The month</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:12px">
+        Live from the GX game. Production and rhythm only — what people write in
+        The Roots is theirs and is never shown here.</p>
+      <div id="gxRows"></div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h3>Not in the game yet</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:10px">
+        Active members who haven't signed into the GX game. Send them the link.</p>
+      <div id="gxMissing" style="font-size:13px"></div>
     </div>
   </section>
 
@@ -535,13 +578,13 @@ const PH_TARGETS = [
   {key:'refs', label:'Referral requests', target:2}
 ];
 
-let db = { contacts: [], power: {}, dna: [], members: [] };
+let db = { contacts: [], power: {}, dna: [], members: [], gx: [] };
 let me = null, scopeUid = 'all', unsubMembers = null;
 let editingId = null, modalType = 'client';
 let currentLog = [];
 let filters = { clients:'All', recruits:'All' };
 let currentTab = 'dash';
-let user = null, fs = null, unsubContacts = null, unsubPower = null, unsubDna = null;
+let user = null, fs = null, unsubContacts = null, unsubPower = null, unsubDna = null, unsubGx = null;
 
 const todayStr = () => new Date().toISOString().slice(0,10);
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
@@ -771,11 +814,16 @@ function startSync(){
     });
     renderPower(); renderDash();
   });
+  unsubGx = onSnapshot(collection(fs,'teams',TEAM,'gx'), snap => {
+    db.gx = snap.docs.map(d => ({ uid:d.id, ...d.data() }));
+    renderGx();
+  }, err => {/* gx rules not published yet — board stays empty */});
 }
 function stopSync(){
   if(unsubContacts) unsubContacts(); if(unsubPower) unsubPower(); if(unsubDna) unsubDna();
+  if(unsubGx) unsubGx();
   syncing = false; me = null; scopeUid = 'all';
-  db = { contacts: [], power: {}, dna: [] };
+  db = { contacts: [], power: {}, dna: [], members: [], gx: [] };
 }
 async function pushContact(c){
   setDot('Saving…');
@@ -1483,12 +1531,101 @@ window.importData = function(input){
   input.value='';
 };
 
+/* ---------- GX Board ----------
+   Reads teams/hyperion/gx/{uid} docs written by the GX game.
+   IMPORTANT: uses the same week/month key math as the game, so a
+   counter from a previous week/day correctly reads as zero here.
+   Roots content is deliberately never rendered. */
+const gxMonthKey = () => { const d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1); };
+const gxWeekKey  = () => { const d=new Date(), o=new Date(d.getFullYear(),0,1);
+  return d.getFullYear()+'w'+Math.ceil(((d-o)/86400000+o.getDay()+1)/7); };
+/* uses the CRM's existing esc() helper */
+
+function gxRead(g){
+  const need = d => d==='GX2' ? {r:6,p:30000} : {r:3,p:15000};
+  const m = (g.month||{})[gxMonthKey()] || {};
+  const n = need(m.declared);
+  const wk = (g.week&&g.week.wk===gxWeekKey()) ? g.week : {ten:0,convos:0};
+  const today = (g.day&&g.day.d===todayStr()) ? g.day.convos : 0;
+  const rings = Object.keys((g.year||{})[new Date().getFullYear()]||{}).length;
+  const recruits = (m.recruits||[]).length;
+  const qualified = !!m.declared && recruits>=n.r && (m.points||0)>=n.p;
+  const daysAgo = g.updated ? Math.floor((Date.now()-new Date(g.updated))/86400000) : null;
+  /* fire scars: months declared and missed this year — same rule as the game's ring */
+  let scars=0; const yr=new Date().getFullYear(), mo=new Date().getMonth();
+  for(let i=0;i<12;i++){
+    const rec=(g.month||{})[yr+'-'+(i+1)];
+    const ringed=((g.year||{})[yr]||{})[i+1];
+    if(!ringed && rec && rec.declared){
+      const nn=need(rec.declared);
+      const hitIt=(rec.recruits||[]).length>=nn.r && (rec.points||0)>=nn.p;
+      if(!hitIt && (i<mo || (i===mo&&rec.closedShort))) scars++;
+    }
+  }
+  return { declared:m.declared||'', recruits, needR:n.r, points:m.points||0, needP:n.p,
+    qualified, closedShort:!!m.closedShort, ten:wk.ten||0, convosWk:wk.convos||0,
+    today, rings, scars, trees:(g.grove||[]).length, licensed:(g.lic&&g.lic.step>=4), daysAgo };
+}
+
+function renderGx(){
+  if(!$('gxRows')) return;
+  const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  $('gxMonthHead').textContent = MONTHS[new Date().getMonth()]+' — the whole baseshop';
+  const rows = db.gx.map(g => ({ g, uid:g.uid, s:gxRead(g),
+    name: memberName(g.uid)!=='Unknown' ? memberName(g.uid) : (g.email||'Unnamed') }));
+  $('cntGx').textContent = rows.length;
+
+  const q = rows.filter(r=>r.s.qualified).length;
+  const dec = rows.filter(r=>r.s.declared).length;
+  const recs = rows.reduce((a,r)=>a+r.s.recruits,0);
+  const active = rows.filter(r=>r.s.daysAgo!==null && r.s.daysAgo<=7).length;
+  $('gxStats').innerHTML =
+    `<div class="card"><h3>Qualified this month</h3><div class="stat">${q}<small>of ${rows.length} in the game</small></div></div>`+
+    `<div class="card"><h3>Declared</h3><div class="stat">${dec}<small>said the number out loud</small></div></div>`+
+    `<div class="card"><h3>Recruits logged</h3><div class="stat">${recs}<small>this month, team-wide</small></div></div>`+
+    `<div class="card"><h3>Active players</h3><div class="stat">${active}<small>touched it this week</small></div></div>`;
+
+  rows.sort((a,b)=> (b.s.qualified-a.s.qualified) || (b.s.recruits-a.s.recruits)
+    || (b.s.points-a.s.points) || (b.s.ten-a.s.ten));
+
+  $('gxRows').innerHTML = rows.length ? rows.map(r=>{
+    const s=r.s;
+    const stalled = s.daysAgo!==null && s.daysAgo>7;
+    const pill = s.qualified ? '<span class="gxpill q">QUALIFIED</span>'
+      : s.declared ? `<span class="gxpill run">${esc(s.declared)} · ${s.recruits}/${s.needR}</span>`
+      : '<span class="gxpill no">NOT DECLARED</span>';
+    const gates = Array.from({length:s.needR},(_,i)=>
+      `<span class="gxg${i<s.recruits?' on':''}"></span>`).join('');
+    const slots = Array.from({length:10},(_,i)=>
+      `<span class="gxg sm${i<s.ten?' on':''}"></span>`).join('');
+    const pct = Math.min(100,Math.round(s.points/s.needP*100));
+    return `<div class="gxrow${s.qualified?' q':(!s.declared?' nodeclare':'')}${stalled?' stalled':''}">
+      <div class="who"><b>${esc(r.name)}</b>
+        <small>${s.licensed?'licensed':'pre-license'} · ${s.rings}/12 rings${
+          s.scars?' · <span style="color:#b5705e">'+s.scars+' scar'+(s.scars>1?'s':'')+'</span>':''} · ${s.trees} tree${s.trees===1?'':'s'}${
+          s.daysAgo===null?'':' · '+(s.daysAgo===0?'today':s.daysAgo+'d ago')}${stalled?' · <b style="color:var(--red)">stalled</b>':''}</small></div>
+      ${pill}
+      <div class="gxcol"><span class="lb">Recruits</span>${gates}</div>
+      <div class="gxcol"><span class="lb">Points</span><div class="gxbar"><i style="width:${pct}%"></i></div></div>
+      <div class="gxcol"><span class="lb">Ten this wk</span>${slots}</div>
+      <div class="gxcol" style="min-width:70px"><span class="lb">Two today</span>
+        <span class="gxg${s.today>0?' on':''}"></span><span class="gxg${s.today>1?' on':''}"></span></div>
+    </div>`;
+  }).join('') : '<p style="color:var(--muted);font-size:13px">Nobody has synced the game yet. Progress appears here the moment someone signs in inside the GX game.</p>';
+
+  const playing = new Set(rows.map(r=>r.uid));
+  const missing = db.members.filter(m=>m.status==='active' && !playing.has(m.uid));
+  $('gxMissing').innerHTML = missing.length
+    ? missing.map(m=>esc(m.name||m.email||'Unnamed')).join(', ')
+    : 'Everyone active is in. Rooted, rising.';
+}
+
 /* ---------- Tabs ---------- */
 $('nav').addEventListener('click', e=>{
   const b = e.target.closest('button'); if(!b || !b.dataset.tab) return;
   currentTab = b.dataset.tab;
   document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active', x===b));
-  ['dash','clients','recruits','today','power','team'].forEach(t=>{
+  ['dash','clients','recruits','today','power','team','gx'].forEach(t=>{
     $('tab-'+t).hidden = (t!==currentTab);
   });
   renderAll();
@@ -1506,7 +1643,7 @@ function renderAll(){
   renderScope(); renderTeam();
   renderRail('client'); renderRail('recruit');
   renderList('client'); renderList('recruit');
-  renderToday(); renderDash(); renderPower();
+  renderToday(); renderDash(); renderPower(); renderGx();
 }
 $('tab-power').hidden = true;
 renderAll();

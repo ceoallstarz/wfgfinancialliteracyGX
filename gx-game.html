@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GX — Hyperion Legacy Builders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0e1a29; --navy2:#132435; --navy3:#17293e; --panel:#0a1626;
+  --line:#22364f; --line2:#3a5372;
+  --gold:#c9a84c; --gold2:#e0c880;
+  --ink:#f4f6f8; --dim:#8fa3bd; --dim2:#5f7793;
+  --green:#6f9a63; --rust:#b5705e;
+  --mono:ui-monospace,Menlo,Consolas,monospace;
+  --sans:'Plus Jakarta Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--navy);color:var(--ink);font-family:var(--sans);
+     -webkit-font-smoothing:antialiased}
+.mono{font-family:var(--mono)}
+.lbl{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--dim2)}
+
+/* ---------- CHROME ---------- */
+#bar{background:#08111c;border-bottom:1px solid var(--line);padding:9px 16px;
+     display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:sticky;top:0;z-index:40}
+#bar .bd{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--gold)}
+#bar .sp{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap}
+.btn{background:rgba(201,168,76,.13);border:1px solid rgba(201,168,76,.42);color:var(--gold);
+     font-family:var(--mono);font-size:11px;letter-spacing:1px;padding:5px 11px;border-radius:18px;
+     cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block}
+.btn:hover{background:rgba(201,168,76,.26);color:var(--gold2)}
+.btn.solid{background:var(--gold);color:#0e1a29;border-color:var(--gold);font-weight:700}
+.btn.solid:hover{background:var(--gold2)}
+.btn.ghost{background:transparent;border-color:var(--line2);color:var(--dim)}
+.btn.ghost:hover{background:rgba(255,255,255,.05);color:var(--ink)}
+
+/* snapshot strip */
+#snap{background:#0a1626;border-bottom:1px solid var(--line);padding:10px 16px;
+      display:flex;gap:26px;flex-wrap:wrap}
+#snap div span{display:block}
+#snap .v{font-family:var(--mono);font-size:13.5px;color:var(--ink);margin-top:3px}
+#snap .v.warn{color:var(--gold2)}
+
+/* creed beam */
+#creed{background:#0c1a28;border-bottom:1px solid var(--line);text-align:center;padding:7px 16px;
+       font-family:var(--mono);font-size:10.5px;letter-spacing:3px;color:#6b7f97}
+#creed b{color:var(--gold);font-weight:400}
+
+/* ---------- HUB ---------- */
+#hub{position:relative;height:330px;overflow:hidden;background:var(--navy2)}
+#hub svg.bg{position:absolute;inset:0;width:100%;height:100%}
+.door{position:absolute;bottom:34px;cursor:pointer;transition:transform .18s}
+.door:hover{transform:translateY(-3px)}
+.door .cap{font-family:var(--mono);font-size:9.5px;letter-spacing:1px;text-align:center;
+           margin-top:5px;color:var(--dim)}
+.door.lit .cap{color:var(--gold2)}
+.door .pip{font-family:var(--mono);font-size:9px;text-align:center;color:var(--gold);margin-top:2px;min-height:11px}
+#walker{position:absolute;bottom:34px;left:60px;width:20px;height:36px;transition:left 1s ease-in-out;z-index:5}
+#walker .hd{position:absolute;top:0;left:5px;width:10px;height:10px;border-radius:50%;background:var(--gold2)}
+#walker .bd2{position:absolute;top:11px;left:6px;width:8px;height:14px;background:var(--gold)}
+#walker .lg{position:absolute;top:25px;width:3px;height:11px;background:var(--gold);transform-origin:top center}
+#walker .lg1{left:7px}#walker .lg2{left:11px}
+#walker.mv .lg1{animation:stp .36s linear infinite}
+#walker.mv .lg2{animation:stp .36s linear infinite .18s}
+@keyframes stp{0%{transform:rotate(18deg)}50%{transform:rotate(-18deg)}100%{transform:rotate(18deg)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+#walker:not(.mv){animation:bob 2.6s ease-in-out infinite}
+
+/* ---------- ROOMS ---------- */
+#room{display:none;padding:20px 16px 60px;max-width:840px;margin:0 auto}
+#room.on{display:block}
+#hubwrap.off{display:none}
+.rtop{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.rtop h1{margin:0;font-size:1.25rem;font-weight:800;letter-spacing:-.01em}
+.rtop .sub{font-family:var(--mono);font-size:10.5px;letter-spacing:2px;color:var(--dim2)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px;margin-bottom:14px}
+.card h3{margin:0 0 10px;font-family:var(--mono);font-size:10.5px;letter-spacing:2px;
+         color:var(--dim2);font-weight:400}
+.row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.spread{justify-content:space-between}
+.gate{width:34px;height:15px;background:#1a2c42;border:1px solid var(--line2);display:inline-block;
+      margin-right:5px;transition:background .4s,border-color .4s}
+.gate.on{background:var(--gold);border-color:var(--gold)}
+.slot{width:15px;height:12px;background:#1a2c42;border:1px solid var(--line2);display:inline-block;margin-right:3px}
+.slot.on{background:var(--gold);border-color:var(--gold)}
+.pbar{height:15px;background:#1a2c42;flex:1;min-width:120px}
+.pbar i{display:block;height:100%;background:var(--gold);width:0;transition:width .9s cubic-bezier(.4,0,.2,1)}
+.num{font-family:var(--mono);font-size:13px;color:var(--ink)}
+.big{font-family:var(--mono);font-size:26px;color:var(--ink)}
+input[type=text],input[type=number],input[type=date],input[type=password],textarea,select{
+  background:#12222f;border:1px solid var(--line);color:var(--ink);font-family:var(--sans);
+  font-size:13.5px;padding:9px 11px;border-radius:5px;width:100%}
+textarea{min-height:78px;resize:vertical;line-height:1.6}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--gold);outline-offset:1px}
+label.fl{display:block;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;
+         color:var(--dim2);margin:12px 0 5px}
+.note{font-size:12.5px;color:var(--dim);line-height:1.65}
+.stamp{font-family:var(--mono);font-size:10px;color:var(--dim2);margin-top:5px}
+.pillar{border-left:2px solid var(--gold);padding:9px 0 9px 13px;margin-bottom:12px}
+.pillar b{display:block;font-size:13.5px;color:var(--gold2);margin-bottom:3px}
+.pillar span{font-size:13px;color:#b9c8d8;line-height:1.65}
+.swap{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12.5px}
+.swap div{padding:8px 10px;border-radius:5px;line-height:1.5}
+.swap .no{background:#2a1c1c;color:#c9907f}
+.swap .yes{background:#1c2b1e;color:#9dc48f}
+.wp{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid #16273b}
+.wp:last-child{border-bottom:none}
+.wp .dot{width:22px;height:22px;border-radius:50%;border:2px solid var(--line2);flex:0 0 auto;
+         display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--dim2)}
+.wp.done .dot{background:var(--gold);border-color:var(--gold);color:#0e1a29}
+.wp .t{flex:1;min-width:0}
+.wp .t b{display:block;font-size:13.5px}
+.wp.done .t b{color:var(--dim)}
+.wp .t small{color:var(--dim2);font-size:12px}
+.tree{display:inline-flex;flex-direction:column;align-items:center;margin:0 12px 14px 0;width:66px}
+.tree .cv{font-size:11px;font-family:var(--mono);color:var(--dim);margin-top:4px;text-align:center;line-height:1.3}
+.chip{font-family:var(--mono);font-size:9.5px;letter-spacing:1px;padding:2px 7px;border-radius:10px;
+      border:1px solid var(--line2);color:var(--dim2);margin-top:3px}
+.chip.gx{border-color:var(--gold);color:var(--gold)}
+.chip.new{border-color:var(--green);color:var(--green)}
+.ok{color:var(--green)}.warnc{color:var(--gold2)}.bad{color:var(--rust)}
+.miss{background:#1b1410;border:1px solid #4a3626;border-radius:8px;padding:16px;margin-bottom:14px}
+.miss .season{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--gold);margin-bottom:8px}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);
+  background:var(--gold);color:#0e1a29;font-family:var(--mono);font-size:12px;letter-spacing:1px;
+  padding:11px 20px;border-radius:22px;opacity:0;transition:.35s;z-index:60;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* intro + auth overlays */
+#intro,#authov{position:fixed;inset:0;background:rgba(6,12,20,.9);z-index:80;display:none;
+  align-items:center;justify-content:center;padding:20px}
+#intro.on,#authov.on{display:flex}
+#intro .box,#authov .box{background:var(--navy2);border:1px solid var(--gold);border-radius:10px;
+  max-width:480px;padding:24px 22px}
+#intro h2,#authov h2{margin:0 0 4px;font-size:1.15rem;letter-spacing:-.01em}
+#authov .box{max-width:360px}
+#intro .clock{display:flex;gap:12px;align-items:baseline;padding:10px 0;border-bottom:1px solid #16273b}
+#intro .clock:last-of-type{border-bottom:none}
+#intro .clock .when{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--gold);flex:0 0 96px}
+#intro .clock .what{font-size:13.5px;color:#dbe4ee;line-height:1.55;flex:1}
+
+/* guided next door */
+.door.next svg{filter:drop-shadow(0 0 8px rgba(201,168,76,.55))}
+.door.next .pip{color:var(--gold2);animation:bob 2.2s ease-in-out infinite}
+
+/* hub scrolls sideways on small screens instead of clipping */
+#hubscroll{overflow-x:auto;background:var(--navy2)}
+#hub{width:680px;margin:0 auto}
+
+@media(max-width:620px){
+  #hub{height:250px}
+  #snap{gap:16px}
+  .swap{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div id="bar">
+  <span class="bd">⚙ GX &#183; HYPERION</span>
+  <span class="sp">
+    <a class="btn" href="mission-hq.html">🎯 Mission HQ</a>
+    <button class="btn ghost" id="authBtn" type="button">Sign in to sync</button>
+    <button class="btn ghost" id="helpBtn" type="button">How this works</button>
+    <button class="btn ghost" id="demoBtn" type="button">Demo data</button>
+    <button class="btn ghost" id="wipeBtn" type="button">Reset</button>
+  </span>
+</div>
+
+<div id="creed">ROOTED. <b>RISING.</b> UNSTOPPABLE. &#183; NO FAMILY LEFT BEHIND</div>
+
+<div id="snap">
+  <div><span class="lbl">THIS MONTH</span><span class="v" id="sMonth">—</span></div>
+  <div><span class="lbl">TALKS TODAY</span><span class="v" id="sTalk">—</span></div>
+  <div><span class="lbl">APPTS THIS WK</span><span class="v" id="sTen">—</span></div>
+  <div><span class="lbl">LICENCE</span><span class="v" id="sLic">—</span></div>
+  <div><span class="lbl">GROVE</span><span class="v" id="sGrove">—</span></div>
+  <div><span class="lbl">YEAR</span><span class="v" id="sYear">—</span></div>
+</div>
+
+<div id="hubwrap">
+<div id="hubscroll">
+<div id="hub">
+  <svg class="bg" viewBox="0 0 680 330" preserveAspectRatio="none" aria-hidden="true">
+    <rect width="680" height="330" fill="#132435"/>
+    <rect y="262" width="680" height="68" fill="#0c1a28"/>
+    <rect y="260" width="680" height="2" fill="#1f344d"/>
+    <rect width="680" height="24" fill="#0c1a28"/>
+    <rect x="16" y="24" width="7" height="238" fill="#1a2c40"/>
+    <rect x="657" y="24" width="7" height="238" fill="#1a2c40"/>
+    <rect x="34" y="48" width="64" height="80" fill="#17293e"/>
+    <path d="M46 128 L46 58 L52 58 L52 128 Z" fill="#24405c"/>
+    <path d="M68 128 L68 54 L76 54 L76 128 Z" fill="#24405c"/>
+    <path d="M86 128 L86 62 L91 62 L91 128 Z" fill="#24405c"/>
+    <rect x="34" y="48" width="64" height="80" fill="none" stroke="#2b4055" stroke-width="2"/>
+    <rect x="582" y="48" width="64" height="80" fill="#17293e"/>
+    <path d="M594 128 L594 56 L601 56 L601 128 Z" fill="#24405c"/>
+    <path d="M618 128 L618 52 L625 52 L625 128 Z" fill="#24405c"/>
+    <rect x="582" y="48" width="64" height="80" fill="none" stroke="#2b4055" stroke-width="2"/>
+    <path d="M120 24 L134 24 L128 96 L114 96 Z" fill="#c9a84c" opacity=".04"/>
+  </svg>
+  <div id="walker"><div class="hd"></div><div class="bd2"></div><div class="lg lg1"></div><div class="lg lg2"></div></div>
+</div>
+</div>
+</div>
+
+<div id="room"></div>
+<div class="toast" id="toast"></div>
+
+<div id="intro">
+  <div class="box">
+    <h2>Three clocks run this business</h2>
+    <p class="note" style="margin:4px 0 8px">This page is your scoreboard for all three.</p>
+    <div class="clock"><span class="when">EVERY DAY</span>
+      <span class="what">Talk to <b>2 new people</b>. Anyone, anywhere. Small and constant — this is most of the water.</span></div>
+    <div class="clock"><span class="when">EVERY WEEK</span>
+      <span class="what">Book <b>10 appointments</b>. Personal sits and BPM guests both count.</span></div>
+    <div class="clock"><span class="when">EVERY MONTH</span>
+      <span class="what"><b>GX1 minimum</b> — 3 recruits brought in + 15,000 points of business written, in one calendar month. Keep the first two clocks and this one mostly takes care of itself.</span></div>
+    <p class="note" style="margin-top:12px">New here? Walk through the glowing door marked
+      <b style="color:var(--gold)">START HERE</b>. It will move as you progress.</p>
+    <button class="btn solid" id="introGo" type="button" style="margin-top:14px">Let&#8217;s go</button>
+  </div>
+</div>
+
+<div id="authov">
+  <div class="box">
+    <h2>Sign in to sync</h2>
+    <p class="note" style="margin:6px 0 4px">Use your Hyperion CRM login. Your progress will follow you to any device.</p>
+    <label class="fl">EMAIL</label><input type="text" id="aEmail" autocomplete="email">
+    <label class="fl">PASSWORD</label><input type="password" id="aPass" autocomplete="current-password">
+    <p class="note" id="aErr" style="color:var(--rust);min-height:16px;margin:8px 0 0"></p>
+    <div class="row" style="margin-top:8px">
+      <button class="btn solid" id="aGo" type="button">Sign in</button>
+      <button class="btn ghost" id="aCancel" type="button">Not now</button>
+    </div>
+    <p class="note" style="margin-top:12px">No account yet? Create one in the CRM first &#8212; same login works here.</p>
+  </div>
+</div>
+
+<script>
+/* ==========================================================
+   GX — preview build
+   Calendar months (Option A). Local save; swaps to Firestore later.
+   ========================================================== */
+var MONO=["January","February","March","April","May","June","July",
+          "August","September","October","November","December"];
+
+var mem=null;
+function load(){
+  try{var r=localStorage.getItem("hyperion_gx_v1");return r?fix(JSON.parse(r)):seed();}
+  catch(e){return mem||(mem=seed());}
+}
+function fix(s){ /* older saves miss newer fields */
+  if(!s.day)s.day={d:"",convos:0};
+  if(s.introSeen===undefined)s.introSeen=false;
+  return s;
+}
+var hydrating=false;
+function save(){
+  try{localStorage.setItem("hyperion_gx_v1",JSON.stringify(S));}catch(e){mem=S;}
+  /* cloud sync is fire-and-forget — never blocks the game */
+  if(!hydrating&&window.gxCloud)window.gxCloud.push(S);
+}
+function seed(){
+  var d=new Date();
+  return{
+    started:d.toISOString().slice(0,10),
+    introSeen:false,
+    lic:{step:0,hours:0,examDate:""},
+    fast:{},
+    month:{},           /* "2026-8": {declared, recruits:[], points} */
+    week:{ten:0,convos:0,wk:weekKey()},
+    day:{d:"",convos:0},
+    roots:{why:"",fullTime:"",decl:"",edited:{}},
+    grove:[],
+    year:{}             /* "2026": {8:"gx1"} */
+  };
+}
+var S=load();
+
+function now(){return new Date();}
+function mKey(d){d=d||now();return d.getFullYear()+"-"+(d.getMonth()+1);}
+function weekKey(){var d=now();var o=new Date(d.getFullYear(),0,1);
+  return d.getFullYear()+"w"+Math.ceil(((d-o)/86400000+o.getDay()+1)/7);}
+function M(){var k=mKey();if(!S.month[k])S.month[k]={declared:"",recruits:[],points:0};return S.month[k];}
+function need(){return M().declared==="GX2"?{r:6,p:30000}:{r:3,p:15000};}
+function hit(m){if(!m||!m.declared)return false;
+  var n=m.declared==="GX2"?{r:6,p:30000}:{r:3,p:15000};
+  return m.recruits.length>=n.r&&m.points>=n.p;}
+function daysLeft(){var d=now();var e=new Date(d.getFullYear(),d.getMonth()+1,0);
+  return e.getDate()-d.getDate();}
+function rollWeek(){if(S.week.wk!==weekKey()){S.week={ten:0,convos:0,wk:weekKey()};save();}}
+function rollDay(){var k=new Date().toISOString().slice(0,10);
+  if(S.day.d!==k){S.day={d:k,convos:0};save();}}
+
+function toast(t){var e=document.getElementById("toast");e.textContent=t;e.classList.add("on");
+  setTimeout(function(){e.classList.remove("on");},1900);}
+
+/* ---------- doors ---------- */
+var DOORS=[
+  {id:"fast", cap:"FAST START", x:118, w:74, h:112},
+  {id:"lic",  cap:"LICENSING",  x:210, w:74, h:112},
+  {id:"gx",   cap:"THE MONTH",  x:302, w:112,h:158, big:true},
+  {id:"roots",cap:"THE ROOTS",  x:432, w:74, h:112},
+  {id:"grove",cap:"THE GROVE",  x:524, w:70, h:104}
+];
+
+function doorPip(id){
+  var m=M();
+  if(id==="gx"){ if(!m.declared) return "DECLARE"; return m.recruits.length+"/"+need().r; }
+  if(id==="lic"){ return S.lic.step>=4?"DONE":"STEP "+(S.lic.step+1)+"/4"; }
+  if(id==="fast"){ var n=Object.keys(S.fast).filter(function(k){return S.fast[k];}).length;
+    return n+"/6"; }
+  if(id==="roots"){ return S.roots.why?"":"EMPTY"; }
+  if(id==="grove"){ return S.grove.length?S.grove.length+" TREES":"EMPTY"; }
+  return "";
+}
+function doorLit(id){
+  var m=M();
+  if(id==="gx") return true;
+  if(id==="lic") return S.lic.step<4;
+  if(id==="roots") return !S.roots.why || missPending();
+  if(id==="fast") return Object.keys(S.fast).filter(function(k){return S.fast[k];}).length<6;
+  return false;
+}
+/* the month (key) awaiting a miss reflection, or null.
+   Covers: current month closed short by hand, OR last month that
+   was declared, missed, and never reflected on. */
+function missMonthKey(){
+  var ck=mKey(),cm=S.month[ck];
+  if(cm&&cm.closedShort&&!cm.reflected) return ck;
+  var d=now(),pm=new Date(d.getFullYear(),d.getMonth()-1,1),k=mKey(pm);
+  var m=S.month[k];
+  if(m&&m.declared&&!hit(m)&&!m.reflected) return k;
+  return null;
+}
+function missPending(){return !!missMonthKey();}
+/* which door a new associate should walk through next */
+function nextDoor(){
+  var f=Object.keys(S.fast).filter(function(k){return S.fast[k];}).length;
+  if(f<6)return "fast";
+  if(S.lic.step<4)return "lic";
+  return null; /* fully onboarded — no marker needed */
+}
+
+function drawHub(){
+  var hub=document.getElementById("hub");
+  hub.querySelectorAll(".door").forEach(function(n){n.remove();});
+  var nd=nextDoor();
+  DOORS.forEach(function(d){
+    var lit=doorLit(d.id),nx=(d.id===nd);
+    var el=document.createElement("div");
+    el.className="door"+(lit?" lit":"")+(nx?" next":"");
+    el.style.left=d.x+"px";
+    el.setAttribute("role","button");el.setAttribute("tabindex","0");
+    el.innerHTML=
+      '<svg width="'+d.w+'" height="'+d.h+'" aria-hidden="true">'+
+      '<rect x="2" y="2" width="'+(d.w-4)+'" height="'+(d.h-4)+'" fill="'+(d.big?"#1a2c40":"#16283b")+
+        '" stroke="'+(lit?"#c9a84c":"#3a5372")+'" stroke-width="'+(d.big?3:2)+'"/>'+
+      '<rect x="10" y="10" width="'+(d.w-20)+'" height="'+(d.h-20)+'" fill="'+(d.big?"#2a3a24":(lit?"#22344a":"#1c3149"))+'"/>'+
+      (lit?'<rect x="10" y="10" width="'+(d.w-20)+'" height="6" fill="#c9a84c" opacity=".55"/>':'')+
+      '<circle cx="'+(d.w-20)+'" cy="'+(d.h/2)+'" r="3" fill="'+(lit?"#e0c880":"#7f93ab")+'"/>'+
+      (d.big?'<text x="'+(d.w/2)+'" y="52" text-anchor="middle" font-family="ui-monospace,monospace" font-size="17" fill="#e0c880" letter-spacing="2">GX</text>':'')+
+      '</svg>'+
+      '<div class="cap">'+d.cap+'</div><div class="pip">'+(nx?"&#9654; START HERE":doorPip(d.id))+'</div>';
+    el.addEventListener("click",function(){walkTo(d);});
+    el.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();walkTo(d);}});
+    hub.appendChild(el);
+  });
+}
+
+function walkTo(d){
+  var w=document.getElementById("walker");
+  w.classList.add("mv");
+  w.style.left=(d.x+d.w/2-10)+"px";
+  setTimeout(function(){w.classList.remove("mv");openRoom(d.id);},1000);
+}
+
+/* ---------- snapshot ---------- */
+function drawSnap(){
+  rollWeek();rollDay();
+  var m=M(),n=need();
+  document.getElementById("sMonth").textContent=
+    m.declared?(m.declared+" · "+m.recruits.length+"/"+n.r+" · "+m.points.toLocaleString()):"not declared";
+  document.getElementById("sMonth").className="v"+(m.declared?"":" warn");
+  document.getElementById("sTalk").textContent=S.day.convos+" of 2";
+  document.getElementById("sTalk").className="v"+(S.day.convos<2?" warn":"");
+  document.getElementById("sTen").textContent=S.week.ten+" of 10";
+  document.getElementById("sLic").textContent=
+    S.lic.step>=4?"licensed":["not scheduled","studying","exam booked","passed"][S.lic.step]||"—";
+  document.getElementById("sGrove").textContent=S.grove.length+" trees";
+  var y=S.year[now().getFullYear()]||{};
+  document.getElementById("sYear").textContent=Object.keys(y).length+"/12 closed";
+}
+
+/* ---------- rooms ---------- */
+function back(){document.getElementById("room").classList.remove("on");
+  document.getElementById("hubwrap").classList.remove("off");
+  drawHub();drawSnap();window.scrollTo({top:0,behavior:"smooth"});}
+
+function openRoom(id){
+  document.getElementById("hubwrap").classList.add("off");
+  var r=document.getElementById("room");r.classList.add("on");
+  r.innerHTML=ROOMS[id]();
+  wire(id);
+  /* every room re-render follows a state change, so refresh the strip too —
+     otherwise the header can contradict the room below it */
+  drawSnap();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function head(title,sub){
+  return '<div class="rtop"><button class="btn ghost" onclick="back()">&#8592; Hub</button>'+
+    '<h1>'+title+'</h1><span class="sub">'+sub+'</span></div>';
+}
+
+var ROOMS={};
+
+/* ---------- THE MONTH ---------- */
+ROOMS.gx=function(){
+  var m=M(),n=need(),d=now();
+  var h=head("The Month",MONO[d.getMonth()].toUpperCase()+" &#183; DAY "+d.getDate());
+  if(!m.declared){
+    h+='<div class="card"><h3>DECLARE THE MONTH</h3>'+
+      '<p class="note">GX is the monthly standard: recruits you bring in plus points of business you write, '+
+      'inside one calendar month. GX1 is the minimum everyone runs, every month.</p>'+
+      '<p class="note" style="margin-top:8px">Day one, you say the number out loud. Not &#8220;I&#8217;ll try&#8221; &#8212; a declaration. '+
+      'It sets your gates for the month.</p><div class="row" style="margin-top:12px">'+
+      '<button class="btn solid" data-dec="GX1">GX1 &#183; 3 recruits &#183; 15,000 pts</button>'+
+      '<button class="btn" data-dec="GX2">GX2 &#183; 6 recruits &#183; 30,000 pts</button></div></div>';
+    return h;
+  }
+  var pct=Math.min(100,Math.round(m.points/n.p*100));
+  h+='<div class="card"><div class="row spread" style="margin-bottom:14px">'+
+    '<span class="lbl">DECLARED</span><span class="num">'+m.declared+'</span></div>'+
+    '<h3>RECRUITS</h3><div class="row">';
+  for(var i=0;i<n.r;i++) h+='<span class="gate'+(i<m.recruits.length?" on":"")+'"></span>';
+  h+='<span class="num" style="margin-left:8px">'+m.recruits.length+' of '+n.r+'</span></div>';
+  if(m.recruits.length) h+='<p class="stamp">'+m.recruits.map(esc).join(" &#183; ")+'</p>';
+  h+='<h3 style="margin-top:16px">POINTS</h3><div class="row">'+
+    '<span class="pbar"><i style="width:'+pct+'%"></i></span>'+
+    '<span class="num">'+m.points.toLocaleString()+' / '+n.p.toLocaleString()+'</span></div>'+
+    '<p class="note" style="margin-top:8px">Points come from business written &#8212; every policy carries a point value. '+
+    'Not sure what a case is worth? Ask your SMD (Senior Marketing Director).</p>';
+  h+='<div class="row" style="margin-top:16px;gap:8px">'+
+    '<input type="text" id="recName" placeholder="Recruit name" style="max-width:190px">'+
+    '<button class="btn" id="addRec">Log recruit</button>'+
+    '<input type="number" id="ptsAdd" placeholder="Points" style="max-width:120px">'+
+    '<button class="btn" id="addPts">Add points</button></div></div>';
+
+  h+='<div class="card"><h3>THE TWO &#183; TODAY</h3><div class="row">';
+  for(var t=0;t<2;t++) h+='<span class="gate'+(t<S.day.convos?" on":"")+'"></span>';
+  h+='<span class="num" style="margin-left:8px">'+S.day.convos+' new '+(S.day.convos===1?'person':'people')+' today</span>'+
+    '<button class="btn" id="addTalk" style="margin-left:auto">+1 talk</button></div>'+
+    '<p class="note" style="margin-top:10px">Two new people a day, every day &#8212; this is the clock everything else runs on. '+
+    S.week.convos+' this week.</p></div>';
+
+  h+='<div class="card"><h3>THE TEN &#183; APPOINTMENTS THIS WEEK</h3><div class="row">';
+  for(var j=0;j<10;j++) h+='<span class="slot'+(j<S.week.ten?" on":"")+'"></span>';
+  h+='<span class="num" style="margin-left:8px">'+S.week.ten+' of 10</span></div>'+
+    '<p class="note" style="margin-top:10px">Personal sits and BPM guests both count. '+
+    'BPM &#8212; the Business Presentation Meeting &#8212; runs Thursday 6:00 PM &amp; Saturday 9:00 AM.</p>'+
+    '<div class="row" style="margin-top:12px;gap:8px">'+
+    '<button class="btn" id="addAppt">+ Appointment</button>'+
+    '<button class="btn" id="addBpm">+ BPM guest</button></div></div>';
+
+  var left=daysLeft();
+  h+='<div class="card"><h3>NEXT MOVE</h3><p class="note" style="color:#dbe4ee;font-size:13.5px">'+
+    nextMove(m,n,left)+'</p>'+
+    (S.roots.why?'<p class="stamp" style="color:#c9a84c;margin-top:10px">Building toward &#8212; '+esc(S.roots.why.split("\n")[0])+'</p>':'')+
+    '</div>';
+
+  h+=ringCard();
+  var ringSet=(S.year[d.getFullYear()]||{})[d.getMonth()+1];
+  if(ringSet){
+    h+='<div class="card" style="border-color:#c9a84c"><h3 style="color:#c9a84c">MONTH CLOSED</h3>'+
+      '<p class="note">'+ringSet.toUpperCase()+' is in the ring. Now help somebody else get theirs before the calendar turns.</p></div>';
+  }else if(m.closedShort){
+    h+='<div class="card" style="border-color:#4a3626"><h3 style="color:#b5705e">CLOSED SHORT &#183; FIRE SCAR</h3>'+
+      '<p class="note">This month is a scar on the ring now &#8212; not the end of the tree. Redwoods grow around the wound. '+
+      'The Roots is lit: three questions, then run the next one.</p>'+
+      '<button class="btn" onclick="openRoom(\'roots\')" style="margin-top:10px">Go to The Roots</button></div>';
+  }else if(hit(m)){
+    h+='<div class="card" style="border-color:#c9a84c"><h3 style="color:#c9a84c">QUALIFIED</h3>'+
+      '<p class="note">'+m.declared+' met. Close the month to set the ring.</p>'+
+      '<button class="btn solid" id="closeMo" style="margin-top:10px">Close the month</button></div>';
+  }else if(left<=3){
+    h+='<div class="card"><h3>CLOSING TIME</h3>'+
+      '<p class="note">'+left+' day'+(left===1?'':'s')+' left. Still chasing it &#8212; good. '+
+      'If it ends short, close it honestly and take the three questions in The Roots.</p>'+
+      '<button class="btn" id="closeMo" style="margin-top:10px">Close the month short</button></div>';
+  }
+  /* mid-month with gates open: no close button — the month isn't over */
+  return h;
+};
+
+function nextMove(m,n,left){
+  if(m.recruits.length>=n.r&&m.points>=n.p) return "Qualified. Now help somebody else get there before the month ends.";
+  var needR=n.r-m.recruits.length;
+  if(left<=15&&needR===1) return "One recruit away. Who said &#8220;maybe&#8221; or &#8220;not right now&#8221;? Call them today.";
+  if(needR>0&&S.week.ten<10) return needR+" recruit"+(needR>1?"s":"")+" and "+(10-S.week.ten)+
+    " more toward your ten. Book the appointments first &#8212; recruits come out of sits.";
+  if(needR>0) return needR+" recruit"+(needR>1?"s":"")+" to go with "+left+" days left.";
+  return (n.p-m.points).toLocaleString()+" points to go. "+left+" days left.";
+}
+
+function ringCard(){
+  var yr=now().getFullYear(),y=S.year[yr]||{};
+  var R=76,C=2*Math.PI*R,SEG=C/12,GAP=8,DASH=SEG-GAP;
+  var s='<div class="card"><h3>YOUR YEAR &#183; '+yr+'</h3>'+
+    '<div class="row" style="gap:22px"><svg width="220" height="220" viewBox="0 0 220 220" aria-hidden="true">'+
+    '<circle cx="110" cy="110" r="'+R+'" fill="none" stroke="#16273b" stroke-width="18"/>';
+  var cnt=0,scars=0;
+  for(var i=0;i<12;i++){
+    var st=y[i+1],mo=now().getMonth();
+    /* fire scar: a month you DECLARED and came up short. Not the same as
+       a month you weren't playing — redwoods scar where the fire hit. */
+    var mrec=S.month[yr+"-"+(i+1)];
+    var scar=!st&&mrec&&mrec.declared&&!hit(mrec)&&(i<mo||(i===mo&&mrec.closedShort));
+    var col,w;
+    if(st==="gx2"){col="#e0c880";w=26;cnt++;}
+    else if(st==="gx1"){col="#c9a84c";w=18;cnt++;}
+    else if(scar){col="#b5705e";w=11;scars++;}
+    else if(i<=mo){col="#22364f";w=6;}
+    else {col="#2c445f";w=6;}
+    s+='<circle cx="110" cy="110" r="'+R+'" fill="none" stroke="'+col+'" stroke-width="'+w+
+       '" stroke-dasharray="'+DASH.toFixed(1)+' '+(C-DASH).toFixed(1)+
+       '" transform="rotate('+(-90+i*30)+' 110 110)"'+(i>mo?' opacity=".45"':'')+'/>';
+    var ang=(-90+i*30+(DASH/C*360)/2)*Math.PI/180,lr=R+26;
+    s+='<text x="'+(110+lr*Math.cos(ang)).toFixed(1)+'" y="'+(110+lr*Math.sin(ang)+4).toFixed(1)+
+       '" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" fill="'+
+       (st?"#e0c880":(scar?"#b5705e":(i<=mo?"#7f93ab":"#4a6382")))+'">'+MONO[i][0]+'</text>';
+  }
+  s+='<text x="110" y="106" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#7f93ab" letter-spacing="2">CLOSED</text>'+
+     '<text x="110" y="132" text-anchor="middle" font-family="ui-monospace,monospace" font-size="24" fill="#f4f6f8">'+cnt+'/12</text></svg>'+
+     '<div style="flex:1;min-width:190px"><p class="note">One wedge per month, January at the top, clockwise. '+
+     'Gold fills are months you closed. Rust marks are fire scars &#8212; months you declared and came up short. '+
+     'Redwoods survive fire and grow around the wound. So do you.</p>'+
+     '<p class="note" style="color:#e0c880;margin-top:8px">Twelve filled is GX12.</p>'+
+     (scars?'<p class="note" style="color:#b5705e;margin-top:8px">'+scars+' scar'+(scars>1?'s':'')+
+       ' survived. Still standing, still growing.</p>':'')+
+     '</div></div></div>';
+  return s;
+}
+
+/* ---------- LICENSING ---------- */
+ROOMS.lic=function(){
+  var steps=[["Schedule the exam","Book the date first. The date creates the study."],
+             ["Study","Log your hours. Most people who fail stretched it past 30 days."],
+             ["Pass the exam","Life &amp; Health."],
+             ["Get appointed","Writing number in hand. Now you can be paid."]];
+  var h=head("Licensing","TRACK 1 &#183; SEQUENTIAL");
+  h+='<div class="card">';
+  steps.forEach(function(s,i){
+    h+='<div class="wp'+(i<S.lic.step?" done":"")+'"><div class="dot">'+(i<S.lic.step?"&#10003;":(i+1))+'</div>'+
+       '<div class="t"><b>'+s[0]+'</b><small>'+s[1]+'</small></div>'+
+       (i===S.lic.step?'<button class="btn" id="licNext">Mark done</button>':'')+'</div>';
+  });
+  h+='</div>';
+  h+='<div class="card"><h3>STUDY LOG</h3><div class="row">'+
+     '<span class="big">'+S.lic.hours+'</span><span class="note">hours logged</span>'+
+     '<button class="btn" id="hr1" style="margin-left:auto">+1 hr</button>'+
+     '<button class="btn" id="hr2">+2 hrs</button></div>'+
+     '<label class="fl">EXAM DATE</label>'+
+     '<input type="date" id="examD" value="'+(S.lic.examDate||"")+'"></div>';
+  h+='<div class="card" style="border-color:#3a5372"><h3>MEANWHILE</h3>'+
+     '<p class="note">You do not wait for a licence to book appointments or bring BPM guests. '+
+     'The Ten runs from day one &#8212; and any recruit you bring in counts the month it happens.</p>'+
+     '<div class="row" style="margin-top:10px"><span class="num">'+S.week.ten+' of 10 this week</span>'+
+     '<button class="btn" onclick="openRoom(\'gx\')" style="margin-left:auto">Go to The Month</button></div></div>';
+  return h;
+};
+
+/* ---------- FAST START ---------- */
+ROOMS.fast=function(){
+  var items=[["f1","Bookmark the portal and Mission HQ","Everything lives in one place."],
+             ["f2","Save the key emails and phone numbers","Before you need them, not after."],
+             ["f3","Write your top 10 whys","Do this in The Roots."],
+             ["f4","Set your full-time date with your SMD","Your Senior Marketing Director &#8212; the leader who trains you. A real date, not someday."],
+             ["f5","Build the list &#8212; 100+ names","No pre-judging."],
+             ["f6","Attend your first BPM as a guest-bringer","Thursday 6 PM or Saturday 9 AM."]];
+  var h=head("Fast Start","30-DAY ONBOARDING");
+  h+='<div class="card">';
+  items.forEach(function(it){
+    h+='<div class="wp'+(S.fast[it[0]]?" done":"")+'"><div class="dot">'+(S.fast[it[0]]?"&#10003;":"")+'</div>'+
+       '<div class="t"><b>'+it[1]+'</b><small>'+it[2]+'</small></div>'+
+       '<button class="btn ghost" data-fast="'+it[0]+'">'+(S.fast[it[0]]?"Undo":"Done")+'</button></div>';
+  });
+  h+='</div><p class="note">Runs alongside licensing and The Ten. None of these wait on the others.</p>';
+  return h;
+};
+
+/* ---------- THE ROOTS ---------- */
+ROOMS.roots=function(){
+  var h=head("The Roots","ROOTED &#183; IN SEASON AND OUT");
+  var mk=missMonthKey();
+  if(mk){
+    var mi=parseInt(mk.split("-")[1],10)-1;
+    h+='<div class="miss"><div class="season">OUT OF SEASON</div>'+
+      '<p class="note" style="color:#dbe4ee">'+MONO[mi]+' came up short. That is part of the covenant too &#8212; '+
+      'you show up with integrity in season and out of season. Three questions, then move on.</p>'+
+      '<label class="fl">WHICH WEEK DID THE RHYTHM STOP?</label><textarea id="r1"></textarea>'+
+      '<label class="fl">READ YOUR WHY. STILL TRUE?</label><textarea id="r2"></textarea>'+
+      '<label class="fl">ONE THING CHANGING THIS MONTH</label><textarea id="r3"></textarea>'+
+      '<button class="btn solid" id="saveMiss" style="margin-top:12px">Log it and move on</button></div>';
+  }
+  h+='<div class="card"><h3>THE COVENANT</h3>'+
+    '<p style="font-size:15px;color:#e0c880;line-height:1.6;margin:0">'+
+    'No family left behind is not a slogan. It is a covenant.</p></div>';
+
+  h+='<div class="card"><h3>YOUR WORDS</h3>'+
+    '<label class="fl">TOP 10 WHYS</label><textarea id="wWhy" placeholder="What is this actually for?">'+esc(S.roots.why)+'</textarea>'+
+    stampFor("why")+
+    '<label class="fl">FULL-TIME DATE</label><input type="text" id="wFt" value="'+esc(S.roots.fullTime)+'" placeholder="A real date, set with your SMD">'+
+    stampFor("fullTime")+
+    '<label class="fl">IDENTITY DECLARATION</label><textarea id="wDecl" placeholder="Who you are now — in your own words">'+esc(S.roots.decl)+'</textarea>'+
+    stampFor("decl")+
+    '<button class="btn solid" id="saveRoots" style="margin-top:12px">Save</button></div>';
+
+  var P=[["Mission over commission","I do not wake up chasing transactions. I wake up to create impact. The money follows the mission. Always."],
+    ["Trusted authority, not a salesperson","How I speak and carry myself in every room defines my impact."],
+    ["Think like an owner","This is my business. Nobody hands me people."],
+    ["Builder of people","My real business is not products. My real business is people. The product is the vehicle. The transformation is the mission."],
+    ["Student of the craft","I study financial literacy, leadership, and human connection the way a doctor studies medicine."],
+    ["Community steward","I was planted in this community for a reason. Every family I protect ripples forward &#8212; far beyond what I can see."],
+    ["Faith-led, mission-driven","I show up with integrity, in season and out of season. The discipline I bring to this mission is an act of service."]];
+  h+='<div class="card"><h3>THE 7 HIGH-IDENTITY PILLARS</h3>';
+  P.forEach(function(p,i){h+='<div class="pillar"><b>'+(i+1<10?"0":"")+(i+1)+' &#183; '+p[0]+'</b><span>'+p[1]+'</span></div>';});
+  h+='</div>';
+
+  h+='<div class="card"><h3>ELEVATED LANGUAGE</h3><div class="swap">'+
+    '<div class="no">&#8220;I sell insurance&#8221;</div><div class="yes">&#8220;I help families build financial security&#8221;</div>'+
+    '<div class="no">&#8220;Can I pitch you something?&#8221;</div><div class="yes">&#8220;Can I show you what most people were never taught?&#8221;</div>'+
+    '<div class="no">&#8220;I just started&#8221;</div><div class="yes">&#8220;I work with a team that has done this for years&#8221;</div>'+
+    '</div><p class="note" style="margin-top:10px">This is the one part of the room you practice, not just read.</p></div>';
+
+  h+='<div class="card" style="border-color:#3a5372"><h3>DEEP LINKS</h3>'+
+    '<div class="row"><a class="btn" href="identity-shift.html">Identity Shift</a>'+
+    '<a class="btn" href="fast-start-onboarding.html">Fast Start</a></div></div>';
+  return h;
+};
+function stampFor(k){
+  var t=S.roots.edited[k];
+  return t?'<p class="stamp">written '+ago(t)+'</p>':'';
+}
+function ago(iso){
+  var d=Math.floor((Date.now()-new Date(iso))/86400000);
+  if(d<1)return "today";if(d===1)return "yesterday";
+  if(d<30)return d+" days ago";
+  var m=Math.floor(d/30);return m+" month"+(m>1?"s":"")+" ago";
+}
+
+/* ---------- THE GROVE ---------- */
+ROOMS.grove=function(){
+  var h=head("The Grove","LEADERSHIP &#183; MEASURED BY OTHERS");
+  h+='<div class="card"><h3>YOUR STAND</h3>';
+  if(!S.grove.length){
+    h+='<p class="note">No trees yet. Your first recruit plants one.</p>';
+  }else{
+    h+='<div style="display:flex;flex-wrap:wrap;margin-top:6px">';
+    S.grove.forEach(function(t,i){
+      var ht=t.status==="gx"?52:(t.status==="lic"?40:28);
+      h+='<div class="tree"><svg width="34" height="60" aria-hidden="true">'+
+        '<rect x="14" y="'+(60-ht)+'" width="6" height="'+ht+'" fill="#6b4a2f"/>'+
+        '<path d="M17 '+(60-ht-16)+' L27 '+(60-ht)+' L7 '+(60-ht)+' Z" fill="'+
+          (t.status==="gx"?"#c9a84c":"#4e7355")+'"/></svg>'+
+        '<span class="cv">'+esc(t.name)+'</span>'+
+        '<span class="chip '+(t.status==="gx"?"gx":(t.status==="new"?"new":""))+'">'+
+          (t.status==="gx"?"GX":(t.status==="lic"?"LICENSED":"NEW"))+'</span></div>';
+    });
+    h+='</div>';
+  }
+  h+='<div class="row" style="margin-top:14px;gap:8px">'+
+    '<input type="text" id="tName" placeholder="Name" style="max-width:180px">'+
+    '<select id="tStat" style="max-width:150px"><option value="new">New</option>'+
+    '<option value="lic">Licensed</option><option value="gx">Running GX</option></select>'+
+    '<button class="btn" id="addTree">Plant</button></div></div>';
+  h+='<div class="card"><h3>WHO NEEDS A CALL</h3><p class="note">'+
+    (S.grove.filter(function(t){return t.status!=="gx";}).length?
+      S.grove.filter(function(t){return t.status!=="gx";}).map(function(t){return esc(t.name);}).join(", ")+
+      " &#8212; not running GX yet.":
+      "Everyone in your stand is running GX. Go find another.")+'</p>'+
+    '<p class="note" style="margin-top:8px;color:#e0c880">A trainer is not someone who knows the system. '+
+    'It is someone whose people get results.</p></div>';
+  return h;
+};
+
+/* ---------- wiring ---------- */
+function esc(s){return String(s||"").replace(/[&<>"']/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];});}
+function $(id){return document.getElementById(id);}
+function on(id,fn){var e=$(id);if(e)e.addEventListener("click",fn);}
+
+function wire(id){
+  if(id==="gx"){
+    document.querySelectorAll("[data-dec]").forEach(function(b){
+      b.addEventListener("click",function(){
+        M().declared=b.getAttribute("data-dec");save();toast("Declared "+M().declared);openRoom("gx");});
+    });
+    on("addRec",function(){var v=$("recName").value.trim();if(!v)return;
+      M().recruits.push(v);save();toast("Recruit logged");openRoom("gx");});
+    on("addPts",function(){var v=parseInt($("ptsAdd").value,10);if(!v)return;
+      M().points+=v;save();toast("+"+v.toLocaleString()+" points");openRoom("gx");});
+    on("addAppt",function(){if(S.week.ten<10){S.week.ten++;save();openRoom("gx");}});
+    on("addBpm",function(){if(S.week.ten<10){S.week.ten++;save();toast("BPM guest");openRoom("gx");}});
+    on("addTalk",function(){rollDay();S.day.convos++;S.week.convos++;save();
+      toast(S.day.convos>=2?"The Two — done for today":"+1 talk");openRoom("gx");});
+    on("closeMo",function(){
+      var m=M(),y=now().getFullYear(),mo=now().getMonth()+1;
+      if(!S.year[y])S.year[y]={};
+      if(hit(m)){S.year[y][mo]=m.declared==="GX2"?"gx2":"gx1";toast(m.declared+" — month closed");}
+      else{m.closedShort=true;m.reflected=false;toast("Closed short — The Roots is lit for you");}
+      save();openRoom("gx");
+    });
+  }
+  if(id==="lic"){
+    on("licNext",function(){if(S.lic.step<4){S.lic.step++;save();
+      toast(S.lic.step>=4?"Licensed and appointed":"Step complete");openRoom("lic");}});
+    on("hr1",function(){S.lic.hours++;save();openRoom("lic");});
+    on("hr2",function(){S.lic.hours+=2;save();openRoom("lic");});
+    var e=$("examD");if(e)e.addEventListener("change",function(){S.lic.examDate=e.value;save();});
+  }
+  if(id==="fast"){
+    document.querySelectorAll("[data-fast]").forEach(function(b){
+      b.addEventListener("click",function(){var k=b.getAttribute("data-fast");
+        S.fast[k]=!S.fast[k];save();openRoom("fast");});
+    });
+  }
+  if(id==="roots"){
+    on("saveRoots",function(){
+      var t=new Date().toISOString();
+      if($("wWhy").value!==S.roots.why){S.roots.why=$("wWhy").value;S.roots.edited.why=t;}
+      if($("wFt").value!==S.roots.fullTime){S.roots.fullTime=$("wFt").value;S.roots.edited.fullTime=t;}
+      if($("wDecl").value!==S.roots.decl){S.roots.decl=$("wDecl").value;S.roots.edited.decl=t;}
+      save();toast("Saved");openRoom("roots");});
+    on("saveMiss",function(){
+      var k=missMonthKey();
+      if(k&&S.month[k]){
+        S.month[k].reflection={stopped:$("r1").value,why:$("r2").value,change:$("r3").value};
+        S.month[k].reflected=true;
+      }
+      save();toast("Logged. New month, same covenant.");openRoom("roots");});
+  }
+  if(id==="grove"){
+    on("addTree",function(){var v=$("tName").value.trim();if(!v)return;
+      S.grove.push({name:v,status:$("tStat").value});save();toast("Planted");openRoom("grove");});
+  }
+}
+
+/* ---------- cloud sync (Firebase module below fills window.gxCloud) ---------- */
+window.gxState=function(){return S;};
+window.gxHydrate=function(data){
+  var d={};for(var k in data)if(k!=="updated"&&k!=="email"&&k!=="name")d[k]=data[k];
+  hydrating=true;S=fix(d);
+  try{localStorage.setItem("hyperion_gx_v1",JSON.stringify(S));}catch(e){mem=S;}
+  back(); /* redraw may roll day/week — keep guard up so it doesn't echo a write */
+  hydrating=false;
+  toast("Progress synced");
+};
+window.gxAuthUi=function(u){
+  var b=$("authBtn");if(!b)return;
+  b.textContent=u?("✓ "+(u.email||"synced")+" · sign out"):"Sign in to sync";
+};
+on("authBtn",function(){
+  if(window.gxCloud&&window.gxCloud.user()){
+    if(confirm("Sign out? Progress stays on this device and stops syncing."))window.gxCloud.signOut();
+    return;
+  }
+  if(!window.gxCloud){toast("Sync unavailable offline");return;}
+  document.getElementById("authov").classList.add("on");
+});
+on("aCancel",function(){document.getElementById("authov").classList.remove("on");});
+on("aGo",function(){
+  var e=$("aEmail").value.trim(),p=$("aPass").value;
+  if(!e||!p){$("aErr").textContent="Email and password, both.";return;}
+  $("aErr").textContent="";
+  window.gxCloud.signIn(e,p).then(function(){
+    document.getElementById("authov").classList.remove("on");
+  }).catch(function(){
+    $("aErr").textContent="Sign-in failed. Check email and password.";
+  });
+});
+
+/* intro */
+function showIntro(){document.getElementById("intro").classList.add("on");}
+on("introGo",function(){S.introSeen=true;save();
+  document.getElementById("intro").classList.remove("on");});
+on("helpBtn",showIntro);
+if(!S.introSeen)showIntro();
+
+on("wipeBtn",function(){if(!confirm("Clear everything?"))return;
+  S=seed();save();back();toast("Reset");showIntro();});
+on("demoBtn",function(){
+  var y=now().getFullYear(),mo=now().getMonth()+1;
+  S=seed();
+  S.introSeen=true;
+  S.lic={step:4,hours:38,examDate:""};
+  S.fast={f1:1,f2:1,f3:1,f4:1};
+  S.month[mKey()]={declared:"GX1",recruits:["Marcus T.","Dee R."],points:10800};
+  S.week={ten:7,convos:12,wk:weekKey()};
+  S.day={d:new Date().toISOString().slice(0,10),convos:1};
+  S.roots={why:"Get my mom out of that apartment",fullTime:"March 1",decl:"",
+           edited:{why:new Date(Date.now()-86400000*124).toISOString()}};
+  S.grove=[{name:"Marcus T.",status:"gx"},{name:"Dee R.",status:"lic"},
+           {name:"Angela P.",status:"new"},{name:"Rey",status:"new"},{name:"Tasha",status:"lic"}];
+  S.year[y]={};
+  for(var i=1;i<mo;i++) if(i%3!==0) S.year[y][i]=(i===5?"gx2":"gx1");
+  save();back();toast("Demo loaded");
+});
+
+drawHub();drawSnap();
+</script>
+<script src="hyperion-search.js"></script>
+
+<script type="module">
+/* ============================================================
+   CLOUD SYNC — same Firebase project + login as the CRM.
+   Game state lives at teams/hyperion/gx/{uid}, one doc per
+   associate. Local play still works without signing in.
+   ============================================================ */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC5jXI140Z9f618dFk8JwGhHyOzU6Q6Jek",
+  authDomain: "hyperion-crm-ea994.firebaseapp.com",
+  projectId: "hyperion-crm-ea994",
+  storageBucket: "hyperion-crm-ea994.firebasestorage.app",
+  messagingSenderId: "651443980689",
+  appId: "1:651443980689:web:eaed1f15d21c306616b230"
+};
+const TEAM = "hyperion";
+
+let u = null, timer = null;
+try {
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const fs   = getFirestore(app);
+
+  window.gxCloud = {
+    user(){ return u; },
+    signIn(e,p){ return signInWithEmailAndPassword(auth,e,p); },
+    signOut(){ return signOut(auth); },
+    /* debounced, fire-and-forget — the game never waits on the network */
+    push(state){
+      if(!u) return;
+      clearTimeout(timer);
+      const snap = JSON.parse(JSON.stringify(state));
+      timer = setTimeout(()=>{
+        setDoc(doc(fs,'teams',TEAM,'gx',u.uid),
+          Object.assign(snap,{ email:u.email||'', updated:new Date().toISOString() })
+        ).catch(()=>{});
+      }, 600);
+    }
+  };
+
+  onAuthStateChanged(auth, async user => {
+    u = user;
+    if(window.gxAuthUi) window.gxAuthUi(u);
+    if(!u) return;
+    try {
+      const snap = await getDoc(doc(fs,'teams',TEAM,'gx',u.uid));
+      if(snap.exists()){
+        if(window.gxHydrate) window.gxHydrate(snap.data());   /* cloud copy wins */
+      } else if(window.gxState){
+        window.gxCloud.push(window.gxState());                /* first sign-in: upload local */
+      }
+    } catch(e){ /* offline or rules issue — keep playing locally */ }
+  });
+} catch(e){ /* Firebase unreachable — game runs local-only */ }
+</script>
+</body>
+</html>
