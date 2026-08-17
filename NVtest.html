@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Translator — NV Life &amp; Health, in Plain English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1a2a42;
+  --navy-deep:#121e30;
+  --gold:#c9a84c;
+  --gold-soft:#e5d3a0;
+  --cream:#f7f3ea;
+  --sand:#ebe3d3;
+  --ink:#22303f;
+  --muted:#6b7a8c;
+  --green:#3f7d5c;
+  --scale:1;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html{font-size:calc(17px * var(--scale))}
+body{
+  margin:0;
+  background:var(--navy);
+  color:var(--cream);
+  font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:940px;margin:0 auto;padding:0 20px 80px}
+
+/* ---------- top bar ---------- */
+header{
+  position:sticky;top:0;z-index:20;
+  background:rgba(18,30,48,.94);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid rgba(201,168,76,.28);
+}
+.bar{max-width:940px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.mark{display:flex;align-items:center;gap:10px;margin-right:auto;cursor:pointer;background:none;border:0;color:inherit;font-family:inherit;padding:0}
+.mark .tree{width:26px;height:26px;flex:none}
+.mark b{font-size:.95rem;font-weight:800;letter-spacing:.02em}
+.mark span{display:block;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.navbtn{
+  background:transparent;border:1px solid rgba(247,243,234,.22);color:var(--cream);
+  font-family:inherit;font-size:.8rem;font-weight:600;padding:7px 13px;border-radius:999px;cursor:pointer;
+}
+.navbtn:hover{border-color:var(--gold);color:var(--gold-soft)}
+.navbtn[aria-current="true"]{background:var(--gold);border-color:var(--gold);color:var(--navy-deep)}
+.sizer{display:flex;gap:4px;align-items:center;border:1px solid rgba(247,243,234,.22);border-radius:999px;padding:3px}
+.sizer button{background:none;border:0;color:var(--cream);font-family:inherit;cursor:pointer;padding:3px 8px;border-radius:999px;font-weight:700}
+.sizer button:nth-child(1){font-size:.72rem}
+.sizer button:nth-child(2){font-size:.85rem}
+.sizer button:nth-child(3){font-size:1rem}
+.sizer button[aria-pressed="true"]{background:var(--gold);color:var(--navy-deep)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+/* ---------- hero ---------- */
+.hero{padding:46px 0 28px}
+.eyebrow{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:700;margin:0 0 14px}
+h1{font-size:2.5rem;line-height:1.08;margin:0 0 16px;font-weight:800;letter-spacing:-.02em}
+h1 em{font-style:normal;color:var(--gold)}
+.lede{font-size:1.05rem;color:#cfd8e3;max-width:56ch;margin:0 0 22px}
+.rule{height:1px;background:linear-gradient(90deg,var(--gold),rgba(201,168,76,0));margin:26px 0}
+
+/* ---------- module list ---------- */
+h2{font-size:1.35rem;margin:34px 0 4px;font-weight:800;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:.9rem;margin:0 0 18px}
+.mods{display:grid;gap:12px}
+.mod{
+  display:grid;grid-template-columns:52px 1fr auto;gap:16px;align-items:center;
+  width:100%;text-align:left;background:rgba(247,243,234,.045);
+  border:1px solid rgba(247,243,234,.12);border-radius:var(--r);
+  padding:16px 18px;cursor:pointer;color:inherit;font-family:inherit;
+  transition:border-color .15s,background .15s,transform .15s;
+}
+.mod:hover{border-color:var(--gold);background:rgba(201,168,76,.08);transform:translateX(3px)}
+.modnum{
+  font-size:1.15rem;font-weight:800;color:var(--gold);
+  border:1px solid rgba(201,168,76,.4);border-radius:10px;
+  height:44px;display:grid;place-items:center;
+}
+.mod h3{margin:0 0 3px;font-size:1.05rem;font-weight:700}
+.mod p{margin:0;color:var(--muted);font-size:.82rem}
+.meter{width:92px}
+.meter .track{height:7px;background:rgba(247,243,234,.14);border-radius:999px;overflow:hidden}
+.meter .fill{height:100%;background:var(--gold);width:0;transition:width .4s}
+.meter small{display:block;text-align:right;color:var(--muted);font-size:.68rem;margin-top:5px;letter-spacing:.04em}
+.done .modnum{background:var(--gold);color:var(--navy-deep);border-color:var(--gold)}
+
+/* ---------- study card ---------- */
+.card{
+  background:var(--cream);color:var(--ink);border-radius:20px;
+  padding:0;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.34);
+  display:grid;grid-template-columns:88px 1fr;
+}
+.ladder{background:var(--sand);padding:22px 0;display:flex;flex-direction:column;gap:0;align-items:center}
+.rung{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:100%;position:relative}
+.dot{width:15px;height:15px;border-radius:50%;border:2px solid #b9ad92;background:var(--cream);z-index:2;transition:.3s}
+.rung.on .dot{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 5px rgba(201,168,76,.22)}
+.rung .lbl{
+  font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#8a8171;
+  writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;
+}
+.rung.on .lbl{color:#7a642a}
+.rung:not(:last-child):after{content:"";position:absolute;top:50%;bottom:-50%;width:2px;background:#cdc2ab;z-index:1}
+.rung.on:not(:last-child):after{background:var(--gold-soft)}
+.face{padding:30px 34px 26px;min-height:430px;display:flex;flex-direction:column}
+.crumb{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:#9a8f7a;font-weight:700;margin:0 0 14px;display:flex;justify-content:space-between;gap:10px}
+.term{font-size:2rem;line-height:1.12;font-weight:800;margin:0 0 4px;letter-spacing:-.02em;color:var(--navy)}
+.saylike{font-size:.85rem;color:var(--muted);margin:0 0 20px;font-style:italic}
+.step{border-top:1px dashed #d6cbb4;padding:16px 0 2px;animation:rise .28s ease-out}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.step h4{margin:0 0 6px;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:#a08a3f;font-weight:800}
+.step p{margin:0;font-size:1.02rem}
+.step.test{background:rgba(201,168,76,.14);margin:14px -34px 0;padding:16px 34px 18px;border-top:1px solid rgba(201,168,76,.4)}
+.spacer{flex:1}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.big{
+  background:var(--navy);color:var(--cream);border:0;border-radius:12px;
+  padding:15px 24px;font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;flex:1;min-width:200px;
+}
+.big:hover{background:var(--navy-deep)}
+.teach{background:var(--navy);color:var(--cream);border-radius:14px;padding:18px 20px;margin-top:18px}
+.teach h4{margin:0 0 6px;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:800}
+.teach p{margin:0;font-size:1rem}
+.rate{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.rate button{
+  border-radius:12px;padding:14px 8px;font-family:inherit;font-weight:700;font-size:.9rem;cursor:pointer;
+  border:2px solid #d6cbb4;background:var(--cream);color:var(--ink);
+}
+.rate button small{display:block;font-weight:500;font-size:.68rem;color:var(--muted);margin-top:3px}
+.rate button:hover{border-color:var(--navy)}
+.rate .g{border-color:var(--green);color:var(--green)}
+.rate .g:hover{background:var(--green);color:#fff}
+.rate .g:hover small{color:rgba(255,255,255,.8)}
+.queue{display:flex;justify-content:space-between;align-items:center;margin:0 0 16px;gap:12px}
+.qtrack{flex:1;height:6px;background:rgba(247,243,234,.16);border-radius:999px;overflow:hidden}
+.qtrack i{display:block;height:100%;background:var(--gold);transition:width .3s}
+.qcount{font-size:.75rem;color:var(--muted);letter-spacing:.08em;white-space:nowrap}
+
+/* ---------- quiz ---------- */
+.quiz{background:var(--cream);color:var(--ink);border-radius:20px;padding:30px 34px;box-shadow:0 24px 60px rgba(0,0,0,.34)}
+.quiz h3{margin:0 0 20px;font-size:1.3rem;color:var(--navy);font-weight:800;line-height:1.3}
+.opt{
+  display:block;width:100%;text-align:left;background:#fff;border:2px solid #ded4bf;border-radius:12px;
+  padding:14px 16px;margin-bottom:10px;font-family:inherit;font-size:1rem;cursor:pointer;color:var(--ink);
+}
+.opt:hover{border-color:var(--navy)}
+.opt.sel{border-color:var(--navy);background:rgba(26,42,66,.08);font-weight:600}
+/* ---------- math cards ---------- */
+.card.mathcard{grid-template-columns:1fr}
+.card.mathcard .ladder{display:none}
+.mathprob{background:var(--navy);color:var(--cream);border-radius:14px;padding:18px 20px;margin-bottom:6px}
+.mathprob h4{margin:0 0 6px;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:800}
+.mathprob p{margin:0;font-size:1.08rem;line-height:1.5}
+.answerbig{
+  background:linear-gradient(135deg,var(--gold),var(--gold-soft));
+  color:var(--navy-deep);border-radius:14px;padding:18px 22px;margin:14px 0 2px;
+  font-size:1.3rem;font-weight:800;display:flex;align-items:center;gap:12px;
+  animation:pop .42s cubic-bezier(.2,.9,.3,1.3);
+}
+.answerbig .chk{
+  background:var(--navy);color:var(--gold);width:34px;height:34px;border-radius:50%;
+  display:grid;place-items:center;font-size:1.1rem;flex:none;
+}
+@keyframes pop{0%{transform:scale(.9);opacity:0}60%{transform:scale(1.03)}100%{transform:scale(1);opacity:1}}
+.opt.right{border-color:var(--green);background:rgba(63,125,92,.1)}
+.opt.wrong{border-color:#b4483f;background:rgba(180,72,63,.08)}
+.opt[disabled]{cursor:default}
+.why{background:var(--navy);color:var(--cream);border-radius:12px;padding:16px 18px;margin-top:16px}
+.why b{color:var(--gold)}
+
+/* ---------- glossary ---------- */
+.search{
+  width:100%;padding:14px 18px;border-radius:12px;border:1px solid rgba(247,243,234,.25);
+  background:rgba(247,243,234,.06);color:var(--cream);font-family:inherit;font-size:1rem;margin-bottom:18px;
+}
+.search::placeholder{color:var(--muted)}
+.gitem{border-bottom:1px solid rgba(247,243,234,.12);padding:16px 0}
+.gitem h4{margin:0 0 4px;font-size:1.05rem;color:var(--gold);font-weight:700}
+.gitem .pe{margin:0 0 6px}
+.gitem .ex{margin:0 0 6px;color:#c3ccd8;font-size:.92rem}
+.gitem .tt{margin:0;font-size:.88rem;color:var(--gold-soft);border-left:2px solid var(--gold);padding-left:12px}
+.gtag{font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+
+/* ---------- coach ---------- */
+.panel{background:rgba(247,243,234,.05);border:1px solid rgba(247,243,234,.13);border-radius:var(--r);padding:22px 24px;margin-bottom:14px}
+.panel h3{margin:0 0 10px;font-size:1.05rem;color:var(--gold);font-weight:700}
+.panel p{margin:0 0 10px}
+.panel ul{margin:0;padding-left:20px}
+.panel li{margin-bottom:7px}
+.pull{border-left:3px solid var(--gold);padding:4px 0 4px 16px;font-size:1.08rem;color:var(--cream);margin:14px 0}
+.no{color:#e79b94}
+.yes{color:#8fd0ac}
+.foot{color:var(--muted);font-size:.78rem;margin-top:34px;border-top:1px solid rgba(247,243,234,.12);padding-top:16px}
+/* ---------- exam bank ---------- */
+.exhero{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0 10px}
+@media(max-width:640px){.exhero{grid-template-columns:1fr}}
+.exmode{background:rgba(247,243,234,.045);border:1px solid rgba(247,243,234,.13);border-radius:var(--r);padding:22px;cursor:pointer;text-align:left;color:inherit;font-family:inherit;transition:.15s}
+.exmode:hover{border-color:var(--gold);background:rgba(201,168,76,.08)}
+.exmode h3{margin:0 0 6px;font-size:1.15rem;font-weight:800;color:var(--gold)}
+.exmode p{margin:0;color:#cfd8e3;font-size:.9rem}
+.exmode .big{margin-top:16px;pointer-events:none}
+.topicgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+@media(max-width:640px){.topicgrid{grid-template-columns:1fr}}
+.tbtn{display:flex;justify-content:space-between;align-items:center;gap:10px;background:rgba(247,243,234,.045);border:1px solid rgba(247,243,234,.12);border-radius:12px;padding:13px 16px;cursor:pointer;color:inherit;font-family:inherit;text-align:left;transition:.15s}
+.tbtn:hover{border-color:var(--gold);background:rgba(201,168,76,.08)}
+.tbtn b{font-weight:700;font-size:.92rem}
+.tbtn span{color:var(--muted);font-size:.75rem;white-space:nowrap}
+.tbtn .best{color:var(--gold)}
+.exbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.timer{font-variant-numeric:tabular-nums;font-weight:800;font-size:1.05rem;color:var(--gold);letter-spacing:.04em}
+.exprog{flex:1;min-width:120px;height:6px;background:rgba(247,243,234,.16);border-radius:999px;overflow:hidden}
+.exprog i{display:block;height:100%;background:var(--gold);transition:width .3s}
+.exmeta{font-size:.78rem;color:var(--muted);letter-spacing:.06em;white-space:nowrap}
+.report{background:var(--cream);color:var(--ink);border-radius:20px;padding:30px 34px;box-shadow:0 24px 60px rgba(0,0,0,.34)}
+.score{font-size:3.2rem;font-weight:800;line-height:1;letter-spacing:-.02em;margin:0}
+.score.pass{color:var(--green)}.score.fail{color:#b4483f}
+.verdict{font-size:1.05rem;margin:8px 0 22px;color:var(--navy);font-weight:600}
+.trow{display:grid;grid-template-columns:1fr 62px;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid #e2d8c2}
+.trow .tn{font-size:.92rem;font-weight:600}
+.trow .tbar{height:8px;background:#e2d8c2;border-radius:999px;overflow:hidden;margin-top:5px}
+.trow .tbar i{display:block;height:100%;border-radius:999px}
+.trow .tpct{text-align:right;font-weight:800;font-variant-numeric:tabular-nums}
+.wk{color:#b4483f}.ok{color:var(--green)}
+.rvw{margin-top:14px}
+.rvw .ri{border-top:1px dashed #d6cbb4;padding:14px 0}
+.rvw .rq{font-weight:700;margin:0 0 8px;color:var(--navy)}
+.rvw .ro{font-size:.9rem;margin:2px 0;padding-left:18px}
+.rvw .ro.c{color:var(--green);font-weight:700}
+.rvw .ro.x{color:#b4483f}
+.rvw .rw{font-size:.86rem;color:#5a5140;margin:8px 0 0;border-left:2px solid var(--gold);padding-left:12px}
+.flagwrap{margin-left:auto}
+.flagbtn{background:transparent;border:1px solid rgba(247,243,234,.25);color:var(--cream);font-family:inherit;font-size:.78rem;font-weight:600;padding:7px 13px;border-radius:999px;cursor:pointer}
+.flagbtn[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:var(--navy-deep)}
+.exnav{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.exnav .big{flex:1;min-width:140px}
+.ghost{background:transparent;border:1px solid rgba(247,243,234,.25);color:var(--cream)}
+.ghost:hover{border-color:var(--gold);color:var(--gold-soft)}
+.hidden{display:none!important}
+@media (max-width:640px){
+  h1{font-size:1.9rem}
+  .card{grid-template-columns:1fr}
+  .ladder{flex-direction:row;padding:14px 0}
+  .rung .lbl{writing-mode:horizontal-tb;transform:none}
+  .rung:not(:last-child):after{top:auto;left:50%;right:-50%;bottom:auto;height:2px;width:auto;top:14px}
+  .face{padding:24px 20px;min-height:0}
+  .step.test{margin:14px -20px 0;padding:16px 20px}
+  .mod{grid-template-columns:44px 1fr;gap:12px}
+  .meter{grid-column:2;width:100%}
+}
+@media print{
+  body{background:#fff;color:#000}
+  header,.navbtn,.search,.foot{display:none}
+  .gitem h4{color:#000}.gitem .tt{color:#000;border-color:#000}.gitem .ex{color:#333}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <button class="mark" onclick="go('home')" aria-label="Home">
+      <svg class="tree" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2 4 12h4l-4 6h6v4h4v-4h6l-4-6h4z" fill="#c9a84c"/></svg>
+      <div><b>THE TRANSLATOR</b><span>Hyperion Legacy Builders</span></div>
+    </button>
+    <button class="navbtn" id="nav-home" onclick="go('home')">Study</button>
+    <button class="navbtn" id="nav-gloss" onclick="go('gloss')">Glossary</button>
+    <button class="navbtn" id="nav-exam" onclick="go('exam')">Exam Bank</button>
+    <button class="navbtn" id="nav-coach" onclick="go('coach')">Coach</button>
+    <div class="sizer" role="group" aria-label="Text size">
+      <button onclick="setScale(1)" aria-pressed="true" title="Normal text">A</button>
+      <button onclick="setScale(1.15)" aria-pressed="false" title="Larger text">A</button>
+      <button onclick="setScale(1.32)" aria-pressed="false" title="Largest text">A</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- ================= HOME ================= -->
+<section id="home">
+  <div class="hero">
+    <p class="eyebrow">Nevada Life &amp; Health · Plain English First</p>
+    <h1>Nobody fails this test for being slow.<br>They fail it for <em>never being told what the words mean.</em></h1>
+    <p class="lede">Every term gets translated three ways before you're asked to remember anything: plain English, then a real-life picture, then what the test actually wants. Thirteen short modules. Five to ten words at a time. Repeat as often as you like — that's the method, not a setback.</p>
+    <button class="big" style="max-width:320px" onclick="resume()">Start where I left off</button>
+  </div>
+  <div class="rule"></div>
+  <h2>The thirteen modules</h2>
+  <p class="sub">Do one sitting at a time. A sitting is 15–20 minutes, not an evening.</p>
+  <div class="mods" id="modlist"></div>
+  <p class="foot"><b>What this is and isn't.</b> This is the vocabulary and math layer: 131 cards and 52 quick checks, including a Nevada Code &amp; Ethics module and a worked-math module — the two places most people lose the exam. The Nevada Life &amp; Health exam is 80 scored questions (plus pretest), 60 general + 20 state, and you need a scaled score of 80 to pass. Own every card here and you'll understand the questions — but you still need a full exam-prep question bank (scoring 80%+ consistently) before you schedule. Verified August 2026: Nevada uses Pearson VUE; prelicensing education has not been required since Jan 1, 2020; renewal is every 3 years with 30 hours of CE (incl. 3 hours ethics). Confirm current figures against the Nevada Division of Insurance candidate handbook.</p>
+</section>
+
+<!-- ================= STUDY ================= -->
+<section id="study" class="hidden">
+  <div class="queue">
+    <button class="navbtn" onclick="go('home')">← All modules</button>
+    <div class="qtrack"><i id="qfill"></i></div>
+    <div class="qcount" id="qcount"></div>
+  </div>
+  <div class="card" id="studycard">
+    <div class="ladder">
+      <div class="rung" id="r0"><span class="dot"></span><span class="lbl">Plain English</span></div>
+      <div class="rung" id="r1"><span class="dot"></span><span class="lbl">Real life</span></div>
+      <div class="rung" id="r2"><span class="dot"></span><span class="lbl">On the test</span></div>
+    </div>
+    <div class="face">
+      <p class="crumb"><span id="modname"></span><span id="cardno"></span></p>
+      <p class="term" id="term"></p>
+      <p class="saylike" id="saylike"></p>
+      <div id="steps"></div>
+      <div class="spacer"></div>
+      <div id="controls"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= QUIZ ================= -->
+<section id="quiz" class="hidden">
+  <div class="queue">
+    <button class="navbtn" onclick="go('home')">← All modules</button>
+    <div class="qcount" id="quizcount"></div>
+  </div>
+  <div class="quiz" id="quizbox"></div>
+</section>
+
+<!-- ================= GLOSSARY ================= -->
+<section id="gloss" class="hidden">
+  <h2 style="margin-top:26px">The whole glossary</h2>
+  <p class="sub">Term → plain English → real life → what the test wants. Print this and keep it in the truck.</p>
+  <input class="search" id="q" placeholder="Type a word you got stuck on…" oninput="renderGloss()">
+  <div id="glist"></div>
+</section>
+
+<!-- ================= COACH ================= -->
+<section id="exam" class="hidden">
+  <!-- landing -->
+  <div id="ex-home">
+    <h2 style="margin-top:26px">The exam bank</h2>
+    <p class="sub">Original questions across every topic on the Nevada Life &amp; Health exam. Take a full timed mock, or drill one weak topic at a time.</p>
+    <div class="exhero">
+      <button class="exmode" onclick="startMock()">
+        <h3>Full timed mock</h3>
+        <p>150 questions on a timed clock, shuffled like the real thing. Score report by topic at the end. Nevada's real combined exam runs ~170 questions in 3h35m — this mirrors the pace.</p>
+        <span class="big">Start the mock →</span>
+      </button>
+      <button class="exmode" onclick="startWeakest()">
+        <h3>Drill my weak spots</h3>
+        <p>Pulls 25 questions weighted toward the topics he's scored lowest on so far. Gets stronger as a diagnostic the more he uses it.</p>
+        <span class="big">Start a focused set →</span>
+      </button>
+    </div>
+    <h2 style="font-size:1.15rem;margin:26px 0 4px">Or drill one topic</h2>
+    <p class="sub">Every question in that topic, in order, untimed.</p>
+    <div class="topicgrid" id="topicgrid"></div>
+    <p class="foot"><b>How to use it.</b> Vocabulary first (the Study tab) until a topic stops feeling foreign — then drill that same topic here. Save full timed mocks for when single-topic drills are landing above 80%. Nevada passes on a SCALED score of 80 (not a raw percentage), so aim for a steady 80%+ here as your safe cushion. Questions are original and written to exam style; treat them as representative practice, not a leaked pool.</p>
+  </div>
+
+  <!-- running -->
+  <div id="ex-run" class="hidden">
+    <div class="exbar">
+      <button class="navbtn" onclick="quitExam()">← End</button>
+      <span class="timer" id="extimer"></span>
+      <div class="exprog"><i id="exfill"></i></div>
+      <span class="exmeta" id="exmeta"></span>
+    </div>
+    <div class="quiz" id="exbox"></div>
+    <div class="exnav" id="exnavbtns"></div>
+  </div>
+
+  <!-- report -->
+  <div id="ex-report" class="hidden"></div>
+</section>
+
+<section id="coach" class="hidden">
+  <h2 style="margin-top:26px">How to run a session</h2>
+  <p class="sub">For whoever is sitting next to him. Read this once before the first session.</p>
+
+  <div class="panel">
+    <h3>Ask this before you teach anything</h3>
+    <p class="pull">"When you say the licensing language feels like Chinese — what's hardest? The vocabulary, understanding what the question is asking, remembering it, or all three?"</p>
+    <p>His answer sets the plan, not his age:</p>
+    <ul>
+      <li><b>Vocabulary</b> → live in this tool. Ladder rungs 1 and 2. Skip the quizzes for the first two weeks.</li>
+      <li><b>Understanding the question</b> → he knows more than he thinks. Go straight to quiz mode and read every question out loud together, translating the question stem before he answers.</li>
+      <li><b>Remembering</b> → short and frequent beats long. Three 15-minute sittings a week beats one three-hour Saturday.</li>
+      <li><b>All three</b> → one module a week, in order. Ten weeks. Say it that way so it has an end.</li>
+    </ul>
+  </div>
+
+  <div class="panel">
+    <h3>The 20-minute sitting</h3>
+    <ul>
+      <li><b>2 min</b> — he re-says three terms from last time, out loud, from memory. No cards.</li>
+      <li><b>12 min</b> — five to eight new cards. He reads the term, guesses, then climbs the ladder.</li>
+      <li><b>4 min</b> — he teaches the five back to you like you've never heard them.</li>
+      <li><b>2 min</b> — name what got easier. Out loud. Specifically.</li>
+    </ul>
+  </div>
+
+  <div class="panel">
+    <h3>What you say and what you don't</h3>
+    <ul>
+      <li><span class="no">Never:</span> "Does that make sense?" — he'll say yes to end the discomfort.</li>
+      <li><span class="yes">Instead:</span> "Say it back to me the way you'd say it to Mom."</li>
+      <li><span class="no">Never:</span> "We covered that already."</li>
+      <li><span class="yes">Instead:</span> "Good — that one's worth hearing twice. Run it again."</li>
+      <li><span class="no">Never:</span> praise only the score.</li>
+      <li><span class="yes">Instead:</span> "Two weeks ago 'aleatory' was noise. You just explained it cold."</li>
+    </ul>
+  </div>
+
+  <div class="panel">
+    <h3>Why the cards work this way</h3>
+    <p>Three rungs, always in the same order. Plain English first, because a definition written in exam language just adds more foreign words. Real life second, because the student has a lifetime of examples the exam doesn't know about. Test language last, and only last — once he already owns the idea, the exam's phrasing is a translation problem, not a comprehension problem.</p>
+    <p>The tool never asks whether he understood. It asks him to say it out loud, then he rates himself. "Say it again" is a button with no penalty attached — pressing it is the tool working correctly.</p>
+  </div>
+
+  <div class="panel">
+    <h3>Where the points are</h3>
+    <p>150 questions, 60% to pass. They are not spread evenly — Life and Health carry the test:</p>
+    <ul>
+      <li><b>Life insurance</b> — the single biggest block. Modules 5, 6, 7, and 9 feed it.</li>
+      <li><b>Medical / health insurance</b> — nearly as big. Modules 10 and 12 feed it.</li>
+      <li><b>General insurance</b> — basics and contract law. Modules 1, 2, 3, 11.</li>
+      <li><b>Disability, long-term care, riders</b> — smaller blocks, a handful of questions each.</li>
+    </ul>
+    <p>Coach the big blocks to mastery first. A point in Life counts the same as a point in LTC, and there are far more of them.</p>
+  </div>
+
+  <div class="panel">
+    <h3>The four kinds of question</h3>
+    <p>Teach them to sort every question into one of four buckets the moment they read it:</p>
+    <ul>
+      <li><b>The "I know this"</b> → answer it, move on, don't overthink it.</li>
+      <li><b>The 50/50</b> → cross off the one or two clearly wrong options, then trust the gut pick. Tell them plainly: <b>do not change a 50/50 answer later</b> — changes usually go from right to wrong.</li>
+      <li><b>The "no idea"</b> → pick the option that stands out most, flag it, move on, come back at the end. Never sit and stew.</li>
+      <li><b>The teaching question</b> → two to five questions will teach you something you didn't know. Note what you learned; it often answers a "no idea" question later in the same test.</li>
+    </ul>
+  </div>
+
+  <div class="panel">
+    <h3>The one exam-day rule</h3>
+    <p class="pull">Never leave a question blank.</p>
+    <p>Wrong answers cost nothing beyond the point — there is no penalty for guessing. A blank is the only choice with a zero percent chance of being right. If time is running out, fill every remaining bubble with something. And when reviewing at the end, only revisit the ones left blank or purely guessed — leave the confident answers alone.</p>
+  </div>
+
+  <div class="panel">
+    <h3>From the trainers who've done this a thousand times</h3>
+    <ul>
+      <li><b>Book the test now.</b> The material sticks for about a day. Finish the study, then take the exam within a few days — before work, kids, and life erode it. Don't finish the class and "get to it next month."</li>
+      <li><b>Passing is the goal, not acing.</b> Nevada passes on a SCALED score of 80 (not a raw percentage). If someone is consistently scoring 80%+ on practice, they're ready — don't let anyone disappear for months chasing a perfect score.</li>
+      <li><b>Guard the environment.</b> Testing from home means truly distraction-free: a proctor who sees someone walk behind the screen, or a kid or a dog interrupting, can fail the attempt. If home isn't controllable, use a test center.</li>
+      <li><b>Trust the first instinct.</b> There's a reason it looked right the first time. Flag-and-return is fine for genuine unknowns; changing a confident answer is how a pass becomes a fail.</li>
+    </ul>
+  </div>
+</section>
+
+</div>
+
+<script>
+/* ---------------- storage (degrades to memory) ---------------- */
+var mem={};
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){mem[k]=v}}
+function load(k,d){try{var s=localStorage.getItem(k);if(s===null)return (k in mem?mem[k]:d);return JSON.parse(s)}catch(e){return (k in mem?mem[k]:d)}}
+var P=load('hlb_translator_v1',{});
+function setStat(id,s){P[id]=s;save('hlb_translator_v1',P)}
+
+/* ---------------- content ---------------- */
+var M=[
+{n:"What insurance actually is",d:"The eight ideas everything else is built on.",
+c:[
+{t:"Risk",s:"say: risk",p:"The chance that something bad happens and it costs money.",e:"The chance your house burns, or that you die before the mortgage is paid.",x:"Two kinds. Pure risk = you can only lose (fire, death) — insurable. Speculative risk = you might win or lose (a business bet, a casino) — NOT insurable."},
+{t:"Peril",s:"say: PEHR-ill",p:"The actual thing that causes the loss.",e:"Fire. A heart attack. A car crash. The event itself.",x:"Peril = the cause of loss. If the question names an event, they mean peril."},
+{t:"Hazard",s:"say: HAZ-erd",p:"Anything that makes the bad thing more likely to happen.",e:"Smoking. Icy front steps. A guy who's already lied to two insurance companies.",x:"Three kinds: physical (a body or property condition), moral (a dishonest person — lies, fraud), morale (a careless attitude — 'I'm insured, who cares')."},
+{t:"Insurable interest",s:"say: in-SURE-able interest",p:"You'd actually be hurt financially if that person died. You can't insure a stranger.",e:"You on your spouse or business partner — not someone off the street, which is exactly why it exists.",x:"LIFE insurance: interest only has to exist when the policy is APPLIED FOR, not at death. PROPERTY insurance: it must exist at application AND at the time of loss — sell your car, and you can no longer claim on it. That timing difference is the trick question."},
+{t:"Law of large numbers",s:"say it as it looks",p:"The more people in the pool, the more predictable the results.",e:"Nobody can say if one man dies this year. With a million men, the carrier knows almost exactly how many will.",x:"This is what makes pricing possible. If a question asks how a carrier predicts losses — this is it."},
+{t:"Adverse selection",s:"say: AD-verse selection",p:"Sick people want insurance more than healthy people do.",e:"The man who just got a bad scan is suddenly very interested in a $500,000 policy.",x:"Underwriting exists to control adverse selection. That's the whole answer."},
+{t:"Indemnity",s:"say: in-DEM-nih-tee",p:"Put you back where you were. No profit from a loss.",e:"Your $4,000 surgery gets paid. You don't get $40,000 and a boat.",x:"Health insurance follows indemnity. Life insurance does not — it's a VALUED contract that pays a set face amount."},
+{t:"Reinsurance",s:"say: REE-insurance",p:"Insurance companies buy insurance on themselves.",e:"A carrier writes a $20 million policy and hands most of that risk to another company.",x:"The company handing off is the CEDING company. The amount it keeps is its RETENTION limit."},
+{t:"Mortality vs. morbidity",s:"say: mor-TAL-ih-tee / mor-BID-ih-tee",p:"Two words that sound alike and mean opposite things. Mortality is about dying. Morbidity is about getting sick.",e:"How many 55-year-old men die this year (mortality) versus how many get sick or hurt (morbidity).",x:"MORTALITY tables price LIFE insurance (chance of death). MORBIDITY tables price HEALTH insurance (chance of sickness/injury). The test loves swapping the two \u2014 death goes with life, sickness goes with health."},
+{t:"Subrogation",s:"say: sub-roh-GAY-shun",p:"After the insurer pays your claim, it can go after whoever actually caused the loss to get its money back.",e:"Another driver totals your insured car; your carrier pays you, then chases the at-fault driver to recover what it paid.",x:"Subrogation lets the insurer step into your shoes to recover from the NEGLIGENT party. It shows up mostly in property/casualty, but the definition is fair game on the exam."}
+]},
+
+{n:"The contract words",d:"Ten words that make the exam sound foreign. All ten are simple.",
+c:[
+{t:"Consideration",s:"say: kon-sid-er-AY-shun",p:"What each side puts on the table.",e:"You put up premium plus honest answers. The company puts up its promise to pay.",x:"Both sides must give consideration or there's no contract. Yours = premium + statements on the application."},
+{t:"Unilateral",s:"say: you-nih-LAT-er-ul",p:"Only ONE side is legally stuck. Uni = one.",e:"You can stop paying premium tomorrow and nobody sues you. The company can't stop paying a claim.",x:"Only the insurer makes a legally enforceable promise. That's why it's unilateral."},
+{t:"Aleatory",s:"say: AY-lee-uh-tor-ee",p:"Unequal trade. One side might get far more than it put in.",e:"He pays one $200 premium, dies that month, and the family gets $500,000.",x:"Unequal exchange of value = aleatory. Don't overthink the word."},
+{t:"Contract of adhesion",s:"say: ad-HEE-zhun",p:"Take it or leave it. The company wrote it; you didn't get a vote.",e:"Like a cell phone agreement. You sign it or you walk.",x:"Because the insured didn't write it, ANY ambiguity is decided in favor of the insured."},
+{t:"Conditional",s:"say it as it looks",p:"Certain things have to happen before anyone pays.",e:"Premiums have to be paid. A death certificate has to be filed. Then the check goes out.",x:"Conditions on both sides must be met for the contract to perform."},
+{t:"Representation",s:"say: rep-ree-zen-TAY-shun",p:"A statement you believe is true when you say it on the application.",e:"'I take blood pressure medication' — true as far as you know.",x:"A false one is a MISREPRESENTATION. If it's MATERIAL (would have changed the decision), the policy can be voided."},
+{t:"Warranty",s:"say: WAR-un-tee",p:"A statement guaranteed to be absolutely true. A higher bar.",e:"Like a guarantee on a tool — not 'I think so,' but 'it is.'",x:"Statements on a life application are REPRESENTATIONS, not warranties. Classic exam contrast."},
+{t:"Concealment",s:"say: kon-SEEL-ment",p:"Deliberately hiding something important. Not lying — staying quiet on purpose.",e:"Leaving out the heart procedure from three months ago.",x:"Concealing a MATERIAL fact is grounds to void the contract, even though nothing false was said."},
+{t:"Waiver and estoppel",s:"say: WAY-ver, es-TOP-ul",p:"Waiver = giving up a right on purpose. Estoppel = you can't take it back later.",e:"The company accepts a late premium without complaint. Later it can't call that policy lapsed.",x:"Waiver first, estoppel second. Estoppel is the consequence of the waiver."},
+{t:"Utmost good faith",s:"say it as it looks",p:"Both sides deal honestly and don't hide things.",e:"He tells the truth on the app. The company doesn't bury a trapdoor in the fine print.",x:"Insurance contracts are built on utmost good faith — that's why concealment and misrepresentation carry so much weight."}
+]},
+
+{n:"You, the licensed agent",d:"What the state expects from you, and how to lose a license.",
+c:[
+{t:"Producer / agent",s:"say it as it looks",p:"The licensed person who sells the policy. Legally you represent the COMPANY, not the client.",e:"You sit at their kitchen table, but on paper you're the carrier's representative.",x:"Agent = insurer's representative. A BROKER represents the buyer. Exam loves this distinction."},
+{t:"Fiduciary",s:"say: fih-DOO-she-air-ee",p:"You're holding other people's money in trust. It is never yours, not for one day.",e:"A client's $400 premium check sitting in your desk drawer is trust money.",x:"Premiums are TRUST FUNDS. Mixing them with your own money is COMMINGLING — illegal, license gone."},
+{t:"Express, implied, apparent authority",s:"say: ex-PRESS / im-PLIED / uh-PAIR-ent",p:"Express = written in your contract. Implied = needed to do the job. Apparent = what the public reasonably assumes.",e:"Express: you may collect initial premium. Implied: you may hand out a receipt. Apparent: you're standing there with company brochures and a business card.",x:"Apparent authority is about what a reasonable customer would believe — that's why it binds the company."},
+{t:"Errors &amp; omissions (E&amp;O)",s:"say: E and O",p:"Malpractice insurance for agents. Covers honest mistakes.",e:"You recommend the wrong rider and it costs the family money.",x:"E&amp;O covers negligence — it does NOT cover dishonest or criminal acts."},
+{t:"Insurance Commissioner",s:"say it as it looks",p:"The head of the Nevada Division of Insurance. In Nevada this person is appointed, not elected.",e:"He runs the division that issued your license and can take it away.",x:"Nevada's Commissioner is APPOINTED (through the Department of Business & Industry) and ENFORCES the code — the legislature writes it. California elects its Commissioner; Nevada appoints. Common trap."},
+{t:"Getting and keeping the license",s:"say: prelicensing and CE",p:"What Nevada makes you do to get the license, and every three years after.",e:"He passes the Pearson VUE exam, gets fingerprinted, applies through Sircon, then keeps up class hours.",x:"Nevada has NOT required prelicensing education since JAN 1, 2020. You must be 18+, PASS the exam (scaled score of 80), and be FINGERPRINTED. After licensing: 30 HOURS of CE per THREE-YEAR renewal (incl. 3 hours ethics), plus a one-time 4-hour annuity Best Interest course before selling annuities."},
+{t:"Twisting",s:"say: TWIST-ing",p:"Talking someone out of a policy at another company using misleading statements.",e:"'That old policy is garbage' — when you haven't compared a thing.",x:"Twisting = replacing ANOTHER company's policy through misrepresentation."},
+{t:"Churning",s:"say: CHURN-ing",p:"Same trick, but you're flipping a policy inside the SAME company to make a new commission.",e:"Replacing a client's existing whole life with a new one at the same carrier for no real gain.",x:"Twisting = different company. Churning = same company. That's the only difference tested."},
+{t:"Rebating",s:"say: REE-bate-ing",p:"Giving somebody part of your commission — or anything of value — to get them to buy.",e:"'I'll cover your first premium out of my own pocket.'",x:"Rebating is illegal, and BOTH the agent and the person accepting it are in violation."},
+{t:"Reporting duties",s:"say it as it looks",p:"The Department has to be able to find you and know your record.",e:"You move, you change your business name, you get a felony conviction or a regulatory action.",x:"Address changes, and any administrative action or criminal conviction, must be reported to the Commissioner promptly — the code sets a short deadline. Know your course's stated number."}
+]},
+
+{n:"Getting the policy issued",d:"From the kitchen table to a policy in their hands.",
+c:[
+{t:"Field underwriting",s:"say it as it looks",p:"You are the company's first set of eyes. Your job is to ask the uncomfortable questions honestly.",e:"A client has diabetes — don't just write 'diabetes.' Ask: type 1 or type 2? Insulin or metformin? What's the A1C?",x:"The agent is the FIELD UNDERWRITER — gather the fullest picture up front. The more complete the case you hand the underwriter, the faster it clears and the fewer surprises at claim time. Poor field underwriting = declined cases and contestable claims."},
+{t:"The application",s:"say it as it looks",p:"Three pieces: general info, health info, and your own report about the client.",e:"Part 1 name and job. Part 2 the medical. Then the agent's report — your observations.",x:"Part 1 = general. Part 2 = medical. The AGENT'S REPORT is not shown to the applicant and isn't part of the entire contract."},
+{t:"Conditional receipt vs. binder",s:"say: kon-DISH-un-ul receipt / BINE-der",p:"Two 'you paid, are you covered yet?' answers — and they're opposite. One is life, one is property.",e:"Pay with a life application and you get a conditional receipt; buy car insurance and the agent can bind you on the spot.",x:"LIFE insurance = CONDITIONAL RECEIPT: always WRITTEN, and it does NOT guarantee immediate coverage (coverage still hinges on being insurable). PROPERTY & CASUALTY = BINDER: can be ORAL, and DOES give immediate coverage. Never tell a life client 'you're covered' at signing — you can't."},
+{t:"MIB",s:"say: em-eye-bee (Medical Information Bureau)",p:"A shared file room where carriers post coded notes about applicants.",e:"An impairment reported on a 2019 application shows up when he applies again in 2026.",x:"MIB holds CODED information only. It cannot be the sole reason for a declination."},
+{t:"Attending Physician Statement (APS)",s:"say: A-P-S",p:"The carrier writes to his actual doctor for records.",e:"Ordered when the application mentions a condition the underwriter needs detail on.",x:"Requires the applicant's signed authorization. Ordered by the UNDERWRITER, not the agent."},
+{t:"Investigative consumer report",s:"say it as it looks",p:"An outside firm asks around about lifestyle, finances, reputation.",e:"They interview neighbors or coworkers about habits and hobbies.",x:"Under the Fair Credit Reporting Act, the applicant must be NOTIFIED and can request the nature and scope of the investigation."},
+{t:"Risk classification",s:"say it as it looks",p:"The grade the underwriter assigns, which sets the price.",e:"Preferred (best health), standard (average), substandard/rated (health issues), declined.",x:"SUBSTANDARD = higher premium, not a refusal. DECLINED = no offer at all."},
+{t:"Policy delivery",s:"say it as it looks",p:"Handing over the policy — a real step with real consequences, not a formality.",e:"You sit down, explain it, collect the delivery receipt, and start the free-look clock.",x:"Delivery starts the free-look period. If health changed since the application, you need a STATEMENT OF GOOD HEALTH before delivering."},
+{t:"STOLI / IOLI",s:"say: STOH-lee",p:"Investors talking a senior into taking out a policy so THEY can own it and collect.",e:"A stranger offers Grandpa cash to sign an application on his own life.",x:"Stranger- or investor-originated life insurance is ILLEGAL. It fails the insurable interest rule."}
+]},
+
+{n:"The policy rules everyone tests on",d:"The clauses that generate the most exam questions. Learn these cold.",
+c:[
+{t:"Free look",s:"say it as it looks",p:"A window to return the policy after delivery and get every dollar back.",e:"He gets the policy, reads it at the kitchen table, and changes his mind on day six.",x:"Nevada: individual life and annuity contracts carry at least a 10-DAY free look. A REPLACEMENT policy gets a longer 30-DAY free look (NRS 688A.165). Full refund. Unlike California, Nevada's extra window is tied to REPLACEMENT, not the buyer's age. Confirm current days with the NV candidate handbook."},
+{t:"Grace period",s:"say it as it looks",p:"You're late but you're not dead. Coverage continues while you catch up.",e:"Premium was due the 1st. He pays on the 20th. The policy never lapsed.",x:"Nevada life policies carry a 30-DAY grace period (NRS 688A.060). If death occurs during grace, the claim is PAID minus the premium owed."},
+{t:"Incontestability",s:"say: in-kon-TEST-uh-BIL-ih-tee",p:"After the policy has been in force a set time, the company can't fight the claim over what was written on the application.",e:"A death from lung cancer three months in — if the carrier finds the insured knew and hid it, it refunds the premiums and denies the claim. After two years, it can't.",x:"TWO YEARS. Inside that window the insurer can investigate a death claim and, for a MATERIAL misstatement, refund premiums instead of paying. After two years it's locked — only outright FRAUD and NON-PAYMENT remain exceptions."},
+{t:"Reinstatement",s:"say: ree-in-STATE-ment",p:"Bringing a lapsed policy back to life instead of buying a new one.",e:"He lets it lapse for eight months, then wants it back at the original rate.",x:"Requires proof of insurability plus back premiums with interest. A NEW two-year contestable period starts on the reinstatement application."},
+{t:"Misstatement of age",s:"say it as it looks",p:"He put the wrong birth year down. Nobody voids the policy over it.",e:"He said 45, he was really 48. The premium he paid was too small.",x:"The benefit is ADJUSTED to what the premium would have purchased at the correct age. Policy stays in force."},
+{t:"Suicide clause",s:"say it as it looks",p:"If the insured takes his own life within the first stretch of the policy, the company returns premiums instead of paying the face amount.",e:"A death in year one returns what was paid in.",x:"Two years. After that, it's paid like any other claim."},
+{t:"Entire contract",s:"say it as it looks",p:"The policy plus the attached application is the whole agreement. Nothing else counts.",e:"A promise you made verbally at the kitchen table is not part of it.",x:"Nothing can be incorporated by reference. Any change requires an executive officer's signature — an agent cannot alter the contract."},
+{t:"Owner's rights",s:"say it as it looks",p:"The OWNER runs the policy. Often that's the insured — but not always.",e:"A wife owns a policy on her husband's life. She names the beneficiary, she can borrow against it.",x:"The owner can name and change the beneficiary, take loans, assign, and surrender. The insured, as insured, controls nothing."},
+{t:"Beneficiary types",s:"say: ben-eh-FISH-ee-air-ee",p:"Who gets the money, and in what order.",e:"Wife primary; the three kids contingent if she's gone.",x:"PRIMARY first, CONTINGENT if the primary is deceased. REVOCABLE can be changed anytime; IRREVOCABLE requires that beneficiary's written consent."},
+{t:"Common disaster clause",s:"say it as it looks",p:"When the insured and the beneficiary die in the same accident and nobody knows who went first.",e:"A car crash takes both husband and wife.",x:"The BENEFICIARY is presumed to have died first, so proceeds go to the contingent beneficiary — not through the beneficiary's estate."},
+{t:"Policy loan",s:"say it as it looks",p:"Borrowing against your own cash value. The company can't say no.",e:"He borrows $10,000 from a whole life policy for a roof.",x:"An unpaid loan plus interest is SUBTRACTED from the death benefit. Automatic Premium Loan uses cash value to pay a missed premium and prevent lapse."},
+{t:"Assignment",s:"say: uh-SINE-ment",p:"Transferring your rights in the policy to someone else.",e:"Signing benefits over to a bank as security for a loan.",x:"ABSOLUTE = full permanent transfer of ownership. COLLATERAL = partial and temporary, usually to a lender."}
+]},
+
+{n:"The kinds of life insurance",d:"What you actually sell, in the words a client understands.",
+c:[
+{t:"Term insurance",s:"say it as it looks",p:"Renting coverage for a set number of years. Pure protection, no savings inside.",e:"$500,000 for 20 years while the kids are home and the mortgage is alive.",x:"NO cash value. Level term = level face. DECREASING term shrinks over time (mortgage protection). Annually renewable term = premium climbs every year."},
+{t:"Renewable and convertible",s:"say it as it looks",p:"Renewable = keep it going without a new physical. Convertible = trade it for permanent without a new physical.",e:"He's diabetic now but converts to whole life anyway, because health can't be re-asked.",x:"Both features mean NO evidence of insurability required. That's the whole value."},
+{t:"Whole life",s:"say it as it looks",p:"Permanent. Level premium for life, and it builds guaranteed cash value.",e:"Same premium at 40 as at 80, and there's money inside he can borrow.",x:"Guaranteed death benefit, guaranteed cash value, guaranteed level premium. Endows at the maturity age stated in the policy."},
+{t:"Limited pay and single premium",s:"say it as it looks",p:"Same whole life, but you finish paying early — or all at once.",e:"20-pay life: paid up after 20 years, covered for life.",x:"Shorter pay period = HIGHER premium, same death benefit. Coverage is permanent either way."},
+{t:"Universal life",s:"say: YOO-nih-ver-sul",p:"Permanent insurance with an adjustable premium and an adjustable death benefit.",e:"Good year, he overfunds it. Tight year, the cash value covers the cost.",x:"FLEXIBLE premium, ADJUSTABLE death benefit. Option A = level death benefit. Option B = death benefit plus cash value (increasing). Cost of insurance is deducted from the cash value."},
+{t:"Variable life / VUL",s:"say: VAIR-ee-uh-bul",p:"Permanent insurance where the cash value is invested in subaccounts. The client carries the market risk.",e:"Good market, the cash value climbs. Bad market, it drops.",x:"Held in a SEPARATE account, regulated as a security. Requires a life license PLUS a securities registration."},
+{t:"Indexed universal life (IUL)",s:"say: eye-yoo-el",p:"Universal life where interest is credited using a market index formula — with a floor so it doesn't go backwards.",e:"Index gains credit up to a cap; a down year credits the floor instead of a loss.",x:"Interest tied to an index, held in the GENERAL account. Watch the three words: CAP, FLOOR, PARTICIPATION RATE."},
+{t:"Group life",s:"say it as it looks",p:"One policy covering a whole group. The employer holds the contract; each person gets a certificate.",e:"His employer's $50,000 group policy.",x:"Employer holds the MASTER POLICY; employees hold CERTIFICATES. Usually annually renewable term with a conversion privilege when he leaves."},
+{t:"Face amount vs. cash value",s:"say it as it looks",p:"Face amount is what pays at death. Cash value is the money that builds up while he's alive.",e:"$250,000 face with $30,000 of cash value in it at age 60.",x:"Net amount at risk = face amount minus cash value. As cash value grows, the company's risk shrinks."}
+]},
+
+{n:"The money options",d:"Riders, dividends, nonforfeiture, settlement. Four lists, four homes.",
+c:[
+{t:"Waiver of premium",s:"say it as it looks",p:"If he becomes disabled, the company pays the premiums for him and the policy keeps going.",e:"A back injury ends his work. Coverage continues, premium paid by the carrier.",x:"There's a waiting period (typically six months) before it kicks in. Coverage stays fully in force."},
+{t:"Guaranteed insurability rider",s:"say it as it looks",p:"The right to buy more coverage later with no health questions.",e:"At 25 he buys a small policy; at 35, uninsurable, he still buys more.",x:"Additional purchases at stated OPTION DATES or life events — no evidence of insurability required."},
+{t:"Accidental death benefit",s:"say it as it looks",p:"Extra money if death is caused by an accident. Also called double indemnity.",e:"$250,000 policy pays $500,000 after a car accident.",x:"ACCIDENT only, usually within 90 days of the accident. Illness pays the base benefit only."},
+{t:"Accelerated death benefit",s:"say: ak-SEL-er-ated",p:"He can draw part of his own death benefit early when terminally ill.",e:"A terminal diagnosis lets him take a portion now for treatment or to settle affairs.",x:"The amount taken early REDUCES what the beneficiary receives. Triggered by terminal illness — commonly a 12- or 24-month prognosis."},
+{t:"Nonforfeiture options",s:"say: non-FOR-fih-cher",p:"The three ways he never walks away empty-handed from a policy with cash value.",e:"He stops paying on a whole life policy after 18 years.",x:"1) CASH SURRENDER — take the money. 2) REDUCED PAID-UP — smaller permanent policy, no more premiums. 3) EXTENDED TERM — same face amount for a limited time, and this is the automatic DEFAULT if he picks nothing."},
+{t:"Dividend options",s:"say it as it looks",p:"What he can do with the dividend a participating policy pays.",e:"A mutual company sends $600 this year.",x:"Cash · reduce premium · accumulate at interest (the INTEREST is taxable) · PAID-UP ADDITIONS (the usual best answer) · one-year term. Dividends themselves are a RETURN OF PREMIUM and not taxable."},
+{t:"Participating policy",s:"say: par-TIS-ih-pay-ting",p:"A policy that can pay dividends because the owners are the policyholders.",e:"A mutual carrier returns surplus to the people who own it — its policyholders.",x:"MUTUAL companies issue PARTICIPATING policies (dividends). STOCK companies issue NON-participating policies."},
+{t:"Settlement options",s:"say it as it looks",p:"How the beneficiary takes the money. It doesn't have to be one big check.",e:"A widow takes monthly income for life instead of a $500,000 lump sum.",x:"Lump sum · interest only · fixed period (period certain) · fixed amount · LIFE INCOME (largest payment, stops at death) · life with period certain · joint and survivor. Death proceeds are income-tax free; the INTEREST portion of installments is taxable."}
+]},
+
+{n:"Annuities and taxes",d:"The flip side of life insurance, and how the IRS treats all of it.",
+c:[
+{t:"Annuity",s:"say: uh-NEW-ih-tee",p:"The opposite of life insurance. Life insurance protects against dying too soon; an annuity protects against living too long.",e:"He hands over $200,000 and gets a check every month for the rest of his life.",x:"Life insurance creates an estate. An annuity LIQUIDATES one. The person receiving payments is the ANNUITANT."},
+{t:"Accumulation vs. annuitization",s:"say: uh-new-ih-tih-ZAY-shun",p:"Two phases: money going in and growing, then money coming out.",e:"Ten years of building, then twenty years of monthly checks.",x:"ACCUMULATION = pay-in and growth. ANNUITIZATION = the payout phase, which is irreversible once it starts."},
+{t:"Immediate vs. deferred",s:"say it as it looks",p:"Immediate starts paying almost right away. Deferred sits and grows first.",e:"A retiring 66-year-old buys an immediate annuity. A 45-year-old buys a deferred one.",x:"IMMEDIATE annuities are bought with a SINGLE premium and begin payments within about a year. Deferred annuities can be funded with periodic premiums."},
+{t:"Fixed, variable, indexed",s:"say it as it looks",p:"Three ways the money inside can grow.",e:"Fixed: a set rate. Variable: market subaccounts. Indexed: a formula tied to an index with a floor.",x:"FIXED = guaranteed rate, general account. VARIABLE = separate account, requires a securities registration. INDEXED = general account, uses cap/floor/participation rate."},
+{t:"Surrender charge",s:"say it as it looks",p:"A penalty for pulling out too much, too soon.",e:"He takes $40,000 out in year three and loses a percentage of it.",x:"Charges decline over a set schedule. Most contracts allow a FREE WITHDRAWAL (often around 10% a year) with no surrender charge."},
+{t:"Exclusion ratio",s:"say: ex-KLOO-zhun ratio",p:"Splits every annuity payment into 'money you already paid tax on' and 'growth you owe tax on.'",e:"Part of each monthly check is his own money coming back — that part isn't taxed again.",x:"The exclusion ratio determines the tax-free portion of each payment. Only the GROWTH portion is taxable."},
+{t:"Payout options",s:"say it as it looks",p:"How long the checks keep coming, and to whom.",e:"Life only pays the most, but stops the day he dies — even if that's month two.",x:"LIFE ONLY (also called straight life) = largest payment, nothing to heirs. LIFE WITH PERIOD CERTAIN and REFUND options guarantee something to a beneficiary. JOINT AND SURVIVOR continues for a second life."},
+{t:"How life insurance is taxed",s:"say it as it looks",p:"The best tax treatment in the business — as long as it's a real life policy.",e:"A $500,000 death benefit lands with the family income-tax free.",x:"Death benefit = income-tax FREE to the beneficiary. Cash value grows TAX-DEFERRED. Premiums are NOT deductible. Withdrawals from a life policy come out FIFO — your basis first."},
+{t:"MEC",s:"say: mek (Modified Endowment Contract)",p:"A life policy stuffed with so much premium so fast that the IRS stops treating it like insurance.",e:"Overfunding a policy well past the limit in the first several years.",x:"Fails the SEVEN-PAY TEST. Distributions flip to LIFO — taxable gain first — plus a 10% penalty before age 59½. The death benefit stays income-tax free. Once a MEC, always a MEC."},
+{t:"1035 exchange",s:"say: ten-thirty-five",p:"Trading one contract for another without triggering a tax bill.",e:"Moving an old whole life policy into a new one with better terms.",x:"Life to life, life to annuity, annuity to annuity — all fine. ANNUITY TO LIFE is NOT allowed. That's the tested direction."}
+]},
+
+{n:"Health insurance in plain English",d:"The words clients ask about — and the exam asks about too.",
+c:[
+{t:"Premium",s:"say it as it looks",p:"What you pay every month just to have the plan, whether you use it or not.",e:"$480 a month, deducted every payday.",x:"Premium buys the coverage. It never counts toward the deductible."},
+{t:"Deductible",s:"say: dih-DUK-tih-bul",p:"What you pay out of your own pocket before the plan starts paying.",e:"$2,000 deductible: he pays the first $2,000 of care each year.",x:"Deductible is per calendar year. Higher deductible = lower premium. Always."},
+{t:"Copay and coinsurance",s:"say: CO-pay / co-in-SURE-ance",p:"Copay is a flat fee. Coinsurance is a percentage split.",e:"$40 to see the doctor is a copay. 80/20 on a surgery is coinsurance.",x:"Copay = fixed dollar amount. COINSURANCE = a percentage the insured shares, most often 80/20."},
+{t:"Out-of-pocket maximum",s:"say it as it looks",p:"The ceiling. Once he hits it, the plan pays 100% for the rest of the year.",e:"After $8,000 of his own money, the plan covers everything covered.",x:"Also called the STOP-LOSS limit. It's what protects against a catastrophic year."},
+{t:"HMO vs. PPO",s:"say: H-M-O / P-P-O",p:"HMO: cheaper, you stay in the network and go through one main doctor. PPO: costs more, go where you want.",e:"HMO needs a referral to see the specialist. PPO, he just books it.",x:"HMO uses a PRIMARY CARE PHYSICIAN as gatekeeper, emphasizes prevention, and generally covers in-network only (emergencies excepted). PPO allows out-of-network at a higher cost, no referral needed."},
+{t:"Elimination period",s:"say: ee-lim-ih-NAY-shun",p:"A deductible measured in days instead of dollars. You wait before benefits start.",e:"A 90-day elimination period on disability income: no check for the first three months.",x:"Used in DISABILITY INCOME and LONG-TERM CARE. Longer elimination period = lower premium."},
+{t:"Benefit period",s:"say it as it looks",p:"How long the checks keep coming once they start.",e:"Two years, five years, or to age 65.",x:"Elimination period = how long before benefits START. Benefit period = how long they LAST. Don't mix these two up."},
+{t:"Own occupation vs. any occupation",s:"say it as it looks",p:"Own occ: disabled if you can't do YOUR job. Any occ: disabled only if you can't do ANY job you're suited for.",e:"A surgeon with a hand tremor is disabled under own occ, not under any occ.",x:"OWN OCCUPATION is the broader, more expensive, more favorable definition. Any occupation is stricter."},
+{t:"Total vs. residual disability",s:"say: rih-ZID-you-ul",p:"Total = can't work at all. Residual = back part-time, earning less.",e:"He returns three days a week at 60% of his old income.",x:"RESIDUAL (partial) benefits pay a proportion based on LOST INCOME."},
+{t:"Renewability",s:"say: ree-noo-uh-BIL-ih-tee",p:"Whether the company can raise your rate or drop you.",e:"He wants to know if this policy can be canceled on him at 58.",x:"NONCANCELABLE = rates and coverage both locked (strongest). GUARANTEED RENEWABLE = can't be canceled, but rates can rise for the whole CLASS. Conditionally renewable is weaker than both."},
+{t:"Accidental death & dismemberment (AD&D)",s:"say: A-D-and-D",p:"The one health policy that pays a death benefit — but only for accidents. Cheap, and far narrower than it sounds.",e:"A client says \u2018I've got a $1,000,000 policy through work for $2 a month.\u2019 That's almost never life insurance — it's AD&D.",x:"AD&D pays ONLY for accidental death or dismemberment (loss of a limb, sight, hearing). Illness pays nothing. Don't argue with a client who thinks their AD&D is real life insurance — ask to see the paperwork and show them where it says AD&D."},
+{t:"COBRA and Cal-COBRA",s:"say: KOH-bruh",p:"Keep the employer's health plan for a while after you leave the job — but now you pay the whole premium yourself.",e:"Laid off or cut to part-time, you hold the same plan while you line up new coverage.",x:"Federal COBRA: employers with 20+ EMPLOYEES, up to 18 MONTHS of continuation (longer if disabled). Fired for GROSS MISCONDUCT? COBRA does NOT apply. Many states — including Nevada — have a state 'mini-COBRA' continuation law covering SMALL employers (roughly 2–19). You pay the FULL premium plus a small admin fee."}
+]},
+
+{n:"Senior work: Medicare and long-term care",d:"The market he'll actually serve. Plain names for confusing parts.",
+c:[
+{t:"Medicare Part A",s:"say it as it looks",p:"Hospital coverage. Most people get it premium-free at 65 because they paid in through payroll taxes.",e:"A three-day hospital admission.",x:"Part A = HOSPITAL, inpatient, skilled nursing facility after a qualifying stay, hospice, some home health. Premium-free with sufficient work credits."},
+{t:"Medicare Part B",s:"say it as it looks",p:"Doctors and outpatient care. This one has a monthly premium.",e:"Office visits, lab work, durable medical equipment.",x:"Part B = MEDICAL. Monthly premium, annual deductible, then Medicare generally pays 80% and the beneficiary owes 20% with no cap."},
+{t:"Medicare Part C",s:"say: Medicare Advantage",p:"A private plan that takes the place of A and B, usually with extras bundled in.",e:"An HMO plan that includes drugs, dental, and a gym benefit.",x:"Part C = MEDICARE ADVANTAGE. Offered by private carriers, must cover everything A and B cover, typically network-based."},
+{t:"Medicare Part D",s:"say it as it looks",p:"Prescription drug coverage.",e:"His monthly medications.",x:"Part D = DRUGS. Sold by private companies. Late enrollment without other creditable coverage brings a permanent penalty."},
+{t:"Medicare Supplement (Medigap)",s:"say: MED-ee-gap",p:"A private policy that pays the holes Medicare leaves — the 20%, the deductibles.",e:"A Plan G policy covering what Part B doesn't.",x:"Standardized plans identified by LETTER; the same letter means the same benefits at every carrier. There is a guaranteed open enrollment window tied to turning 65 and enrolling in Part B. Some states add extra switching rights; confirm current windows for Nevada with your course."},
+{t:"Medicaid (Nevada)",s:"say: MED-ih-kayd",p:"Health coverage based on financial need, not age. Nevada runs it as Nevada Medicaid.",e:"A low-income family, or a senior who has spent down assets in a nursing home.",x:"MEDICARE is age/disability based and federal. MEDICAID is NEEDS based and state-administered (Nevada Medicaid; Nevada Check Up covers kids). Medicaid pays for long-term custodial care; Medicare does not."},
+{t:"Activities of Daily Living (ADLs)",s:"say: A-D-Ls",p:"The six basic things a person has to be able to do alone: bathe, dress, eat, use the toilet, move from bed to chair, and manage continence.",e:"He can still eat and dress, but can't bathe or transfer without help.",x:"The BENEFIT TRIGGER for long-term care is usually the inability to perform TWO of the six ADLs, or cognitive impairment such as dementia."},
+{t:"Skilled vs. custodial care",s:"say: KUS-toh-dee-ul",p:"Skilled care needs a licensed professional. Custodial care is help with everyday living.",e:"Wound care by a nurse is skilled. Help bathing and dressing is custodial.",x:"Medicare covers limited SKILLED care after a qualifying hospital stay. It does NOT cover long-term CUSTODIAL care — that gap is the entire reason LTC insurance exists."},
+{t:"LTC policy parts",s:"say: L-T-C",p:"Three dials: how much per day, how long it pays, and how long you wait to start.",e:"$200 a day, three-year benefit period, 90-day elimination period.",x:"Daily/monthly benefit · BENEFIT PERIOD · ELIMINATION PERIOD · INFLATION PROTECTION (which must be offered under the NAIC model most states follow). A Partnership-qualified policy protects assets from MEDICAID spend-down."}
+]}
+,
+{n:"Government programs & the big laws",d:"The federal and state rules the exam leans on — Social Security, workers' comp, and the acronym laws. Plain English, no politics.",
+c:[
+{t:"The ACA (Obamacare)",s:"say: A-C-A, or PPACA",p:"The law that made health coverage required and did away with being turned down for a condition you already had. For the test, your politics don't matter — only the rules do.",e:"A pregnant woman with no coverage can still get a plan; a family's 25-year-old can stay on a parent's plan.",x:"Key testable points: NO more pre-existing condition exclusions; dependent children covered to AGE 26; Medicaid opened to those earning up to 133% of the federal poverty line; buy individual coverage on the state exchange (in Nevada, NEVADA HEALTH LINK); pregnancy is no longer pre-existing."},
+{t:"Social Security Disability (SSDI)",s:"say: S-S-D-I",p:"Government disability coverage — and the hardest kind to qualify for, because the definition is so strict.",e:"Not 'can't do your job' — you must be unable to do ANY gainful work, and it has to be expected to last a year or more.",x:"Strictest disability definition on the exam. Must be unable to perform ANY gainful work, expected to last 12+ months. There's a 5-MONTH waiting period, you must be UNDER 65, and you must be 'FULLY INSURED' — 40 quarters (10 years) of paying FICA taxes."},
+{t:"The blackout period",s:"say it as it looks",p:"A gap in Social Security survivor income for a surviving spouse — after the kids are grown but before the spouse's own benefits begin.",e:"A young father dies; his widow gets survivor income while raising the kids, but it stops once the youngest turns 16, and she waits until age 60 for it to resume.",x:"The BLACKOUT PERIOD runs from when survivor benefits END (youngest child turns 16) until the surviving spouse can restart benefits (age 60 at the earliest). It's a coverage gap life insurance is meant to fill."},
+{t:"Coordinating disability benefits",s:"say it as it looks",p:"When someone qualifies for more than one disability check, the payments take turns — they don't all stack.",e:"A worker has an individual DI policy plus workers' comp and SSDI. All three don't pay in full at once.",x:"The INDIVIDUAL disability policy pays FIRST. When workers' comp or SSDI kicks in, the individual policy steps back, then resumes paying once those other benefits stop. The point is to replace income, not to profit."},
+{t:"Workers' compensation",s:"say it as it looks",p:"Mandatory coverage for employees hurt or made sick by their job. Employers in Nevada are required to carry it.",e:"A warehouse worker throws out their back lifting stock — workers' comp covers the medical bills and lost wages.",x:"Compulsory in Nevada. PART 1 (Part I) = the required coverages: medical, rehab, lost income, death and survivor benefits. PART 2 (Part II) = employer's liability. '24-HOUR COVERAGE' merges group health and workers' comp so the employee is covered both ON and OFF the job."},
+{t:"ERISA",s:"say: eh-RISS-uh",p:"The federal law that forces employers to tell workers the truth about their retirement and benefit plans.",e:"An employer has to spell out a 401(k)'s features, fees, and tax consequences instead of hiding them.",x:"ERISA (Employee Retirement Income Security Act) is about DISCLOSURE — it protects plan participants and beneficiaries by requiring employers to disclose plan features, benefits, fees, and tax consequences."},
+{t:"HIPAA",s:"say: HIP-uh",p:"Two jobs: it protects your health coverage when you change jobs, and it protects your medical privacy.",e:"Someone leaves one job for another without a long coverage gap, and the new plan can't make them re-serve a waiting period for a known condition.",x:"HIPAA (Health Insurance Portability and Accountability Act): with 18 MONTHS of continuous prior group coverage and no gap longer than 63 DAYS, a new plan can't re-impose a pre-existing waiting period. It also protects medical PRIVACY."}
+]}
+,
+{n:"Nevada Code & Ethics",d:"The state-specific rules for Nevada. These are the questions the national study guides can't cover — in plain English.",
+c:[
+{t:"The Division of Insurance",s:"say it as it looks",p:"The state agency that hands out your license and can take it away. The Commissioner runs it.",e:"It issues your license, reviews policy forms, investigates complaints, and disciplines agents.",x:"The NEVADA DIVISION OF INSURANCE (under the Department of Business & Industry) ENFORCES the insurance code (NRS Title 57). The LEGISLATURE writes it. Don't mix those up on the test."},
+{t:"The Insurance Commissioner",s:"say it as it looks",p:"The official in charge of the Division. In Nevada this person is appointed, not elected.",e:"The Commissioner can issue, suspend, or revoke your license and levy fines.",x:"APPOINTED (through the Department of Business & Industry) — NOT elected. This is a common trap: California elects its Commissioner, but Nevada APPOINTS. The Commissioner enforces the law and does NOT write it."},
+{t:"Getting licensed in Nevada",s:"say it as it looks",p:"No required course to sit for the exam — just pass, get fingerprinted, and apply.",e:"He schedules with Pearson VUE, passes, gets fingerprinted, and applies through Sircon.",x:"Nevada has NOT required prelicensing education since JANUARY 1, 2020. You must be 18+, PASS the Pearson VUE exam (scaled score of 80), and be FINGERPRINTED. Apply through Sircon. Confirm current fees and steps with the Division."},
+{t:"The exam itself",s:"say it as it looks",p:"Pearson VUE, scored on a scaled system, with a national part and a Nevada part.",e:"He answers general life/health questions, then a block of Nevada-specific law questions.",x:"Administered by PEARSON VUE. Passing is a SCALED SCORE of 80 — not a raw percentage. The combined Life & Health exam is longer than a single line. You get a pass/fail report immediately; a fail also shows a numeric score."},
+{t:"Keeping the license",s:"say: C-E, continuing education",p:"The license expires and has homework attached. Nevada runs a three-year cycle.",e:"Every three years he renews and proves his continuing-education hours, including ethics.",x:"Resident producers complete 30 HOURS of CE per THREE-YEAR term, including 3 HOURS of ETHICS. No carryover of excess hours. Nevada's 3-year/30-hour cycle is different from many states' 2-year/24-hour cycle."},
+{t:"Selling annuities",s:"say it as it looks",p:"Before you can sell annuities in Nevada, there's a one-time training you must finish.",e:"A new producer completes the annuity Best Interest course before writing any annuity.",x:"Nevada adopted the NAIC Best Interest annuity rule (effective Nov 15, 2024). Producers must complete a one-time 4-HOUR annuity training that includes the BEST INTEREST standard BEFORE selling annuities."},
+{t:"Agent vs. broker",s:"say it as it looks",p:"Different roles. An agent works for the company; a broker works for the buyer.",e:"He signs with a carrier as a producer. A broker shops multiple companies for the client.",x:"AGENT (producer) represents the INSURER. BROKER represents the INSURED (the buyer). Transacting insurance without a proper license carries civil and criminal penalties."},
+{t:"Fiduciary duty and trust funds",s:"say: fih-DOO-she-air-ee",p:"Client premium money is never yours. You hold it in trust and pass it to the company.",e:"A $400 premium check sitting in his desk is trust money, not income.",x:"Premiums are TRUST FUNDS. Depositing them into a personal account is COMMINGLING — a license-ending violation."},
+{t:"Unfair trade practices",s:"say it as it looks",p:"Nevada's list of sales tactics that are flat-out illegal. Know the names.",e:"Lying to replace a rival's policy, badmouthing another insurer, or paying a bribe to close.",x:"Nevada's Trade Practices and Frauds law (NRS 686A) prohibits MISREPRESENTATION, TWISTING, CHURNING, DEFAMATION, BOYCOTT, false advertising, and REBATING. Rebating penalizes BOTH the agent and the person who accepts it."},
+{t:"Twisting, churning, rebating",s:"say it as it looks",p:"The three that trip people up. Twisting is across companies, churning is inside one, rebating is a bribe.",e:"Twisting: 'Your old policy is junk' with no comparison. Churning: flipping a policy at the same carrier. Rebating: 'I'll pay your first premium.'",x:"TWISTING = misrepresentation to replace ANOTHER company's policy. CHURNING = same trick, SAME company. REBATING = giving anything of value to induce a sale. All illegal."},
+{t:"Unfair claims settlement",s:"say it as it looks",p:"Rules that force insurers to handle claims promptly and honestly.",e:"A carrier can't ignore a claim, lowball without explanation, or drag its feet unreasonably.",x:"Nevada's Unfair Claims Settlement Practices law (NRS 686A.310) protects CLAIMANTS by setting standards for acknowledging, investigating, and paying claims. Violations bring penalties from the Division."},
+{t:"Replacement rules",s:"say: replacement",p:"Talking a client out of an existing policy into a new one triggers extra paperwork to protect them.",e:"He replaces an old whole life with a new one, so he must hand over the required replacement notices.",x:"Nevada requires specific REPLACEMENT DISCLOSURES and notices when a policy is replaced. A replacement policy also gets a longer 30-DAY free look. The goal is to make sure the client isn't harmed by dropping existing coverage."},
+{t:"Free look, the Nevada numbers",s:"say it as it looks",p:"The window to return a policy for a full refund after delivery. Nevada sets minimums.",e:"He delivers the policy; the client has at least 10 days to return it (30 if it's a replacement).",x:"Individual life and annuity: at least a 10-DAY free look. REPLACEMENT policies: a 30-DAY free look (NRS 688A.165). Full refund. Nevada's longer window is tied to REPLACEMENT — not the buyer's age, the way California's is."},
+{t:"Insurance fraud",s:"say it as it looks",p:"Lying to get money out of an insurance transaction. It's a crime, and Nevada takes it seriously.",e:"Faking an application detail, staging a loss, or an agent pocketing premium.",x:"Fraud is prosecutable and grounds for license revocation. Carriers run SIUs (Special Investigation Units), and producers have a duty to report suspected fraud to the Division."},
+{t:"License discipline & duties",s:"say it as it looks",p:"The ways a producer damages a license, and the duty to keep the Division informed.",e:"A felony conviction, a false statement on the license application, or commingling can end a career.",x:"Grounds for DENIAL, SUSPENSION, or REVOCATION include material misstatements, fraud, and rule violations. Producers must promptly report address changes, criminal convictions, and administrative actions to the Commissioner."}
+]}
+,
+{n:"The math, made easy",d:"The number problems, one step at a time. Clean numbers, no tricks. This is where most people leave easy points on the table.",math:true,
+c:[
+{t:"Deductible, then coinsurance",s:"the #1 health-math question on the test",
+ prob:"Maria has a $1,000 deductible and an 80/20 plan. She gets a covered bill for $5,000. How much does SHE pay?",
+ steps:[
+   {label:"Step 1 — deductible first",line:"She pays the full deductible before the plan pays anything: $1,000."},
+   {label:"Step 2 — what's left",line:"$5,000 − $1,000 = $4,000 still to split."},
+   {label:"Step 3 — her share of the rest",line:"On an 80/20 plan she pays 20%. 20% of $4,000 = $800."},
+   {label:"Step 4 — add her two pieces",line:"$1,000 (deductible) + $800 (coinsurance) = $1,800."}
+ ],
+ ans:"Maria pays $1,800. The plan pays $3,200.",
+ tip:"The deductible ALWAYS comes out first, THEN the percentage applies to what's LEFT. The classic wrong answer is taking 20% of the whole $5,000 — that skips the deductible step."},
+
+{t:"When the out-of-pocket max saves the day",s:"the ceiling on what she can ever pay",
+ prob:"Same plan: $1,000 deductible, 80/20, but with a $6,000 out-of-pocket maximum. Now Maria has a huge $50,000 covered bill. What does she pay?",
+ steps:[
+   {label:"Step 1 — deductible",line:"$1,000 comes out first."},
+   {label:"Step 2 — coinsurance would be huge",line:"20% of the remaining $49,000 = $9,800. That would put her way over the cap."},
+   {label:"Step 3 — the cap stops it",line:"The out-of-pocket max limits her TOTAL to $6,000. Deductible + coinsurance both count toward it."},
+   {label:"Step 4 — after the cap",line:"Once she has paid $6,000, the plan pays 100% of everything else covered."}
+ ],
+ ans:"Maria pays $6,000 — not a penny more.",
+ tip:"The out-of-pocket max is a ceiling on HER spending. The deductible and coinsurance count toward it. After she hits it, the plan pays everything covered for the rest of the year."},
+
+{t:"Coinsurance after the deductible's done",s:"a mid-year bill",
+ prob:"Later that same year, Maria has already met her deductible. A new $2,000 covered bill comes in on the 80/20 plan. Her share?",
+ steps:[
+   {label:"Step 1 — skip the deductible",line:"It's a once-a-year amount and she already met it. Skip straight to coinsurance."},
+   {label:"Step 2 — just the percentage",line:"20% of $2,000 = $400."}
+ ],
+ ans:"Maria pays $400.",
+ tip:"The deductible resets once per year, not per bill. After it's met, only the coinsurance % applies to new bills — until she reaches the out-of-pocket max."},
+
+{t:"Exclusion ratio — the tax-free percent",s:"annuity taxation, part 1",
+ prob:"Frank paid $100,000 into an annuity. It's expected to pay him $200,000 total over his lifetime. What PERCENT of each check is tax-free?",
+ steps:[
+   {label:"Step 1 — the formula",line:"Exclusion ratio = money he put in ÷ total expected payout."},
+   {label:"Step 2 — plug in",line:"$100,000 ÷ $200,000 = 0.50."}
+ ],
+ ans:"50% of each payment is tax-free.",
+ tip:"The tax-free half is Frank's OWN money coming back to him. The other half is growth, and growth is taxable. Exclusion ratio = investment in the contract ÷ expected return."},
+
+{t:"Exclusion ratio — the tax-free dollars",s:"annuity taxation, part 2",
+ prob:"Using Frank's 50% ratio, he receives $1,000 a month. How much of each check is taxable?",
+ steps:[
+   {label:"Step 1 — tax-free part",line:"50% of $1,000 = $500 is a tax-free return of his own money."},
+   {label:"Step 2 — the rest",line:"The other $500 is growth, so it's taxable."}
+ ],
+ ans:"$500 taxable, $500 tax-free — every month.",
+ tip:"Watch for the twist: once Frank's entire $100,000 has come back to him, the exclusion is used up and the WHOLE check becomes taxable after that. Live long enough and the tax-free part runs out."},
+
+{t:"Misstatement of age",s:"understated his age on the app",
+ prob:"An insured paid $500/year — the rate for age 40. But he was really 45, where the correct rate is $625/year. The policy face is $100,000. What does the beneficiary receive at death?",
+ steps:[
+   {label:"Step 1 — the policy is NOT voided",line:"Misstatement of age never voids the policy. The benefit just gets adjusted."},
+   {label:"Step 2 — the ratio",line:"He paid $500 of the $625 he should have. $500 ÷ $625 = 0.80."},
+   {label:"Step 3 — adjust the benefit",line:"0.80 × $100,000 = $80,000."}
+ ],
+ ans:"The beneficiary receives $80,000.",
+ tip:"He paid 80% of the true premium, so he gets 80% of the coverage. The benefit adjusts to what his premium would have bought at his real age. Nobody gets voided or refunded."},
+
+{t:"A loan comes off the death benefit",s:"he borrowed against the policy",
+ prob:"A $250,000 whole life policy has an outstanding loan of $20,000 plus $1,000 of loan interest owed. The insured dies. What does the beneficiary get?",
+ steps:[
+   {label:"Step 1 — start with the face",line:"$250,000."},
+   {label:"Step 2 — subtract the loan",line:"$250,000 − $20,000 = $230,000."},
+   {label:"Step 3 — subtract the interest",line:"$230,000 − $1,000 = $229,000."}
+ ],
+ ans:"The beneficiary receives $229,000.",
+ tip:"An unpaid policy loan plus its interest comes straight off the death benefit. The insurer can't refuse to give a policy loan, but it always gets paid back out of the proceeds."},
+
+{t:"Death during the grace period",s:"the premium was late",
+ prob:"A $100,000 policy's $200 premium was due and unpaid, but the insured dies during the grace period. What does the beneficiary receive?",
+ steps:[
+   {label:"Step 1 — still covered",line:"Coverage stays in force during the grace period."},
+   {label:"Step 2 — subtract what was owed",line:"$100,000 − $200 = $99,800."}
+ ],
+ ans:"The beneficiary receives $99,800.",
+ tip:"Dying in the grace period still pays the claim. The insurer simply deducts the one premium that was owed. The wrong answer is 'nothing' — the grace period exists precisely so the policy hasn't lapsed."},
+
+{t:"Double indemnity",s:"an accidental death",
+ prob:"A $150,000 policy carries a double indemnity (accidental death) rider. The insured dies in a covered accident. What's the payout?",
+ steps:[
+   {label:"Step 1 — 'double' means times two",line:"Double indemnity pays twice the face amount for accidental death."},
+   {label:"Step 2 — multiply",line:"2 × $150,000 = $300,000."}
+ ],
+ ans:"The payout is $300,000.",
+ tip:"Double indemnity only applies to ACCIDENTAL death, usually within 90 days of the accident. If the same insured died of an illness, the payout is the normal $150,000."},
+
+{t:"Pro-rata refund on cancellation",s:"the insurer cancels early",
+ prob:"An annual premium is $1,200. The INSURER cancels the policy after 3 months. What is the pro-rata refund?",
+ steps:[
+   {label:"Step 1 — how much is unused",line:"3 of 12 months were used, so 9 months are unused."},
+   {label:"Step 2 — refund the unused share in full",line:"9 ÷ 12 × $1,200 = $900."}
+ ],
+ ans:"The refund is $900.",
+ tip:"When the INSURER cancels, the insured gets a full pro-rata refund. If the INSURED cancels instead, a short-rate refund applies — the insured gets back a bit less as a penalty."}
+]}
+];
+
+var Q=[
+[{q:"A man buys a policy hoping to profit if the market falls. Why can't an insurer cover that?",o:["It's speculative risk, not pure risk","It's a moral hazard","There's no consideration","It violates indemnity"],a:0,w:"Insurers only cover PURE risk — situations where you can only lose. Speculative risk includes a chance of gain, so it's uninsurable."},
+{q:"Icy front steps at a rental property are an example of:",o:["A peril","A physical hazard","A morale hazard","Adverse selection"],a:1,w:"A hazard makes a loss more likely. A condition of the property is a PHYSICAL hazard. The fall itself would be the peril."},
+{q:"When must insurable interest exist in a life insurance policy?",o:["At the time of death","At the time of application","Both times","Only if there's a loan"],a:1,w:"Life insurance requires insurable interest at APPLICATION only. A divorced spouse can remain a beneficiary because the interest existed when the policy was written."},
+{q:"Underwriting exists primarily to control:",o:["Reinsurance costs","The law of large numbers","Adverse selection","Indemnity"],a:2,w:"Sick people seek coverage more eagerly than healthy people. Underwriting is the carrier's defense against that imbalance."}],
+
+[{q:"Ambiguous wording in a policy is interpreted in favor of the insured because the contract is:",o:["Aleatory","Unilateral","Conditional","A contract of adhesion"],a:3,w:"The insured had no hand in writing it — take it or leave it. So unclear language breaks the insured's way."},
+{q:"Only the insurance company makes a legally enforceable promise. That makes the contract:",o:["Unilateral","Aleatory","Bilateral","Conditional"],a:0,w:"Uni = one. The insured can stop paying premium at will; the insurer cannot walk away from its promise."},
+{q:"Statements made on a life insurance application are considered:",o:["Warranties","Representations","Concealments","Waivers"],a:1,w:"They're believed true to the best of the applicant's knowledge — representations. Warranties are guaranteed absolutely true and are a higher standard."},
+{q:"An insurer knowingly accepts a late premium, then later tries to declare the policy lapsed for that same payment. It's blocked by:",o:["Concealment","Estoppel","Indemnity","Adhesion"],a:1,w:"It waived the right by accepting the payment; estoppel prevents it from reversing course afterward."}],
+
+[{q:"An agent deposits a client's premium check into his personal account for a few days. This is:",o:["Apparent authority","Commingling","Rebating","Twisting"],a:1,w:"Premiums are trust funds held in a fiduciary capacity. Mixing them with personal money is commingling — a license-ending violation."},
+{q:"An agent convinces a client to drop a policy at ANOTHER carrier using misleading comparisons. That's:",o:["Churning","Rebating","Twisting","Defamation"],a:2,w:"Twisting = misrepresentation to replace a DIFFERENT company's policy. Same carrier would make it churning."},
+{q:"An agent offers to pay a prospect's first premium personally to close the sale. This is:",o:["Legal if disclosed","Rebating, and illegal","An acceptable inducement","Only illegal over $50"],a:1,w:"Giving anything of value to induce a purchase is rebating. Both the agent and the person accepting it are in violation."},
+{q:"In Nevada, the Insurance Commissioner is:",o:["Elected by voters","Appointed through the Department of Business & Industry","Chosen by the legislature","Selected by insurers"],a:1,w:"Nevada APPOINTS its Commissioner (California elects). The Commissioner ENFORCES the code — the legislature writes it."}],
+
+[{q:"An applicant pays with the application and receives a conditional receipt. He dies before the policy is issued but was insurable as applied for. The claim is:",o:["Denied — no policy existed","Paid","Refunded as premium only","Paid at half the face amount"],a:1,w:"That's exactly what a conditional receipt does — coverage back to the receipt date, provided the applicant proves insurable as applied for."},
+{q:"The MIB may be used to:",o:["Decline an application on its own","Alert an underwriter to investigate further","Replace the medical exam","Set the final premium"],a:1,w:"MIB holds coded information only. It flags areas worth checking — it can never be the sole basis for a declination."},
+{q:"Health has declined between application and delivery, and no premium was collected up front. Before delivering, the agent must obtain:",o:["A new application","A statement of good health","An APS","A conditional receipt"],a:1,w:"With no premium paid at application, coverage begins at delivery — so the carrier needs current confirmation of health first."},
+{q:"An applicant rated substandard has been:",o:["Declined","Offered coverage at a higher premium","Offered preferred rates","Placed with the MIB"],a:1,w:"Substandard means an offer with extra premium for extra risk. Declined means no offer at all."}],
+
+[{q:"An insured dies 26 months after issue, and the carrier discovers a material misstatement on the application. The carrier must:",o:["Deny the claim","Pay the claim","Refund premiums only","Rescind the policy"],a:1,w:"The incontestable clause closes at two years. After that, misstatements on the application can no longer be used to contest a claim."},
+{q:"An insured stated age 45 but was actually 48. At death the carrier will:",o:["Void the policy","Pay the full face amount","Adjust the benefit to what the premium would have bought at 48","Refund the premiums"],a:2,w:"Misstatement of age never voids a policy. The benefit is simply adjusted to what the premiums actually purchased."},
+{q:"Husband and wife die in the same crash and the order of death is unknown. The common disaster clause presumes:",o:["The insured died first","The beneficiary died first","Both died simultaneously","The estate takes the proceeds"],a:1,w:"The beneficiary is presumed to have died first, sending proceeds to the CONTINGENT beneficiary rather than through the beneficiary's estate."},
+{q:"To change an irrevocable beneficiary, the policyowner needs:",o:["Nothing — it's his policy","The insurer's approval","That beneficiary's written consent","A court order"],a:2,w:"Irrevocable means the beneficiary holds a vested right. Nothing changes without their written consent."}],
+
+[{q:"A term policy's conversion privilege lets the insured convert to permanent coverage:",o:["Only if he's still healthy","Without evidence of insurability","At the original age rate always","Only in the first year"],a:1,w:"No new health questions — that's the entire point. It protects someone who has become uninsurable."},
+{q:"Which universal life option pays the face amount PLUS the cash value at death?",o:["Option A","Option B","Option C","Reduced paid-up"],a:1,w:"Option B is the increasing death benefit: face plus cash value. Option A keeps the death benefit level."},
+{q:"Variable life requires the producer to hold:",o:["A life license only","A life license plus a securities registration","A property license","No additional registration"],a:1,w:"The cash value sits in a separate account invested in securities, so it's regulated as both insurance and a security."},
+{q:"Decreasing term is most commonly used for:",o:["Estate planning","Mortgage protection","Executive bonuses","Cash accumulation"],a:1,w:"The face amount declines alongside a shrinking mortgage balance."}],
+
+[{q:"If a whole life policyowner stops paying and selects nothing, the automatic nonforfeiture option is:",o:["Cash surrender","Reduced paid-up","Extended term","Automatic premium loan"],a:2,w:"Extended term is the default: the same face amount continues for a limited period using the cash value."},
+{q:"Which dividend option buys additional permanent coverage with no new underwriting?",o:["Cash","Paid-up additions","Accumulate at interest","One-year term"],a:1,w:"Paid-up additions purchase small chunks of fully paid whole life — usually the strongest long-term choice."},
+{q:"Which settlement option produces the LARGEST monthly payment?",o:["Life income (straight life)","Life with 20-year certain","Joint and survivor","Fixed period"],a:0,w:"Straight life pays the most because the carrier's obligation ends at death, with nothing guaranteed to heirs."},
+{q:"Dividends paid on a participating policy are treated as:",o:["Taxable income","A return of premium, not taxable","Capital gains","A policy loan"],a:1,w:"They're considered a return of overpaid premium. Only INTEREST earned on dividends left with the company is taxable."}],
+
+[{q:"Withdrawals from a Modified Endowment Contract are taxed:",o:["FIFO — basis first","LIFO — gain first","Never","As capital gains"],a:1,w:"A MEC flips distributions to LIFO, so taxable growth comes out first, plus a 10% penalty before 59½. The death benefit remains income-tax free."},
+{q:"A 1035 exchange permits which transfer?",o:["Annuity to life insurance","Life insurance to annuity","IRA to life insurance","Annuity to a Roth"],a:1,w:"Life to life, life to annuity, and annuity to annuity are permitted. Annuity to LIFE is not — that's the direction they test."},
+{q:"The exclusion ratio determines:",o:["The surrender charge","The portion of each annuity payment that isn't taxed","The free withdrawal amount","The death benefit"],a:1,w:"It separates return of the owner's own principal (not taxed) from growth (taxed)."},
+{q:"A life insurance death benefit paid in a lump sum to a named beneficiary is:",o:["Fully taxable as income","Income-tax free","Taxed as capital gains","Taxable above $50,000"],a:1,w:"Lump-sum death proceeds are income-tax free. Only the interest portion of installment payouts is taxable."}],
+
+[{q:"A 90-day elimination period on a disability policy means:",o:["Benefits last 90 days","No benefits are paid for the first 90 days of disability","The policy is contestable 90 days","Premiums are waived 90 days"],a:1,w:"An elimination period is a deductible measured in time. Longer wait, lower premium."},
+{q:"A surgeon develops a tremor and can no longer operate, but could teach. Under an OWN OCCUPATION definition he is:",o:["Not disabled","Totally disabled","Partially disabled only","Ineligible"],a:1,w:"Own occupation asks only whether he can perform HIS occupation. Under any occupation, teaching would disqualify him."},
+{q:"Which arrangement locks BOTH the premium and the coverage for the policy term?",o:["Guaranteed renewable","Noncancelable","Conditionally renewable","Optionally renewable"],a:1,w:"Noncancelable is strongest. Guaranteed renewable protects coverage but allows rate increases by class."},
+{q:"An HMO member needs a specialist. Typically he must first:",o:["Pay the deductible","Get a referral from his primary care physician","Call the state","Switch to a PPO"],a:1,w:"The HMO's primary care physician acts as gatekeeper. A PPO requires no referral."}],
+
+[{q:"Which part of Medicare covers doctor visits and outpatient services?",o:["Part A","Part B","Part C","Part D"],a:1,w:"Part B is the medical side — doctors, outpatient, equipment — and it carries a monthly premium. Part A is hospital."},
+{q:"Long-term custodial care in a nursing home is generally covered by:",o:["Medicare Part A indefinitely","Medicaid or an LTC policy","Part B","A Medicare Supplement"],a:1,w:"Medicare covers only limited SKILLED care after a qualifying hospital stay. Long-term custodial care falls to LTC insurance or, after spend-down, Medicaid."},
+{q:"The most common benefit trigger for a long-term care policy is the inability to perform:",o:["Any one ADL","Two of the six ADLs","All six ADLs","Any work duties"],a:1,w:"Two of six ADLs, or cognitive impairment such as Alzheimer's."},
+{q:"Medicare Supplement plans are identified by letter because:",o:["Each carrier designs its own","The benefits are standardized by letter","The letters set the price","They match Medicare's parts"],a:1,w:"Standardization means Plan G is Plan G everywhere — so the client shops on price and service, not benefits."}]
+,
+[
+{q:"To qualify for Social Security Disability (SSDI), a worker must be 'fully insured,' meaning they have accumulated:",o:["4 quarters (1 year)","20 quarters (5 years)","40 quarters (10 years)","No work history is required"],a:2,w:"'Fully insured' means 40 quarters — 10 years — of paying FICA taxes. SSDI also has a 5-month wait and a strict any-occupation definition."},
+{q:"'24-hour coverage' combines group health and workers' compensation so that the employee is:",o:["Covered only during work hours","Covered both on and off the job","Covered only for accidents","Covered for 24 months"],a:1,w:"24-hour coverage merges the two so the worker is covered on AND off the job, removing the need for separate policies."},
+{q:"Under the ACA, insurers must allow dependent children to remain on a parent's health plan up to age:",o:["18","21","26","30"],a:2,w:"The ACA requires dependent coverage to age 26, and it eliminated pre-existing condition exclusions."},
+{q:"Under HIPAA, prior continuous group coverage protects portability as long as the gap in coverage did not exceed:",o:["30 days","63 days","90 days","6 months"],a:1,w:"A gap of more than 63 days breaks HIPAA portability protection. With 18 months of prior coverage and no such gap, a new plan can't re-impose a pre-existing waiting period."}
+]
+,
+[
+{q:"In Nevada, the Insurance Commissioner is:",o:["Elected by the voters","Appointed through the Department of Business & Industry","Chosen by the insurers","Elected to a 4-year term"],a:1,w:"Nevada APPOINTS its Commissioner (unlike California, which elects). The Commissioner enforces the code but does not write it."},
+{q:"Nevada requires prelicensing education before sitting for the insurance exam:",o:["Yes, 20 hours","Yes, a 12-hour ethics course","No — not required since January 1, 2020","Only for annuities"],a:2,w:"Nevada has not required prelicensing education since Jan 1, 2020. You still must pass the Pearson VUE exam and be fingerprinted."},
+{q:"Resident producers in Nevada must complete continuing education of:",o:["24 hours every 2 years","30 hours every 3 years, including 3 hours of ethics","40 hours every year","No CE is required"],a:1,w:"Nevada uses a 3-year cycle: 30 hours of CE including 3 hours of ethics, which differs from many states' 2-year/24-hour cycle."},
+{q:"For an individual life policy in Nevada, the standard minimum free-look period is:",o:["3 days","10 days","30 days","60 days"],a:1,w:"Nevada's standard free look is at least 10 days; a replacement policy gets a longer 30-day free look (NRS 688A.165)."}
+]
+,
+[
+{q:"A plan has a $500 deductible and 80/20 coinsurance. On a $3,000 covered bill, how much does the insured pay?",o:["$600","$1,000","$500","$2,400"],a:1,w:"Deductible first: $500. Remaining $2,500 × 20% = $500. Total $500 + $500 = $1,000."},
+{q:"$60,000 was paid into an annuity expected to pay out $120,000. What percent of each payment is tax-free?",o:["25%","50%","75%","100%"],a:1,w:"Exclusion ratio = $60,000 ÷ $120,000 = 0.50, so 50% is a tax-free return of principal."},
+{q:"A $300,000 policy has an unpaid loan of $25,000 plus $2,000 of interest when the insured dies. The beneficiary receives:",o:["$300,000","$275,000","$273,000","$298,000"],a:2,w:"$300,000 − $25,000 − $2,000 = $273,000. Loan plus interest comes off the death benefit."},
+{q:"A $100,000 policy with a double indemnity rider pays out how much for a covered accidental death?",o:["$50,000","$100,000","$150,000","$200,000"],a:3,w:"Double indemnity pays twice the face for accidental death: 2 × $100,000 = $200,000."}
+]
+];
+
+/* ---------------- state ---------------- */
+var view='home',mi=0,queue=[],qi=0,rung=0,quizIdx=0,quizAns=null,quizScore=0;
+
+function id(x){return document.getElementById(x)}
+function esc(s){return s}
+
+function setScale(v){
+  document.documentElement.style.setProperty('--scale',v);
+  var b=document.querySelectorAll('.sizer button');
+  b.forEach(function(x,i){x.setAttribute('aria-pressed',[1,1.15,1.32][i]===v?'true':'false')});
+  save('hlb_scale',v);
+}
+setScale(load('hlb_scale',1));
+
+function go(v){
+  view=v;
+  ['home','study','quiz','gloss','exam','coach'].forEach(function(s){id(s).classList.toggle('hidden',s!==v)});
+  ['home','gloss','exam','coach'].forEach(function(s){var n=id('nav-'+s);if(n)n.setAttribute('aria-current',s===v?'true':'false')});
+  if(v==='home')renderHome();
+  if(v==='gloss')renderGloss();
+  if(v==='exam')examHome();
+  if(v!=='exam')stopTimer();
+  window.scrollTo(0,0);
+}
+
+function key(m,i){return m+'-'+i}
+function modDone(m){var n=0;M[m].c.forEach(function(c,i){if(P[key(m,i)]==='got')n++});return n}
+
+function renderHome(){
+  var h='';
+  M.forEach(function(m,i){
+    var d=modDone(i),tot=m.c.length,pc=Math.round(d/tot*100);
+    h+='<button class="mod'+(d===tot?' done':'')+'" onclick="openMod('+i+')">'+
+       '<span class="modnum">'+(d===tot?'&#10003;':(i+1))+'</span>'+
+       '<span><h3>'+m.n+'</h3><p>'+m.d+'</p></span>'+
+       '<span class="meter"><span class="track"><span class="fill" style="width:'+pc+'%"></span></span><small>'+d+' / '+tot+'</small></span>'+
+       '</button>';
+  });
+  id('modlist').innerHTML=h;
+}
+
+function resume(){
+  for(var i=0;i<M.length;i++){if(modDone(i)<M[i].c.length){openMod(i);return}}
+  openMod(0);
+}
+
+function openMod(m){
+  mi=m;queue=[];
+  M[m].c.forEach(function(c,i){if(P[key(m,i)]!=='got')queue.push(i)});
+  if(!queue.length)M[m].c.forEach(function(c,i){queue.push(i)});
+  qi=0;go('study');showCard();
+}
+
+function showCard(){
+  if(qi>=queue.length){startQuiz();return}
+  id('studycard').classList.remove('mathcard');
+  if(M[mi].math){showMathCard();return}
+  rung=0;
+  var c=M[mi].c[queue[qi]];
+  id('modname').textContent=M[mi].n;
+  id('cardno').textContent='Card '+(qi+1)+' of '+queue.length;
+  id('term').innerHTML=c.t;
+  id('saylike').textContent=c.s;
+  id('steps').innerHTML='';
+  id('qfill').style.width=Math.round(qi/queue.length*100)+'%';
+  id('qcount').textContent=queue.length-qi+' to go';
+  paintLadder();
+  id('controls').innerHTML='<div class="actions"><button class="big" onclick="next()">What does it actually mean?</button></div>';
+}
+
+function paintLadder(){for(var i=0;i<3;i++)id('r'+i).classList.toggle('on',i<rung)}
+
+function showMathCard(){
+  rung=0;
+  var c=M[mi].c[queue[qi]];
+  id('studycard').classList.add('mathcard');
+  id('modname').textContent=M[mi].n;
+  id('cardno').textContent='Problem '+(qi+1)+' of '+queue.length;
+  id('term').innerHTML=c.t;
+  id('saylike').textContent=c.s;
+  id('steps').innerHTML='<div class="mathprob"><h4>Here\u2019s the situation</h4><p>'+c.prob+'</p></div>';
+  id('qfill').style.width=Math.round(qi/queue.length*100)+'%';
+  id('qcount').textContent=queue.length-qi+' to go';
+  id('controls').innerHTML='<div class="actions"><button class="big" onclick="nextMath()">Let\u2019s work it out →</button></div>';
+}
+function nextMath(){
+  var c=M[mi].c[queue[qi]],st=c.steps;
+  id('steps').insertAdjacentHTML('beforeend','<div class="step"><h4>'+(st[rung].label||('Step '+(rung+1)))+'</h4><p>'+st[rung].line+'</p></div>');
+  rung++;
+  if(rung<st.length){
+    id('controls').innerHTML='<div class="actions"><button class="big" onclick="nextMath()">Next step →</button></div>';
+  }else{
+    id('controls').innerHTML='<div class="actions"><button class="big" onclick="revealAns()">Show me the answer</button></div>';
+  }
+}
+function revealAns(){
+  var c=M[mi].c[queue[qi]];
+  id('steps').insertAdjacentHTML('beforeend','<div class="answerbig"><span class="chk">\u2713</span> '+c.ans+'</div>');
+  id('steps').insertAdjacentHTML('beforeend','<div class="step test"><h4>The trap to remember</h4><p>'+c.tip+'</p></div>');
+  id('controls').innerHTML=
+    '<div class="teach"><h4>Now you try</h4><p>Cover the steps and do the next problem on your own first. Getting it wrong here costs nothing \u2014 that\u2019s exactly what practice is for.</p></div>'+
+    '<div class="rate">'+
+    '<button onclick="rate(\'again\')">Work it again<small>comes back in a minute</small></button>'+
+    '<button onclick="rate(\'closer\')">Almost had it<small>keep it in the stack</small></button>'+
+    '<button class="g" onclick="rate(\'got\')">Nailed it<small>did it on my own</small></button>'+
+    '</div>';
+}
+
+
+function next(){
+  var c=M[mi].c[queue[qi]];rung++;
+  var s=id('steps');
+  if(rung===1)s.insertAdjacentHTML('beforeend','<div class="step"><h4>Plain English</h4><p>'+c.p+'</p></div>');
+  if(rung===2)s.insertAdjacentHTML('beforeend','<div class="step"><h4>Real life</h4><p>'+c.e+'</p></div>');
+  if(rung===3)s.insertAdjacentHTML('beforeend','<div class="step test"><h4>On the test</h4><p>'+c.x+'</p></div>');
+  paintLadder();
+  var lbl=['','Now show me a real-life example','Now — what does the test want?'][rung]||'';
+  if(rung<3){
+    id('controls').innerHTML='<div class="actions"><button class="big" onclick="next()">'+lbl+'</button></div>';
+  }else{
+    id('controls').innerHTML=
+      '<div class="teach"><h4>Say it back</h4><p>Close your eyes and explain <b>'+c.t.replace(/&amp;/g,'&')+'</b> out loud, in your own words, the way you\u2019d explain it to a friend. Don\u2019t read it off the screen.</p></div>'+
+      '<div class="rate">'+
+      '<button onclick="rate(\'again\')">Say it again<small>comes back in a minute</small></button>'+
+      '<button onclick="rate(\'closer\')">Getting there<small>keep it in the stack</small></button>'+
+      '<button class="g" onclick="rate(\'got\')">I own it<small>said it cold</small></button>'+
+      '</div>';
+  }
+}
+
+function rate(s){
+  var i=queue[qi];setStat(key(mi,i),s);
+  if(s==='again'){queue.splice(Math.min(qi+3,queue.length),0,i)}
+  qi++;showCard();
+}
+
+/* ---------------- quiz ---------------- */
+function startQuiz(){quizIdx=0;quizScore=0;go('quiz');showQ()}
+function showQ(){
+  var qs=Q[mi];
+  if(quizIdx>=qs.length){
+    id('quizcount').textContent='';
+    id('quizbox').innerHTML='<h3>'+quizScore+' out of '+qs.length+'.</h3>'+
+      '<p style="font-size:1.05rem">'+(quizScore>=3?'That module is yours. The words that sounded foreign an hour ago just got answered under pressure.':'Good \u2014 now you know exactly which cards to run again. Missing questions this early is the cheapest way to find the gaps.')+'</p>'+
+      '<div class="actions"><button class="big" onclick="openMod('+mi+')">Run this module again</button>'+
+      '<button class="big" style="background:#c9a84c;color:#121e30" onclick="go(\'home\')">Back to modules</button></div>';
+    return;
+  }
+  var q=qs[quizIdx];quizAns=null;
+  id('quizcount').textContent='Quick check '+(quizIdx+1)+' of '+qs.length;
+  var h='<h3>'+q.q+'</h3>';
+  q.o.forEach(function(o,i){h+='<button class="opt" id="o'+i+'" onclick="answer('+i+')">'+o+'</button>'});
+  h+='<div id="wbox"></div>';
+  id('quizbox').innerHTML=h;
+}
+function answer(i){
+  if(quizAns!==null)return;
+  quizAns=i;var q=Q[mi][quizIdx];
+  q.o.forEach(function(o,j){var b=id('o'+j);b.disabled=true;if(j===q.a)b.classList.add('right');else if(j===i)b.classList.add('wrong')});
+  if(i===q.a)quizScore++;
+  id('wbox').innerHTML='<div class="why"><b>'+(i===q.a?'Right. ':'Not quite. ')+'</b>'+q.w+'</div>'+
+    '<div class="actions"><button class="big" onclick="quizIdx++;showQ()">Next question</button></div>';
+}
+
+/* ---------------- glossary ---------------- */
+function renderGloss(){
+  var s=(id('q').value||'').toLowerCase(),h='';
+  M.forEach(function(m,mIdx){
+    m.c.forEach(function(c){
+      var pe,ex,tt;
+      if(m.math){pe=c.prob;ex=c.ans;tt=c.tip;}
+      else{pe=c.p;ex=c.e;tt=c.x;}
+      var blob=(c.t+' '+pe+' '+ex+' '+tt).toLowerCase();
+      if(s&&blob.indexOf(s)<0)return;
+      h+='<div class="gitem"><span class="gtag">'+(mIdx+1)+' · '+m.n+'</span>'+
+         '<h4>'+c.t+'</h4><p class="pe">'+pe+'</p><p class="ex">'+ex+'</p><p class="tt">'+tt+'</p></div>';
+    });
+  });
+  id('glist').innerHTML=h||'<p style="color:#6b7a8c">Nothing matches that word yet. Try a shorter piece of it.</p>';
+}
+
+/* ---------------- full exam bank (original questions) ---------------- */
+var TOPICS=["Insurance basics","Contract law","Agent & regulation","Underwriting & issue","Life provisions","Life products","Riders & options","Annuities","Taxation","Health insurance","Disability income","Medicare & LTC","Nevada Code & Ethics"];
+var BANK=[
+/* ===== Insurance basics ===== */
+{tp:0,q:"An insurer can cover the risk of a house fire but not the risk of a bad stock trade because only one of them is:",o:["A speculative risk","A pure risk","A morale hazard","A catastrophic loss"],a:1,w:"Only pure risk (chance of loss only) is insurable. A trade carries a chance of gain, making it speculative."},
+{tp:0,q:"The characteristic that lets insurers predict losses accurately across a large group is:",o:["Adverse selection","Indemnity","The law of large numbers","Reinsurance"],a:2,w:"The larger the pool, the more closely actual results track predicted results."},
+{tp:0,q:"A smoker who conceals the habit to get a better rate is an example of what kind of hazard?",o:["Physical hazard","Moral hazard","Morale hazard","Legal hazard"],a:1,w:"Moral hazard involves dishonesty or the tendency to lie/defraud. Careless indifference would be morale hazard."},
+{tp:0,q:"Transferring the possibility of loss from an individual to an insurer is the definition of:",o:["Retention","Sharing","Insurance","Avoidance"],a:2,w:"Insurance is the transfer of the risk of loss in exchange for premium."},
+{tp:0,q:"Reducing risk by combining a large number of loss exposures is called:",o:["Sharing","Pooling","Retention","Speculation"],a:1,w:"Pooling combines exposures so losses become predictable and shareable."},
+{tp:0,q:"The immediate specific cause of a loss, such as a fire or a heart attack, is a:",o:["Hazard","Peril","Exposure","Risk"],a:1,w:"The peril is the cause of loss. A hazard only increases the chance of it."},
+{tp:0,q:"The principle that a person should not profit from insurance, only be restored, is:",o:["Utmost good faith","Indemnity","Insurable interest","Subrogation"],a:1,w:"Indemnity restores the insured to their prior financial position, no better."},
+{tp:0,q:"When an insurance company transfers part of a large risk to another insurer, the company giving up the risk is the:",o:["Reinsurer","Ceding insurer","Retaining insurer","Admitted insurer"],a:1,w:"The ceding company hands off risk; the amount it keeps is its retention."},
+{tp:0,q:"For a risk to be insurable, the loss must generally be all of the following EXCEPT:",o:["Definite and measurable","Due to chance","Catastrophic to the insurer","Predictable in the aggregate"],a:2,w:"Insurers avoid risks catastrophic to themselves; insurable losses must NOT expose the insurer to catastrophe."},
+{tp:0,q:"The tendency of poorer-than-average risks to seek insurance more eagerly is:",o:["Moral hazard","Adverse selection","Anti-selection bias","Speculative risk"],a:1,w:"Adverse selection is why underwriting exists."},
+{tp:0,q:"An insurer authorized and licensed to do business in Nevada is considered a(n):",o:["Nonadmitted insurer","Admitted insurer","Alien insurer","Surplus lines insurer"],a:1,w:"An admitted (authorized) insurer holds a Certificate of Authority in the state."},
+{tp:0,q:"A company chartered in another country doing business in Nevada is classified as a(n):",o:["Domestic insurer","Foreign insurer","Alien insurer","Reciprocal insurer"],a:2,w:"Domestic = this state, Foreign = another state, Alien = another country."},
+
+/* ===== Contract law ===== */
+{tp:1,q:"Because the insured cannot negotiate the wording and must accept the policy as written, an insurance contract is one of:",o:["Adhesion","Aleatory","Utmost good faith","Indemnity"],a:0,w:"Take-it-or-leave-it wording means ambiguities are read against the drafter (the insurer)."},
+{tp:1,q:"Only the insurer makes a legally enforceable promise, which makes the insurance contract:",o:["Bilateral","Unilateral","Conditional","Aleatory"],a:1,w:"The insured can stop paying without being sued; only the insurer is bound to perform."},
+{tp:1,q:"The unequal exchange of value, where a small premium may yield a large benefit, describes a contract that is:",o:["Conditional","Aleatory","Unilateral","Executed"],a:1,w:"Aleatory contracts turn on chance and may exchange very unequal amounts."},
+{tp:1,q:"Statements on a life insurance application are considered representations, meaning they are:",o:["Guaranteed absolutely true","Believed true to the best of the applicant's knowledge","Warranties of fact","Immaterial to the contract"],a:1,w:"Representations are believed-true statements; only a MATERIAL misrepresentation can void the policy."},
+{tp:1,q:"A false statement that would have changed the insurer's underwriting decision is a:",o:["Concealment","Material misrepresentation","Warranty","Waiver"],a:1,w:"Materiality is the key: if it would have altered the decision, the contract can be voided."},
+{tp:1,q:"Deliberately withholding a material fact the insurer needs to know is:",o:["Misrepresentation","Concealment","Estoppel","Adhesion"],a:1,w:"Concealment is silence about something material; it can also void the contract."},
+{tp:1,q:"The four elements required to form any valid contract are agreement, competent parties, legal purpose, and:",o:["Insurable interest","Consideration","Warranty","Utmost good faith"],a:1,w:"Consideration is the value each party gives; the applicant's is premium plus statements."},
+{tp:1,q:"An insurer that accepts a habitually late premium without objection, then tries to deny a claim for lateness, is prevented from doing so by:",o:["Waiver","Estoppel","Concealment","Rescission"],a:1,w:"Having waived the right, the insurer is estopped from later asserting it."},
+{tp:1,q:"The requirement that both parties deal honestly and disclose material facts is called:",o:["Adhesion","Utmost good faith","Indemnity","Consideration"],a:1,w:"Insurance rests on utmost good faith, which is why concealment and misrepresentation matter so much."},
+{tp:1,q:"A contract in which performance depends on future uncertain events being met is described as:",o:["Aleatory","Conditional","Unilateral","Executory"],a:1,w:"Conditions such as paying premium and filing proof of loss must be met before performance."},
+{tp:1,q:"When a life insurance owner transfers all ownership rights permanently to another party, it is a(n):",o:["Collateral assignment","Absolute assignment","Conditional assignment","Revocable designation"],a:1,w:"Absolute assignment is a complete, permanent transfer; collateral is partial and temporary."},
+{tp:1,q:"An applicant's voluntary surrender of a known legal right is a:",o:["Waiver","Warranty","Rider","Reservation"],a:0,w:"A waiver is the intentional giving-up of a known right."},
+
+/* ===== Agent & regulation ===== */
+{tp:2,q:"In Nevada, the Insurance Commissioner is:",o:["Elected by the voters","Appointed through the Department of Business & Industry","Appointed by the legislature","Selected by the insurers"],a:1,w:"Nevada appoints its Commissioner, who enforces (not writes) the code. California is the outlier that elects."},
+{tp:2,q:"An agent legally represents the:",o:["Applicant","Insurer","Beneficiary","State"],a:1,w:"An agent represents the insurer. A broker represents the insurance buyer."},
+{tp:2,q:"Premiums an agent collects and holds before remitting them to the insurer are:",o:["The agent's earned income","Trust funds","A conditional receipt","Rebates"],a:1,w:"They are trust funds; mixing them with personal money is illegal commingling."},
+{tp:2,q:"The authority a reasonable customer assumes an agent has, based on the company's actions, is:",o:["Express authority","Implied authority","Apparent authority","Fiduciary authority"],a:2,w:"Apparent authority binds the insurer because of the impression it created in the public."},
+{tp:2,q:"Persuading a client to drop a policy at another company through misleading comparisons is:",o:["Churning","Twisting","Rebating","Sliding"],a:1,w:"Twisting = misrepresentation to replace ANOTHER company's policy. Same-company would be churning."},
+{tp:2,q:"Replacing a policy within the SAME insurer to generate a new commission, to the client's detriment, is:",o:["Twisting","Churning","Rebating","Defamation"],a:1,w:"Churning is the same trick as twisting but inside one company."},
+{tp:2,q:"Offering a prospect part of the commission or any inducement not stated in the policy to make a sale is:",o:["Legal if written down","Rebating","A permissible discount","Coercion"],a:1,w:"Rebating is illegal, and both the giver and the receiver are in violation."},
+{tp:2,q:"Errors and omissions (E&O) coverage protects an agent against claims arising from:",o:["Intentional fraud","Negligent acts and mistakes","Criminal conduct","Rebating penalties"],a:1,w:"E&O covers negligence and honest errors, not dishonest or criminal acts."},
+{tp:2,q:"Making false or maliciously critical statements about another insurer's financial condition is:",o:["Twisting","Defamation","Boycott","Rebating"],a:1,w:"Defamation is a false, damaging statement about a person or company in the business."},
+{tp:2,q:"A licensee who moves must report the address change to the Commissioner, and must also promptly report:",o:["Every new client","A felony conviction or administrative action","Each policy sold","A change in marital status"],a:1,w:"Criminal convictions and regulatory/administrative actions must be reported to the Commissioner."},
+{tp:2,q:"An agent who signs an insured's name to an application without authorization has committed:",o:["A permissible convenience","Forgery, grounds for license revocation","Field underwriting","A waiver"],a:1,w:"Forgery is fraud and grounds for disciplinary action including license loss."},
+{tp:2,q:"An agent depositing client premium into a personal checking account has engaged in:",o:["Commingling","Rebating","Twisting","Coercion"],a:0,w:"Commingling trust funds with personal funds is prohibited."},
+{tp:2,q:"An agent representing the buyer rather than the insurer is acting as a(n):",o:["Producer","Broker","Underwriter","Adjuster"],a:1,w:"A broker represents the client shopping for coverage."},
+
+/* ===== Underwriting & issue ===== */
+{tp:3,q:"The agent taking the application is considered the insurer's:",o:["Chief underwriter","Field underwriter","Actuary","Claims examiner"],a:1,w:"The agent is the field underwriter, gathering the first honest picture of the risk."},
+{tp:3,q:"A conditional receipt given when the applicant pays with the application provides coverage:",o:["Only after the policy is delivered","Back to the receipt date if the applicant proves insurable","Never before underwriting completes","Only if the applicant survives 30 days"],a:1,w:"Coverage relates back to the receipt date provided the applicant is found insurable as applied for."},
+{tp:3,q:"The Medical Information Bureau (MIB) may be used by an underwriter to:",o:["Decline an applicant outright","Flag areas to investigate further","Set the exact premium","Replace the application"],a:1,w:"MIB holds coded information only and can never be the sole basis for a declination."},
+{tp:3,q:"To obtain records directly from an applicant's own doctor, the underwriter orders a(n):",o:["Investigative consumer report","Attending Physician Statement","MIB report","Inspection report"],a:1,w:"An APS requires the applicant's signed authorization and is ordered by the underwriter."},
+{tp:3,q:"Under the Fair Credit Reporting Act, an applicant subject to an investigative consumer report must be:",o:["Charged an extra fee","Notified that the report may be obtained","Interviewed in person","Given a copy automatically"],a:1,w:"The applicant must be notified and may request the nature and scope of the investigation."},
+{tp:3,q:"An applicant classified as substandard will:",o:["Be declined","Pay a higher-than-standard premium","Receive preferred rates","Be referred to the MIB"],a:1,w:"Substandard means an offer at extra premium, not a refusal."},
+{tp:3,q:"If health has declined between application and delivery and no premium was paid up front, before delivering the agent must obtain a:",o:["New application","Statement of good health","Conditional receipt","Second medical exam"],a:1,w:"With no premium collected, coverage starts at delivery, so current good-health confirmation is required."},
+{tp:3,q:"Investors who induce a senior to buy a policy so the investors can own and profit from it are engaged in:",o:["A viatical settlement","STOLI, which is illegal","A 1035 exchange","An accelerated benefit"],a:1,w:"Stranger-originated life insurance fails the insurable interest requirement and is illegal."},
+{tp:3,q:"The part of the application NOT shown to the applicant and not part of the entire contract is the:",o:["Part 1 general information","Part 2 medical information","Agent's report","Conditional receipt"],a:2,w:"The agent's report contains the agent's observations and is confidential to the insurer."},
+{tp:3,q:"Delivering the policy in person is significant primarily because it:",o:["Guarantees the sale","Starts the free-look period","Waives underwriting","Sets the premium"],a:1,w:"Delivery begins the free-look clock and may require a statement of good health."},
+{tp:3,q:"A risk classification of 'declined' means the applicant:",o:["Pays a higher premium","Received no offer of coverage","Qualifies for preferred","Must reapply in 30 days"],a:1,w:"Declined = no offer at all, distinct from substandard (an offer at higher cost)."},
+{tp:3,q:"Insurable interest in a life insurance policy must exist:",o:["At the time of death","At the time of application","At both times","Only when a loan is taken"],a:1,w:"For life insurance, insurable interest is required only when the policy is applied for."},
+
+/* ===== Life provisions ===== */
+{tp:4,q:"After a life policy has been in force two years, the insurer generally cannot contest it based on application misstatements. This is the:",o:["Grace period","Incontestable clause","Reinstatement clause","Free-look provision"],a:1,w:"After the two-year contestable period, only fraud and nonpayment remain as defenses in most cases."},
+{tp:4,q:"If an insured misstates their age, at death the insurer will:",o:["Void the policy","Adjust the benefit to what the premium would have bought at the correct age","Pay the full face amount","Refund all premiums"],a:1,w:"Misstatement of age adjusts the benefit; it never voids the policy."},
+{tp:4,q:"The period after a premium due date during which coverage continues and a late payment is still accepted is the:",o:["Free-look period","Grace period","Elimination period","Contestable period"],a:1,w:"If death occurs during grace, the claim is paid minus the premium owed."},
+{tp:4,q:"Bringing a lapsed policy back into force, rather than buying new, is:",o:["Conversion","Reinstatement","Renewal","Assignment"],a:1,w:"Reinstatement requires proof of insurability and back premiums with interest; a new contestable period starts."},
+{tp:4,q:"Under the entire contract provision, the complete agreement consists of:",o:["The policy alone","The policy plus the attached application","The policy plus the agent's promises","The application alone"],a:1,w:"Nothing outside the policy and attached application is part of the contract."},
+{tp:4,q:"Changing an IRREVOCABLE beneficiary requires:",o:["Only the owner's request","The insurer's approval","The irrevocable beneficiary's written consent","A court order"],a:2,w:"An irrevocable beneficiary holds a vested right that cannot be changed without their consent."},
+{tp:4,q:"When the insured and primary beneficiary die in the same accident with no clear order, the common disaster clause presumes the:",o:["Insured died first","Beneficiary died first","Deaths were simultaneous with proceeds to the estate","Contingent beneficiary died first"],a:1,w:"Presuming the beneficiary died first routes proceeds to the contingent beneficiary."},
+{tp:4,q:"A policy loan against cash value:",o:["Can be refused by the insurer","Reduces the death benefit by any unpaid balance plus interest","Must be repaid within one year","Is treated as taxable income immediately"],a:1,w:"Unpaid loan plus interest is subtracted from the death benefit; the insurer cannot refuse the loan."},
+{tp:4,q:"An automatic premium loan provision uses the policy's cash value to:",o:["Increase the death benefit","Pay a premium that would otherwise lapse","Fund a rider","Accelerate benefits"],a:1,w:"APL prevents unintentional lapse by borrowing from cash value to cover a missed premium."},
+{tp:4,q:"The person who controls beneficiary designations, loans, and surrender of a policy is the:",o:["Insured","Owner","Beneficiary","Producer"],a:1,w:"Ownership rights belong to the policyowner, who may or may not be the insured."},
+{tp:4,q:"A beneficiary who receives proceeds only if the primary beneficiary has died is the:",o:["Tertiary beneficiary","Contingent beneficiary","Irrevocable beneficiary","Assignee"],a:1,w:"Contingent (secondary) beneficiaries take only if the primary is deceased."},
+{tp:4,q:"A suicide within the policy's stated suicide period results in the insurer:",o:["Denying all payment","Returning premiums paid","Paying the full face amount","Paying half the face"],a:1,w:"Within the period (commonly two years) the insurer refunds premiums; afterward it pays as a normal claim."},
+{tp:4,q:"Any change to the contract must be signed by:",o:["The soliciting agent","An executive officer of the insurer","The beneficiary","The applicant only"],a:1,w:"An agent cannot alter the contract; only an executive officer can, in writing."},
+{tp:4,q:"A per capita beneficiary designation means proceeds are divided:",o:["By family branch","Equally among living named beneficiaries","Only to the eldest","To the estate"],a:1,w:"Per capita splits equally among surviving named beneficiaries; per stirpes follows family branches."},
+{tp:4,q:"The insuring clause of a life policy states the:",o:["Free-look period","Insurer's basic promise to pay the death benefit","Exclusions","Premium mode"],a:1,w:"The insuring clause is the core promise to pay upon the insured's death."},
+{tp:4,q:"A spendthrift clause is designed to:",o:["Speed up claim payment","Protect proceeds from a beneficiary's creditors","Increase the death benefit","Waive premiums"],a:1,w:"It restricts a beneficiary's ability to assign proceeds and shields them from creditors."},
+
+/* ===== Life products ===== */
+{tp:5,q:"Term insurance is best described as:",o:["Permanent coverage with cash value","Temporary protection with no cash value","An investment contract","A retirement annuity"],a:1,w:"Term is pure protection for a set period with no cash accumulation."},
+{tp:5,q:"Decreasing term insurance is most commonly used to cover a:",o:["Growing estate","Mortgage balance","Retirement income need","Key-person buyout"],a:1,w:"The declining face amount tracks a shrinking mortgage."},
+{tp:5,q:"The right to continue a term policy without a new medical exam is the:",o:["Convertible feature","Renewable feature","Reinstatement feature","Guaranteed insurability rider"],a:1,w:"Renewable = keep the term without proving insurability; convertible = switch to permanent without it."},
+{tp:5,q:"Whole life insurance guarantees all of the following EXCEPT:",o:["A level premium","A fixed cash value schedule","A death benefit to a stated age","Market-based investment gains"],a:3,w:"Whole life offers guarantees, not market gains; that describes variable life."},
+{tp:5,q:"A 20-pay whole life policy is characterized by:",o:["Coverage for only 20 years","Premiums paid over 20 years, coverage for life","No cash value","Increasing premiums"],a:1,w:"Limited-pay whole life is fully paid up after the stated period but covers the whole life."},
+{tp:5,q:"Universal life insurance is distinguished by its:",o:["Fixed premium and fixed death benefit","Flexible premium and adjustable death benefit","Lack of cash value","Market subaccounts"],a:1,w:"UL allows flexible premiums and an adjustable death benefit; cost of insurance is drawn from cash value."},
+{tp:5,q:"Under universal life Option B, the death benefit equals:",o:["A level face amount","The face amount plus the cash value","The cash value only","The premiums paid"],a:1,w:"Option B is the increasing death benefit (face + cash value); Option A stays level."},
+{tp:5,q:"Variable life insurance requires the producer to also hold:",o:["A property license","A securities registration","A surplus lines license","No additional license"],a:1,w:"Cash value sits in a separate account of securities, so a securities registration is required."},
+{tp:5,q:"In indexed universal life, interest credited to cash value is tied to a market index but protected from loss by a:",o:["Cap","Floor","Participation rate","Spread"],a:1,w:"The floor prevents negative crediting; the cap limits the upside."},
+{tp:5,q:"In a group life plan, the employer holds the master policy and each employee receives a:",o:["Rider","Certificate of coverage","Separate policy","Conditional receipt"],a:1,w:"Group coverage issues certificates to members under one master policy."},
+{tp:5,q:"The net amount at risk to the insurer on a whole life policy is the:",o:["Cash value","Face amount minus cash value","Premium paid","Face amount plus cash value"],a:1,w:"As cash value grows, the insurer's net amount at risk (face minus cash value) shrinks."},
+{tp:5,q:"Annually renewable term insurance is characterized by:",o:["A level premium for life","A premium that increases each year","Guaranteed cash value","A decreasing face amount"],a:1,w:"ART renews yearly with a premium that rises as the insured ages."},
+{tp:5,q:"A policy that pays dividends because its policyholders are its owners is issued by a:",o:["Stock insurer","Mutual insurer","Fraternal by default","Reciprocal only"],a:1,w:"Mutual insurers issue participating (dividend-paying) policies; stock insurers issue nonparticipating."},
+{tp:5,q:"Joint life (first-to-die) insurance pays the death benefit:",o:["When the last insured dies","When the first insured dies","To both insureds equally","Only after both die"],a:1,w:"First-to-die pays at the first death; survivorship (second-to-die) pays at the last."},
+{tp:5,q:"Endowment policies are designed to:",o:["Pay only at death","Pay the face amount if the insured survives to a stated age","Provide term coverage only","Avoid all cash value"],a:1,w:"An endowment pays out at maturity if the insured lives, or at death if earlier."},
+{tp:5,q:"Credit life insurance is typically written as:",o:["Whole life on the lender","Decreasing term on the borrower","An annuity","Variable life"],a:1,w:"Credit life is decreasing term that pays off a loan balance if the borrower dies."},
+
+/* ===== Riders & options ===== */
+{tp:6,q:"The waiver of premium rider keeps a policy in force by having the insurer pay premiums when the insured is:",o:["Unemployed","Totally disabled beyond the waiting period","Traveling abroad","Over age 65"],a:1,w:"After a waiting period (often six months) of total disability, the insurer pays the premiums."},
+{tp:6,q:"A guaranteed insurability rider lets the insured buy additional coverage at set dates:",o:["Only if still healthy","Without evidence of insurability","At the original age's rate","Only before age 30"],a:1,w:"Its value is buying more coverage with no new health questions at option dates or life events."},
+{tp:6,q:"The accidental death benefit rider, often called double indemnity, pays extra when death results from:",o:["Any cause","An accident within a stated period","Illness","Old age"],a:1,w:"It pays a multiple of the face amount for accidental death, usually within 90 days of the accident."},
+{tp:6,q:"An accelerated death benefit allows the insured to receive part of the face amount early upon:",o:["Job loss","A qualifying terminal illness","Retirement","Policy surrender"],a:1,w:"Amounts taken early reduce the benefit payable to the beneficiary."},
+{tp:6,q:"If a whole life owner stops paying and elects no nonforfeiture option, the automatic default is:",o:["Cash surrender","Reduced paid-up","Extended term","Automatic premium loan"],a:2,w:"Extended term continues the same face amount for a limited period using the cash value."},
+{tp:6,q:"The reduced paid-up nonforfeiture option provides:",o:["The same face amount for a limited time","A smaller permanent policy with no further premiums","A cash refund only","Term coverage to age 100"],a:1,w:"Reduced paid-up buys a smaller, fully paid whole life policy that lasts for life."},
+{tp:6,q:"Which dividend option purchases small amounts of additional permanent coverage?",o:["Cash","Reduce premium","Paid-up additions","Accumulate at interest"],a:2,w:"Paid-up additions use dividends to buy bits of fully paid whole life."},
+{tp:6,q:"Interest earned on dividends left to accumulate with the insurer is:",o:["Always tax-free","Taxable","A return of premium","A capital gain"],a:1,w:"Dividends are a nontaxable return of premium, but interest earned on them is taxable."},
+{tp:6,q:"The settlement option producing the LARGEST monthly income to the beneficiary is:",o:["Life income (straight life)","Fixed period","Interest only","Joint and survivor"],a:0,w:"Straight life pays the most because payments stop at death with nothing guaranteed to heirs."},
+{tp:6,q:"A settlement option that guarantees payments for the beneficiary's life but for at least a set number of years is:",o:["Life income only","Life with period certain","Fixed amount","Interest only"],a:1,w:"Life with period certain guarantees a minimum number of payments even if the beneficiary dies early."},
+{tp:6,q:"A payor benefit rider on a juvenile policy waives premiums if the:",o:["Child becomes disabled","Premium-paying adult dies or becomes disabled","Child reaches age 18","Policy is surrendered"],a:1,w:"It protects the child's coverage if the paying parent dies or is disabled."},
+{tp:6,q:"A cost-of-living rider increases coverage to keep pace with:",o:["Interest rates","Inflation","The insured's income","The cash value"],a:1,w:"The COLA rider raises the benefit as inflation rises, often without new underwriting."},
+{tp:6,q:"The return of premium rider pays the beneficiary the death benefit plus:",o:["Interest earned","A refund of premiums paid","The cash value","Double the face"],a:1,w:"ROP adds a refund of premiums paid to the base death benefit."},
+{tp:6,q:"A term rider added to a whole life policy provides:",o:["Permanent additional coverage","Temporary additional coverage on the same or another insured","A guaranteed cash value","An annuity payout"],a:1,w:"Term riders add temporary coverage, sometimes on a spouse or child."},
+
+/* ===== Annuities ===== */
+{tp:7,q:"An annuity is essentially the opposite of life insurance because it protects against:",o:["Dying too soon","Living too long","Disability","Property loss"],a:1,w:"Life insurance creates an estate; an annuity liquidates one to provide income for life."},
+{tp:7,q:"The person who receives income payments from an annuity is the:",o:["Owner","Annuitant","Beneficiary","Insurer"],a:1,w:"The annuitant's life measures the payout; the owner controls the contract."},
+{tp:7,q:"The phase during which an annuity is paying out income is:",o:["Accumulation","Annuitization","Surrender","Free look"],a:1,w:"Annuitization is the payout phase and is generally irreversible once elected."},
+{tp:7,q:"An immediate annuity is funded with a:",o:["Series of monthly premiums","Single premium, with payments beginning within about a year","No premium","Loan"],a:1,w:"Single-premium immediate annuities begin income within roughly 12 months."},
+{tp:7,q:"A fixed annuity's guaranteed rate is backed by the insurer's:",o:["Separate account","General account","Reinsurer","Owner"],a:1,w:"Fixed annuities credit a guaranteed rate from the general account; variable uses the separate account."},
+{tp:7,q:"A variable annuity requires the producer to hold a life license plus:",o:["A property license","A securities registration","A surplus lines license","Nothing extra"],a:1,w:"Variable products are securities held in a separate account and require securities licensing."},
+{tp:7,q:"An indexed annuity credits interest based on an index but limits gains with a:",o:["Floor only","Cap and participation rate","Guaranteed 8% rate","Surrender bonus"],a:1,w:"Indexed annuities use cap, floor, and participation rate; they sit in the general account."},
+{tp:7,q:"A penalty for withdrawing too much from an annuity too early is a:",o:["Free-look charge","Surrender charge","Mortality fee","Rider charge"],a:1,w:"Surrender charges decline over a schedule; many contracts allow a free withdrawal each year."},
+{tp:7,q:"The exclusion ratio applied to annuity income determines the portion that is:",o:["Taxable growth","A tax-free return of principal","Subject to penalty","A surrender charge"],a:1,w:"The exclusion ratio isolates the return of the owner's own cost basis, which is not taxed."},
+{tp:7,q:"The life-only (straight life) annuity payout option provides:",o:["The largest payment, ending at death with nothing to heirs","Guaranteed payments to heirs","A lump sum only","Payments for a fixed period"],a:0,w:"Straight life pays the most but leaves nothing to beneficiaries."},
+{tp:7,q:"A joint and survivor annuity continues payments:",o:["Until the first annuitant dies","As long as either annuitant lives","For 10 years only","To the estate"],a:1,w:"Payments continue while either of the two annuitants is alive."},
+{tp:7,q:"Contributions to a deferred annuity grow:",o:["Tax-free forever","Tax-deferred until withdrawal","As tax-free municipal income","Only if annuitized"],a:1,w:"Annuity earnings accumulate tax-deferred; gains are taxed when withdrawn."},
+
+/* ===== Taxation ===== */
+{tp:8,q:"A life insurance death benefit paid as a lump sum to a named beneficiary is:",o:["Fully taxable as income","Income-tax free","Taxed as a capital gain","Taxable above $50,000"],a:1,w:"Lump-sum death proceeds are received income-tax free."},
+{tp:8,q:"When death proceeds are paid in installments, the portion that is taxable is the:",o:["Principal","Interest earned","Entire payment","None of it"],a:1,w:"The interest element of installment payments is taxable; the principal remains tax-free."},
+{tp:8,q:"Premiums paid for personal life insurance are:",o:["Tax-deductible","Not tax-deductible","A tax credit","Deductible only for seniors"],a:1,w:"Personal life insurance premiums are not deductible."},
+{tp:8,q:"Withdrawals from a non-MEC life insurance policy are taxed on a:",o:["LIFO basis","FIFO basis","Pro-rata basis","Capital gains basis"],a:1,w:"Non-MEC life policies withdraw basis first (FIFO); the owner's own money comes out untaxed first."},
+{tp:8,q:"A policy that fails the seven-pay test becomes a:",o:["Modified endowment contract","Qualified plan","Variable contract","Term conversion"],a:0,w:"Overfunding past the seven-pay limit creates a MEC."},
+{tp:8,q:"Distributions from a MEC are taxed:",o:["FIFO with no penalty","LIFO, with a 10% penalty before age 59½","Never","As a return of premium"],a:1,w:"A MEC flips to LIFO (gain out first) plus a pre-59½ penalty; the death benefit stays income-tax free."},
+{tp:8,q:"A 1035 exchange allows a tax-free transfer from:",o:["An annuity into life insurance","Life insurance into an annuity","An IRA into life insurance","A Roth into an annuity"],a:1,w:"Life-to-life, life-to-annuity, and annuity-to-annuity are permitted; annuity-to-life is NOT."},
+{tp:8,q:"Cash value growth inside a life insurance policy is:",o:["Taxed annually","Tax-deferred","A capital gain each year","Always tax-free at withdrawal"],a:1,w:"Inside buildup grows tax-deferred while it remains in the policy."},
+{tp:8,q:"Dividends paid on a participating life policy are generally:",o:["Taxable income","A nontaxable return of premium","A capital gain","Subject to a 10% penalty"],a:1,w:"Dividends are treated as a return of overpaid premium and are not taxable."},
+{tp:8,q:"The taxable portion of each annuity payment during annuitization is the:",o:["Return of principal","Growth/earnings portion","Surrender charge","Full payment"],a:1,w:"Only the earnings portion is taxable; the exclusion ratio protects the return of basis."},
+{tp:8,q:"Amounts an employer pays for group term life over the first $50,000 of coverage are:",o:["Fully deductible to the employee","Imputed as taxable income to the employee","Never taxed","A capital gain"],a:1,w:"Coverage above $50,000 creates imputed income to the employee."},
+{tp:8,q:"Qualified plan contributions and IRA deductions are attractive because contributions are often:",o:["After-tax","Pre-tax, with growth tax-deferred","Tax-free at withdrawal always","A capital loss"],a:1,w:"Qualified money is typically pre-tax with tax-deferred growth, taxed at distribution."},
+
+/* ===== Health insurance ===== */
+{tp:9,q:"The amount the insured pays out of pocket before the health plan begins to pay is the:",o:["Premium","Deductible","Coinsurance","Copay"],a:1,w:"The deductible is the annual amount paid first before benefits kick in."},
+{tp:9,q:"An 80/20 arrangement in which the plan pays 80% and the insured pays 20% is:",o:["A copay","Coinsurance","A deductible","A stop-loss"],a:1,w:"Coinsurance is a percentage split of covered costs after the deductible."},
+{tp:9,q:"The annual ceiling after which the plan pays 100% of covered charges is the:",o:["Deductible","Out-of-pocket maximum","Coinsurance limit","Premium cap"],a:1,w:"Also called the stop-loss, it caps the insured's yearly cost share."},
+{tp:9,q:"In an HMO, the physician who coordinates care and provides referrals is the:",o:["Specialist","Primary care physician","Utilization reviewer","Adjuster"],a:1,w:"The PCP is the gatekeeper; HMOs emphasize prevention and in-network care."},
+{tp:9,q:"Compared with an HMO, a PPO generally:",o:["Requires referrals","Allows out-of-network care at higher cost","Covers only in-network care","Has no network"],a:1,w:"PPOs let members go out of network for a higher share and need no referral."},
+{tp:9,q:"A flat dollar amount paid for a specific service, such as $40 for an office visit, is a:",o:["Deductible","Copay","Coinsurance","Premium"],a:1,w:"A copay is a fixed fee per service."},
+{tp:9,q:"A provision that lets the insurer refuse to renew a health policy on any anniversary is:",o:["Noncancelable","Guaranteed renewable","Optionally renewable","Conditionally renewable"],a:2,w:"Optionally renewable gives the insurer discretion to nonrenew at anniversaries."},
+{tp:9,q:"A guaranteed renewable health policy means the insurer cannot cancel but may:",o:["Raise rates for an entire class","Raise one insured's rate individually","Change the benefits","Add exclusions later"],a:0,w:"Rates may rise by class, but coverage cannot be canceled and terms stay fixed."},
+{tp:9,q:"Coordination of benefits provisions exist primarily to:",o:["Increase total benefits","Prevent the insured from collecting more than 100% of covered expenses","Lower premiums","Speed up claims"],a:1,w:"COB prevents duplicate payment beyond the actual expense across multiple plans."},
+{tp:9,q:"A basic hospital expense policy typically pays for:",o:["Physician office visits only","Room, board, and miscellaneous hospital charges","Prescription drugs only","Dental care"],a:1,w:"Basic hospital coverage addresses inpatient room/board and ancillary charges."},
+{tp:9,q:"A preexisting condition, broadly, is one for which the insured received care:",o:["After the policy began","Before the policy's effective date within a look-back window","Only in childhood","Only if hospitalized"],a:1,w:"Preexisting conditions are those treated/diagnosed before coverage began, within the defined period."},
+{tp:9,q:"The right of a covered person to continue employer group health coverage after leaving a job is provided by:",o:["HIPAA portability","COBRA / Cal-COBRA","The free-look law","Medicare Part C"],a:1,w:"COBRA (larger employers) and Cal-COBRA (small employers) let former employees continue coverage at their own cost."},
+{tp:9,q:"A Health Savings Account must be paired with a:",o:["Low-deductible plan","Qualified high-deductible health plan","Medicare Advantage plan","Disability policy"],a:1,w:"HSAs require an HSA-qualified high-deductible health plan."},
+{tp:9,q:"An HMO focuses on cost control primarily by:",o:["Emphasizing preventive care and using a primary-care gatekeeper","Paying every out-of-network claim in full","Eliminating all copays","Removing the need for referrals"],a:0,w:"HMOs stress prevention and route care through a primary care physician gatekeeper to control cost."},
+
+/* ===== Disability income ===== */
+{tp:10,q:"The waiting period at the start of a disability claim, measured in days before benefits begin, is the:",o:["Benefit period","Elimination period","Probationary period","Grace period"],a:1,w:"The elimination period is a time deductible; longer periods lower the premium."},
+{tp:10,q:"How long disability benefits will be paid once they begin is set by the:",o:["Elimination period","Benefit period","Probationary period","Free-look period"],a:1,w:"The benefit period governs the duration of payments, e.g., two years or to age 65."},
+{tp:10,q:"An 'own occupation' definition of total disability considers the insured disabled if they cannot perform:",o:["Any job at all","The duties of their own occupation","Household chores","Any job they are educated for"],a:1,w:"Own-occ is broader and more favorable than any-occupation."},
+{tp:10,q:"Residual disability benefits are based on the insured's:",o:["Age","Loss of income","Number of dependents","Occupation class only"],a:1,w:"Residual (partial) benefits pay in proportion to income actually lost."},
+{tp:10,q:"A noncancelable disability policy locks in both the coverage and the:",o:["Occupation class","Premium rate","Benefit trigger","Elimination period only"],a:1,w:"Noncancelable is the strongest: neither rates nor coverage can change through the term."},
+{tp:10,q:"The probationary period in a disability policy is the time after issue during which:",o:["No benefits are paid for sickness that begins","Premiums are waived","The free look runs","Benefits double"],a:0,w:"Illnesses beginning during the initial probationary period are not covered."},
+{tp:10,q:"A presumptive disability provision pays full benefits automatically upon loss of:",o:["A single finger","Sight, hearing, speech, or two limbs","One day of work","Any income"],a:1,w:"Presumptive disability (e.g., loss of sight, hearing, speech, or two limbs) is deemed total."},
+{tp:10,q:"Benefits from an individual disability income policy paid for with after-tax premiums are:",o:["Fully taxable","Received income-tax free","Taxable above $50,000","A capital gain"],a:1,w:"When the individual pays premiums with after-tax dollars, benefits are tax-free."},
+{tp:10,q:"An 'any occupation' definition is:",o:["More favorable to the insured","Stricter and harder to qualify under","Only used for seniors","Illegal in most states"],a:1,w:"Any-occupation is a tougher standard, requiring inability to perform any suitable work."},
+{tp:10,q:"A business overhead expense policy reimburses a disabled owner for:",o:["Lost personal income","Ongoing business expenses like rent and staff","Medical bills","Retirement contributions"],a:1,w:"BOE covers business operating costs, not the owner's salary."},
+
+/* ===== Medicare & LTC ===== */
+{tp:11,q:"Medicare Part A primarily covers:",o:["Physician office visits","Inpatient hospital care","Prescription drugs","Vision and dental"],a:1,w:"Part A is hospital/inpatient coverage, usually premium-free with sufficient work credits."},
+{tp:11,q:"Medicare Part B covers physician and outpatient services and requires:",o:["No premium","A monthly premium","A hospital stay first","Employer sponsorship"],a:1,w:"Part B is the medical side and charges a monthly premium."},
+{tp:11,q:"Medicare Part C (Medicare Advantage) is:",o:["Original Medicare","A private plan replacing Parts A and B, often with extras","Drug-only coverage","A supplement policy"],a:1,w:"Part C plans are offered by private insurers and must cover what A and B cover."},
+{tp:11,q:"Standardized Medicare Supplement (Medigap) plans are identified by:",o:["Numbers","Letters, with identical benefits per letter across carriers","Company brand","Star ratings"],a:1,w:"Medigap plans are lettered and standardized, so a given letter means the same benefits everywhere."},
+{tp:11,q:"Medicare Part D provides:",o:["Hospital coverage","Prescription drug coverage","Long-term custodial care","Vision care"],a:1,w:"Part D covers prescription drugs and is sold by private companies."},
+{tp:11,q:"The program that covers health costs based on financial need (called Nevada Medicaid in-state) is:",o:["Medicare","Medicaid","Medigap","COBRA"],a:1,w:"Medicaid is the needs-based program (Nevada Medicaid in-state); it can cover long-term custodial care that Medicare will not."},
+{tp:11,q:"The usual benefit trigger for a long-term care policy is the inability to perform:",o:["Any one ADL","Two of six activities of daily living, or cognitive impairment","All six ADLs","Any work task"],a:1,w:"Most LTC policies trigger on loss of two of six ADLs or cognitive impairment such as dementia."},
+{tp:11,q:"Long-term CUSTODIAL care in a nursing home is generally NOT covered by:",o:["An LTC policy","Medicaid after spend-down","Medicare","A Partnership policy"],a:2,w:"Medicare covers only limited skilled care after a qualifying stay, not long-term custodial care."},
+{tp:11,q:"The six activities of daily living include bathing, dressing, eating, toileting, continence, and:",o:["Driving","Transferring","Shopping","Cooking"],a:1,w:"Transferring (moving from bed to chair) is the sixth ADL; the others listed are instrumental activities."},
+{tp:11,q:"State LTC rules (NAIC model) require LTC policies to offer applicants:",o:["A free rider","Inflation protection","Guaranteed cash value","A death benefit"],a:1,w:"Inflation protection must be offered so benefits keep pace with rising care costs."},
+{tp:11,q:"A Partnership-qualified LTC policy provides the added benefit of:",o:["A higher death benefit","Asset protection from Medicaid spend-down","Free premiums","Guaranteed renewal at any age"],a:1,w:"Partnership policies let insureds protect assets equal to benefits paid when qualifying for Medicaid."},
+{tp:11,q:"Care requiring a licensed medical professional, ordered by a physician, is:",o:["Custodial care","Skilled care","Homemaker services","Adult day care"],a:1,w:"Skilled care requires licensed professionals; custodial care is help with daily living."},
+
+/* ===== Nevada Code & Ethics ===== */
+{tp:12,q:"In Nevada, the Insurance Commissioner is:",o:["Elected by the voters","Appointed through the Department of Business & Industry","Chosen by the insurers","Elected to a 4-year term"],a:1,w:"Nevada APPOINTS its Commissioner, unlike California which elects. The Commissioner enforces the code but does not write it."},
+{tp:12,q:"For an individual life insurance policy in Nevada, the standard minimum free-look period is:",o:["3 days","10 days","20 days","60 days"],a:1,w:"Nevada's standard free look is at least 10 days (NRS 688A.165). A replacement policy gets a longer 30-day free look."},
+{tp:12,q:"In Nevada, a replacement life or annuity policy must be given a free-look period of at least:",o:["10 days","20 days","30 days","45 days"],a:2,w:"Replacement policies get a 30-day free look under NRS 688A.165 — Nevada's longer window is tied to replacement, not the buyer's age."},
+{tp:12,q:"Prelicensing education in Nevada is:",o:["40 hours, required","A 12-hour ethics course, required","Not required since January 1, 2020","Required only for annuities"],a:2,w:"Nevada has not required prelicensing education since Jan 1, 2020. Candidates still must pass the Pearson VUE exam and be fingerprinted."},
+{tp:12,q:"Nevada resident producers must complete continuing education of:",o:["12 hours per year","24 hours per two-year term","30 hours per three-year term, including 3 hours of ethics","No CE"],a:2,w:"Nevada uses a 3-year cycle: 30 hours including 3 hours of ethics — different from the common 2-year/24-hour cycle."},
+{tp:12,q:"Before selling annuities in Nevada, a producer must complete:",o:["Nothing extra","A one-time 4-hour annuity Best Interest training","A securities exam","A property license"],a:1,w:"Nevada adopted the NAIC Best Interest rule (effective Nov 15, 2024): a one-time 4-hour annuity training is required before selling annuities."},
+{tp:12,q:"The Nevada insurance licensing exam is administered by:",o:["PSI","Pearson VUE","The Division directly","Prometric"],a:1,w:"Nevada uses Pearson VUE. Passing is a scaled score of 80, not a raw percentage."},
+{tp:12,q:"A person who transacts insurance in Nevada without a license is subject to:",o:["A warning only","Civil and criminal penalties","Automatic licensing","No consequence"],a:1,w:"Transacting insurance without a license is a violation carrying civil and criminal penalties."},
+{tp:12,q:"Nevada's Unfair Claims Settlement Practices law (NRS 686A.310) primarily protects:",o:["Insurers","Claimants during the claims process","Agents","Reinsurers"],a:1,w:"It sets standards for prompt, fair claims handling to protect claimants; violations bring penalties from the Division."},
+{tp:12,q:"When replacing an existing life policy in Nevada, the producer must:",o:["Do nothing special","Provide the required replacement disclosures and notices","Cancel the old policy first","Pay the first premium"],a:1,w:"Nevada's replacement rules require specific disclosures and notices to protect the consumer from unnecessary replacement."},
+{tp:12,q:"Nevada's insurance code is enforced by the Commissioner, while it is written by the:",o:["Commissioner","State Legislature","Insurers","Courts"],a:1,w:"The Legislature writes the code (NRS); the Commissioner and Division enforce it."},
+{tp:12,q:"Nevada's Trade Practices and Frauds law (NRS 686A) prohibits:",o:["Paying claims promptly","Twisting, defamation, and false advertising","Offering CE courses","Filing rate changes"],a:1,w:"It lists prohibited practices including misrepresentation, twisting, churning, defamation, boycott, and rebating."},
+{tp:12,q:"Commingling in Nevada means a producer has:",o:["Sold too many policies","Mixed premium trust funds with personal funds","Replaced a policy","Missed CE hours"],a:1,w:"Premiums are trust funds; combining them with personal money is prohibited commingling."},
+{tp:12,q:"A Nevada producer must keep the Commissioner informed of a change in:",o:["Favorite carrier","Residence or business address","Client list","Marital status"],a:1,w:"Address changes must be reported promptly, as must criminal convictions and administrative actions."},
+{tp:12,q:"To be issued a Nevada producer license, an applicant must be at least:",o:["16","18","21","25"],a:1,w:"Nevada requires applicants to be at least 18, pass the exam, and be fingerprinted."}
+];
+
+/* ================= EXAM BANK ENGINE ================= */
+var exList=[],exAns=[],exCur=0,exFlags={},exMode='mock',exSecs=0,exTimerH=null,exTimed=false;
+if(!P.__perf)P.__perf={};
+
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function topicAcc(tp){var d=P.__perf[tp];if(!d||!d.seen)return null;return d.correct/d.seen}
+
+function examHome(){
+  id('ex-home').classList.remove('hidden');
+  id('ex-run').classList.add('hidden');
+  id('ex-report').classList.add('hidden');
+  var g='';
+  TOPICS.forEach(function(t,i){
+    var n=BANK.filter(function(x){return x.tp===i}).length;
+    var acc=topicAcc(i);
+    var badge=acc===null?'not tried':(Math.round(acc*100)+'% best pass');
+    var cls=acc!==null&&acc<0.7?'wk':(acc!==null?'best':'');
+    g+='<button class="tbtn" onclick="startTopic('+i+')"><b>'+t+'</b>'+
+       '<span class="'+cls+'">'+n+' Qs · '+badge+'</span></button>';
+  });
+  id('topicgrid').innerHTML=g;
+}
+
+function startMock(){
+  var pool=shuffle(BANK);
+  exList=pool.slice(0,Math.min(150,pool.length));
+  exMode='mock';beginExam(true,190*60);
+}
+function startTopic(tp){
+  exList=BANK.filter(function(x){return x.tp===tp});
+  exMode='topic';beginExam(false,0);
+}
+function startWeakest(){
+  // weight questions by how weak their topic is (unseen treated as moderately weak)
+  var weighted=[];
+  BANK.forEach(function(x){
+    var acc=topicAcc(x.tp);
+    var w=acc===null?1.4:(1-acc)+0.15;
+    var reps=Math.max(1,Math.round(w*10));
+    for(var k=0;k<reps;k++)weighted.push(x);
+  });
+  var picked=[],seen={};
+  weighted=shuffle(weighted);
+  for(var i=0;i<weighted.length&&picked.length<25;i++){
+    var q=weighted[i];var key=q.q;
+    if(seen[key])continue;seen[key]=1;picked.push(q);
+  }
+  exList=picked;exMode='weak';beginExam(false,0);
+}
+
+function beginExam(timed,secs){
+  exAns=exList.map(function(){return null});
+  exFlags={};exCur=0;exTimed=timed;exSecs=secs;
+  id('ex-home').classList.add('hidden');
+  id('ex-report').classList.add('hidden');
+  id('ex-run').classList.remove('hidden');
+  stopTimer();
+  if(timed){exTimerH=setInterval(tick,1000);id('extimer').style.display=''}
+  else{id('extimer').style.display='none'}
+  paintTimer();showExQ();
+}
+function tick(){exSecs--;if(exSecs<=0){exSecs=0;paintTimer();stopTimer();submitExam();return}paintTimer()}
+function paintTimer(){
+  if(!exTimed)return;
+  var h=Math.floor(exSecs/3600),m=Math.floor((exSecs%3600)/60),s=exSecs%60;
+  function p(n){return(n<10?'0':'')+n}
+  id('extimer').textContent=(h>0?h+':':'')+p(m)+':'+p(s);
+  id('extimer').style.color=exSecs<300?'#e79b94':'var(--gold)';
+}
+function stopTimer(){if(exTimerH){clearInterval(exTimerH);exTimerH=null}}
+
+function showExQ(){
+  var q=exList[exCur],chosen=exAns[exCur];
+  var answered=exAns.filter(function(a){return a!==null}).length;
+  var flagged=Object.keys(exFlags).filter(function(k){return exFlags[k]}).length;
+  id('exfill').style.width=Math.round((exCur+1)/exList.length*100)+'%';
+  id('exmeta').textContent=answered+' answered'+(flagged?' · '+flagged+' flagged':'');
+  var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">'+
+    '<span class="gtag" style="color:#9a8f7a">'+TOPICS[q.tp]+'</span>'+
+    '<span class="exmeta" style="color:#9a8f7a">Question '+(exCur+1)+' of '+exList.length+'</span>'+
+    '<span class="flagwrap"><button class="flagbtn" aria-pressed="'+(exFlags[exCur]?'true':'false')+'" onclick="toggleFlag()">'+(exFlags[exCur]?'★ Flagged':'☆ Flag')+'</button></span>'+
+    '</div>';
+  h+='<h3>'+q.q+'</h3>';
+  q.o.forEach(function(o,i){
+    h+='<button class="opt'+(chosen===i?' sel':'')+'" onclick="selectEx('+i+')">'+o+'</button>';
+  });
+  id('exbox').innerHTML=h;
+  var nav='';
+  nav+='<button class="big ghost" onclick="prevEx()"'+(exCur===0?' disabled':'')+'>← Previous</button>';
+  if(exCur<exList.length-1)nav+='<button class="big" onclick="nextEx()">Next →</button>';
+  nav+='<button class="big" style="background:#c9a84c;color:#121e30" onclick="confirmSubmit()">Submit &amp; score</button>';
+  id('exnavbtns').innerHTML=nav;
+}
+function selectEx(i){exAns[exCur]=i;showExQ()}
+function toggleFlag(){exFlags[exCur]=!exFlags[exCur];showExQ()}
+function prevEx(){if(exCur>0){exCur--;showExQ();window.scrollTo(0,0)}}
+function nextEx(){if(exCur<exList.length-1){exCur++;showExQ();window.scrollTo(0,0)}}
+function quitExam(){
+  var answered=exAns.filter(function(a){return a!==null}).length;
+  if(answered>0&&!confirm('End this set? Your progress on it won\u2019t be saved.'))return;
+  stopTimer();go('exam');
+}
+function confirmSubmit(){
+  var un=exAns.filter(function(a){return a===null}).length;
+  if(un>0&&!confirm(un+' question'+(un>1?'s are':' is')+' still blank. Submit anyway?'))return;
+  submitExam();
+}
+
+function submitExam(){
+  stopTimer();
+  var correct=0,byTopic={};
+  exList.forEach(function(q,i){
+    var t=q.tp;if(!byTopic[t])byTopic[t]={seen:0,correct:0};
+    byTopic[t].seen++;
+    var ok=exAns[i]===q.a;
+    if(ok){correct++;byTopic[t].correct++}
+    // persist into long-term perf
+    if(!P.__perf[t])P.__perf[t]={seen:0,correct:0};
+    P.__perf[t].seen++;if(ok)P.__perf[t].correct++;
+  });
+  save('hlb_translator_v1',P);
+  var pct=Math.round(correct/exList.length*100);
+  var pass=pct>=80;
+  var h='<div class="report">';
+  h+='<p class="score '+(pass?'pass':'fail')+'">'+pct+'%</p>';
+  h+='<p class="verdict">'+correct+' of '+exList.length+' correct — '+
+     (exMode==='mock'?(pass?'80%+ on a full-length mock — that\u2019s the cushion you want. Nevada scores on a scaled 80, and consistent 80%+ practice means ready.':'under 80%. Nevada passes on a scaled 80, so treat 80% here as the target. The weak topics below are exactly where to spend the next sessions.'):
+      (pass?'solid. Push this topic toward 80%+ before the next full mock.':'this topic needs another pass in the Study tab, then drill it again here.'))+'</p>';
+  // topic breakdown
+  var tks=Object.keys(byTopic).map(Number).sort(function(a,b){return (byTopic[a].correct/byTopic[a].seen)-(byTopic[b].correct/byTopic[b].seen)});
+  h+='<div>';
+  tks.forEach(function(t){
+    var d=byTopic[t],p=Math.round(d.correct/d.seen*100),weak=p<70;
+    h+='<div class="trow"><div><div class="tn">'+TOPICS[t]+'</div>'+
+       '<div class="tbar"><i style="width:'+p+'%;background:'+(weak?'#b4483f':'#3f7d5c')+'"></i></div></div>'+
+       '<div class="tpct '+(weak?'wk':'ok')+'">'+p+'%<br><span style="font-weight:500;color:#8a8171;font-size:.7rem">'+d.correct+'/'+d.seen+'</span></div></div>';
+  });
+  h+='</div>';
+  h+='<div class="exnav">'+
+     '<button class="big" style="background:#c9a84c;color:#121e30" onclick="reviewToggle()">Review all answers</button>'+
+     (exMode==='mock'?'<button class="big" onclick="startMock()">New mock</button>':'<button class="big" onclick="go(\'exam\')">Back to bank</button>')+
+     '</div>';
+  h+='<div id="reviewbox" class="rvw hidden"></div>';
+  h+='</div>';
+  id('ex-report').innerHTML=h;
+  id('ex-run').classList.add('hidden');
+  id('ex-report').classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+function reviewToggle(){
+  var box=id('reviewbox');
+  if(!box.classList.contains('hidden')){box.classList.add('hidden');return}
+  var h='';
+  exList.forEach(function(q,i){
+    var chosen=exAns[i],ok=chosen===q.a;
+    h+='<div class="ri"><p class="rq">'+(i+1)+'. '+q.q+'  '+(ok?'<span class="ok">✓</span>':'<span class="wk">✗</span>')+'</p>';
+    q.o.forEach(function(o,j){
+      var c=j===q.a?'ro c':(j===chosen?'ro x':'ro');
+      var mk=j===q.a?'✓ ':(j===chosen?'✗ ':'');
+      h+='<p class="'+c+'">'+mk+o+'</p>';
+    });
+    if(chosen===null)h+='<p class="ro" style="color:#9a8f7a">(left blank)</p>';
+    h+='<p class="rw">'+q.w+'</p></div>';
+  });
+  box.innerHTML=h;box.classList.remove('hidden');
+}
+
+renderHome();
+</script>
+</body>
+</html>
