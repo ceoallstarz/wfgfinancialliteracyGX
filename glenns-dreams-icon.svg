@@ -1,0 +1,30 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#071527"/>
+      <stop offset="0.55" stop-color="#0B1F3A"/>
+      <stop offset="1" stop-color="#12294a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.1" r="0.7">
+      <stop offset="0" stop-color="#C9A227" stop-opacity="0.42"/>
+      <stop offset="0.55" stop-color="#C9A227" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#C9A227" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E3BC4B"/>
+      <stop offset="1" stop-color="#C9A227"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <rect width="1024" height="1024" fill="url(#glow)"/>
+
+  <g fill="url(#gold)">
+    <rect x="492" y="792" width="40" height="118" rx="7"/>
+    <path d="M512 610 L628 812 Q636 828 618 828 L406 828 Q388 828 396 812 Z"/>
+    <path d="M512 500 L604 690 Q612 706 594 706 L430 706 Q412 706 420 690 Z"/>
+    <path d="M512 398 L582 574 Q590 590 572 590 L452 590 Q434 590 442 574 Z"/>
+    <path d="M512 300 L560 462 Q567 478 550 478 L474 478 Q457 478 464 462 Z"/>
+    <path d="M512 214 L544 358 Q550 374 533 374 L491 374 Q474 374 480 358 Z"/>
+  </g>
+</svg>
