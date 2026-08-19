@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glenn's Dreams — I'm Coming For All of It | Hyperion Legacy Builders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1F3A;
+    --navy-deep:#071527;
+    --navy-soft:#12294a;
+    --gold:#C9A227;
+    --gold-bright:#E3BC4B;
+    --cream:#F7F3E8;
+    --cream-soft:#EFE9D8;
+    --ink:#1c2536;
+    --muted:#6b7488;
+    --won:#2e7d4f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    line-height:1.55;
+  }
+
+  /* ============ HEADER ============ */
+  header{
+    background:linear-gradient(160deg,var(--navy-deep) 0%,var(--navy) 55%,var(--navy-soft) 100%);
+    color:var(--cream);
+    padding:58px 24px 40px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  header::after{
+    content:"";
+    position:absolute;inset:0;
+    background:radial-gradient(ellipse at 50% -20%,rgba(201,162,39,.18),transparent 60%);
+    pointer-events:none;
+  }
+  .eyebrow{
+    font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--gold-bright);font-weight:600;margin-bottom:14px;
+  }
+  h1{
+    font-size:clamp(2rem,5vw,3.1rem);
+    font-weight:800;letter-spacing:-.01em;line-height:1.1;
+  }
+  h1 .accent{color:var(--gold-bright);}
+  .subhead{
+    margin-top:14px;font-size:.9rem;color:rgba(247,243,232,.7);
+    max-width:560px;margin-left:auto;margin-right:auto;
+  }
+  .creed{
+    margin-top:16px;font-size:.8rem;letter-spacing:.22em;
+    text-transform:uppercase;color:rgba(247,243,232,.6);font-weight:500;
+  }
+  .creed b{color:var(--gold-bright);font-weight:700;}
+
+  /* ============ SECTION NAV ============ */
+  .section-nav{
+    position:sticky;top:0;z-index:20;
+    background:rgba(7,21,39,.96);backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(201,162,39,.25);
+    display:flex;justify-content:center;gap:8px;flex-wrap:wrap;
+    padding:12px 16px;
+  }
+  .section-nav a{
+    font-size:.76rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    color:rgba(247,243,232,.75);text-decoration:none;
+    padding:7px 15px;border-radius:99px;transition:all .15s;
+    border:1px solid transparent;
+  }
+  .section-nav a:hover{color:var(--gold-bright);border-color:rgba(201,162,39,.4);}
+
+  /* ============ LAYOUT ============ */
+  main{max-width:860px;margin:0 auto;padding:36px 20px 40px;}
+  .section-divider{
+    max-width:860px;margin:16px auto 0;padding:0 20px;
+    display:flex;align-items:center;gap:16px;
+  }
+  .section-divider::before,.section-divider::after{
+    content:"";flex:1;height:1px;background:rgba(11,31,58,.15);
+  }
+  .section-divider span{
+    font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;
+    font-weight:700;color:var(--gold);
+  }
+  .intro{
+    text-align:center;color:var(--muted);font-size:.92rem;
+    max-width:620px;margin:0 auto 34px;
+  }
+
+  /* ============ PROGRESS BAR ============ */
+  .progress-wrap{max-width:860px;margin:28px auto 0;position:relative;z-index:1;}
+  .progress-stats{
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-size:.8rem;color:rgba(247,243,232,.75);margin-bottom:8px;padding:0 2px;
+  }
+  .progress-stats .count{font-size:1.05rem;font-weight:700;color:var(--gold-bright);}
+  .progress-bar{height:10px;border-radius:99px;background:rgba(247,243,232,.14);overflow:hidden;}
+  .progress-fill{
+    height:100%;width:0%;border-radius:99px;
+    background:linear-gradient(90deg,var(--gold),var(--gold-bright));
+    transition:width .5s ease;
+  }
+
+  /* ============ TOP 5 DREAMS ============ */
+  .dreams{
+    background:var(--navy);border-radius:16px;padding:34px 26px 28px;
+    margin-bottom:38px;color:var(--cream);position:relative;overflow:hidden;
+  }
+  .dreams::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(ellipse at 85% -10%,rgba(201,162,39,.16),transparent 55%);
+    pointer-events:none;
+  }
+  .dreams-eyebrow{
+    font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--gold-bright);font-weight:700;margin-bottom:6px;
+  }
+  .dreams h2{font-size:1.5rem;font-weight:800;letter-spacing:-.01em;margin-bottom:20px;}
+  .dream{
+    display:flex;gap:16px;align-items:flex-start;padding:15px 0;
+    border-bottom:1px solid rgba(247,243,232,.1);position:relative;
+  }
+  .dream:last-of-type{border-bottom:none;}
+  .dream-num{
+    flex-shrink:0;width:36px;height:36px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:.95rem;
+    border:2px solid rgba(247,243,232,.3);color:var(--cream);
+  }
+  .dream.anchor .dream-num{
+    background:var(--gold);border-color:var(--gold);color:var(--navy-deep);
+    box-shadow:0 0 0 4px rgba(201,162,39,.22);
+  }
+  .dream-body{flex:1;min-width:0;}
+  .dream-title{font-weight:700;font-size:1.02rem;color:#fff;}
+  .dream.anchor .dream-title{color:var(--gold-bright);}
+  .dream-desc{font-size:.87rem;color:rgba(247,243,232,.75);margin-top:3px;}
+  .dream-tagline{
+    display:inline-block;font-size:.62rem;font-weight:700;letter-spacing:.16em;
+    text-transform:uppercase;padding:2px 9px;border-radius:99px;
+    background:rgba(201,162,39,.18);color:var(--gold-bright);
+    margin-left:8px;vertical-align:2px;
+  }
+  .dreams-insight{
+    margin-top:20px;padding:16px 18px;background:rgba(201,162,39,.1);
+    border-left:3px solid var(--gold);border-radius:0 10px 10px 0;
+    font-size:.9rem;color:rgba(247,243,232,.9);
+  }
+  .dreams-insight b{color:var(--gold-bright);}
+
+  /* ============ TIER CARDS ============ */
+  .tier{
+    background:#fff;border:1px solid rgba(11,31,58,.1);
+    border-radius:14px;margin-bottom:22px;overflow:hidden;
+    box-shadow:0 2px 10px rgba(11,31,58,.05);
+  }
+  .tier-head{
+    width:100%;display:flex;align-items:center;gap:16px;
+    padding:20px 22px;background:none;border:none;cursor:pointer;
+    text-align:left;font-family:inherit;
+  }
+  .tier-head:focus-visible{outline:3px solid var(--gold);outline-offset:-3px;}
+  .tier-badge{
+    flex-shrink:0;width:46px;height:46px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:1.05rem;color:var(--cream);
+    background:var(--navy);position:relative;
+  }
+  .tier-1 .tier-badge{background:var(--gold);color:var(--navy-deep);box-shadow:0 0 0 4px rgba(201,162,39,.22);}
+  .tier-title-wrap{flex:1;min-width:0;}
+  .tier-title{font-size:1.12rem;font-weight:700;color:var(--navy);}
+  .tier-sub{font-size:.8rem;color:var(--muted);margin-top:2px;}
+  .tier-count{
+    flex-shrink:0;font-size:.78rem;font-weight:600;color:var(--muted);
+    background:var(--cream-soft);padding:5px 11px;border-radius:99px;white-space:nowrap;
+  }
+  .chev{
+    flex-shrink:0;width:12px;height:12px;border-right:2.5px solid var(--navy);
+    border-bottom:2.5px solid var(--navy);transform:rotate(45deg);
+    transition:transform .25s;margin-left:2px;
+  }
+  .tier.open .chev{transform:rotate(-135deg);}
+  .tier-body{display:none;border-top:1px solid rgba(11,31,58,.08);}
+  .tier.open .tier-body{display:block;}
+  .group-label{
+    font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
+    font-weight:700;color:var(--gold);padding:16px 22px 6px;
+  }
+  .wish{
+    display:flex;align-items:flex-start;gap:13px;padding:11px 22px;cursor:pointer;
+    border-bottom:1px solid rgba(11,31,58,.045);transition:background .15s;
+  }
+  .wish:hover{background:rgba(201,162,39,.06);}
+  .wish:last-child{border-bottom:none;}
+  .wish input{
+    appearance:none;-webkit-appearance:none;
+    flex-shrink:0;width:21px;height:21px;margin-top:2px;
+    border:2px solid rgba(11,31,58,.35);border-radius:6px;
+    cursor:pointer;position:relative;background:#fff;transition:all .15s;
+  }
+  .wish input:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+  .wish input:checked{background:var(--won);border-color:var(--won);}
+  .wish input:checked::after{
+    content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;
+    border-right:2.5px solid #fff;border-bottom:2.5px solid #fff;transform:rotate(45deg);
+  }
+  .wish-text{font-size:.94rem;color:var(--ink);}
+  .wish-note{display:block;font-size:.78rem;color:var(--muted);font-style:italic;margin-top:1px;}
+  .wish.done .wish-text{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(46,125,79,.6);}
+  .wish.done .wish-note{text-decoration:none;}
+  .tag{
+    display:inline-block;font-size:.62rem;font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;padding:2px 8px;border-radius:99px;margin-left:8px;vertical-align:2px;
+  }
+  .tag-now{background:rgba(201,162,39,.18);color:#8a6d10;}
+  .tag-won{background:rgba(46,125,79,.14);color:var(--won);}
+
+  /* ============ WON SECTION ============ */
+  .won-section{
+    background:var(--navy);border-radius:14px;color:var(--cream);
+    padding:26px 24px;margin-top:34px;
+  }
+  .won-section h2{
+    font-size:1rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--gold-bright);font-weight:700;margin-bottom:6px;
+  }
+  .won-section p.empty{font-size:.88rem;color:rgba(247,243,232,.65);}
+  #wonList{list-style:none;margin-top:10px;}
+  #wonList li{
+    font-size:.9rem;padding:7px 0;border-bottom:1px solid rgba(247,243,232,.1);
+    display:flex;gap:10px;align-items:baseline;
+  }
+  #wonList li::before{content:"✓";color:var(--gold-bright);font-weight:800;}
+  #wonList li:last-child{border-bottom:none;}
+
+  /* ============ 6 HUMAN NEEDS: TOP TWO ============ */
+  .drivers{
+    background:var(--navy);border-radius:16px;color:var(--cream);
+    padding:28px 26px;margin-bottom:34px;position:relative;overflow:hidden;
+  }
+  .drivers::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(ellipse at 85% -10%,rgba(201,162,39,.16),transparent 55%);
+    pointer-events:none;
+  }
+  .drivers-eyebrow{
+    font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;
+    color:var(--gold-bright);font-weight:700;margin-bottom:8px;
+  }
+  .drivers h2{font-size:1.3rem;font-weight:800;margin-bottom:8px;}
+  .drivers p{font-size:.92rem;color:rgba(247,243,232,.85);}
+  .drivers .chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;}
+  .chip{
+    font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    padding:6px 14px;border-radius:99px;background:rgba(201,162,39,.18);
+    color:var(--gold-bright);border:1px solid rgba(201,162,39,.35);
+  }
+
+  /* ============ NEED CARDS ============ */
+  .need{
+    background:#fff;border:1px solid rgba(11,31,58,.1);
+    border-radius:14px;margin-bottom:18px;overflow:hidden;
+    box-shadow:0 2px 10px rgba(11,31,58,.05);
+  }
+  .need-top{display:flex;align-items:center;gap:16px;padding:20px 22px 14px;}
+  .need-rank{
+    flex-shrink:0;width:40px;height:40px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:.85rem;color:var(--cream);
+    background:var(--navy);letter-spacing:.02em;
+  }
+  .need.top .need-rank{background:var(--gold);color:var(--navy-deep);box-shadow:0 0 0 4px rgba(201,162,39,.22);}
+  .need-titlewrap{flex:1;min-width:0;}
+  .need-title{font-size:1.12rem;font-weight:800;color:var(--navy);}
+  .need-tag{font-size:.76rem;color:var(--muted);margin-top:1px;}
+  .need-score{
+    flex-shrink:0;font-weight:800;font-size:1.15rem;color:var(--gold);
+    background:var(--cream-soft);padding:6px 13px;border-radius:12px;white-space:nowrap;
+  }
+  .need.top .need-score{background:var(--gold);color:var(--navy-deep);}
+  .bar{height:8px;background:rgba(11,31,58,.08);margin:0 22px;border-radius:99px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold),var(--gold-bright));}
+  .need.top .bar-fill{background:linear-gradient(90deg,#b8901c,var(--gold-bright));}
+  .need-body{padding:14px 22px 20px;font-size:.92rem;color:var(--ink);}
+  .need-body b{color:var(--navy);}
+  .watch{
+    margin-top:10px;font-size:.84rem;color:var(--muted);
+    padding:9px 13px;background:var(--cream-soft);border-radius:0 8px 8px 0;
+    border-left:3px solid var(--gold);
+  }
+  .watch b{color:#8a6d10;}
+
+  /* ============ SYNTHESIS ============ */
+  .synth{
+    background:var(--navy);border-radius:16px;color:var(--cream);
+    padding:28px 26px;margin-top:32px;position:relative;overflow:hidden;
+  }
+  .synth::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(ellipse at 15% 110%,rgba(201,162,39,.14),transparent 55%);
+    pointer-events:none;
+  }
+  .synth-eyebrow{
+    font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;
+    color:var(--gold-bright);font-weight:700;margin-bottom:10px;
+  }
+  .synth h2{font-size:1.2rem;font-weight:800;margin-bottom:12px;}
+  .synth p{font-size:.92rem;color:rgba(247,243,232,.85);margin-bottom:12px;}
+  .synth p:last-child{margin-bottom:0;}
+  .synth b{color:var(--gold-bright);}
+  .caution{
+    margin-top:16px;padding:15px 17px;background:rgba(201,162,39,.1);
+    border-left:3px solid var(--gold);border-radius:0 10px 10px 0;
+    font-size:.9rem;color:rgba(247,243,232,.9);
+  }
+  .review{text-align:center;margin-top:26px;font-size:.82rem;color:var(--muted);font-style:italic;}
+
+  footer{text-align:center;padding:30px 20px 48px;font-size:.75rem;color:var(--muted);}
+  footer b{color:var(--navy);}
+
+  @media (max-width:560px){
+    .tier-head{padding:16px 15px;gap:11px;}
+    .tier-badge{width:38px;height:38px;font-size:.9rem;}
+    .wish{padding:11px 15px;}
+    .group-label{padding:14px 15px 4px;}
+    .tier-count{display:none;}
+    .need-top{padding:16px 15px 12px;gap:12px;}
+    .bar{margin:0 15px;}
+    .need-body{padding:12px 15px 18px;}
+    .need-score{font-size:1rem;padding:5px 10px;}
+  }
+  @media print{
+    header,.dreams,.drivers,.synth,.won-section{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .tier-body{display:block!important;}
+    .chev,.section-nav{display:none;}
+    body{background:#fff;}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;}html{scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Hyperion Legacy Builders · Glenn's Dreams</div>
+  <h1>I'm Coming <span class="accent">For All of It</span></h1>
+  <div class="subhead">Not a wishlist. A hit list. Every dream on this page has my name on it — and I'm going out to get every single one.</div>
+  <div class="creed"><b>Rooted.</b> <b>Rising.</b> <b>Unstoppable.</b></div>
+</header>
+
+<nav class="section-nav">
+  <a href="#dreams">Top 5 Dreams</a>
+  <a href="#wishes">101 Wishes</a>
+  <a href="#needs">6 Human Needs</a>
+  <a href="#won">Dreams Won</a>
+</nav>
+
+<main>
+
+  <!-- ================= TOP 5 DREAMS ================= -->
+  <section class="dreams" id="dreams">
+    <div class="dreams-eyebrow">The Heartbeat</div>
+    <h2>Glenn's Top 5 Dreams</h2>
+
+    <div class="dream anchor">
+      <div class="dream-num">1</div>
+      <div class="dream-body">
+        <div class="dream-title">The Bulacan Mission<span class="dream-tagline">The Anchor</span></div>
+        <div class="dream-desc">A church, a school, and a clinic on the family's property in the Philippines. The dream every other dream feeds — faith, education, and healing in one place, on the land the family came from.</div>
+      </div>
+    </div>
+
+    <div class="dream">
+      <div class="dream-num">2</div>
+      <div class="dream-body">
+        <div class="dream-title">A legacy the kids inherit — not just money, but a mission</div>
+        <div class="dream-desc">Mia, Tristan, and Shyanne growing up watching Glenn and Mitch build something rooted in faith, then carrying it forward. The Hyperion redwood — rooted, rising, unstoppable — with the children as the next rings of the tree.</div>
+      </div>
+    </div>
+
+    <div class="dream">
+      <div class="dream-num">3</div>
+      <div class="dream-body">
+        <div class="dream-title">Honoring my parents' sacrifice</div>
+        <div class="dream-desc">They immigrated and gave up everything for this life. The dream is making that sacrifice pay off visibly — a thriving family, a business with their grandchildren's names on its future, and blessings flowing back home to the Philippines.</div>
+      </div>
+    </div>
+
+    <div class="dream">
+      <div class="dream-num">4</div>
+      <div class="dream-body">
+        <div class="dream-title">Hyperion Legacy Builders as a movement, not a baseshop</div>
+        <div class="dream-desc">Glenn and Mitch leading a team of leaders — healthcare professionals, faith community members, South Bay families — where No Family Left Behind isn't a slogan, it's a track record measured in thousands of families educated and protected.</div>
+      </div>
+    </div>
+
+    <div class="dream">
+      <div class="dream-num">5</div>
+      <div class="dream-body">
+        <div class="dream-title">Full freedom with Mitch</div>
+        <div class="dream-desc">Time freedom, money freedom, mission freedom. Working because we're called to, not because we have to — snowboard trips with the kids, walking the Bulacan property together, and choosing every day how we serve.</div>
+      </div>
+    </div>
+
+    <div class="dreams-insight">
+      Dreams 2 through 5 all exist to fund and fuel dream #1. Most people have five scattered dreams. <b>This is one mission with five expressions.</b>
+    </div>
+  </section>
+
+  <!-- ================= 101 WISHES ================= -->
+  <div class="section-divider" id="wishes"><span>The 101 Wishes</span></div>
+  <p class="intro" style="margin-top:22px;">Five tiers, from the heartbeat outward. Tier 1 is the finish line — everything below it exists to fund and fuel the mission. Tap any wish to mark it won.</p>
+
+  <div class="progress-wrap" style="margin-bottom:30px;">
+    <div class="progress-stats">
+      <span style="color:var(--muted);">Dreams won</span>
+      <span class="count" style="color:var(--gold);"><span id="wonCount">0</span> / <span id="totalCount">110</span></span>
+    </div>
+    <div class="progress-bar" style="background:rgba(11,31,58,.1);"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <!-- TIER 1 -->
+  <section class="tier tier-1 open" id="t1">
+    <button class="tier-head" onclick="toggleTier('t1')" aria-expanded="true">
+      <div class="tier-badge">1</div>
+      <div class="tier-title-wrap">
+        <div class="tier-title">The Mission</div>
+        <div class="tier-sub">Non-negotiable. Everything funds these.</div>
+      </div>
+      <span class="tier-count" data-count="t1"></span>
+      <span class="chev"></span>
+    </button>
+    <div class="tier-body" data-tier="t1">
+      <label class="wish"><input type="checkbox" data-id="w99"><span class="wish-text">Build a school, medical center, and church on the family property in Bulacan, Philippines<span class="wish-note">The anchor vision — the finish line every other goal points toward</span></span></label>
+      <label class="wish"><input type="checkbox" data-id="w78"><span class="wish-text">Build a church</span></label>
+      <label class="wish"><input type="checkbox" data-id="w69"><span class="wish-text">Own a school with great teachers</span></label>
+      <label class="wish"><input type="checkbox" data-id="w101"><span class="wish-text">Donate $1,000,000 every year to church and charity</span></label>
+      <label class="wish"><input type="checkbox" data-id="w88"><span class="wish-text">Sponsor Coast Christian Fellowship missions — fully fund the missions team's work</span></label>
+      <label class="wish"><input type="checkbox" data-id="w89"><span class="wish-text">Create a maintenance fund for Coast Christian Fellowship</span></label>
+      <label class="wish"><input type="checkbox" data-id="w90"><span class="wish-text">Build a retirement and healthcare fund for our pastors at Coast</span></label>
+      <label class="wish"><input type="checkbox" data-id="w84"><span class="wish-text">Have at-risk kids be loved by someone<span class="wish-note">Already in motion — Genesis Life Skills, Wilmington &amp; Inglewood</span></span></label>
+      <label class="wish"><input type="checkbox" data-id="w91"><span class="wish-text">Be a volunteer at Torrance Memorial Medical Center</span></label>
+      <label class="wish"><input type="checkbox" data-id="w68"><span class="wish-text">Leave a legacy</span></label>
+    </div>
+  </section>
+
+  <!-- TIER 2 -->
+  <section class="tier" id="t2">
+    <button class="tier-head" onclick="toggleTier('t2')" aria-expanded="false">
+      <div class="tier-badge">2</div>
+      <div class="tier-title-wrap">
+        <div class="tier-title">Family</div>
+        <div class="tier-sub">The "why" you'd sacrifice everything for.</div>
+      </div>
+      <span class="tier-count" data-count="t2"></span>
+      <span class="chev"></span>
+    </button>
+    <div class="tier-body" data-tier="t2">
+      <label class="wish"><input type="checkbox" data-id="w62"><span class="wish-text">Have a happy wife — Mitch loved, protected, and thriving</span></label>
+      <label class="wish"><input type="checkbox" data-id="w61"><span class="wish-text">Have awesome kids — Mia, Tristan, and Shyanne raised strong in faith and character</span></label>
+      <label class="wish"><input type="checkbox" data-id="w103"><span class="wish-text">Paddleboard with Mitch — just the two of us on the water</span></label>
+      <label class="wish"><input type="checkbox" data-id="w107"><span class="wish-text">Date nights — eating out with Mitch, regularly</span></label>
+      <label class="wish"><input type="checkbox" data-id="w18"><span class="wish-text">Pay for Mom's teeth and hearing aids<span class="tag tag-now">Do this year</span></span></label>
+      <label class="wish"><input type="checkbox" data-id="w23"><span class="wish-text">Give money to parents and in-laws</span></label>
+      <label class="wish"><input type="checkbox" data-id="w86"><span class="wish-text">Provide financially for my parents and in-laws — full peace of mind</span></label>
+      <label class="wish"><input type="checkbox" data-id="w57"><span class="wish-text">Take care of immediate family</span></label>
+      <label class="wish"><input type="checkbox" data-id="w6"><span class="wish-text">Buy a home for each child</span></label>
+      <label class="wish"><input type="checkbox" data-id="w73"><span class="wish-text">Tristan and Shyanne promoted to EVC</span></label>
+      <label class="wish"><input type="checkbox" data-id="w51"><span class="wish-text">Spend money on my nieces and nephews</span></label>
+      <label class="wish"><input type="checkbox" data-id="w94"><span class="wish-text">Vacation with family and extended family together</span></label>
+      <label class="wish"><input type="checkbox" data-id="w10"><span class="wish-text">Restore Dad's Shelby by 2026<span class="tag tag-now">Deadline</span></span></label>
+    </div>
+  </section>
+
+  <!-- TIER 3 -->
+  <section class="tier" id="t3">
+    <button class="tier-head" onclick="toggleTier('t3')" aria-expanded="false">
+      <div class="tier-badge">3</div>
+      <div class="tier-title-wrap">
+        <div class="tier-title">The Business Engine</div>
+        <div class="tier-sub">What makes Tiers 1 and 2 possible.</div>
+      </div>
+      <span class="tier-count" data-count="t3"></span>
+      <span class="chev"></span>
+    </button>
+    <div class="tier-body" data-tier="t3">
+      <label class="wish"><input type="checkbox" data-id="w16"><span class="wish-text">Promote to Field Chairman by 2028<span class="wish-note">The domino that tips everything else</span></span></label>
+      <label class="wish"><input type="checkbox" data-id="w4"><span class="wish-text">Personal GX1 per month and Team 9 GX1s per month; 100 wide; 50 licensed in the baseshop</span></label>
+      <label class="wish"><input type="checkbox" data-id="w60"><span class="wish-text">Build 100 millionaires and make $100,000,000 a year</span></label>
+      <label class="wish"><input type="checkbox" data-id="w102"><span class="wish-text">10 CEOs making $500,000 a year, each donating $50,000 to churches and charity<span class="wish-note">$500,000 a year in giving flowing through the team — the Council multiplying the mission</span></span></label>
+      <label class="wish"><input type="checkbox" data-id="w5"><span class="wish-text">An EVC in every state</span></label>
+      <label class="wish"><input type="checkbox" data-id="w59"><span class="wish-text">Have an awesome leadership team</span></label>
+      <label class="wish"><input type="checkbox" data-id="w26"><span class="wish-text">Close friends who are leaders in our business</span></label>
+      <label class="wish"><input type="checkbox" data-id="w31"><span class="wish-text">Own a wealth platform</span></label>
+      <label class="wish"><input type="checkbox" data-id="w32"><span class="wish-text">Manage retirement plans for Fortune 100 companies</span></label>
+      <label class="wish"><input type="checkbox" data-id="w15"><span class="wish-text">$20,000,000 in liquid assets</span></label>
+      <label class="wish"><input type="checkbox" data-id="w38"><span class="wish-text">Own a 500-unit apartment complex</span></label>
+      <label class="wish"><input type="checkbox" data-id="w45"><span class="wish-text">Retire from nursing on my own terms — full-time on the mission<span class="wish-note">For now, the OR funds the dream: income, insurance, and mission money every shift</span></span></label>
+      <label class="wish"><input type="checkbox" data-id="w58"><span class="wish-text">Prove all believers right</span></label>
+      <label class="wish"><input type="checkbox" data-id="w36"><span class="wish-text">Prove all naysayers wrong</span></label>
+    </div>
+  </section>
+
+  <!-- TIER 4 -->
+  <section class="tier" id="t4">
+    <button class="tier-head" onclick="toggleTier('t4')" aria-expanded="false">
+      <div class="tier-badge">4</div>
+      <div class="tier-title-wrap">
+        <div class="tier-title">The Life</div>
+        <div class="tier-sub">Earned rewards — real, but they wait their turn.</div>
+      </div>
+      <span class="tier-count" data-count="t4"></span>
+      <span class="chev"></span>
+    </button>
+    <div class="tier-body" data-tier="t4">
+      <div class="group-label">Homes &amp; Property</div>
+      <label class="wish"><input type="checkbox" data-id="w1"><span class="wish-text">Own a home on Paseo de las Tortugas</span></label>
+      <label class="wish"><input type="checkbox" data-id="w12"><span class="wish-text">Home in the Bluffs</span></label>
+      <label class="wish"><input type="checkbox" data-id="w13"><span class="wish-text">House on Laguna Beach</span></label>
+      <label class="wish"><input type="checkbox" data-id="w14"><span class="wish-text">Golf course property</span></label>
+      <label class="wish"><input type="checkbox" data-id="w49"><span class="wish-text">Pebble Beach home</span></label>
+      <label class="wish"><input type="checkbox" data-id="w25"><span class="wish-text">A house that's great for entertaining</span></label>
+      <label class="wish"><input type="checkbox" data-id="w100"><span class="wish-text">Land next to BLM land</span></label>
+      <label class="wish"><input type="checkbox" data-id="w34"><span class="wish-text">Backyard paintball/airsoft playing field and gun range</span></label>
+
+      <div class="group-label">Experiences</div>
+      <label class="wish"><input type="checkbox" data-id="w19"><span class="wish-text">Vacation Europe — Greece, Italy, Paris, London</span></label>
+      <label class="wish"><input type="checkbox" data-id="w20"><span class="wish-text">Vacation regularly — rest is part of the plan</span></label>
+      <label class="wish"><input type="checkbox" data-id="w21"><span class="wish-text">Take a pilgrimage</span></label>
+      <label class="wish"><input type="checkbox" data-id="w28"><span class="wish-text">Meet the Pope</span></label>
+      <label class="wish"><input type="checkbox" data-id="w97"><span class="wish-text">See the Northern Lights</span></label>
+      <label class="wish"><input type="checkbox" data-id="w98"><span class="wish-text">Machu Picchu hike and ATV adventure</span></label>
+      <label class="wish"><input type="checkbox" data-id="w72"><span class="wish-text">RV across the US — all 50 states and the national parks, with the team</span></label>
+      <label class="wish"><input type="checkbox" data-id="w56"><span class="wish-text">Jet ski at the best beaches in the world</span></label>
+      <label class="wish"><input type="checkbox" data-id="w104"><span class="wish-text">Snorkeling in clear, warm water</span></label>
+      <label class="wish"><input type="checkbox" data-id="w110"><span class="wish-text">Beach hangout with friends — swimming in warm water</span></label>
+      <label class="wish"><input type="checkbox" data-id="w108"><span class="wish-text">Camping and hiking while visiting the team all over the US</span></label>
+      <label class="wish"><input type="checkbox" data-id="w109"><span class="wish-text">Find places to hang out and worship with like-minded people, wherever we travel</span></label>
+      <label class="wish"><input type="checkbox" data-id="w105"><span class="wish-text">Skeet shooting</span></label>
+      <label class="wish"><input type="checkbox" data-id="w53"><span class="wish-text">Space travel</span></label>
+      <label class="wish"><input type="checkbox" data-id="w85"><span class="wish-text">Zero-gravity plane ride</span></label>
+      <label class="wish"><input type="checkbox" data-id="w8"><span class="wish-text">Get catapulted off an aircraft carrier in a fighter jet</span></label>
+      <label class="wish"><input type="checkbox" data-id="w93"><span class="wish-text">Go 3-gunning with the kids</span></label>
+      <label class="wish"><input type="checkbox" data-id="w41"><span class="wish-text">Yearly 50-yard-line Super Bowl box tickets</span></label>
+      <label class="wish"><input type="checkbox" data-id="w52"><span class="wish-text">Season box tickets for the Lakers</span></label>
+
+      <div class="group-label">Body &amp; Skills</div>
+      <label class="wish"><input type="checkbox" data-id="w40"><span class="wish-text">Have a six pack</span></label>
+      <label class="wish"><input type="checkbox" data-id="w82"><span class="wish-text">Learn jujitsu</span></label>
+      <label class="wish"><input type="checkbox" data-id="w92"><span class="wish-text">Learn to surf</span></label>
+      <label class="wish"><input type="checkbox" data-id="w9"><span class="wish-text">Learn to ride the snowboard half pipe</span></label>
+      <label class="wish"><input type="checkbox" data-id="w44"><span class="wish-text">Learn how to really DJ</span></label>
+      <label class="wish"><input type="checkbox" data-id="w66"><span class="wish-text">Be a great storyteller</span></label>
+      <label class="wish"><input type="checkbox" data-id="w67"><span class="wish-text">Have a great memory</span></label>
+
+      <div class="group-label">Toys, Staff &amp; Style</div>
+      <label class="wish"><input type="checkbox" data-id="w63"><span class="wish-text">Lamborghini, Ferrari, Porsche, and Tesla in the garage</span></label>
+      <label class="wish"><input type="checkbox" data-id="w11"><span class="wish-text">A Mustang that handles better than a race car</span></label>
+      <label class="wish"><input type="checkbox" data-id="w81"><span class="wish-text">Have a Ford Raptor</span></label>
+      <label class="wish"><input type="checkbox" data-id="w96"><span class="wish-text">Personal chef</span></label>
+      <label class="wish"><input type="checkbox" data-id="w22"><span class="wish-text">Full-time cook and housekeeper</span></label>
+      <label class="wish"><input type="checkbox" data-id="w48"><span class="wish-text">An Alfred Pennyworth-level butler</span></label>
+      <label class="wish"><input type="checkbox" data-id="w46"><span class="wish-text">Have a personal assistant</span></label>
+      <label class="wish"><input type="checkbox" data-id="w83"><span class="wish-text">Personal masseuse</span></label>
+      <label class="wish"><input type="checkbox" data-id="w95"><span class="wish-text">Bodyguards</span></label>
+      <label class="wish"><input type="checkbox" data-id="w47"><span class="wish-text">Own barber</span></label>
+      <label class="wish"><input type="checkbox" data-id="w64"><span class="wish-text">Super nice suits and shoes</span></label>
+      <label class="wish"><input type="checkbox" data-id="w65"><span class="wish-text">Personal tailor</span></label>
+      <label class="wish"><input type="checkbox" data-id="w24"><span class="wish-text">Have an unlimited Amazon gift card</span></label>
+      <label class="wish"><input type="checkbox" data-id="w37"><span class="wish-text">Buy everything cash</span></label>
+      <label class="wish"><input type="checkbox" data-id="w87"><span class="wish-text">Have an arsenal of weapons in the panic room</span></label>
+      <label class="wish"><input type="checkbox" data-id="w106"><span class="wish-text">Fully automatic weapons for fun — MP5s and AR-15s with FRTs</span></label>
+    </div>
+  </section>
+
+  <!-- TIER 5 -->
+  <section class="tier" id="t5">
+    <button class="tier-head" onclick="toggleTier('t5')" aria-expanded="false">
+      <div class="tier-badge">5</div>
+      <div class="tier-title-wrap">
+        <div class="tier-title">The Wild Cards</div>
+        <div class="tier-sub">Keep them — they set the ceiling of your thinking.</div>
+      </div>
+      <span class="tier-count" data-count="t5"></span>
+      <span class="chev"></span>
+    </button>
+    <div class="tier-body" data-tier="t5">
+      <div class="group-label">Mega-Wealth</div>
+      <label class="wish"><input type="checkbox" data-id="w2"><span class="wish-text">Own a hotel in Vegas</span></label>
+      <label class="wish"><input type="checkbox" data-id="w3"><span class="wish-text">Own a private jet</span></label>
+      <label class="wish"><input type="checkbox" data-id="w17"><span class="wish-text">Billionaire by 60 years old</span></label>
+      <label class="wish"><input type="checkbox" data-id="w27"><span class="wish-text">A money room pit filled with cash</span></label>
+      <label class="wish"><input type="checkbox" data-id="w50"><span class="wish-text">Own a self-sustaining county that's zombie proof</span></label>
+      <label class="wish"><input type="checkbox" data-id="w55"><span class="wish-text">Own an island</span></label>
+      <label class="wish"><input type="checkbox" data-id="w79"><span class="wish-text">Own Del Amo Mall</span></label>
+      <label class="wish"><input type="checkbox" data-id="w33"><span class="wish-text">Own or build a racetrack</span></label>
+      <label class="wish"><input type="checkbox" data-id="w80"><span class="wish-text">Own a high-end car dealership</span></label>
+
+      <div class="group-label">Access &amp; Relationships</div>
+      <label class="wish"><input type="checkbox" data-id="w7"><span class="wish-text">Have dinner at the White House with a conservative president</span></label>
+      <label class="wish"><input type="checkbox" data-id="w54"><span class="wish-text">Tea with King Charles</span></label>
+      <label class="wish"><input type="checkbox" data-id="w29"><span class="wish-text">Be friends with Elon Musk</span></label>
+      <label class="wish"><input type="checkbox" data-id="w35"><span class="wish-text">Have the direct number to Rich Thawley, Ed Mylett, Monty Holm, and John Maxwell<span class="wish-note">Genuinely reachable — Field Chairman puts you in those rooms</span></span></label>
+      <label class="wish"><input type="checkbox" data-id="w39"><span class="wish-text">Be friends with Tim Storey</span></label>
+      <label class="wish"><input type="checkbox" data-id="w74"><span class="wish-text">Friends who own sports teams</span></label>
+      <label class="wish"><input type="checkbox" data-id="w77"><span class="wish-text">Everyone wants to take me out to lunch</span></label>
+
+      <div class="group-label">Change the World</div>
+      <label class="wish"><input type="checkbox" data-id="w30"><span class="wish-text">Get rid of corruption in the Philippine government</span></label>
+      <label class="wish"><input type="checkbox" data-id="w42"><span class="wish-text">Downsize the government</span></label>
+      <label class="wish"><input type="checkbox" data-id="w43"><span class="wish-text">Make California a conservative state</span></label>
+      <label class="wish"><input type="checkbox" data-id="w70"><span class="wish-text">Solve homelessness</span></label>
+      <label class="wish"><input type="checkbox" data-id="w71"><span class="wish-text">Cure mental illness</span></label>
+      <label class="wish"><input type="checkbox" data-id="w75"><span class="wish-text">A drug-free world</span></label>
+      <label class="wish"><input type="checkbox" data-id="w76"><span class="wish-text">Free healthcare</span></label>
+    </div>
+  </section>
+
+  <!-- ================= 6 HUMAN NEEDS ================= -->
+  <div class="section-divider" id="needs"><span>The 6 Human Needs</span></div>
+  <p class="intro" style="margin-top:22px;">Every decision is an attempt to meet six core needs. The top two run the show. This is the read — revisit it every quarter and watch the numbers move.</p>
+
+  <section class="drivers">
+    <div class="drivers-eyebrow">The Two That Run Glenn</div>
+    <h2>Contribution + Significance</h2>
+    <p>Held together by Connection. It's a rare combination — most high-significance people burn out or step on others to feed the need. Glenn's only gets satisfied when other families win. That's why the mission and the money point the same direction.</p>
+    <div class="chips">
+      <span class="chip">Contribution · 10</span>
+      <span class="chip">Connection · 9</span>
+      <span class="chip">Significance · 9</span>
+    </div>
+  </section>
+
+  <section class="need top">
+    <div class="need-top">
+      <div class="need-rank">#1</div>
+      <div class="need-titlewrap">
+        <div class="need-title">Contribution</div>
+        <div class="need-tag">Giving beyond yourself · the engine of everything</div>
+      </div>
+      <div class="need-score">10<span style="font-size:.7rem;opacity:.7;">/10</span></div>
+    </div>
+    <div class="bar"><div class="bar-fill" style="width:100%"></div></div>
+    <div class="need-body">
+      This is the engine. Bulacan church/school/clinic, $1M a year to charity, No Family Left Behind, at-risk kids loved by someone, 10 CEOs giving $50K each. The whole 101 list bends toward giving. <b>Most people put contribution near the bottom — for Glenn it's the anchor.</b> When he's contributing, he feels most like himself.
+    </div>
+  </section>
+
+  <section class="need">
+    <div class="need-top">
+      <div class="need-rank">#2</div>
+      <div class="need-titlewrap">
+        <div class="need-title">Love &amp; Connection</div>
+        <div class="need-tag">Belonging · not winning alone</div>
+      </div>
+      <div class="need-score">9<span style="font-size:.7rem;opacity:.7;">/10</span></div>
+    </div>
+    <div class="bar"><div class="bar-fill" style="width:90%"></div></div>
+    <div class="need-body">
+      The "why" is relational, not financial. Mitch as co-CEO and life partner, Mia/Tristan/Shyanne, the parents' sacrifice, the faith community at Coast, a team of leaders who are true friends. <b>Glenn doesn't want to win alone</b> — he wants to walk the Bulacan property <i>with</i> people.
+    </div>
+  </section>
+
+  <section class="need">
+    <div class="need-top">
+      <div class="need-rank">#3</div>
+      <div class="need-titlewrap">
+        <div class="need-title">Significance</div>
+        <div class="need-tag">Mattering · fused with contribution</div>
+      </div>
+      <div class="need-score">9<span style="font-size:.7rem;opacity:.7;">/10</span></div>
+    </div>
+    <div class="bar"><div class="bar-fill" style="width:90%"></div></div>
+    <div class="need-body">
+      Prove the naysayers wrong, prove the believers right, leave a legacy, meet the Pope, dinner at the White House, direct line to Mylett and Maxwell. The healthy part: <b>significance is fused with contribution</b> — Glenn wants to matter by lifting others, not by taking.
+      <div class="watch"><b>Watch:</b> don't let "prove them wrong" quietly become the driver over "serve them well."</div>
+    </div>
+  </section>
+
+  <section class="need">
+    <div class="need-top">
+      <div class="need-rank">#4</div>
+      <div class="need-titlewrap">
+        <div class="need-title">Growth</div>
+        <div class="need-tag">Always building · self as a project</div>
+      </div>
+      <div class="need-score">8<span style="font-size:.7rem;opacity:.7;">/10</span></div>
+    </div>
+    <div class="bar"><div class="bar-fill" style="width:80%"></div></div>
+    <div class="need-body">
+      A builder who never sits still. EMD, Field Chairman, developing runners — plus the personal stuff: six pack, better memory, storytelling, jujitsu, surfing. 75 Hard energy. <b>Growth feeds both significance and contribution</b>, which is why it stays high.
+    </div>
+  </section>
+
+  <section class="need">
+    <div class="need-top">
+      <div class="need-rank">#5</div>
+      <div class="need-titlewrap">
+        <div class="need-title">Variety</div>
+        <div class="need-tag">Adventure &amp; novelty · disciplined into a reward</div>
+      </div>
+      <div class="need-score">7<span style="font-size:.7rem;opacity:.7;">/10</span></div>
+    </div>
+    <div class="bar"><div class="bar-fill" style="width:70%"></div></div>
+    <div class="need-body">
+      Glenn literally defines freedom as "options and variety, not materialism." Space travel, fighter-jet catapult, RV across all 50 states, DJ, snowboard half pipe. It's real — but it sits <b>below</b> the mission, which is exactly right. He's disciplined it into a reward, not a distraction.
+    </div>
+  </section>
+
+  <section class="need">
+    <div class="need-top">
+      <div class="need-rank">#6</div>
+      <div class="need-titlewrap">
+        <div class="need-title">Certainty</div>
+        <div class="need-tag">Foundation &amp; faith · the one that just moved</div>
+      </div>
+      <div class="need-score">7<span style="font-size:.7rem;opacity:.7;">/10</span></div>
+    </div>
+    <div class="bar"><div class="bar-fill" style="width:70%"></div></div>
+    <div class="need-body">
+      Going back to nursing <i>is</i> Glenn honoring his need for certainty — steady income, health insurance, a foundation to plan the mission on. 25 years in the OR is a certainty anchor. And the deepest certainty isn't financial at all — <b>it's faith.</b> Certain God's got the outcome, which frees him to take risks everywhere else.
+    </div>
+  </section>
+
+  <section class="synth">
+    <div class="synth-eyebrow">The Synthesis</div>
+    <h2>One mission, six needs, all pointing the same way</h2>
+    <p>Glenn's top two are <b>Contribution and Significance</b>, held together by <b>Connection</b>. That combination is rare and it's a gift — most high-significance people burn out or step on others to feed the need. His only gets satisfied when other families win.</p>
+    <p>That's the deep reason the mission and the money never compete for Glenn. For most people, ambition and generosity pull in opposite directions. For him, they're the same motion.</p>
+    <div class="caution">
+      <b>The one honest caution:</b> because Contribution and Significance both run so hot, the risk isn't laziness — it's overextension. Saying yes to everything, carrying the team on Glenn's hours, going back to work <i>and</i> sprinting the baseshop. Certainty — rest, systems, insurance, faith — is what keeps the other five from burning him down. Protect it on purpose.
+    </div>
+  </section>
+
+  <div class="review">Revisit each quarter. If a number moves, ask why — the shift is the message.</div>
+
+  <!-- ================= WON ================= -->
+  <div class="won-section" id="won">
+    <h2>Dreams Won</h2>
+    <p class="empty" id="wonEmpty">Check off a wish above and it lands here — proof the tree is growing.</p>
+    <ul id="wonList"></ul>
+  </div>
+
+</main>
+
+<footer>
+  <b>Hyperion Legacy Builders</b> · No Family Left Behind · Glenn &amp; Mitch · Torrance, CA
+</footer>
+
+<script>
+  var STORE_KEY = 'hyperion101Wishes';
+  var memState = {};
+  function loadState(){
+    try{ var raw = localStorage.getItem(STORE_KEY); if(raw) return JSON.parse(raw); }catch(e){}
+    return memState;
+  }
+  function saveState(state){
+    memState = state;
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  function toggleTier(id){
+    var el = document.getElementById(id);
+    var open = el.classList.toggle('open');
+    el.querySelector('.tier-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('.wish input'));
+
+  function refresh(){
+    var state = {};
+    var wonItems = [];
+    var total = boxes.length;
+    var won = 0;
+
+    boxes.forEach(function(box){
+      var row = box.closest('.wish');
+      if(box.checked){
+        row.classList.add('done');
+        won++;
+        state[box.getAttribute('data-id')] = true;
+        var textEl = row.querySelector('.wish-text');
+        var clone = textEl.cloneNode(true);
+        var note = clone.querySelector('.wish-note'); if(note) note.remove();
+        var tag = clone.querySelector('.tag'); if(tag) tag.remove();
+        wonItems.push(clone.textContent.trim());
+      } else {
+        row.classList.remove('done');
+      }
+    });
+
+    saveState(state);
+
+    document.getElementById('wonCount').textContent = won;
+    document.getElementById('totalCount').textContent = total;
+    document.getElementById('progressFill').style.width = (won/total*100) + '%';
+
+    document.querySelectorAll('[data-count]').forEach(function(span){
+      var tierId = span.getAttribute('data-count');
+      var tierBoxes = document.querySelectorAll('#' + tierId + ' .wish input');
+      var tierWon = document.querySelectorAll('#' + tierId + ' .wish input:checked').length;
+      span.textContent = tierWon + ' / ' + tierBoxes.length + ' won';
+    });
+
+    var list = document.getElementById('wonList');
+    var empty = document.getElementById('wonEmpty');
+    list.innerHTML = '';
+    if(wonItems.length){
+      empty.style.display = 'none';
+      wonItems.forEach(function(txt){
+        var li = document.createElement('li');
+        li.textContent = txt;
+        list.appendChild(li);
+      });
+    } else {
+      empty.style.display = 'block';
+    }
+  }
+
+  (function(){
+    var saved = loadState();
+    boxes.forEach(function(box){
+      var id = box.getAttribute('data-id');
+      if(saved.hasOwnProperty(id)) box.checked = !!saved[id];
+      box.addEventListener('change', refresh);
+    });
+    refresh();
+  })();
+</script>
+
+</body>
+</html>
