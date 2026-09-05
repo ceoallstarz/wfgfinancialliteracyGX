@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--HEAD-START-->
+<title>Five Things, Four Tiers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap">
+<style>
+:root{
+  --navy:#1a2a42;
+  --navy-2:#22344f;
+  --gold:#c9a84c;
+  --gold-deep:#a8862f;
+  --gold-wash:#f6efdc;
+  --cream:#faf7f0;
+  --paper:#ffffff;
+  --ink:#20242c;
+  --muted:#6f6a5f;
+  --rule:#e2dacb;
+  --alert:#8c3a2b;
+  --alert-wash:#fbf0ed;
+  --affirm:#2f5d4f;
+  --affirm-wash:#eef4f1;
+  --shadow:0 1px 2px rgba(26,42,66,.05), 0 8px 24px -12px rgba(26,42,66,.18);
+  --font:"Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1000px;margin:0 auto;padding:0 24px}
+p{margin:0 0 14px}
+p:last-child{margin-bottom:0}
+strong{font-weight:700;color:var(--navy)}
+a{color:var(--gold-deep)}
+button{font-family:inherit}
+
+/* ---- masthead ---- */
+.masthead{background:var(--navy);color:#fff;padding:50px 0 42px;border-bottom:4px solid var(--gold)}
+.eyebrow{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--gold);margin:0 0 16px}
+.masthead h1{font-size:clamp(34px,5.6vw,54px);line-height:1.03;letter-spacing:-.028em;font-weight:800;margin:0 0 16px;text-wrap:balance}
+.masthead .dek{font-size:clamp(16.5px,2vw,19px);color:#c9d4e3;font-weight:300;max-width:62ch;margin:0}
+
+/* ---- control bar ---- */
+.bar{position:sticky;top:0;z-index:30;background:rgba(250,247,240,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.bar .wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
+.clock{display:flex;align-items:center;gap:10px}
+.clock .t{font-size:26px;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums;letter-spacing:-.02em;min-width:86px}
+.btn{border:1px solid var(--rule);background:var(--paper);color:var(--navy);font-size:13px;font-weight:700;padding:8px 14px;border-radius:3px;cursor:pointer;letter-spacing:.01em}
+.btn:hover{border-color:var(--gold);color:var(--gold-deep)}
+.btn:focus-visible{outline:2px solid var(--gold-deep);outline-offset:2px}
+.btn.primary{background:var(--navy);border-color:var(--navy);color:#fff}
+.btn.primary:hover{background:var(--navy-2);color:var(--gold)}
+.now{font-size:13px;color:var(--muted);font-weight:600;flex:1;min-width:150px}
+.now b{color:var(--navy)}
+.modes{display:flex;border:1px solid var(--rule);border-radius:3px;overflow:hidden;background:var(--paper)}
+.modes button{border:0;background:transparent;padding:8px 14px;font-size:12.5px;font-weight:700;color:var(--muted);cursor:pointer}
+.modes button[aria-pressed="true"]{background:var(--navy);color:var(--gold)}
+.modes button:focus-visible{outline:2px solid var(--gold-deep);outline-offset:-2px}
+
+/* ---- segments ---- */
+.seg{display:grid;gap:0 26px;padding:34px 0;border-bottom:1px solid var(--rule);scroll-margin-top:70px}
+@media(min-width:820px){.seg{grid-template-columns:132px 1fr}}
+.seg.active{background:linear-gradient(90deg,rgba(201,168,76,.09),rgba(201,168,76,0) 70%)}
+.rail{padding-bottom:14px}
+.chip{display:inline-block;background:var(--navy);color:var(--gold);font-size:13px;font-weight:800;padding:5px 10px;border-radius:3px;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.seg.active .chip{background:var(--gold);color:var(--navy)}
+.mins{display:block;margin-top:7px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.seg h2{font-size:clamp(23px,3vw,29px);line-height:1.15;letter-spacing:-.02em;font-weight:800;color:var(--navy);margin:0 0 8px;text-wrap:balance}
+.goal{color:var(--muted);font-size:16.5px;margin:0 0 20px;max-width:64ch}
+.body{max-width:70ch}
+.body h3{font-size:16px;font-weight:700;color:var(--navy);margin:24px 0 8px}
+
+/* ---- blocks ---- */
+.fac{background:var(--navy);color:#dfe7f0;border-radius:3px;padding:18px 20px;margin:16px 0;font-size:16px}
+.fac .lbl{display:block;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;font-weight:800;color:var(--gold);margin-bottom:9px}
+.fac strong{color:#fff}
+.fac em{color:var(--gold)}
+.solo{background:var(--paper);border:1px solid var(--rule);border-left:4px solid var(--navy);border-radius:3px;padding:18px 20px;margin:16px 0;font-size:16px}
+.solo .lbl{display:block;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;font-weight:800;color:var(--navy);margin-bottom:9px}
+.drill{background:var(--gold-wash);border:1px solid #e6d9b4;border-radius:3px;padding:18px 20px;margin:16px 0;font-size:16px}
+.drill .lbl{display:block;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;font-weight:800;color:var(--gold-deep);margin-bottom:9px}
+.win{background:var(--affirm-wash);border-left:4px solid var(--affirm);border-radius:3px;padding:14px 18px;margin:16px 0;font-size:15.5px;color:#23483d}
+.win .lbl{display:block;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;font-weight:800;margin-bottom:6px;opacity:.8}
+.say{background:var(--paper);border:1px solid var(--rule);border-radius:3px;padding:15px 18px;margin:14px 0;font-size:16.5px;line-height:1.6}
+.warn{background:var(--alert-wash);border-left:4px solid var(--alert);border-radius:3px;padding:14px 18px;margin:16px 0;font-size:15.5px;color:#6d2c21}
+.warn .lbl{display:block;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;font-weight:800;margin-bottom:6px;opacity:.8}
+.warn strong{color:#5c241b}
+
+ul.tight{margin:0 0 14px;padding-left:20px}
+ul.tight li{margin-bottom:7px}
+ol.tight{margin:0 0 14px;padding-left:22px}
+ol.tight li{margin-bottom:7px}
+
+/* ---- tier strip ---- */
+.tiers{display:grid;gap:12px;margin:18px 0}
+@media(min-width:700px){.tiers{grid-template-columns:1fr 1fr}}
+.tier{background:var(--paper);border:1px solid var(--rule);border-top:4px solid var(--gold);border-radius:3px;padding:18px 20px}
+.tier .tn{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;font-weight:800;color:var(--gold-deep);margin:0 0 4px}
+.tier h4{margin:0 0 3px;font-size:18px;font-weight:800;color:var(--navy);letter-spacing:-.01em}
+.tier .rng{font-size:13.5px;color:var(--muted);font-weight:600;margin:0 0 10px;font-variant-numeric:tabular-nums}
+.tier dl{margin:0;font-size:15px}
+.tier dt{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;font-weight:800;color:var(--muted);margin-top:9px}
+.tier dd{margin:2px 0 0}
+
+/* ---- quiz ---- */
+.quiz{background:var(--paper);border:1px solid var(--rule);border-radius:3px;padding:24px 26px;margin:20px 0}
+.q{padding:18px 0;border-bottom:1px solid var(--rule)}
+.q:first-of-type{padding-top:0}
+.q:last-of-type{border-bottom:0}
+.q .qh{font-weight:700;color:var(--navy);font-size:16.5px;margin:0 0 4px;line-height:1.45}
+.q .qm{font-size:12.5px;color:var(--muted);margin:0 0 12px;font-weight:600}
+.q .qm .flag{color:var(--alert);font-weight:800}
+.opt{display:flex;gap:11px;align-items:flex-start;padding:7px 10px;border-radius:3px;cursor:pointer;font-size:15.5px;line-height:1.5}
+.opt:hover{background:var(--gold-wash)}
+.opt input{margin:4px 0 0;accent-color:var(--gold-deep);flex:none}
+.fb{margin-top:10px;font-size:14.5px;padding:10px 13px;border-radius:3px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--affirm-wash);color:#23483d}
+.fb.no{background:var(--alert-wash);color:#6d2c21}
+.quizbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:22px;padding-top:20px;border-top:1px solid var(--rule)}
+.result{font-size:16px;font-weight:700;color:var(--navy)}
+.result .score{font-variant-numeric:tabular-nums}
+.result.pass{color:var(--affirm)}
+.result.fail{color:var(--alert)}
+
+footer{background:var(--navy);color:#b9c5d6;margin-top:60px;padding:42px 0 38px;border-top:4px solid var(--gold)}
+footer .creed{font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:var(--gold);margin:0 0 14px}
+footer p{font-size:13.5px;line-height:1.6;max-width:74ch;margin:0 0 10px}
+footer .fine{color:#8494a9;font-size:12.5px}
+
+body[data-mode="solo"] .fac{display:none}
+body[data-mode="fac"] .solo{display:none}
+
+@media print{.bar{display:none}body{background:#fff}.fac,.solo{display:block!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+html{scroll-behavior:smooth}
+</style>
+<!--HEAD-END-->
+</head>
+<body data-mode="fac">
+<!--BODY-START-->
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">Hyperion Legacy Builders · IUL Field Certification</p>
+    <h1>Five Things, Four Tiers</h1>
+    <p class="dek">Forty-five minutes to get an associate solid on what an IUL does, why it works, and how to sell it honestly at every budget from eighty dollars a month to six figures a year. Ends with a scored check.</p>
+  </div>
+</header>
+
+<div class="bar">
+  <div class="wrap">
+    <div class="clock">
+      <span class="t" id="clock">00:00</span>
+      <button class="btn primary" id="startBtn" type="button">Start</button>
+      <button class="btn" id="resetBtn" type="button">Reset</button>
+    </div>
+    <div class="now" id="now">Not started — press Start when the room settles.</div>
+    <div class="modes" role="group" aria-label="View mode">
+      <button type="button" id="mFac" aria-pressed="true">Facilitator</button>
+      <button type="button" id="mSolo" aria-pressed="false">Self-paced</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+
+<!-- ===== SEG 1 ===== -->
+<section class="seg" id="s1" data-start="0" data-end="4">
+  <div class="rail"><span class="chip">0:00</span><span class="mins">4 minutes</span></div>
+  <div>
+    <h2>Cold open — sell nothing</h2>
+    <p class="goal">Before a single fact, the room watches a sale happen without a product being mentioned. Everything else in the next forty-one minutes is an explanation of what just occurred.</p>
+    <div class="body">
+      <div class="fac">
+        <span class="lbl">Facilitator</span>
+        <p>Pick one person. Don't warn them. Don't set it up, don't say "I'm going to demonstrate something" — just turn to them and start:</p>
+        <p><em>"Can I ask you something most people have never thought about? Do you know that among Americans over seventy-five, the poverty rate for women runs roughly double what it is for men? … Any idea why?"</em></p>
+        <p>Run the Widow's Chain start to finish — all eight beats, from the couple at thirty to the question at the end. <strong>Stop dead at "who pays?" and let the silence sit.</strong> Do not rescue it. When they answer, let the answer land on the room before you move.</p>
+        <p>Then, to everyone: <strong>"What did I just sell?"</strong></p>
+        <p>Answer: nothing. No product, no number, no illustration. Say that out loud — it's the thesis of the whole course.</p>
+      </div>
+      <div class="solo">
+        <span class="lbl">On your own</span>
+        <p>Open the manual to <strong>§03, The Widow's Chain</strong>, and read all eight beats out loud — actually out loud, not in your head. Time yourself. Then answer honestly: at which beat did you feel it turn?</p>
+        <p>Notice what isn't in it. No product, no cap, no illustration, no number. That's not an accident, and it's the thing most agents never figure out.</p>
+      </div>
+      <div class="win">
+        <span class="lbl">You've got it when</span>
+        The room can state what made the sale — a question they answered themselves — rather than what was presented to them.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEG 2 ===== -->
+<section class="seg" id="s2" data-start="4" data-end="12">
+  <div class="rail"><span class="chip">0:04</span><span class="mins">8 minutes</span></div>
+  <div>
+    <h2>The five things</h2>
+    <p class="goal">If someone remembers one thing from this course, it's these five. Not features — these. Every objection, every tier, and every close routes back through them.</p>
+    <div class="body">
+      <ol class="tight">
+        <li><strong>Permanent coverage after the term expires.</strong> Term is a rented fence around your worst twenty years. It ends.</li>
+        <li><strong>Long-term care that protects the assets you built.</strong> A care event is the most efficient way ever devised to liquidate a lifetime of savings.</li>
+        <li><strong>Growth without state, federal, or capital gains tax.</strong> Structured properly and kept in force.</li>
+        <li><strong>Growth without exposure to market loss.</strong> The index credit has a floor.</li>
+        <li><strong>A tax-advantaged family bank.</strong> No application, no credit check, no job required, no stated purpose.</li>
+      </ol>
+      <p>The close is never "do you want an IUL." It's <strong>"how many of those five matter to you?"</strong> You sell the five things. The product is simply the only vehicle that does all of them at once.</p>
+
+      <div class="drill">
+        <span class="lbl">Drill · 4 minutes</span>
+        <p><strong>Round 1:</strong> everyone closes the page and writes all five from memory. Most people get three.</p>
+        <p><strong>Round 2:</strong> read them again, close, write again. Now most get five.</p>
+        <p><strong>Round 3:</strong> partner up. One person names a thing, the other has to produce the question that opens it — the questions are in <strong>§02</strong> of the manual. Switch after every one.</p>
+      </div>
+      <div class="fac">
+        <span class="lbl">Facilitator</span>
+        <p>Don't skip round two because round one went badly — round one <em>always</em> goes badly, and that's the point of the exercise. Ask for a show of hands on how many people got all five the first time. The gap between what people think they know and what they can produce cold is the entire reason this segment exists.</p>
+      </div>
+      <div class="win">
+        <span class="lbl">You've got it when</span>
+        You can produce all five, in any order, with no notes, plus the question that opens each one.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEG 3 ===== -->
+<section class="seg" id="s3" data-start="12" data-end="19">
+  <div class="rail"><span class="chip">0:12</span><span class="mins">7 minutes</span></div>
+  <div>
+    <h2>Why it works — and saying it precisely</h2>
+    <p class="goal">Mechanism doesn't sell. But vagueness kills, and one careless phrase creates real compliance exposure. Thirty seconds of explanation, said exactly right.</p>
+    <div class="body">
+      <h3>Rock and paper</h3>
+      <p>Fist on the table for the rock, flat hand for the paper.</p>
+      <p><strong>The rock is bonds.</strong> The carrier holds the bulk of the money in its general account. Bonds don't track the index — whatever the market does this year, the rock is still sitting there.</p>
+      <p><strong>The paper is options.</strong> The carrier spends the <em>interest</em> the rock throws off on options that pay if the index rises. It buys upside with the yield, never with the principal.</p>
+      <p><strong>Market up:</strong> the paper pays and the gain is credited on top of the rock. <strong>Market down:</strong> the paper expires worthless. You lost the interest you spent on it. You did not lose the rock.</p>
+
+      <div class="drill">
+        <span class="lbl">Drill · 3 minutes</span>
+        <p>Partner up. Thirty seconds each, hands on the table, explain the floor to your partner as if they were a client. Then switch. Then do it again — the second attempt is always half the length and twice as clear.</p>
+      </div>
+
+      <div class="warn">
+        <span class="lbl">The line that gets you in trouble</span>
+        <p>The floor applies to the <strong>index credit</strong>, not to the account value. Cost of insurance, admin and rider charges still come out in a zero year, so cash value <em>can</em> decline.</p>
+        <p><strong>Never say:</strong> "You can't lose money."<br>
+        <strong>Say:</strong> "Your money isn't exposed to market losses — the index credit has a zero floor. Policy charges still come out, so let me show you both columns."</p>
+      </div>
+      <div class="fac">
+        <span class="lbl">Facilitator</span>
+        <p>Make the room say the correct version out loud, together, once. It feels silly and it's the reason they'll say it right in front of a client six weeks from now. Muscle memory beats a bullet point.</p>
+      </div>
+      <div class="win">
+        <span class="lbl">You've got it when</span>
+        You can explain the floor in thirty seconds without saying "can't lose money," and you volunteer the charges before the client asks.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEG 4 ===== -->
+<section class="seg" id="s4" data-start="19" data-end="30">
+  <div class="rail"><span class="chip">0:19</span><span class="mins">11 minutes</span></div>
+  <div>
+    <h2>The market ladder</h2>
+    <p class="goal">The same five things sell at eighty dollars a month and at three hundred thousand a year — but not the same way, and sometimes not as an IUL at all. This is the segment that prevents the two most common failures: running an affluent script at a young family, and forcing a policy on someone who needs term.</p>
+    <div class="body">
+      <h3>Three questions place the client — they matter more than income</h3>
+      <ol class="tight">
+        <li><strong>Is the death benefit need actually covered?</strong> If a death this year would wreck the household and the coverage isn't there, that gets solved first — at every income level.</li>
+        <li><strong>What can they fund every month for twenty years without resenting it?</strong> Not what they can afford this month. What survives a slow quarter and a new roof.</li>
+        <li><strong>Do they own assets a care event would liquidate?</strong> This decides whether long-term care is an affordability conversation or an asset-protection one.</li>
+      </ol>
+
+      <div class="tiers">
+        <div class="tier">
+          <p class="tn">Tier 1</p>
+          <h4>Protection first</h4>
+          <p class="rng">roughly $50–150 / month</p>
+          <dl>
+            <dt>Lead with</dt><dd>The need calculation, the right amount of term, and convertibility.</dd>
+            <dt>Give them</dt><dd>Insurability. "The most valuable thing I can hand you at twenty-eight is the right to buy a policy later at today's health."</dd>
+            <dt>Never</dt><dd>Sell a small IUL <em>instead of</em> adequate term. The commission looks similar. That's exactly why the temptation exists.</dd>
+          </dl>
+        </div>
+        <div class="tier">
+          <p class="tn">Tier 2</p>
+          <h4>The core household</h4>
+          <p class="rng">roughly $200–500 / month</p>
+          <dl>
+            <dt>Lead with</dt><dd>The Widow's Chain, then things 1 and 2 — coverage that outlives the term, and care that protects the house.</dd>
+            <dt>Size it</dt><dd>For the twenty-year number, not the maximum. Say out loud that you're applying the brakes.</dd>
+            <dt>Not yet</dt><dd>Banking. At $300/month the cash value isn't real capital for eight to ten years. Overselling it creates a year-four cancellation.</dd>
+          </dl>
+        </div>
+        <div class="tier">
+          <p class="tn">Tier 3</p>
+          <h4>The builder</h4>
+          <p class="rng">roughly $1,000–3,000 / month</p>
+          <dl>
+            <dt>Lead with</dt><dd>Sequence of returns and tax diversification. Care becomes asset protection.</dd>
+            <dt>Now real</dt><dd>The family bank. Usable capital by years five to eight, and this client has actual uses for it.</dd>
+            <dt>Vocabulary</dt><dd>Non-correlated asset, participating vs. wash loans. Fumbling a term costs you the case here.</dd>
+          </dl>
+        </div>
+        <div class="tier">
+          <p class="tn">Tier 4</p>
+          <h4>The affluent case</h4>
+          <p class="rng">$3,000+ / month, into six figures</p>
+          <dl>
+            <dt>Lead with</dt><dd>"You've maxed everything they'll let you max. Where does the rest of the after-tax money go?" Three buckets, IRMAA, RMDs, the ten-year rule.</dd>
+            <dt>Position</dt><dd>Against their bonds, never their stocks.</dd>
+            <dt>Non-negotiable</dt><dd>Max-funded to the seven-pay limit, minimum non-MEC death benefit, guaranteed column first, straight answer on how design affects your pay.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <h3>When not to sell an IUL — at any income level</h3>
+      <ul class="tight">
+        <li>They can't sustain the funding through a bad year.</li>
+        <li>They need the money inside five years.</li>
+        <li>The death benefit need is unmet and the budget is finite — term first, always.</li>
+        <li>They haven't captured the employer match. Free money outranks your product.</li>
+        <li>Underwriting rates them so heavily the charges break the design.</li>
+        <li>High-interest consumer debt is sitting there. Nothing here beats retiring a 24% balance.</li>
+      </ul>
+
+      <div class="drill">
+        <span class="lbl">Drill · 4 minutes</span>
+        <p>Read each of these out and have the room call the tier — or call "not an IUL":</p>
+        <ol class="tight">
+          <li>29, two kids under four, $120 a month, no coverage but a small group policy at work.</li>
+          <li>Surgeon, 41, $900K income, maxed 403(b), $300K group life, three kids.</li>
+          <li>Couple, 38, two incomes, mortgage, $400 a month available, aging parents with no plan.</li>
+          <li>Contractor, 45, owns his business, $2,500 a month available, $18,000 on a credit card at 22%.</li>
+          <li>33, single, $1,800 a month available, planning to buy a house in two years.</li>
+        </ol>
+        <p><em>Answers: 1 — Tier 1, term with convertibility. 2 — Tier 4, but check the coverage gap first; three kids on $300K of group is a Tier 1 problem in a Tier 4 suit. 3 — Tier 2, and the parent play is live. 4 — retire the card first, then Tier 3. 5 — not now; they need the money inside five years.</em></p>
+      </div>
+      <div class="fac">
+        <span class="lbl">Facilitator</span>
+        <p>Case 2 and case 4 are the ones that teach. Most rooms call case 2 "Tier 4" instantly and skip the coverage gap — let them, then point it out. And someone will always try to sell case 4 a policy anyway. Ask them what happens to that client's opinion of us in eighteen months.</p>
+      </div>
+      <div class="solo">
+        <span class="lbl">On your own</span>
+        <p>Work the five cases above before reading the answers. Then pull your own last five appointments and tier each one honestly. If any of them were tiered wrong, that's your list of follow-up calls this week.</p>
+      </div>
+      <div class="win">
+        <span class="lbl">You've got it when</span>
+        You can tier a prospect from three questions, and you can say "you shouldn't buy this" without flinching.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEG 5 ===== -->
+<section class="seg" id="s5" data-start="30" data-end="38">
+  <div class="rail"><span class="chip">0:30</span><span class="mins">8 minutes</span></div>
+  <div>
+    <h2>Objection reps</h2>
+    <p class="goal">Nobody learns to handle an objection by reading a handled objection. This segment is reps, out loud, under mild time pressure — because that's the only condition that resembles the field.</p>
+    <div class="body">
+      <div class="drill">
+        <span class="lbl">Drill · the whole segment</span>
+        <p>Pairs. One is the client, one is the agent. The client picks an objection and delivers it flat and a little rude, the way a real one arrives. The agent has <strong>thirty seconds</strong> to answer with a question, not a defense. Switch. Six rounds, then rotate partners and run the six again.</p>
+        <ol class="tight">
+          <li>"Permanent insurance has way too many fees."</li>
+          <li>"Buy term and invest the difference."</li>
+          <li>"I'd rather max my 401(k) — I need the deduction now."</li>
+          <li>"My CPA says IULs are a bad idea."</li>
+          <li>"Real estate is my investment. I don't need this."</li>
+          <li>"Those illustrations look unrealistic to me."</li>
+        </ol>
+      </div>
+      <p>Full answers are in <strong>§12</strong> of the manual, but don't read them during the drill. Answer badly first. The correction sticks better than the script.</p>
+      <h3>The pattern under all six</h3>
+      <ul class="tight">
+        <li><strong>Concede the true part immediately.</strong> "You should have term." "Max the 401(k)." "You should have a CPA with opinions." Agreement disarms; argument entrenches.</li>
+        <li><strong>Answer with a question.</strong> "Which building would you sell?" beats any paragraph you could deliver.</li>
+        <li><strong>Never defend the product.</strong> Return to the five things and ask which ones they want.</li>
+      </ul>
+      <div class="fac">
+        <span class="lbl">Facilitator</span>
+        <p>Walk the room. The tell that someone is doing it wrong is length — if the answer runs past thirty seconds they're defending, not asking. Call it out gently in the moment; don't save it for the debrief.</p>
+      </div>
+      <div class="solo">
+        <span class="lbl">On your own</span>
+        <p>Record voice memos. Deliver each objection to yourself, then answer in thirty seconds, then play it back. It's uncomfortable and it works faster than anything else in this course.</p>
+      </div>
+      <div class="win">
+        <span class="lbl">You've got it when</span>
+        Every one of the six gets answered in under thirty seconds, ending in a question, without defending anything.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEG 6 ===== -->
+<section class="seg" id="s6" data-start="38" data-end="42">
+  <div class="rail"><span class="chip">0:38</span><span class="mins">4 minutes</span></div>
+  <div>
+    <h2>The three phrases</h2>
+    <p class="goal">Most of the guardrails in the manual protect your credibility. These three protect your license. Teach only these three live; the rest is reference.</p>
+    <div class="body">
+      <div class="warn">
+        <span class="lbl">1 · "It can't lose money"</span>
+        <p>The index credit has a floor. The account value still absorbs policy charges. Say <strong>"your money isn't exposed to market losses"</strong> and show both columns.</p>
+      </div>
+      <div class="warn">
+        <span class="lbl">2 · "It's an investment"</span>
+        <p>An IUL is life insurance, not a security. Say <strong>strategy, asset, policy, credited interest, accumulation.</strong> Never <em>returns</em>, never <em>the best investment</em>, never <em>I'll invest this for you</em>.</p>
+      </div>
+      <div class="warn">
+        <span class="lbl">3 · "It's tax-free"</span>
+        <p>Conditionally. The policy has to stay in force and stay outside MEC status. A lapse with a large outstanding loan creates a tax bill on money the client no longer has. Say <strong>"tax-advantaged — as long as it's structured properly and stays in force."</strong></p>
+      </div>
+      <h3>Two more that will date you or embarrass you</h3>
+      <ul class="tight">
+        <li><strong>Step-up in basis was never repealed.</strong> That was a 2021 proposal that died. It's still in effect, and the estate exemption is $15 million per person in 2026 and permanent. Saying otherwise loses the case the moment their CPA hears it.</li>
+        <li><strong>Social Security: 2034, about 83% payable</strong> — not "bankrupt," not 2028. Your prospect can check this on their phone while you're still talking.</li>
+      </ul>
+      <div class="fac">
+        <span class="lbl">Facilitator</span>
+        <p>Frame this as protection, not policing. The three phrases exist because the people who say them are usually the people who believe hardest — enthusiasm is what produces the sloppy sentence. Say that; the room will take the correction better.</p>
+      </div>
+      <div class="win">
+        <span class="lbl">You've got it when</span>
+        You catch yourself mid-sentence and self-correct in front of a client. That's the moment they start trusting you.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEG 7 ===== -->
+<section class="seg" id="s7" data-start="42" data-end="45">
+  <div class="rail"><span class="chip">0:42</span><span class="mins">3 minutes</span></div>
+  <div>
+    <h2>Certification and the field assignment</h2>
+    <p class="goal">Ten questions. Pass before you present an IUL on your own.</p>
+    <div class="body">
+      <p>Eight of ten to pass, and the three compliance questions must all be correct — those are marked. Retake as many times as you want; the point is knowing it, not the score.</p>
+      <div class="fac">
+        <span class="lbl">Facilitator</span>
+        <p>Have everyone take it on their phone before they leave the room. Whoever doesn't pass isn't in trouble — they just run the manual again and retake it before their next appointment. Track who has passed; it's the cleanest gate you'll ever have.</p>
+      </div>
+      <div class="drill">
+        <span class="lbl">Field assignment · this week</span>
+        <p>Run the Widow's Chain on one real prospect and report back what they said at "who pays?" — their exact words. Then tier three prospects from your list using the three questions, and bring one case you decided <em>not</em> to write.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== QUIZ ===== -->
+<section class="seg" id="cert" style="border-bottom:0">
+  <div class="rail"><span class="chip">Check</span><span class="mins">10 questions</span></div>
+  <div>
+    <h2>Certification check</h2>
+    <p class="goal">Pass mark: 8 of 10, with all three compliance questions correct.</p>
+    <form class="quiz" id="quiz">
+
+      <div class="q" data-q="1" data-type="multi" data-answer="a,c,d,f,g">
+        <p class="qh">1. Which of these are the five things an IUL does?</p>
+        <p class="qm">Select exactly five.</p>
+        <label class="opt"><input type="checkbox" name="q1" value="a"><span>Permanent coverage after the term expires</span></label>
+        <label class="opt"><input type="checkbox" name="q1" value="b"><span>A guaranteed 15% annual return</span></label>
+        <label class="opt"><input type="checkbox" name="q1" value="c"><span>Long-term care that protects the assets you built</span></label>
+        <label class="opt"><input type="checkbox" name="q1" value="d"><span>Growth without state, federal, or capital gains tax</span></label>
+        <label class="opt"><input type="checkbox" name="q1" value="e"><span>A tax deduction on the premiums paid</span></label>
+        <label class="opt"><input type="checkbox" name="q1" value="f"><span>Growth without exposure to market loss</span></label>
+        <label class="opt"><input type="checkbox" name="q1" value="g"><span>A tax-advantaged family bank</span></label>
+        <label class="opt"><input type="checkbox" name="q1" value="h"><span>FDIC insurance on the cash value</span></label>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-q="2" data-type="one" data-answer="b">
+        <p class="qh">2. A prospect says: "I don't need life insurance — nobody depends on me." What's your next question?</p>
+        <label class="opt"><input type="radio" name="q2" value="a"><span>"What if you have kids someday?"</span></label>
+        <label class="opt"><input type="radio" name="q2" value="b"><span>"Are your parents financially independent?"</span></label>
+        <label class="opt"><input type="radio" name="q2" value="c"><span>"Let me show you what the illustration looks like."</span></label>
+        <label class="opt"><input type="radio" name="q2" value="d"><span>"Everybody needs life insurance."</span></label>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-q="3" data-type="one" data-answer="c">
+        <p class="qh">3. A 29-year-old with two kids under four has $120 a month available and almost no coverage. What do you recommend?</p>
+        <label class="opt"><input type="radio" name="q3" value="a"><span>A max-funded IUL at $120 a month</span></label>
+        <label class="opt"><input type="radio" name="q3" value="b"><span>Split it — $60 term, $60 IUL</span></label>
+        <label class="opt"><input type="radio" name="q3" value="c"><span>Maximum convertible term now, calendar the conversion, revisit permanent when cash flow grows</span></label>
+        <label class="opt"><input type="radio" name="q3" value="d"><span>Nothing — wait until they can afford an IUL</span></label>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-q="4" data-type="one" data-answer="b" data-compliance="1">
+        <p class="qh">4. Which statement is safe to make to a client?</p>
+        <p class="qm"><span class="flag">Compliance question — must be correct to pass.</span></p>
+        <label class="opt"><input type="radio" name="q4" value="a"><span>"An IUL can't lose money."</span></label>
+        <label class="opt"><input type="radio" name="q4" value="b"><span>"Your money isn't exposed to market losses — the index credit has a zero floor, and policy charges still come out."</span></label>
+        <label class="opt"><input type="radio" name="q4" value="c"><span>"This is the best investment available right now."</span></label>
+        <label class="opt"><input type="radio" name="q4" value="d"><span>"Your gains are guaranteed tax-free forever."</span></label>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-q="5" data-type="one" data-answer="b" data-compliance="1">
+        <p class="qh">5. What happens to cash value in a year the index is negative?</p>
+        <p class="qm"><span class="flag">Compliance question — must be correct to pass.</span></p>
+        <label class="opt"><input type="radio" name="q5" value="a"><span>It falls with the index</span></label>
+        <label class="opt"><input type="radio" name="q5" value="b"><span>The index credit is zero, but policy charges are still deducted — so cash value can decline</span></label>
+        <label class="opt"><input type="radio" name="q5" value="c"><span>Nothing changes at all</span></label>
+        <label class="opt"><input type="radio" name="q5" value="d"><span>The carrier credits a guaranteed 3%</span></label>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-q="6" data-type="one" data-answer="b">
+        <p class="qh">6. Sequence of returns risk is:</p>
+        <label class="opt"><input type="radio" name="q6" value="a"><span>The risk that average returns come in below what was illustrated</span></label>
+        <label class="opt"><input type="radio" name="q6" value="b"><span>The risk that taking income during down years forces liquidation and permanently damages the account</span></label>
+        <label class="opt"><input type="radio" name="q6" value="c"><span>The risk of buying into the market at a high</span></label>
+        <label class="opt"><input type="radio" name="q6" value="d"><span>The risk that dividends get cut</span></label>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-q="7" data-type="one" data-answer="c" data-compliance="1">
+        <p class="qh">7. Step-up in basis at death, as of 2026:</p>
+        <p class="qm"><span class="flag">Compliance question — must be correct to pass.</span></p>
+        <label class="opt"><input type="radio" name="q7" value="a"><span>Was repealed in 2021</span></label>
+        <label class="opt"><input type="radio" name="q7" value="b"><span>Is scheduled to be repealed next year</span></label>
+        <label class="opt"><input type="radio" name="q7" value="c"><span>Remains in effect</span></label>
+        <label class="opt"><input type="radio" name="q7" value="d"><span>Applies only to estates under $1 million</span></label>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-q="8" data-type="one" data-answer="b">
+        <p class="qh">8. What does the 2026 Trustees Report project for the combined Social Security trust funds?</p>
+        <label class="opt"><input type="radio" name="q8" value="a"><span>Depleted in 2028; benefits stop</span></label>
+        <label class="opt"><input type="radio" name="q8" value="b"><span>Depleted in 2034; roughly 83% of scheduled benefits payable</span></label>
+        <label class="opt"><input type="radio" name="q8" value="c"><span>Fully funded through 2075</span></label>
+        <label class="opt"><input type="radio" name="q8" value="d"><span>Depleted in 2031; roughly 50% payable</span></label>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-q="9" data-type="one" data-answer="c">
+        <p class="qh">9. A 41-year-old surgeon earning $900,000 has maxed his 403(b). What do you lead with?</p>
+        <label class="opt"><input type="radio" name="q9" value="a"><span>The Widow's Chain, aimed at him and his wife</span></label>
+        <label class="opt"><input type="radio" name="q9" value="b"><span>The death benefit calculation</span></label>
+        <label class="opt"><input type="radio" name="q9" value="c"><span>"You've maxed everything they'll let you max. Where does the rest of the after-tax money go?"</span></label>
+        <label class="opt"><input type="radio" name="q9" value="d"><span>The rock and paper demo</span></label>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-q="10" data-type="multi" data-answer="a,b,c,f">
+        <p class="qh">10. Select every situation where you should <em>not</em> recommend an IUL.</p>
+        <p class="qm">Select all that apply.</p>
+        <label class="opt"><input type="checkbox" name="q10" value="a"><span>They need this money within five years</span></label>
+        <label class="opt"><input type="checkbox" name="q10" value="b"><span>They can't sustain the funding through a bad year</span></label>
+        <label class="opt"><input type="checkbox" name="q10" value="c"><span>The death benefit need is unmet and the budget is finite</span></label>
+        <label class="opt"><input type="checkbox" name="q10" value="d"><span>They're only 25 years old</span></label>
+        <label class="opt"><input type="checkbox" name="q10" value="e"><span>They already own term insurance</span></label>
+        <label class="opt"><input type="checkbox" name="q10" value="f"><span>They haven't captured their employer match yet</span></label>
+        <div class="fb"></div>
+      </div>
+
+      <div class="quizbar">
+        <button class="btn primary" type="button" id="scoreBtn">Score my check</button>
+        <button class="btn" type="button" id="retakeBtn">Clear and retake</button>
+        <span class="result" id="result"></span>
+      </div>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="creed">Rooted. Rising. Unstoppable.</p>
+    <p><strong style="color:#e8edf4">Hyperion Legacy Builders</strong> · 45-minute IUL field certification. The companion manual is <em>The Widow's Chain</em> (iul-story.html) — this course teaches it; that page holds the full scripts, objection bank, and guardrails.</p>
+    <p class="fine">Internal training use only. Not for client distribution and not an advertisement. Nothing here is tax, legal, or investment advice, and no part of it is a representation of any specific policy, carrier, or contract. Policy features, caps, rider availability and loan provisions vary by carrier, state and product and change over time — verify current specifications and use carrier-approved materials and illustrations in every client presentation. Clients should be directed to their own tax and legal advisors.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var LS = {
+    get:function(k){ try{ return window.localStorage.getItem(k); }catch(e){ return null; } },
+    set:function(k,v){ try{ window.localStorage.setItem(k,v); }catch(e){} }
+  };
+
+  /* ---------- mode ---------- */
+  var body=document.body, mFac=document.getElementById('mFac'), mSolo=document.getElementById('mSolo');
+  function setMode(m){
+    body.setAttribute('data-mode',m);
+    mFac.setAttribute('aria-pressed', m==='fac' ? 'true':'false');
+    mSolo.setAttribute('aria-pressed', m==='solo' ? 'true':'false');
+    LS.set('iul_mode',m);
+  }
+  mFac.addEventListener('click',function(){setMode('fac');});
+  mSolo.addEventListener('click',function(){setMode('solo');});
+  setMode(LS.get('iul_mode')==='solo' ? 'solo' : 'fac');
+
+  /* ---------- timer ---------- */
+  var segs=[].slice.call(document.querySelectorAll('.seg[data-start]'));
+  var clock=document.getElementById('clock'), now=document.getElementById('now');
+  var startBtn=document.getElementById('startBtn'), resetBtn=document.getElementById('resetBtn');
+  var running=false, acc=0, t0=0, tick=null;
+
+  function elapsed(){ return acc + (running ? (Date.now()-t0) : 0); }
+  function fmt(ms){
+    var s=Math.floor(ms/1000), m=Math.floor(s/60);
+    return (m<10?'0':'')+m+':'+((s%60)<10?'0':'')+(s%60);
+  }
+  function paint(){
+    var ms=elapsed(), mins=ms/60000, cur=null;
+    clock.textContent=fmt(ms);
+    segs.forEach(function(el){
+      var a=+el.getAttribute('data-start'), b=+el.getAttribute('data-end');
+      var on = mins>=a && mins<b;
+      el.classList.toggle('active', on);
+      if(on) cur=el;
+    });
+    if(!running && ms===0){ now.textContent='Not started — press Start when the room settles.'; return; }
+    if(cur){
+      var b=+cur.getAttribute('data-end');
+      var left=Math.max(0, Math.ceil(b-mins));
+      now.innerHTML='Now: <b>'+cur.querySelector('h2').textContent+'</b> · about '+left+' min left';
+    } else {
+      now.innerHTML='<b>Time is up</b> — run the certification check.';
+    }
+  }
+  function start(){
+    if(running){ acc=elapsed(); running=false; clearInterval(tick); startBtn.textContent='Resume'; }
+    else { t0=Date.now(); running=true; tick=setInterval(paint,1000); startBtn.textContent='Pause'; }
+    paint();
+  }
+  startBtn.addEventListener('click',start);
+  resetBtn.addEventListener('click',function(){
+    running=false; acc=0; clearInterval(tick); startBtn.textContent='Start'; paint();
+  });
+  paint();
+
+  /* ---------- quiz ---------- */
+  var qs=[].slice.call(document.querySelectorAll('.q'));
+  var result=document.getElementById('result');
+
+  function chosen(q){
+    var name='q'+q.getAttribute('data-q');
+    var picked=[].slice.call(q.querySelectorAll('input[name="'+name+'"]:checked')).map(function(i){return i.value;});
+    return picked.sort().join(',');
+  }
+
+  document.getElementById('scoreBtn').addEventListener('click',function(){
+    var correct=0, compFail=false, unanswered=0;
+    qs.forEach(function(q){
+      var want=q.getAttribute('data-answer').split(',').sort().join(',');
+      var got=chosen(q);
+      var fb=q.querySelector('.fb');
+      if(!got) unanswered++;
+      var ok = got===want;
+      if(ok) correct++;
+      else if(q.getAttribute('data-compliance')) compFail=true;
+      fb.className='fb show '+(ok?'ok':'no');
+      if(ok){
+        fb.textContent='Correct.';
+      } else {
+        var letters=want.split(',').map(function(v){return v.toUpperCase();}).join(', ');
+        fb.textContent = q.getAttribute('data-type')==='multi'
+          ? 'Not quite — the correct set is '+letters+'. Review the manual section before retaking.'
+          : 'Not quite — the correct answer is '+letters+'. Review the manual section before retaking.';
+      }
+    });
+    var pass = correct>=8 && !compFail;
+    result.className='result '+(pass?'pass':'fail');
+    var blanks = unanswered>0 ? ' ('+unanswered+' left blank)' : '';
+    if(pass){
+      result.innerHTML='<span class="score">'+correct+' / 10</span> — passed. You’re cleared to present.';
+    } else if(compFail){
+      result.innerHTML='<span class="score">'+correct+' / 10</span> — not passed'+blanks+'. A compliance question was missed, and those must all be correct.';
+    } else {
+      result.innerHTML='<span class="score">'+correct+' / 10</span> — not passed'+blanks+'. 8 of 10 is the mark.';
+    }
+    document.getElementById('cert').scrollIntoView({block:'start'});
+  });
+
+  document.getElementById('retakeBtn').addEventListener('click',function(){
+    document.getElementById('quiz').reset();
+    qs.forEach(function(q){ var fb=q.querySelector('.fb'); fb.className='fb'; fb.textContent=''; });
+    result.className='result'; result.textContent='';
+  });
+})();
+</script>
+
+<!--BODY-END-->
+</body>
+</html>

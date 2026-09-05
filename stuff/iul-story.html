@@ -1,0 +1,1094 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--HEAD-START-->
+<title>The Widow's Chain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap">
+<style>
+:root{
+  --navy:#1a2a42;
+  --navy-2:#233650;
+  --navy-soft:#3d5573;
+  --gold:#c9a84c;
+  --gold-deep:#a8862f;
+  --gold-wash:#f6efdc;
+  --cream:#faf7f0;
+  --cream-2:#f2ece0;
+  --paper:#ffffff;
+  --ink:#20242c;
+  --muted:#6f6a5f;
+  --rule:#e2dacb;
+  --alert:#8c3a2b;
+  --alert-wash:#fbf0ed;
+  --affirm:#2f5d4f;
+  --affirm-wash:#eef4f1;
+  --shadow:0 1px 2px rgba(26,42,66,.05), 0 8px 24px -12px rgba(26,42,66,.18);
+  --font:"Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--cream);
+  color:var(--ink);
+  font-family:var(--font);
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:940px;margin:0 auto;padding:0 24px}
+.prose{max-width:68ch}
+
+/* ---------- masthead ---------- */
+.masthead{
+  background:var(--navy);
+  color:#fff;
+  padding:56px 0 48px;
+  border-bottom:4px solid var(--gold);
+}
+.eyebrow{
+  font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;
+  color:var(--gold);margin:0 0 18px;
+}
+.masthead h1{
+  font-size:clamp(38px,6.4vw,62px);
+  line-height:1.02;
+  letter-spacing:-.028em;
+  font-weight:800;
+  margin:0 0 18px;
+  text-wrap:balance;
+}
+.masthead .dek{
+  font-size:clamp(17px,2.1vw,20px);
+  color:#c9d4e3;
+  font-weight:300;
+  max-width:60ch;
+  margin:0 0 30px;
+}
+.sourcebar{
+  display:flex;flex-wrap:wrap;gap:0 34px;
+  border-top:1px solid rgba(255,255,255,.16);
+  padding-top:20px;
+}
+.sourcebar div{padding:6px 0}
+.sourcebar dt{
+  font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--gold);font-weight:700;margin-bottom:3px;
+}
+.sourcebar dd{margin:0;font-size:14.5px;color:#dfe6ef;font-weight:500}
+
+/* ---------- nav ---------- */
+nav.toc{
+  position:sticky;top:0;z-index:20;
+  background:rgba(250,247,240,.94);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--rule);
+}
+nav.toc .wrap{display:flex;gap:2px;overflow-x:auto;padding-top:0;padding-bottom:0}
+nav.toc a{
+  flex:none;
+  padding:13px 12px;
+  font-size:12.5px;font-weight:600;letter-spacing:.01em;
+  color:var(--muted);text-decoration:none;
+  border-bottom:2px solid transparent;
+  white-space:nowrap;
+}
+nav.toc a:hover{color:var(--navy);border-bottom-color:var(--gold)}
+nav.toc a:focus-visible{outline:2px solid var(--gold-deep);outline-offset:-2px}
+
+/* ---------- sections ---------- */
+section{padding:60px 0 8px;scroll-margin-top:52px}
+section + section{border-top:1px solid var(--rule)}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+.sec-num{
+  font-size:12px;font-weight:800;color:var(--gold-deep);
+  letter-spacing:.1em;font-variant-numeric:tabular-nums;
+  padding-top:2px;
+}
+h2{
+  font-size:clamp(26px,3.6vw,34px);
+  line-height:1.14;letter-spacing:-.02em;font-weight:800;
+  color:var(--navy);margin:0;text-wrap:balance;
+}
+.standfirst{color:var(--muted);font-size:17.5px;margin:12px 0 30px;max-width:66ch}
+h3{
+  font-size:19px;font-weight:700;color:var(--navy);
+  letter-spacing:-.01em;margin:36px 0 10px;
+}
+h4{font-size:15px;font-weight:700;color:var(--navy);margin:24px 0 8px}
+p{margin:0 0 16px}
+strong{font-weight:700;color:var(--navy)}
+a{color:var(--gold-deep)}
+
+/* ---------- five things ---------- */
+.five{list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.five li{
+  background:var(--paper);
+  border:1px solid var(--rule);
+  border-left:4px solid var(--gold);
+  border-radius:3px;
+  padding:20px 22px;
+  box-shadow:var(--shadow);
+  display:grid;
+  grid-template-columns:38px 1fr;
+  gap:0 16px;
+}
+.five .n{
+  font-size:26px;font-weight:800;color:var(--gold);
+  line-height:1;grid-row:1/3;font-variant-numeric:tabular-nums;
+}
+.five .t{font-weight:700;color:var(--navy);font-size:17.5px;line-height:1.35}
+.five .d{color:var(--muted);font-size:15.5px;margin-top:6px}
+.five .q{
+  margin-top:12px;padding-top:12px;border-top:1px dashed var(--rule);
+  font-size:15.5px;color:var(--ink);
+}
+.five .q b{
+  display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold-deep);margin-bottom:5px;font-weight:800;
+}
+
+/* ---------- story beats ---------- */
+.beats{position:relative;margin:0;padding:0 0 0 46px;list-style:none}
+.beats::before{
+  content:"";position:absolute;left:13px;top:10px;bottom:34px;
+  width:2px;background:linear-gradient(var(--gold),var(--rule));
+}
+.beats > li{position:relative;padding-bottom:34px}
+.beats > li::before{
+  content:attr(data-n);
+  position:absolute;left:-46px;top:1px;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--navy);color:var(--gold);
+  font-size:12px;font-weight:800;
+  display:grid;place-items:center;
+  font-variant-numeric:tabular-nums;
+}
+.beat-label{
+  font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+  font-weight:800;color:var(--gold-deep);margin:0 0 8px;
+}
+.say{
+  background:var(--paper);border:1px solid var(--rule);
+  border-radius:3px;padding:16px 18px;margin:0 0 12px;
+  font-size:16.5px;line-height:1.62;
+}
+.say p:last-child{margin-bottom:0}
+.stage{
+  font-size:14.5px;color:var(--muted);font-style:italic;
+  padding-left:14px;border-left:2px solid var(--gold);margin:0;
+}
+.turn{
+  background:var(--navy);color:#eef2f7;border-radius:3px;
+  padding:26px 28px;margin-top:6px;
+}
+.turn .beat-label{color:var(--gold)}
+.turn p{font-size:18px;margin-bottom:0;line-height:1.55}
+.turn p + p{margin-top:14px}
+
+/* ---------- generic cards ---------- */
+.grid{display:grid;gap:14px}
+@media(min-width:700px){.grid.two{grid-template-columns:1fr 1fr}}
+.card{
+  background:var(--paper);border:1px solid var(--rule);border-radius:3px;
+  padding:20px 22px;box-shadow:var(--shadow);
+}
+.card h4{margin-top:0}
+.card p:last-child{margin-bottom:0}
+.card .obj{
+  font-size:16.5px;font-weight:700;color:var(--alert);
+  margin:0 0 10px;line-height:1.4;
+}
+.card .obj::before{content:"“"}
+.card .obj::after{content:"”"}
+
+/* ---------- vocabulary ---------- */
+.vocab{border-top:1px solid var(--rule)}
+.vocab .row{
+  display:grid;gap:4px 26px;
+  padding:18px 0;border-bottom:1px solid var(--rule);
+}
+@media(min-width:760px){.vocab .row{grid-template-columns:210px 1fr}}
+.vocab dt{font-weight:700;color:var(--navy);font-size:16px}
+.vocab dd{margin:0;color:var(--ink);font-size:15.5px}
+.vocab .why{display:block;margin-top:5px;color:var(--muted);font-size:14.5px}
+
+/* ---------- ledger ---------- */
+.ledger{display:grid;gap:0;border:1px solid var(--rule);border-radius:3px;overflow:hidden;background:var(--paper)}
+@media(min-width:760px){.ledger{grid-template-columns:1fr 1fr}}
+.ledger .col{padding:22px 24px}
+.ledger .col + .col{border-top:1px solid var(--rule)}
+@media(min-width:760px){.ledger .col + .col{border-top:0;border-left:1px solid var(--rule)}}
+.ledger h4{
+  margin:0 0 14px;font-size:11px;letter-spacing:.15em;text-transform:uppercase;font-weight:800;
+}
+.ledger .left h4{color:var(--muted)}
+.ledger .right h4{color:var(--gold-deep)}
+.ledger ul{margin:0;padding:0;list-style:none;font-size:15.5px}
+.ledger li{padding:7px 0 7px 20px;position:relative;border-bottom:1px dotted var(--rule)}
+.ledger li:last-child{border-bottom:0}
+.ledger .left li::before{content:"–";position:absolute;left:2px;color:var(--muted)}
+.ledger .right li::before{content:"→";position:absolute;left:0;color:var(--gold-deep);font-weight:700}
+
+/* ---------- rock & paper ---------- */
+.rp{display:grid;gap:14px;margin:6px 0 4px}
+@media(min-width:700px){.rp{grid-template-columns:1fr 1fr}}
+.rp .box{border:1px solid var(--rule);border-radius:3px;padding:20px 22px;background:var(--paper)}
+.rp .box.rock{border-top:4px solid var(--navy)}
+.rp .box.paper{border-top:4px solid var(--gold)}
+.rp .box h4{margin-top:0;font-size:11px;letter-spacing:.15em;text-transform:uppercase}
+.rp .box .big{font-size:20px;font-weight:800;color:var(--navy);margin:0 0 8px;letter-spacing:-.01em}
+.rp .box p{font-size:15.5px;margin-bottom:0}
+
+/* ---------- numbers ---------- */
+.figs{
+  display:grid;gap:1px;background:var(--rule);
+  border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin:8px 0 18px;
+}
+@media(min-width:640px){.figs{grid-template-columns:repeat(3,1fr)}}
+.figs .f{background:var(--paper);padding:18px 20px}
+.figs .v{
+  font-size:27px;font-weight:800;color:var(--navy);
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1;
+}
+.figs .v.bad{color:var(--alert)}
+.figs .v.good{color:var(--affirm)}
+.figs .k{font-size:13.5px;color:var(--muted);margin-top:5px;line-height:1.4}
+
+/* ---------- guardrails ---------- */
+.gr{
+  background:var(--paper);border:1px solid var(--rule);
+  border-left:4px solid var(--alert);border-radius:3px;
+  padding:20px 22px;margin-bottom:14px;
+}
+.gr h4{margin:0 0 10px;font-size:17px}
+.gr p{font-size:15.5px}
+.gr p:last-child{margin-bottom:0}
+.swap{display:grid;gap:10px;margin-top:14px}
+@media(min-width:640px){.swap{grid-template-columns:1fr 1fr}}
+.swap div{padding:12px 14px;border-radius:3px;font-size:15px;line-height:1.5}
+.swap .no{background:var(--alert-wash);color:#6d2c21}
+.swap .yes{background:var(--affirm-wash);color:#23483d}
+.swap b{
+  display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  font-weight:800;margin-bottom:5px;opacity:.75;
+}
+
+/* ---------- run sheet ---------- */
+.run{width:100%;border-collapse:collapse;font-size:15.5px;background:var(--paper);border:1px solid var(--rule)}
+.run th{
+  text-align:left;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold-deep);font-weight:800;padding:12px 16px;border-bottom:1px solid var(--rule);
+}
+.run td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top}
+.run tr:last-child td{border-bottom:0}
+.run td:first-child{
+  font-variant-numeric:tabular-nums;font-weight:700;color:var(--navy);white-space:nowrap;width:1%;
+}
+.scroll{overflow-x:auto}
+
+.callout{
+  background:var(--gold-wash);border:1px solid #e6d9b4;border-radius:3px;
+  padding:18px 20px;margin:22px 0;font-size:15.5px;
+}
+.callout p:last-child{margin-bottom:0}
+.callout .lbl{
+  font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;font-weight:800;
+  color:var(--gold-deep);display:block;margin-bottom:7px;
+}
+
+footer{
+  background:var(--navy);color:#b9c5d6;margin-top:70px;
+  padding:44px 0 40px;border-top:4px solid var(--gold);
+}
+footer .creed{
+  font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;
+  color:var(--gold);margin:0 0 14px;
+}
+footer p{font-size:13.5px;line-height:1.6;max-width:74ch;margin:0 0 10px}
+footer .fine{color:#8494a9;font-size:12.5px}
+
+@media print{
+  nav.toc{display:none}
+  body{background:#fff;font-size:11.5pt}
+  section{page-break-inside:auto}
+  .card,.gr,.five li{break-inside:avoid}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+<!--HEAD-END-->
+</head>
+<body>
+<!--BODY-START-->
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">Hyperion Legacy Builders · Product Mastery</p>
+    <h1>The Widow's Chain</h1>
+    <p class="dek">One story, five questions, and the plays that turn an IUL conversation into a sale — distilled from Mark Quann's training call for the field, and updated for what's true in 2026.</p>
+    <dl class="sourcebar">
+      <div><dt>Source</dt><dd>Mark Quann, EMD · WFG</dd></div>
+      <div><dt>Recorded</dt><dd>February 2021</dd></div>
+      <div><dt>Verified for</dt><dd>September 2026</dd></div>
+      <div><dt>Use</dt><dd>Internal training only</dd></div>
+    </dl>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Sections">
+  <div class="wrap">
+    <a href="#rule">The Rule</a>
+    <a href="#five">The Five Things</a>
+    <a href="#story">The Story</a>
+    <a href="#parents">The Parent Play</a>
+    <a href="#floor">Rock &amp; Paper</a>
+    <a href="#sequence">Sequence of Returns</a>
+    <a href="#affluent">Affluent Track</a>
+    <a href="#ladder">Market Ladder</a>
+    <a href="#bank">The Family Bank</a>
+    <a href="#ledger">99% / 1%</a>
+    <a href="#language">Language of Money</a>
+    <a href="#objections">Objections</a>
+    <a href="#guardrails">2026 Guardrails</a>
+    <a href="#runsheet">Team Night</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ============ 1 ============ -->
+<section id="rule">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Facts tell. Stories sell.</h2></div>
+  <p class="standfirst">Mark Quann has been in WFG fifteen years, built a family business — his sister, niece and nephew are all SMDs — and written three books, the last one an Amazon bestseller. He opened the call by saying he was terrible at all of this when he started. What he learned is a system, and the system is four moves.</p>
+  <div class="prose">
+    <p><strong>Lead with why, not what.</strong> Nobody buys a mechanism. If you open with crediting methods and caps, you've lost. Open with the reason the thing exists.</p>
+    <p><strong>Tell one story before you show one number.</strong> A fact makes someone nod. A story makes someone <em>see themselves</em>. The number is what they use afterward to justify a decision they already made emotionally.</p>
+    <p><strong>Ask, don't present.</strong> Every section of this page is built around questions rather than statements. A question they answer out loud is a conclusion they own. A statement you make is a claim they get to argue with.</p>
+    <p><strong>Little yeses build to a big yes.</strong> "Do you want coverage after your term expires?" — yes. "Do you want to protect what you've built from a care event?" — yes. "Any objection to growing money without tax?" — yes. Five small yeses and the close is a formality, because you never actually asked them to buy an IUL. You asked what mattered to them, and the IUL is what does those things.</p>
+  </div>
+  <div class="callout">
+    <span class="lbl">The one-line version</span>
+    <p>You are not in the business of explaining products. You are in the business of asking questions, and then being the person who has an answer.</p>
+  </div>
+</section>
+
+<!-- ============ 2 ============ -->
+<section id="five">
+  <div class="sec-head"><span class="sec-num">02</span><h2>The five things an IUL does</h2></div>
+  <p class="standfirst">Memorize these. Not the features — these five. Every presentation, every objection, and every referral in this document routes back through them. The client tells you which ones matter; you build to those.</p>
+
+  <ol class="five">
+    <li>
+      <span class="n">1</span>
+      <div>
+        <div class="t">Permanent coverage after the term expires</div>
+        <div class="d">Term is a rented fence around your worst twenty years. It ends. Permanent coverage is in force the day the claim actually happens.</div>
+        <div class="q"><b>Ask</b>When your term insurance expires, do you want to still be covered the day you die — or is it fine if the policy is gone by then?</div>
+      </div>
+    </li>
+    <li>
+      <span class="n">2</span>
+      <div>
+        <div class="t">Long-term care that protects the assets you built</div>
+        <div class="d">A care event is the single most efficient way to liquidate a lifetime of savings. An accelerated benefit turns the death benefit into care money while you're alive.</div>
+        <div class="q"><b>Ask</b>If you needed three years of care, which asset would you sell first — the retirement account or the house?</div>
+      </div>
+    </li>
+    <li>
+      <span class="n">3</span>
+      <div>
+        <div class="t">Growth without state, federal, or capital gains tax</div>
+        <div class="d">Cash value accumulates tax-deferred; properly structured and kept in force, access comes out without a tax bill, and the death benefit passes income-tax-free.</div>
+        <div class="q"><b>Ask</b>Do you have any objection to growing your money without state, federal, or capital gains tax for the rest of your life?</div>
+      </div>
+    </li>
+    <li>
+      <span class="n">4</span>
+      <div>
+        <div class="t">Growth without exposure to market loss</div>
+        <div class="d">Index credits have a floor. A down year in the index credits zero rather than a negative — the account doesn't ride the crash down.</div>
+        <div class="q"><b>Ask</b>The next time the market drops forty percent, how would you like to sleep straight through it?</div>
+      </div>
+    </li>
+    <li>
+      <span class="n">5</span>
+      <div>
+        <div class="t">A tax-advantaged family bank</div>
+        <div class="d">Policy loans require no application, no credit check, no job, and no explanation of what it's for.</div>
+        <div class="q"><b>Ask</b>How would you like access to capital at low rates, for any reason, even in a year you have no income?</div>
+      </div>
+    </li>
+  </ol>
+
+  <div class="callout">
+    <span class="lbl">The close is one question</span>
+    <p><strong>"How many of those five matter to you?"</strong> Not "do you want an IUL." You never sell the product — you sell the five things, and the product is simply the only vehicle that does all five at once.</p>
+  </div>
+</section>
+
+<!-- ============ 3 ============ -->
+<section id="story">
+  <div class="sec-head"><span class="sec-num">03</span><h2>The story: a chain with one weak link</h2></div>
+  <p class="standfirst">This is the centerpiece of the whole training. It is not a pitch — it's a chain of consequences that a client watches assemble itself, ending on a question they answer. Learn it beat by beat and deliver it slowly. The pauses do more work than the words.</p>
+
+  <ol class="beats">
+    <li data-n="1">
+      <p class="beat-label">Open with a question, not a claim</p>
+      <div class="say"><p>"Can I ask you something most people have never thought about? Do you know that among Americans over seventy-five, the poverty rate for women runs roughly double what it is for men? … Any idea why that is?"</p></div>
+      <p class="stage">Let them guess. They'll usually say "they live longer." That's half of it — and now they're leaning in, because they want the other half.</p>
+    </li>
+    <li data-n="2">
+      <p class="beat-label">Two facts that stack</p>
+      <div class="say"><p>"That's part of it. Here's the other part. Women tend to marry men a few years older, and women tend to outlive men. Stack those two together and the average wife doesn't outlive her husband by a year or two — it's often a decade or more. Which means nearly every marriage in this country ends the same way. She's alone, and she's old."</p></div>
+    </li>
+    <li data-n="3">
+      <p class="beat-label">Age 30 — the decision everything else hangs on</p>
+      <div class="say"><p>"So picture a couple. They're thirty. Kids are little, money's tight, and they do exactly what they were told to do — they buy thirty-year term. Cheap, sensible, covers the years when a death would be catastrophic. There's nothing wrong with that decision. But hold onto that moment, because everything that follows was decided right there."</p></div>
+    </li>
+    <li data-n="4">
+      <p class="beat-label">Age 60 — the door closes</p>
+      <div class="say"><p>"Fast forward thirty years. Kids are grown. The term is about to expire. And life happened, so retirement didn't get funded the way they planned. They go back to get coverage — and one of two things has happened. Either it's priced at sixty-year-old rates and they can't stomach it, or somebody's had a health event and they can't get it at any price. Same story with long-term care. The door that was wide open at thirty is closed at sixty."</p></div>
+    </li>
+    <li data-n="5">
+      <p class="beat-label">He gets sick</p>
+      <div class="say"><p>"Now they're in their seventies. Statistically he goes first, and usually he gets sick before he goes. But that's fine, right? She's there. She takes care of him. Two years, three years — alone, no aide, no facility, because there's no policy to pay for one. And she ages ten years doing it."</p></div>
+    </li>
+    <li data-n="6">
+      <p class="beat-label">He dies</p>
+      <div class="say"><p>"He dies. There's no death benefit — the term expired fifteen years ago. And the household loses a Social Security check, because when a spouse dies the survivor keeps the larger of the two benefits, not both. So her income drops at the exact moment she becomes the one who needs care."</p></div>
+    </li>
+    <li data-n="7">
+      <p class="beat-label">She gets sick — then stop talking</p>
+      <div class="say">
+        <p>"Then she gets sick. And now there's nobody. No husband to care for her, no policy to pay for care. So she spends. Savings first. Then the retirement account. Then the house. And when that's gone—"</p>
+        <p>"—who pays?"</p>
+      </div>
+      <p class="stage">Now stop. Do not fill the silence, do not soften it, do not keep talking. They will answer it themselves, and the answer is almost always "me," or "me and my siblings." That sentence, in their voice, is the sale.</p>
+    </li>
+    <li data-n="8">
+      <p class="beat-label">Name what they just watched</p>
+      <div class="say"><p>"That's the answer to my first question. That's why the poverty rate for older women is what it is. It isn't because they were careless. It's because at thirty they made a completely reasonable decision, and nobody ever showed them the other half of it."</p></div>
+    </li>
+  </ol>
+
+  <div class="turn">
+    <p class="beat-label">The turn</p>
+    <p>"Here's what I want you to see. That whole chain has exactly one weak link, and it isn't at seventy-five. It's at thirty. Everything after that is just consequence."</p>
+    <p>"So the only real question is whether we fix the link while it's still fixable."</p>
+  </div>
+
+  <h3>Why this story works</h3>
+  <div class="prose">
+    <p>It never mentions a product. It never asks for anything. It contains no cap, no crediting method, and no illustration. What it does is walk a client through a sequence where every single step is obviously true, and let them arrive at the cost themselves.</p>
+    <p>It also reaches two people at once. The wife hears her own future. The husband hears what he leaves behind. And if there are adult children in the room, they hear the bill.</p>
+  </div>
+  <div class="callout">
+    <span class="lbl">Delivery notes</span>
+    <p><strong>Slow down at beat 5.</strong> The caregiving years are where the story lands emotionally — most people have watched some version of it. <strong>Never rush beat 7.</strong> The silence is the mechanism. <strong>Don't editorialize after the turn.</strong> Ask what they want to do about it, then be quiet again.</p>
+  </div>
+</section>
+
+<!-- ============ 4 ============ -->
+<section id="parents">
+  <div class="sec-head"><span class="sec-num">04</span><h2>The parent play</h2></div>
+  <p class="standfirst">This is the piece Mark said raised his own belief more than anything else in fifteen years. It solves the hardest prospect in the business: the young, healthy, high-income person with no dependents who genuinely does not need life insurance.</p>
+
+  <h3>The script</h3>
+  <div class="say" style="max-width:68ch">
+    <p><strong>Them:</strong> "I don't really need life insurance. Nobody depends on me."</p>
+    <p><strong>You:</strong> "Fair enough. Let me ask about somebody else, then. Are your parents financially independent?"</p>
+    <p><strong>Them:</strong> "Not really, no."</p>
+    <p><strong>You:</strong> "Does your mom have long-term care coverage?"</p>
+    <p><strong>Them:</strong> "I don't think so."</p>
+    <p><strong>You:</strong> "Does she have life insurance?"</p>
+    <p><strong>Them:</strong> "I don't know."</p>
+    <p><strong>You:</strong> "Okay. So if she needs three years of care — and a private room in a nursing home runs well into six figures a year in California — who writes that check?"</p>
+    <p><em>[Wait.]</em></p>
+    <p><strong>Them:</strong> "…me."</p>
+    <p><strong>You:</strong> "Right. So you don't need life insurance. But you might need a <em>policy</em>. Let me show you what that looks like."</p>
+  </div>
+
+  <h3>How the structure works</h3>
+  <div class="prose">
+    <p>The adult child is the <strong>owner and payor</strong>. The parent is the <strong>insured</strong>. Two different people get two different halves of the five things:</p>
+  </div>
+  <div class="grid two">
+    <div class="card">
+      <h4>Mom gets things 1 and 2</h4>
+      <p>A death benefit that exists when she dies, and an accelerated benefit that pays for her care while she's alive — the two things she can no longer buy for herself on her own income.</p>
+    </div>
+    <div class="card">
+      <h4>He gets things 3, 4 and 5</h4>
+      <p>He owns the contract. The cash value grows tax-deferred and market-loss-protected under his control, he can borrow against it, and the death benefit comes to him — which is exactly the money he would otherwise have had to earn, be taxed on, and spend on her care.</p>
+    </div>
+  </div>
+  <div class="prose">
+    <p>Run the math out loud: a young person can maximize all five things across <em>two</em> policies — a smaller one on himself for growth, banking and future insurability, and a larger one on the parent where the death benefit and the care benefit actually do work in the next twenty years.</p>
+  </div>
+  <div class="callout">
+    <span class="lbl">Do it correctly</span>
+    <p>Insurable interest exists between an adult child and a parent, but the parent <strong>must consent, sign the application, and complete underwriting</strong>. You cannot quietly insure someone. And be honest about what underwriting will allow — a parent in their sixties with existing conditions may qualify for a smaller face amount, a rated policy, or a chronic-illness rider instead of a full LTC rider. Quote what the carrier approves, never what the story needs.</p>
+  </div>
+</section>
+
+<!-- ============ 5 ============ -->
+<section id="floor">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Rock and paper: how the floor actually works</h2></div>
+  <p class="standfirst">When a client asks how it participates in the market without riding the market down, most agents get vague — and vagueness kills the case. This is a thirty-second physical demo. Put a fist on the table for the rock and a flat hand for the paper.</p>
+
+  <div class="rp">
+    <div class="box rock">
+      <h4>The rock</h4>
+      <p class="big">Bonds</p>
+      <p>The carrier puts the bulk of the money in its general account — bonds. Bonds don't track the index. Whatever the market does this year, the rock is still sitting there. It doesn't go up with a rally and it doesn't go down with a crash.</p>
+    </div>
+    <div class="box paper">
+      <h4>The paper</h4>
+      <p class="big">Options</p>
+      <p>The carrier takes the <em>interest</em> the rock throws off and spends it on options that pay if the index rises. It's buying upside with the yield, not with the principal.</p>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p><strong>Market up:</strong> the paper pays, and the gain gets credited on top of the rock. That's your indexed credit.</p>
+    <p><strong>Market down:</strong> the paper expires worthless. You lost the interest you spent on it — you did not lose the rock. That's the floor.</p>
+    <p>This isn't a proprietary trick and it isn't new. Search "market-linked CD" and you'll find banks doing exactly this for wealthy clients for decades. Transamerica's contribution in 1997 was putting the structure inside a life insurance contract, which stripped out the tax drag and added a death benefit and living benefits on top.</p>
+  </div>
+
+  <div class="callout">
+    <span class="lbl">Say it precisely</span>
+    <p>The floor applies to the <strong>index credit</strong>, not to the account value. Policy charges — cost of insurance, admin, rider fees — are still deducted in a zero year, so a policy's cash value can decline even though the index credit never went negative. Say "your money isn't exposed to market losses." Do not say "you can't lose money." See <a href="#guardrails">the guardrails</a>.</p>
+  </div>
+</section>
+
+<!-- ============ 6 ============ -->
+<section id="sequence">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Sequence of returns: the play for people who already have money</h2></div>
+  <p class="standfirst">This is the highest-value conversation in the deck, because it works on the prospect who thinks he's already fine — the one with a seven-figure 401(k) who doesn't think he needs you. It reframes the IUL as a defensive asset that protects the money he already has.</p>
+
+  <h3>The setup: two things that sound the same and aren't</h3>
+  <div class="prose">
+    <p><strong>Dollar cost averaging</strong> is your friend while you're contributing. The market drops, your fixed contribution buys more shares, and the recovery pays you extra for having kept buying. Everyone knows this one.</p>
+    <p><strong>Sequence of returns</strong> is the same math running in reverse, and almost nobody has heard of it. Once you're withdrawing instead of contributing, a crash forces you to sell more shares to raise the same dollar of income. You liquidate at the bottom. The account can't recover from a hole you're still digging.</p>
+    <p>So the rule is simple, and clients understand it instantly: <strong>don't take income out of a market account in a down year.</strong> The obvious next question — <em>then what do I live on?</em> — is the entire sale.</p>
+  </div>
+
+  <h3>The numbers Mark ran on the call</h3>
+  <div class="figs">
+    <div class="f"><div class="v">$1.0M</div><div class="k">Starting balance at retirement, drawing 7% a year</div></div>
+    <div class="f"><div class="v bad">$530K</div><div class="k">After just two early down years while withdrawing</div></div>
+    <div class="f"><div class="v bad">$444K</div><div class="k">Remaining at age 85, even with strong returns after year 3</div></div>
+  </div>
+  <div class="figs">
+    <div class="f"><div class="v good">5</div><div class="k">Years income is drawn from the IUL instead — only the down years</div></div>
+    <div class="f"><div class="v good">$3.6M</div><div class="k">Retirement account at 85 under the same market sequence</div></div>
+    <div class="f"><div class="v good">+ DB</div><div class="k">Plus the death benefit and the care benefit still in force</div></div>
+  </div>
+  <div class="prose">
+    <p>Mark credits the framing to <strong>David McKnight's</strong> work. Treat both columns as a <em>hypothetical illustration of a mechanism</em>, not a projection — the point isn't the exact figure, it's that the same market, the same withdrawals and the same starting balance produce wildly different outcomes based on nothing but <em>which bucket you draw from in a bad year</em>.</p>
+  </div>
+
+  <h3>The question that sells it</h3>
+  <div class="say" style="max-width:68ch">
+    <p>"You're going to have about a million dollars. A million can last thirty-five years, or a million can be gone in fifteen — and the difference isn't the market. It's whether you had somewhere else to pull income from during the two or three bad years."</p>
+    <p>"How would you sleep at eighty-five with four hundred thousand left? … And how would you sleep with three point six million?"</p>
+  </div>
+</section>
+
+<!-- ============ 7 ============ -->
+<section id="affluent">
+  <div class="sec-head"><span class="sec-num">07</span><h2>The affluent track</h2></div>
+  <p class="standfirst">Everything before this section is built for a client who fears loss. A surgeon earning $700,000 doesn't fear loss — he has assets. He fears the IRS, and he's right to. Same five things, same product, completely different door.</p>
+
+  <h3>Don't open with the story. Open with the tax problem they already feel.</h3>
+  <div class="prose">
+    <p>High W-2 earners have one unsolved pain and it is not mortality. They maxed the 401(k) or 403(b). They did the backdoor Roth. And in April they still write a check large enough to buy a car. Nobody has ever offered them a third option, because there almost isn't one.</p>
+  </div>
+  <div class="say" style="max-width:68ch">
+    <p>"You've maxed out everything they'll let you max out. So where does the rest of the after-tax money go?"</p>
+  </div>
+  <p class="stage" style="max-width:68ch">Most of them have never been asked this. The honest answer is "a brokerage account I get taxed on every year." Now you have a problem to solve instead of a product to pitch.</p>
+
+  <h3>The three buckets</h3>
+  <div class="rp" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+    <div class="box rock">
+      <h4>Taxed now</h4>
+      <p class="big">Brokerage</p>
+      <p>Dividends and gains taxed as they go. Most affluent clients have more here than they realize, and it's the leakiest bucket they own.</p>
+    </div>
+    <div class="box rock">
+      <h4>Taxed later</h4>
+      <p class="big">401(k) · 403(b) · 457</p>
+      <p>Where almost all of their retirement money sits. The government is a silent partner and hasn't announced its share yet.</p>
+    </div>
+    <div class="box paper">
+      <h4>Taxed never</h4>
+      <p class="big">Roth · Life insurance</p>
+      <p>Roth belongs here too — say so out loud. What you're selling is that Roth is capped and income-limited, and this isn't.</p>
+    </div>
+  </div>
+  <div class="callout">
+    <span class="lbl">The question that reorganizes their thinking</span>
+    <p>"What percentage of your retirement money is in a bucket the government still owns a piece of — and hasn't told you the price of yet?"</p>
+  </div>
+  <div class="prose">
+    <p>Naming Roth as bucket three is not a concession, it's the move. A financially literate client already knows Roth exists, and the moment you pretend otherwise you're the guy with an angle. Concede it, then point out the ceiling.</p>
+  </div>
+
+  <h3>Dismantle the "you'll be in a lower bracket" promise</h3>
+  <div class="prose">
+    <p>Section 06 gives you the mechanism. For this market, sharpen it with three things they can verify on their phone before you leave the table.</p>
+  </div>
+  <div class="figs">
+    <div class="f"><div class="v">73</div><div class="k">Age required distributions begin — forced income stacked on everything else. It moves to 75 in 2033.</div></div>
+    <div class="f"><div class="v">10</div><div class="k">Years a non-spouse heir has to empty an inherited IRA. Their kids are often high earners too — it lands in a peak bracket.</div></div>
+    <div class="f"><div class="v">$690</div><div class="k">Top-tier monthly Medicare Part B premium in 2026 vs. $202.90 standard — the IRMAA surcharge, driven by income.</div></div>
+  </div>
+  <div class="prose">
+    <p><strong>IRMAA is your sharpest instrument with physicians</strong>, because almost none of them have heard the acronym and all of them will pay it. Medicare Part B and D surcharges are keyed to modified adjusted gross income from two years prior. In 2026 they start at $109,000 single and $218,000 married filing jointly, and the top tier more than triples the standard premium — per person, every month, for life.</p>
+    <p>Then the point that matters: <strong>policy loans don't show up in that calculation.</strong> Neither do qualified Roth distributions. A 401(k) withdrawal does — and it also raises provisional income, which is what makes Social Security benefits taxable. One withdrawal can cost them three times.</p>
+  </div>
+  <div class="callout">
+    <span class="lbl">Verify before you quote</span>
+    <p>IRMAA thresholds and premiums are reset annually, and the RMD age changes again in 2033. These are September 2026 figures. Pull current numbers before an appointment — being wrong on a checkable figure with this audience costs you the case.</p>
+  </div>
+
+  <h3>Position it against their bonds, not their stocks</h3>
+  <div class="prose">
+    <p>This is the single biggest adjustment on the page. A sophisticated client already owns equities, has opinions about them, and does not want you near them. If you present an IUL as a way to do better than the market, you've picked a fight you cannot win and you've told them you're unsophisticated.</p>
+  </div>
+  <div class="say" style="max-width:68ch">
+    <p>"What's your fixed-income allocation actually earning after tax? And what is it there to do?"</p>
+  </div>
+  <div class="prose">
+    <p>It's there to be ballast — the part of the portfolio that doesn't fall with everything else. That is precisely the §05 and §06 argument: non-correlated, floored, tax-advantaged, and liquid without underwriting. You aren't replacing their portfolio. You're competing for the boring half of it, and that's a fight you can win on the merits.</p>
+  </div>
+
+  <h3>Point the Widow's Chain at their parents</h3>
+  <div class="prose">
+    <p>The story still earns its place — you just aim it somewhere else. <a href="#parents">The parent play</a> fits high earners better than any other market, because they're the ones who can actually fund it and they're the ones who will get the phone call. A 35-year-old anesthesiologist whose mother has no plan is the single cleanest case in this document.</p>
+    <p>And reframe the care conversation entirely. This client can afford care. What he can't afford is <strong>liquidating an appreciated position at the wrong moment to pay for it</strong> — or watching his sister become the unpaid caregiver because nobody set anything up. For the affluent, long-term care is a liquidity and family-fairness problem, not an affordability one.</p>
+  </div>
+
+  <h3>Lead with the disqualifier</h3>
+  <div class="prose">
+    <p>Affluent buyers close on candor, not enthusiasm. They have been pitched by three people this year who volunteered no downside whatsoever, and they discounted all three. Give them the disqualifier before they think to ask for it.</p>
+  </div>
+  <div class="say" style="max-width:68ch">
+    <p>"This only works if you can fund it consistently for about a decade, and if you don't need this particular money in the next five years. If either of those isn't true for you, we shouldn't do this."</p>
+  </div>
+  <div class="prose">
+    <p>Then show the <strong>guaranteed column first</strong>. Then tell them the cap isn't guaranteed and has been reduced before. Every hedge you volunteer buys you a larger case, because you become the only person in the process who told them something they didn't want to hear.</p>
+  </div>
+
+  <h3>Be ready for the design question</h3>
+  <div class="prose">
+    <p>Sooner or later a financially literate client asks — politely or not — whether you built this for his accumulation or for your commission. Have the answer cold, because fumbling it loses the $50,000-a-year case to whoever answers it next.</p>
+    <p>An accumulation-designed policy is <strong>max-funded to the seven-pay limit with the minimum death benefit the corridor allows</strong>. That's the opposite of a commission-maximizing design, which pushes face amount up and premium efficiency down. Be able to say which one you built, why, and what it costs him in the first few years — and be able to show the difference in two illustrations side by side.</p>
+    <p>The vocabulary in <a href="#language">§11</a> is the price of admission here. A client who trades options at work will ask about the crediting method, the participating loan spread, and how AG 49-C changed what he's looking at. Those aren't hostile questions. They're the questions of someone deciding whether you're worth $50,000 a year.</p>
+  </div>
+
+  <h3>Your natural market is already high-income</h3>
+  <div class="prose">
+    <p>Twenty-five years in the operating room is the unfair advantage, and it is not transferable — no other agent in the South Bay can talk about a surgeon's Tuesday from the inside. Anesthesiologists, surgeons, CRNAs, and hospital-employed specialists all sit at the top of this market and most have never had a real planning conversation.</p>
+    <p>The highest-yield segment: <strong>physicians two to four years out of residency.</strong> Income has just multiplied several times over, no structure exists yet, the student loan conversation is finally ending, and they are young and healthy enough to be underwritten well. Every year you wait, that case gets more expensive and more likely to be someone else's.</p>
+  </div>
+</section>
+
+<!-- ============ 8 ============ -->
+<section id="ladder">
+  <div class="sec-head"><span class="sec-num">08</span><h2>The market ladder</h2></div>
+  <p class="standfirst">The same five things sell at $80 a month and at $300,000 a year — but not the same way, and not always as an IUL. This is the section that keeps a new associate from running an affluent script at a young family, or forcing a policy on someone who needs term. Match the tier before you build anything.</p>
+
+  <h3>Three questions that place the client</h3>
+  <div class="prose">
+    <p>Ask these before you decide what to present. They matter more than income.</p>
+  </div>
+  <ol class="five">
+    <li><span class="n">1</span><div>
+      <div class="t">Is the death benefit need actually covered?</div>
+      <div class="d">Run the number. If a death this year would wreck the household and the coverage isn't there, that gap gets solved first — at every income level. A high earner with $250,000 of group coverage and three kids is a Tier 1 problem wearing a Tier 4 suit.</div>
+    </div></li>
+    <li><span class="n">2</span><div>
+      <div class="t">What can they fund every month for twenty years without resenting it?</div>
+      <div class="d">Not what they can afford this month. What survives a slow quarter, a job change, and a new roof. A policy funded at the edge of capacity is a policy that lapses, and a lapsed policy is worse than no policy.</div>
+    </div></li>
+    <li><span class="n">3</span><div>
+      <div class="t">Do they own assets a care event would liquidate?</div>
+      <div class="d">This single question decides whether long-term care is an <em>affordability</em> conversation or an <em>asset protection</em> conversation — and those are two completely different presentations.</div>
+    </div></li>
+  </ol>
+
+  <h3>Tier 1 · Protection first — roughly $50–150 a month</h3>
+  <div class="prose">
+    <p><strong>Who:</strong> Young family, tight cash flow, renting or newly mortgaged, some debt. Very often the exact person you just recruited.</p>
+    <p><strong>The honest answer:</strong> an IUL funded at $80 a month is a bad product. Policy charges consume a small premium, cash value stays negligible for a decade, and it never becomes a bank. What this family needs is <em>coverage volume</em> — and what you can give them that's worth more than either is <strong>insurability</strong>.</p>
+    <p><strong>Lead with:</strong> the need calculation, the right amount of term, and <strong>convertibility</strong>. Write the conversion window into their file and calendar it.</p>
+  </div>
+  <div class="say" style="max-width:68ch">
+    <p>"The most valuable thing I can hand you at twenty-eight isn't a policy. It's the right to buy one later at the health you have today — no exam, no questions, whatever happens to you between now and then. Let's make sure that door stays open."</p>
+  </div>
+  <div class="prose">
+    <p><strong>Also check:</strong> chronic and critical illness riders that ride along on term at little or no cost. That's living benefits at a Tier 1 budget, and most agents never mention them.</p>
+    <p><strong>What not to do:</strong> do not sell a small IUL <em>instead of</em> adequate term. The commission looks similar, which is exactly why the temptation exists — and it's the single practice that earns this industry its bad reviews. The parent play doesn't belong here either; this client can't fund it.</p>
+    <p><strong>What a win looks like:</strong> properly covered, permanently insurable, and they trust you. In five years they're Tier 2, and in the meantime they refer, because you're the person who told them what they actually needed.</p>
+  </div>
+
+  <h3>Tier 2 · The core household — roughly $200–500 a month</h3>
+  <div class="prose">
+    <p><strong>Who:</strong> Dual income, mortgage, kids, a 401(k) with something in it, no plan and no advisor. This is the heart of the business.</p>
+    <p><strong>Lead with:</strong> <a href="#story">the Widow's Chain</a>, then things 1 and 2 — permanent coverage that outlives the term, and long-term care that keeps the house and the retirement account out of a care bill.</p>
+    <p><strong>Structure:</strong> term for the volume need, plus an IUL sized to what's genuinely sustainable. Size for the twenty-year number, not the maximum. Say that out loud — clients relax when you're the one applying the brakes.</p>
+    <p><strong>The parent play</strong> enters here if there are aging parents and the cash flow supports it.</p>
+    <p><strong>What not to say:</strong> don't sell banking yet. At $300 a month the cash value isn't meaningful capital for eight to ten years, and a client who was promised a bank in year three becomes a cancellation in year four. Mention the feature, don't build the case on it.</p>
+    <p><strong>What a win looks like:</strong> all five things covered, honestly sized, and still funded in year twenty.</p>
+  </div>
+
+  <h3>Tier 3 · The builder — roughly $1,000–3,000 a month</h3>
+  <div class="prose">
+    <p><strong>Who:</strong> Business owner, dual-professional household, real estate investor, commissioned salesperson. Maxing or nearly maxing the qualified plans. Has real assets now, and knows it.</p>
+    <p><strong>Lead with:</strong> <a href="#sequence">sequence of returns</a> and tax diversification. Long-term care converts from an affordability question into an <strong>asset protection</strong> question — the frame shift that matters most at this tier.</p>
+    <p><strong>Now the family bank is real.</strong> Cash value becomes usable capital somewhere around years five to eight, and this client has actual uses for it: business cash flow, a down payment, a bridge through a bad quarter, an opportunity that shows up on short notice. <a href="#bank">Section 09</a> earns its keep here.</p>
+    <p><strong>Vocabulary starts mattering:</strong> non-correlated asset, participating loans, the difference between a wash loan and a variable one. This is the tier where fumbling a term costs you the case.</p>
+    <p><strong>Structure:</strong> the max-funded design conversation begins — face amount set by the corridor, not by the commission.</p>
+    <p><strong>What a win looks like:</strong> they <em>use</em> the policy while alive. That's what generates the referral, and referrals at this tier are lateral — other business owners.</p>
+  </div>
+
+  <h3>Tier 4 · The affluent case — $3,000+ a month, into six figures a year</h3>
+  <div class="prose">
+    <p><strong>Who:</strong> Physician, surgeon, practice owner, exited founder, serious real estate portfolio.</p>
+    <p><strong>Lead with:</strong> everything in <a href="#affluent">Section 07</a> — the three buckets, the IRMAA and RMD and ten-year-rule sequence, and the positioning against their fixed income rather than their equities. The Widow's Chain gets aimed at their parents, not at them.</p>
+    <p><strong>Structural competence is not optional here.</strong> Max-funded to the seven-pay limit, minimum non-MEC death benefit, guaranteed column shown first, and a straight answer on how the design affects your compensation. Wealth transfer is a <em>liquidity</em> conversation — creating cash to pay what's owed and to equalize among heirs — never a claim that the step-up is disappearing.</p>
+    <p><strong>What a win looks like:</strong> one of these equals a year of Tier 2 production, and this client refers to people exactly like himself.</p>
+  </div>
+
+  <h3>When not to sell an IUL — at any income level</h3>
+  <div class="prose">
+    <p>This list is the most valuable thing on the page for a new associate, and counterintuitively it closes more business than any script. Walk away when:</p>
+  </div>
+  <div class="grid two">
+    <div class="card">
+      <h4>They can't sustain the funding</h4>
+      <p>Through a slow quarter, a layoff, a medical event. If the plan only works in good years, it doesn't work.</p>
+    </div>
+    <div class="card">
+      <h4>They need the money inside five years</h4>
+      <p>Early surrender charges and front-loaded costs make a short horizon a losing structure. Say so.</p>
+    </div>
+    <div class="card">
+      <h4>The death benefit need is unmet and the budget is finite</h4>
+      <p>Term first, always. Coverage volume beats cash value when a family is underinsured.</p>
+    </div>
+    <div class="card">
+      <h4>They haven't captured the employer match</h4>
+      <p>Free money outranks your product. Tell them to go get it, then come back — and they will.</p>
+    </div>
+    <div class="card">
+      <h4>Underwriting rates them heavily</h4>
+      <p>If the cost of insurance breaks the accumulation design, the design was the wrong tool. Look at alternatives honestly.</p>
+    </div>
+    <div class="card">
+      <h4>High-interest consumer debt is sitting there</h4>
+      <p>Nothing in this policy beats retiring a 24% balance. Handle that first and you've earned the appointment you'll get later.</p>
+    </div>
+  </div>
+  <div class="callout">
+    <span class="lbl">Teach this to every new associate on day one</span>
+    <p>An agent who has never said "you shouldn't buy this" has no credibility when they say "you should." The disqualifiers aren't lost business — they're the reason the next five appointments believe you.</p>
+  </div>
+</section>
+
+<!-- ============ 9 ============ -->
+<section id="bank">
+  <div class="sec-head"><span class="sec-num">09</span><h2>The family bank</h2></div>
+  <p class="standfirst">Mark's first book was called <em>Rich Man, Poor Bank</em>. This is the argument underneath it, and it's the piece that turns an IUL from a death product into something a client uses while alive.</p>
+
+  <h3>What a bank actually is</h3>
+  <div class="say" style="max-width:68ch">
+    <p>"Let me tell you what a bank is, because nobody ever did. A bank is an institution that takes your money and pays you the lowest rate it can get away with — call it one percent. Then, on the day you lose your job and actually need money, it lends your own money back to you at twenty-four percent."</p>
+    <p>"They lend to you cheerfully when you don't need it, and they charge you the most at the exact moment you're on the ground. And then a guy on television tells you to keep six months of living expenses parked there for the rest of your life."</p>
+  </div>
+
+  <h3>The alternative</h3>
+  <div class="prose">
+    <p>Cash value in a properly structured policy is liquid, grows tax-deferred, and can be borrowed against with <strong>no application, no credit check, no income verification, and no stated purpose</strong>. Nobody underwrites you. There's no one to say no.</p>
+    <p>Keep a working balance in checking. Build the reserve where it grows.</p>
+  </div>
+
+  <h3>Two kinds of policy loan — know the difference</h3>
+  <div class="grid two">
+    <div class="card">
+      <h4>Fixed / wash loans</h4>
+      <p>You borrow, and the carrier moves the collateralized amount out of the index and into a fixed account. The credited rate and the loan rate offset — hence "wash." Predictable, no arbitrage risk, but the borrowed portion stops participating in the index.</p>
+    </div>
+    <div class="card">
+      <h4>Participating / alternate loans</h4>
+      <p>You borrow at a stated rate and the full cash value <em>stays in the index</em>. If the index credits more than the loan costs, you're ahead on both assets at once. If it credits less, you're behind — that spread cuts both ways, and it is not free money.</p>
+    </div>
+  </div>
+
+  <h3>Why the affluent client cares</h3>
+  <div class="prose">
+    <p>Because it's leverage. Borrow $100K against the policy, put it down on a $500K property with $400K of bank financing, and you now own a building without having pulled a dollar out of the index. Both assets keep working.</p>
+    <p>The real estate investor's loop that Mark laid out: rental cash flow, sheltered by depreciation and cost segregation → fund the policy → borrow against the policy to acquire the next property → more cash flow → repeat. The non-correlated asset is what makes the loop safe, because it's the one piece that doesn't crash at the same time as the buildings.</p>
+  </div>
+  <div class="callout">
+    <span class="lbl">The discipline</span>
+    <p>Loans reduce the death benefit while outstanding, and an over-loaned policy that lapses triggers tax on the gain — potentially a large bill on money the client no longer has. A family bank works when it's managed. Say that out loud to the client; it builds more trust than pretending the loan is free.</p>
+  </div>
+</section>
+
+<!-- ============ 8 ============ -->
+<section id="ledger">
+  <div class="sec-head"><span class="sec-num">10</span><h2>The 99% / 1% ledger</h2></div>
+  <p class="standfirst">Mark's opening frame with any client. Don't read it as a lecture — put it in front of them and ask one question: <em>which column are you doing more of?</em> Nobody argues with a list they're reading themselves.</p>
+
+  <div class="ledger">
+    <div class="col left">
+      <h4>What the 99% do</h4>
+      <ul>
+        <li>One income, from one job</li>
+        <li>Carry a credit card balance and pay interest to build a score</li>
+        <li>Lease or finance a car, forever, without a break</li>
+        <li>Save money in a bank account and leave it there</li>
+        <li>Count on a retirement account to fund retirement</li>
+        <li>Use only their own money</li>
+        <li>Pay tax four times: when they earn it, save it, spend it, and die</li>
+        <li>Die with no life insurance and no long-term care</li>
+        <li>No estate plan</li>
+      </ul>
+    </div>
+    <div class="col right">
+      <h4>What the 1% do</h4>
+      <ul>
+        <li>Own a business, and take the deductions that come with it</li>
+        <li>Pay the card to zero monthly — the bank pays <em>them</em> in rewards</li>
+        <li>Drive a paid-off car while the wealth is still being built</li>
+        <li>Focus on tax-advantaged accumulation, not just accumulation</li>
+        <li>Build multiple streams of income</li>
+        <li>Use other people's money</li>
+        <li>Structure to reduce and defer tax deliberately</li>
+        <li>Own permanent life insurance and long-term care</li>
+        <li>Estate and tax planning in place</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout">
+    <span class="lbl">The follow-up question — this is the whole exercise</span>
+    <p>"You're doing a lot on the left. Everybody is; it's what we were taught. So what would it take to move two or three of those over to the right this year?" You're not asking them to become someone else. You're asking for two line items.</p>
+  </div>
+</section>
+
+<!-- ============ 9 ============ -->
+<section id="language">
+  <div class="sec-head"><span class="sec-num">11</span><h2>Speak the language of money</h2></div>
+  <p class="standfirst">Mark's biggest cases came after he learned the vocabulary, not after he learned a better close. His largest IUL last year was $300,000 of annual premium. A $200-a-month client will never ask you these words. A $50,000-a-year client will, and if you fumble them you're finished — those clients hold stock options at work and know exactly what they're hearing.</p>
+
+  <dl class="vocab">
+    <div class="row">
+      <dt>Non-correlated asset</dt>
+      <dd>An asset that doesn't move with the market it sits beside.
+        <span class="why">The question it unlocks: "Your 401(k), your stocks, and your real estate all go down together in a bad year. How much of your money would you like somewhere that doesn't?"</span></dd>
+    </div>
+    <div class="row">
+      <dt>Index</dt>
+      <dd>A measurement, not an investment. The S&amp;P 500 measures the performance of 500 companies; it doesn't hold anything for you.
+        <span class="why">Why it matters: the policy is credited <em>based on</em> the index. The money is never in the market — which is precisely why the floor is possible.</span></dd>
+    </div>
+    <div class="row">
+      <dt>Dollar cost averaging</dt>
+      <dd>Buying at fixed intervals so a downturn buys more shares.
+        <span class="why">Helps while you're contributing. Actively hurts once you're withdrawing — see §06.</span></dd>
+    </div>
+    <div class="row">
+      <dt>Sequence of returns risk</dt>
+      <dd>The risk that <em>when</em> the bad years arrive matters more than the average return over the period.
+        <span class="why">The single most useful term on this page for a client who thinks he's already set.</span></dd>
+    </div>
+    <div class="row">
+      <dt>AG 49-C</dt>
+      <dd>The current NAIC actuarial guideline governing how IUL illustrations may be built, effective April 1, 2026.
+        <span class="why">Your answer when a competing agent says "those illustrations are unrealistic." Regulators cap what carriers are allowed to show. See §11.</span></dd>
+    </div>
+    <div class="row">
+      <dt>MEC / 7-pay test</dt>
+      <dd>Fund a policy faster than the seven-pay limit and it becomes a Modified Endowment Contract — distributions get taxed gain-first, with a penalty before 59½.
+        <span class="why">Knowing this is how you signal you're the professional in the room. It's also how you avoid destroying the client's tax treatment.</span></dd>
+    </div>
+    <div class="row">
+      <dt>Participating (alternate) loan</dt>
+      <dd>A policy loan where the cash value keeps participating in the index rather than being moved to a fixed account.
+        <span class="why">Affluent clients ask about this by name. Carriers differ — verify before you promise it.</span></dd>
+    </div>
+    <div class="row">
+      <dt>Step-up in basis</dt>
+      <dd>Inherited appreciated assets reset to fair market value at the owner's death, erasing the built-in capital gain.
+        <span class="why">Currently in effect. Read §11 before you say anything about it losing.</span></dd>
+    </div>
+  </dl>
+</section>
+
+<!-- ============ 10 ============ -->
+<section id="objections">
+  <div class="sec-head"><span class="sec-num">12</span><h2>Objections</h2></div>
+  <p class="standfirst">Every one of these is answered by returning to the five things and asking a question. Notice that none of the answers is a defense.</p>
+
+  <div class="grid two">
+    <div class="card">
+      <p class="obj">Permanent insurance has way too many fees.</p>
+      <p>"Let's separate two things. Do you want coverage in force after your term expires? And do you want something that pays for care without selling the house? Those cost money whether they're inside a policy or bought separately — and separately, with after-tax dollars, they cost more. Inside the policy, the growth carries the charges over time. And if you want to talk about expensive: the couple who bought only term paid nothing in fees and lost every asset they had."</p>
+    </div>
+    <div class="card">
+      <p class="obj">Buy term and invest the difference.</p>
+      <p>"I'm with you on the term — you should have term, and plenty of it. The question is what happens on the day it expires. That advice was written in the 1970s when whole life was paying a locked, low rate and the market was about to run. Both of those conditions changed. Also — did you actually invest the difference?" <em>(Nine times out of ten, they didn't.)</em></p>
+    </div>
+    <div class="card">
+      <p class="obj">I'd rather max my 401(k) — I need the deduction now.</p>
+      <p>"Max it. Get the match, take the deduction, I'm not competing with your 401(k). Two things, though. There's a contribution limit, so this doesn't solve where the <em>rest</em> of your after-tax money goes. And the promise that you'll be in a lower bracket later has a hole in it: 401(k) distributions raise provisional income, which is what makes Social Security benefits taxable. So the withdrawal can cost you twice."</p>
+    </div>
+    <div class="card">
+      <p class="obj">My CPA says IULs are a bad idea.</p>
+      <p>"Good — you should have a CPA with opinions. Let me ask what specifically: is it the cost of insurance, the caps, or the way some agents illustrate loans? Because those are three different conversations and two of them I'd agree with." Then hand over something written. A third-party resource ends this argument in a way you never will — which is exactly why Mark's clients stopped cancelling once he started giving them the book.</p>
+    </div>
+    <div class="card">
+      <p class="obj">Real estate is my investment. I don't need this.</p>
+      <p>"Then let's not talk about it as an investment. Two questions. If you needed three years of care, which building would you sell? And when everything you own — the buildings, the market, the credit — goes down at the same time, what's the one asset that doesn't? That's when the guy with liquidity buys from the guy without it."</p>
+    </div>
+    <div class="card">
+      <p class="obj">Those illustrations look unrealistic to me.</p>
+      <p>"They're built under a national actuarial guideline that exists specifically to stop carriers from illustrating aggressively — the current version took effect this April, and it tightened things again around exotic index histories. So the number you're looking at is a regulated, deliberately conservative one. Now let me also show you the guaranteed column, because that's the promise, and the illustrated column is not."</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11 ============ -->
+<section id="guardrails">
+  <div class="sec-head"><span class="sec-num">13</span><h2>2026 guardrails</h2></div>
+  <p class="standfirst">The call was recorded in February 2021. The concepts hold up completely; several of the specifics do not, and a couple of them will get a team member embarrassed in front of a sharp prospect or an examiner. Read this section before you use any number from this page in front of a client.</p>
+
+  <div class="gr">
+    <h4>"It can't lose money"</h4>
+    <p>This is the single biggest exposure on the call. The <em>index credit</em> has a floor — a negative index year credits zero. Policy charges are still deducted, so cash value can decline in a flat year. A blanket "you can't lose money" is a misrepresentation.</p>
+    <div class="swap">
+      <div class="no"><b>Don't say</b>"Your money can never go down."</div>
+      <div class="yes"><b>Say</b>"Your money isn't exposed to market losses — the index credit has a zero floor. Policy charges still come out, so let me show you both columns."</div>
+    </div>
+  </div>
+
+  <div class="gr">
+    <h4>"IUL is the most powerful investment out there"</h4>
+    <p>An IUL is life insurance, not a security. Calling it an investment is a licensing and advertising problem, particularly for life-only licensed agents.</p>
+    <div class="swap">
+      <div class="no"><b>Don't say</b>"the best investment," "returns," "I'll invest this for you"</div>
+      <div class="yes"><b>Say</b>"strategy," "asset," "policy," "credited interest," "accumulation"</div>
+    </div>
+  </div>
+
+  <div class="gr">
+    <h4>"Tax-free"</h4>
+    <p>Loans and withdrawals are tax-advantaged <em>conditionally</em>: the policy must stay in force, stay outside MEC status, and be structured properly. A lapse with a large outstanding loan creates taxable phantom income on gain the client no longer holds.</p>
+    <div class="swap">
+      <div class="no"><b>Don't say</b>"You'll never pay tax on this money."</div>
+      <div class="yes"><b>Say</b>"Tax-advantaged — as long as the policy is properly structured and stays in force. Here's how we make sure it does."</div>
+    </div>
+  </div>
+
+  <div class="gr">
+    <h4>Caps and loan rates are not guaranteed</h4>
+    <p>The 15% cap cited on the call is a current, non-guaranteed rate; carriers have lowered caps before and will again. Guaranteed minimums are materially lower. And illustrated arbitrage on participating loans is exactly what regulators have been tightening — the loan rate can exceed the credited rate. Show the guaranteed column every time.</p>
+  </div>
+
+  <div class="gr">
+    <h4>AG 49 → AG 49-C</h4>
+    <p>Mark cites "AG 49." That was superseded by AG 49-A (2020), AG 49-B (May 2023), and now <strong>AG 49-C, effective April 1, 2026</strong>. AG 49-C requires an index to have at least ten years of actual market history before hypothetical returns can be illustrated, and replaces multi-period lookbacks with a single averaged annualized return. It's an illustration rule, not a product change — mechanics didn't change, the pictures did.</p>
+    <p>This actually <em>strengthens</em> Mark's point about avoiding exotic proprietary indices: the regulation was written to stop back-tested synthetic index histories from producing flattering illustrations. Saying "AG 49" in 2026 dates you by five years. Say AG 49-C.</p>
+  </div>
+
+  <div class="gr">
+    <h4>The 7702 change is old news, not coming news</h4>
+    <p>Mark presents the 7702 amendment as breaking news the carriers couldn't illustrate yet. That was accurate in February 2021. The change was enacted in December 2020 and applies to policies issued on or after January 1, 2021 — carriers implemented it years ago. <em>(He repeatedly says "2001" on the call; he means 2021.)</em> Do not present this as an upcoming advantage. It's simply how policies have been priced for five years.</p>
+  </div>
+
+  <div class="gr">
+    <h4>Step-up in basis was never repealed</h4>
+    <p>The most important correction on this page. Mark describes the step-up being taken away and heirs receiving a nine-million-dollar tax bill. He was describing <em>proposed</em> 2021 legislation. It did not pass. <strong>Step-up in basis at death remains in effect.</strong></p>
+    <p>The estate picture also moved the other way: the federal estate and gift exemption is <strong>$15 million per person in 2026</strong>, made permanent by the 2025 tax law — the sunset everyone was planning around didn't happen. Telling a client their heirs face an income-tax bill on inherited real estate is factually wrong today, and one conversation with their CPA will cost you the case and the relationship.</p>
+    <p><em>What to say instead:</em> life insurance remains the cleanest way to create liquidity at death — for estate costs, for equalizing among heirs, and for paying the tax on the traditional IRA that <em>doesn't</em> get a step-up and now has to be emptied within ten years.</p>
+  </div>
+
+  <div class="gr">
+    <h4>Social Security: 2034, not 2028</h4>
+    <p>Mark says the depletion date might move up to 2028. The 2026 Trustees Report projects the combined OASDI trust funds are depleted in <strong>2034</strong>, at which point incoming revenue covers about <strong>83% of scheduled benefits</strong>. "Going bankrupt" and "gone" are both wrong and both easy to fact-check on a phone.</p>
+    <div class="swap">
+      <div class="no"><b>Don't say</b>"Social Security is going bankrupt in a few years."</div>
+      <div class="yes"><b>Say</b>"The trustees project the fund is depleted in 2034 and benefits drop to about 83% unless Congress acts. Would you want to find out at 71 whether they acted?"</div>
+    </div>
+  </div>
+
+  <div class="gr">
+    <h4>The "average investor earns 4.1%" figure</h4>
+    <p>That's DALBAR, and its methodology has been criticized for years — it's a soft target if your prospect is financially sophisticated. Morningstar's <em>Mind the Gap</em> study is the more defensible source and still makes the point: investors capture meaningfully less than the funds they own, with the gap running around a percentage point a year, driven by badly timed buying and selling. Use the durable version of the argument — <em>behavior costs money</em> — rather than staking your credibility on a contested number.</p>
+  </div>
+
+  <div class="gr">
+    <h4>"It took 26 years for the market to recover from the Depression"</h4>
+    <p>That's the Dow's <em>nominal price</em> recovery to its 1929 peak. On a total-return basis with dividends reinvested and deflation accounted for, real recovery came far sooner. The claim is technically contestable and doesn't need defending — 2000 to 2013 is a cleaner, more recent, and completely unarguable example of a lost decade-plus.</p>
+  </div>
+
+  <div class="gr">
+    <h4>Carrier specifics are five years stale</h4>
+    <p>The carrier notes on the call — which company had participating loans, what caps were, the uncapped strategy spread — described the 2021 shelf. Caps, riders, loan provisions, and product availability have all moved since. Verify current specs before you quote a single one of them. And Mark's own advice still stands: prefer an index you can explain to a client over a proprietary volatility-controlled index you can't.</p>
+  </div>
+
+  <div class="gr">
+    <h4>Stay in your lane on tax and law</h4>
+    <p>Several passages on the call cover 1031 exchanges, cost segregation, and estate strategy. Those are CPA and attorney territory. Referring a client to their tax professional isn't weakness — it's what a professional does, and it's what protects you when the strategy is examined later.</p>
+  </div>
+</section>
+
+<!-- ============ 12 ============ -->
+<section id="runsheet">
+  <div class="sec-head"><span class="sec-num">14</span><h2>Run it on a team night</h2></div>
+  <p class="standfirst">Twenty-five minutes, when that's all you have. Teach the story and the five things and let the rest of this page live as reference. <strong>For the full 45-minute certification course</strong> — with the tier-matching drill, objection reps, and a scored check before anyone presents solo — run <em>iul-course.html</em> instead; this page is its manual.</p>
+
+  <div class="scroll">
+    <table class="run">
+      <thead><tr><th>Time</th><th>Segment</th><th>What actually happens</th></tr></thead>
+      <tbody>
+        <tr><td>0:00</td><td>The rule</td><td>"Facts tell, stories sell." Ask who in the room leads with features. Everyone raises a hand.</td></tr>
+        <tr><td>0:03</td><td>The five things</td><td>Read them out. Have the room write all five down without looking. Most people get three.</td></tr>
+        <tr><td>0:08</td><td>The story</td><td>Deliver the Widow's Chain start to finish on one person, live. Do not narrate it — perform it, including the silence at beat 7.</td></tr>
+        <tr><td>0:16</td><td>Debrief</td><td>Ask the room where they felt it turn. They'll name beat 7. Point out you never mentioned a product.</td></tr>
+        <tr><td>0:19</td><td>Rock and paper</td><td>Everyone makes a fist and a flat hand and says it back to a partner in thirty seconds.</td></tr>
+        <tr><td>0:22</td><td>Guardrails</td><td>Cover three only: "can't lose money," "investment," and step-up in basis. Those are the ones that cost you a case.</td></tr>
+        <tr><td>0:25</td><td>Assignment</td><td>Every person runs the story on one real prospect this week and reports what the prospect said at beat 7.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>The last thing Mark said, and it isn't about product</h3>
+  <div class="prose">
+    <p>He wrote three books because he was angry at the banking industry, not because he was building a personal brand — the brand was the byproduct. But the lesson he drew from it is worth more than any of the mechanics on this page: <strong>people don't buy from a company, they buy from a person.</strong> And a client who has read something credible in writing stops calling you two weeks later to cancel because his neighbor said IULs are bad.</p>
+    <p>That's the retention argument for putting a real resource in a client's hands — a book, a written summary, a page like this one. It does the heavy lifting when you're not in the room, which is most of the time.</p>
+    <p>His three: <em>Rich Man, Poor Bank</em> (2014), <em>Top 10 Ways to Avoid Taxes</em> (2018) — most of it written from an ICU bed after heart valve surgery at 40 — and <em>Top 25 Ways an IUL Can Secure Your Financial Future</em> (2020), the Amazon bestseller that put him on this call. He offers team bundle pricing directly.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="creed">Rooted. Rising. Unstoppable.</p>
+    <p><strong style="color:#e8edf4">Hyperion Legacy Builders</strong> · Field training summary prepared from a recorded Mark Quann team call, February 2021, with time-sensitive claims re-verified September 2026.</p>
+    <p class="fine">Internal training use only. Not for client distribution and not an advertisement. Nothing here is tax, legal, or investment advice, and no part of it is a representation of any specific policy, carrier, or contract. Policy features, caps, rider availability and loan provisions vary by carrier, state and product and change over time — verify current specifications and use carrier-approved materials and illustrations in every client presentation. Clients should be directed to their own tax and legal advisors.</p>
+  </div>
+</footer>
+
+<!--BODY-END-->
+</body>
+</html>
