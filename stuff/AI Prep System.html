@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Prospect-Prep System · Hyperion Legacy Builders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1a2a42;
+    --navy-2:#22354f;
+    --gold:#c9a84c;
+    --gold-soft:#e3cd8c;
+    --cream:#f7f3e9;
+    --cream-2:#efe8d6;
+    --ink:#2b2b2b;
+    --muted:#5b6675;
+    --line:rgba(26,42,66,.12);
+    --shadow:0 18px 50px rgba(26,42,66,.10);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    color:var(--ink);
+    background:var(--cream);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 22px;}
+
+  /* ---------- Header ---------- */
+  header{
+    background:
+      radial-gradient(1200px 400px at 80% -20%, rgba(201,168,76,.18), transparent 60%),
+      linear-gradient(160deg,var(--navy) 0%, var(--navy-2) 100%);
+    color:#fff;
+    padding:54px 0 60px;
+    border-bottom:3px solid var(--gold);
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:.74rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--gold-soft);
+    border:1px solid rgba(201,168,76,.4);
+    padding:7px 14px;border-radius:100px;margin-bottom:22px;
+  }
+  .eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold);}
+  header h1{
+    font-size:clamp(2rem,5vw,3rem);
+    line-height:1.08;font-weight:800;margin:0 0 16px;letter-spacing:-.02em;
+  }
+  header h1 span{color:var(--gold-soft);}
+  header p{font-size:1.08rem;color:rgba(255,255,255,.82);max-width:640px;margin:0;}
+  .thesis{
+    margin-top:30px;padding:20px 24px;border-left:3px solid var(--gold);
+    background:rgba(255,255,255,.05);border-radius:0 10px 10px 0;
+    font-size:1.05rem;font-weight:600;color:#fff;
+  }
+
+  /* ---------- Section scaffolding ---------- */
+  section{padding:46px 0;}
+  .section-label{
+    font-size:.74rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:10px;
+  }
+  h2{font-size:1.6rem;font-weight:800;letter-spacing:-.01em;margin:0 0 14px;color:var(--navy);}
+  h2 .num{color:var(--gold);font-variant-numeric:tabular-nums;margin-right:10px;}
+  .lead{color:var(--muted);max-width:680px;margin:0 0 6px;}
+
+  /* ---------- Toggle ---------- */
+  .toggle-shell{
+    position:sticky;top:0;z-index:30;
+    background:var(--cream);padding:18px 0 14px;
+    border-bottom:1px solid var(--line);
+  }
+  .toggle{
+    display:inline-flex;background:var(--cream-2);border:1px solid var(--line);
+    border-radius:100px;padding:5px;gap:4px;
+  }
+  .toggle button{
+    border:0;background:transparent;cursor:pointer;
+    font-family:inherit;font-size:.92rem;font-weight:700;color:var(--muted);
+    padding:10px 22px;border-radius:100px;transition:all .2s ease;letter-spacing:.01em;
+  }
+  .toggle button.active{background:var(--navy);color:#fff;box-shadow:0 4px 14px rgba(26,42,66,.22);}
+  .toggle button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+  .ctx-line{margin-top:14px;color:var(--muted);font-size:.96rem;font-weight:500;}
+  .ctx-line strong{color:var(--navy);}
+
+  /* ---------- Deep research callout ---------- */
+  .dr{
+    display:flex;gap:14px;align-items:flex-start;
+    background:#fff;border:1px solid var(--line);border-left:3px solid var(--gold);
+    border-radius:12px;padding:16px 18px;margin:24px 0 30px;box-shadow:var(--shadow);
+  }
+  .dr-badge{
+    flex:none;width:34px;height:34px;border-radius:9px;background:var(--navy);
+    color:var(--gold);display:grid;place-items:center;font-weight:800;font-size:1rem;
+  }
+  .dr p{margin:0;font-size:.94rem;color:var(--ink);}
+  .dr strong{color:var(--navy);}
+
+  /* ---------- Prompt cards ---------- */
+  .prompt{
+    background:#fff;border:1px solid var(--line);border-radius:16px;
+    padding:24px;margin-bottom:18px;box-shadow:var(--shadow);
+  }
+  .prompt-head{display:flex;align-items:center;gap:14px;margin-bottom:6px;}
+  .pnum{
+    flex:none;width:40px;height:40px;border-radius:11px;
+    background:linear-gradient(150deg,var(--navy),var(--navy-2));
+    color:var(--gold);display:grid;place-items:center;
+    font-weight:800;font-size:1.15rem;font-variant-numeric:tabular-nums;
+  }
+  .prompt-head h3{margin:0;font-size:1.18rem;font-weight:800;color:var(--navy);letter-spacing:-.01em;}
+  .prompt-head .tag{display:block;font-size:.72rem;font-weight:700;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--gold);margin-top:2px;}
+  .prompt-why{color:var(--muted);font-size:.95rem;margin:8px 0 16px;}
+  .prompt-box{
+    position:relative;background:var(--cream);border:1px dashed rgba(26,42,66,.25);
+    border-radius:12px;padding:18px 18px 16px;
+  }
+  .prompt-box pre{
+    margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-size:.93rem;line-height:1.6;
+    white-space:pre-wrap;word-wrap:break-word;color:var(--ink);
+  }
+  .prompt-box .fill{color:var(--navy);font-weight:700;background:rgba(201,168,76,.18);
+    padding:1px 5px;border-radius:5px;}
+  .copy{
+    margin-top:14px;display:inline-flex;align-items:center;gap:8px;
+    border:0;cursor:pointer;font-family:inherit;font-weight:700;font-size:.86rem;
+    background:var(--navy);color:#fff;padding:10px 18px;border-radius:9px;transition:all .18s ease;
+  }
+  .copy:hover{background:var(--gold);color:var(--navy);}
+  .copy:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+  .copy.done{background:var(--gold);color:var(--navy);}
+
+  /* ---------- Pipeline steps ---------- */
+  .pipe{display:grid;gap:14px;margin-top:24px;}
+  .step{
+    display:grid;grid-template-columns:46px 1fr;gap:18px;align-items:start;
+    background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px;
+    box-shadow:var(--shadow);
+  }
+  .step .s{
+    width:46px;height:46px;border-radius:50%;border:2px solid var(--gold);
+    color:var(--navy);display:grid;place-items:center;font-weight:800;font-size:1.05rem;
+  }
+  .step h4{margin:0 0 5px;font-size:1.05rem;color:var(--navy);font-weight:800;}
+  .step p{margin:0;color:var(--muted);font-size:.95rem;}
+  .step code{background:var(--cream-2);padding:2px 7px;border-radius:5px;font-size:.86em;color:var(--navy);font-weight:600;}
+
+  /* ---------- Video-text ---------- */
+  .video-card{
+    background:linear-gradient(150deg,var(--navy),var(--navy-2));color:#fff;
+    border-radius:18px;padding:32px;border:1px solid rgba(201,168,76,.3);
+  }
+  .video-card h2{color:#fff;}
+  .video-card .section-label{color:var(--gold-soft);}
+  .video-card p{color:rgba(255,255,255,.85);}
+  .script{
+    margin-top:18px;background:rgba(255,255,255,.06);border-left:3px solid var(--gold);
+    border-radius:0 10px 10px 0;padding:16px 20px;font-style:italic;color:#fff;
+  }
+
+  /* ---------- Compliance ---------- */
+  .guard{
+    background:#fff;border:2px solid var(--gold);border-radius:18px;
+    padding:30px;box-shadow:var(--shadow);position:relative;overflow:hidden;
+  }
+  .guard::before{
+    content:"";position:absolute;top:0;left:0;width:6px;height:100%;background:var(--gold);
+  }
+  .guard .section-label{color:#a6802b;}
+  .guard h2{display:flex;align-items:center;gap:12px;}
+  .guard .stop{
+    flex:none;width:40px;height:40px;border-radius:10px;background:var(--gold);
+    color:var(--navy);display:grid;place-items:center;font-weight:800;font-size:1.3rem;
+  }
+  .guard ul{margin:14px 0 0;padding:0;list-style:none;}
+  .guard li{position:relative;padding:10px 0 10px 30px;border-top:1px solid var(--line);color:var(--ink);}
+  .guard li:first-child{border-top:0;}
+  .guard li::before{content:"";position:absolute;left:6px;top:18px;width:8px;height:8px;
+    border-radius:2px;background:var(--gold);transform:rotate(45deg);}
+  .guard strong{color:var(--navy);}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--navy);color:rgba(255,255,255,.7);padding:36px 0;text-align:center;
+    border-top:3px solid var(--gold);font-size:.88rem;margin-top:30px;}
+  footer .mission{color:var(--gold-soft);font-weight:700;letter-spacing:.04em;margin-bottom:6px;}
+
+  .hidden{display:none;}
+  @media (max-width:560px){
+    .prompt{padding:18px;}
+    .video-card,.guard{padding:22px;}
+    .toggle button{padding:9px 16px;font-size:.85rem;}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="eyebrow">Hyperion Legacy Builders · Field Tool</span>
+    <h1>The AI Prospect-Prep System<br><span>Walk in knowing more than they expect.</span></h1>
+    <p>Four prompts. Ten minutes of prep. Whether it's a kitchen table or a recruiting coffee — show up already understanding their world better than anyone else who's pitched them.</p>
+    <div class="thesis">AI won't replace financial professionals. The advisor who preps every case with it will replace the one who wings it.</div>
+  </div>
+</header>
+
+<div class="toggle-shell">
+  <div class="wrap">
+    <div class="toggle" role="tablist" aria-label="Choose audience">
+      <button id="tab-client" class="active" role="tab" aria-selected="true" onclick="setMode('client')">Client-Side</button>
+      <button id="tab-recruit" role="tab" aria-selected="false" onclick="setMode('recruit')">Recruiting-Side</button>
+    </div>
+    <p class="ctx-line" id="ctx">
+      <strong>Client mode:</strong> prepping for a working family, healthcare professional, or military household. Goal — map their gaps and close in their language.
+    </p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="dr">
+      <div class="dr-badge">!</div>
+      <p><strong>Turn on Deep Research first.</strong> In ChatGPT, tap the prompt bar and select <strong>Deep Research</strong> before sending. Without it you get a shallow answer. Run all four prompts back-to-back, set the phone down ~10 minutes, then ask it to organize the output. Use the $20/mo Plus plan.</p>
+    </div>
+
+    <!-- ============ CLIENT PROMPTS ============ -->
+    <div id="client-prompts">
+      <div class="prompt">
+        <div class="prompt-head">
+          <div class="pnum">1</div>
+          <div><h3>Needs Profile</h3><span class="tag">Map the gaps</span></div>
+        </div>
+        <p class="prompt-why">Find what a household like theirs almost always overlooks — before you ever sit down.</p>
+        <div class="prompt-box">
+<pre>Act as a financial-needs analyst. I'm meeting a prospective client and want to understand their likely protection and retirement gaps before our appointment.
+
+Household details:
+- Profession / income range: <span class="fill">[e.g. perioperative RN, ~$120k]</span>
+- Age & life stage: <span class="fill">[e.g. 41, married]</span>
+- Dependents: <span class="fill">[e.g. 3 kids, ages 8–15]</span>
+- Existing coverage / savings: <span class="fill">[e.g. employer term only, small 401k]</span>
+- Stated concern: <span class="fill">[e.g. "what happens to the kids if something happens to me"]</span>
+
+Map the protection and retirement gaps a household in this exact situation typically faces. Highlight what families like this most often overlook — including long-term care exposure and income protection. Give a short summary I can use to prepare, not a sales pitch.</pre>
+        </div>
+        <button class="copy" onclick="copyPrompt(this)">Copy prompt</button>
+      </div>
+
+      <div class="prompt">
+        <div class="prompt-head">
+          <div class="pnum">2</div>
+          <div><h3>Solution Comparison</h3><span class="tag">Prep only — see guardrail</span></div>
+        </div>
+        <p class="prompt-why">A plain-language side-by-side, framed in tradeoffs a non-finance person understands.</p>
+        <div class="prompt-box">
+<pre>Build a plain-language, side-by-side comparison of the vehicles that address this gap: <span class="fill">[e.g. term + LTC hybrid vs. IUL vs. FIA]</span>.
+
+For a <span class="fill">[profession / age / family situation]</span> who cares most about <span class="fill">[e.g. protecting income + leaving a legacy]</span>, explain each option in terms of: what it does, who it fits, the main tradeoff, and how it's funded.
+
+Write it so a non-finance person understands it. This is for my own preparation — do not produce numbers, projections, or illustrations. Keep it conceptual.</pre>
+        </div>
+        <button class="copy" onclick="copyPrompt(this)">Copy prompt</button>
+      </div>
+
+      <div class="prompt">
+        <div class="prompt-head">
+          <div class="pnum">3</div>
+          <div><h3>Objection Map</h3><span class="tag">Anticipate the pushback</span></div>
+        </div>
+        <p class="prompt-why">Know what they'll say before they say it — then layer your D.E.T.E. and NEPQ responses on top.</p>
+        <div class="prompt-box">
+<pre>List the top 6 objections a <span class="fill">[e.g. nurse / military spouse / small-business owner]</span> typically raises when discussing life insurance and retirement planning.
+
+For each objection, give: (1) the real concern underneath it, and (2) an empathetic, question-based reframe that keeps the conversation open rather than defensive. Avoid pushy or scripted-sounding language.</pre>
+        </div>
+        <button class="copy" onclick="copyPrompt(this)">Copy prompt</button>
+      </div>
+
+      <div class="prompt">
+        <div class="prompt-head">
+          <div class="pnum">4</div>
+          <div><h3>Personalized Framing</h3><span class="tag">The one that closes</span></div>
+        </div>
+        <p class="prompt-why">Tie the recommendation to <em>their</em> values — legacy, faith, "no family left behind." This is the language that closes, not the numbers.</p>
+        <div class="prompt-box">
+<pre>Help me frame my recommendation around what this family actually values, not the product features.
+
+What matters to them: <span class="fill">[e.g. faith, providing for kids, never being a burden, building a legacy]</span>.
+The core recommendation: <span class="fill">[e.g. LTC-protected coverage + a vehicle for tax-advantaged retirement income]</span>.
+
+Write 3 short, warm talking points that connect this recommendation to those values in plain, human language. No jargon. It should sound like a trusted advisor who genuinely cares, not a salesperson.</pre>
+        </div>
+        <button class="copy" onclick="copyPrompt(this)">Copy prompt</button>
+      </div>
+    </div>
+
+    <!-- ============ RECRUIT PROMPTS ============ -->
+    <div id="recruit-prompts" class="hidden">
+      <div class="prompt">
+        <div class="prompt-head">
+          <div class="pnum">1</div>
+          <div><h3>Fit Profile</h3><span class="tag">Why this person, why this opportunity</span></div>
+        </div>
+        <p class="prompt-why">Understand how the GX opportunity maps to their current job and life before the coffee.</p>
+        <div class="prompt-box">
+<pre>Act as a recruiting strategist. I'm meeting a potential business partner about an opportunity in financial services (the WFG / GX path). Help me understand how to position it for them specifically.
+
+Their background:
+- Current job / field: <span class="fill">[e.g. bedside RN, 12-hr shifts]</span>
+- Life stage & motivation: <span class="fill">[e.g. 38, two kids, feeling capped at work]</span>
+- What they've expressed wanting: <span class="fill">[e.g. more time, more income, purpose]</span>
+
+Map how a part-time financial services opportunity realistically fits someone in this exact situation — the transferable skills they already have, what would excite them, and what would worry them. Give me a prep summary, not a pitch.</pre>
+        </div>
+        <button class="copy" onclick="copyPrompt(this)">Copy prompt</button>
+      </div>
+
+      <div class="prompt">
+        <div class="prompt-head">
+          <div class="pnum">2</div>
+          <div><h3>Income & Time Math</h3><span class="tag">Make it concrete</span></div>
+        </div>
+        <p class="prompt-why">Turn "extra income" into something they can picture against their actual life.</p>
+        <div class="prompt-box">
+<pre>Help me build a simple, honest way to explain part-time vs. full-time potential in a way that's concrete for this person — without making income guarantees or unrealistic claims.
+
+Their situation: <span class="fill">[e.g. works full-time, has ~8 free hours/week]</span>.
+
+Show me how to frame the math of consistent part-time effort over time using conservative, illustrative language. Emphasize activity and skill-building over promises. Flag anything that would be a compliance risk to say out loud.</pre>
+        </div>
+        <button class="copy" onclick="copyPrompt(this)">Copy prompt</button>
+      </div>
+
+      <div class="prompt">
+        <div class="prompt-head">
+          <div class="pnum">3</div>
+          <div><h3>Objection Map</h3><span class="tag">The WFG hesitations</span></div>
+        </div>
+        <p class="prompt-why">Get ahead of the "is this one of those things?" reflex with honest, grounded answers.</p>
+        <div class="prompt-box">
+<pre>List the top 6 objections or hesitations a thoughtful person typically raises when first hearing about a part-time financial services / WFG-style opportunity (e.g. "is this MLM," "I don't have a finance background," "no time," "I don't want to sell to friends").
+
+For each, give: (1) the genuine concern underneath it, and (2) an honest, non-defensive reframe that respects their intelligence. No hype.</pre>
+        </div>
+        <button class="copy" onclick="copyPrompt(this)">Copy prompt</button>
+      </div>
+
+      <div class="prompt">
+        <div class="prompt-head">
+          <div class="pnum">4</div>
+          <div><h3>Personalized "Why Now"</h3><span class="tag">The one that recruits</span></div>
+        </div>
+        <p class="prompt-why">Connect the opportunity to who they are — purpose, family, the mission of leaving no family behind.</p>
+        <div class="prompt-box">
+<pre>Help me frame this opportunity around what this person actually cares about, not the comp plan.
+
+What drives them: <span class="fill">[e.g. faith, providing for family, helping their community, more freedom]</span>.
+The core invitation: <span class="fill">[e.g. learn this, build part-time, serve families who've been overlooked]</span>.
+
+Write 3 short, warm talking points connecting this opportunity to those values — the "No Family Left Behind" mission of serving working and underserved families. Make it sound like a sincere invitation from a mentor, not a recruiter.</pre>
+        </div>
+        <button class="copy" onclick="copyPrompt(this)">Copy prompt</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PIPELINE ============ -->
+<section style="background:var(--cream-2);">
+  <div class="wrap">
+    <div class="section-label">From prompts to a deck</div>
+    <h2>The presentation pipeline</h2>
+    <p class="lead">Once the four prompts have run, turn the research into a custom one-pager you can send an hour after the meeting.</p>
+    <div class="pipe">
+      <div class="step">
+        <div class="s">1</div>
+        <div><h4>Organize it</h4><p>Tell ChatGPT: <em>"Organize all of this into a clear outline I can paste into Gamma."</em></p></div>
+      </div>
+      <div class="step">
+        <div class="s">2</div>
+        <div><h4>Build the deck</h4><p>Paste into <code>gamma.app</code> (free) — or <code>Manus</code> for the prettier version. Choose <strong>"preserve text as-is."</strong></p></div>
+      </div>
+      <div class="step">
+        <div class="s">3</div>
+        <div><h4>Export & send</h4><p>Export to PDF, send it personally. This is how a custom presentation lands an hour after you met them — while you're still top of mind.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VIDEO TEXT ============ -->
+<section>
+  <div class="wrap">
+    <div class="video-card">
+      <div class="section-label">Steal this directly</div>
+      <h2>The 30-second video text</h2>
+      <p>When a recruit or prospect goes cold, a short selfie video text converts where another email never will. Costs nothing but a minute. Hold the phone up, keep it casual, no pressure.</p>
+      <div class="script">"Hey [name], it's Glenn — no pressure at all, just wanted to put a face to the name and say I'm here whenever you're ready. Shoot me a text back if anything comes up."</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPLIANCE GUARDRAIL ============ -->
+<section>
+  <div class="wrap">
+    <div class="guard">
+      <div class="section-label">Non-negotiable</div>
+      <h2><span class="stop">!</span> The compliance guardrail</h2>
+      <p class="lead">This is our world, not a real estate trainer's. AI is for <strong>prep only</strong>. The line between research and a client-facing number is bright — never cross it.</p>
+      <ul>
+        <li>Any AI-generated comparison or income figure is <strong>preparation only</strong>. It never goes to a client as-is.</li>
+        <li>Client-facing numbers come from <strong>actual carrier illustrations</strong> — NASHP, ForeIncome II, Athene, Nationwide, Global Atlantic — never from ChatGPT.</li>
+        <li>Every projection and recommendation passes <strong>WFG / RFM suitability and compliance review</strong> before it reaches the client.</li>
+        <li>Never present an AI-built projection as if it were an illustration. <strong>Triple-check beats trust.</strong></li>
+        <li>Recruiting: no income guarantees, no unrealistic earnings claims — illustrative and conservative only.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="mission">No Family Left Behind</div>
+    Hyperion Legacy Builders · Revolution Financial Management · Torrance, CA
+  </div>
+</footer>
+
+<script>
+  function setMode(mode){
+    var isClient = mode === 'client';
+    document.getElementById('client-prompts').classList.toggle('hidden', !isClient);
+    document.getElementById('recruit-prompts').classList.toggle('hidden', isClient);
+    var tc = document.getElementById('tab-client'), tr = document.getElementById('tab-recruit');
+    tc.classList.toggle('active', isClient); tr.classList.toggle('active', !isClient);
+    tc.setAttribute('aria-selected', isClient); tr.setAttribute('aria-selected', !isClient);
+    document.getElementById('ctx').innerHTML = isClient
+      ? '<strong>Client mode:</strong> prepping for a working family, healthcare professional, or military household. Goal — map their gaps and close in their language.'
+      : '<strong>Recruiting mode:</strong> prepping for a potential business partner. Goal — show how the GX opportunity fits their real life and values.';
+  }
+
+  function flash(btn, msg){
+    var orig = btn.getAttribute('data-label') || btn.textContent;
+    btn.setAttribute('data-label', orig);
+    btn.textContent = msg;
+    btn.classList.add('done');
+    setTimeout(function(){ btn.textContent = orig; btn.classList.remove('done'); }, 1800);
+  }
+
+  function legacyCopy(text, btn){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly','');
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '0';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    ta.setSelectionRange(0, text.length);
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch(e){ ok = false; }
+    document.body.removeChild(ta);
+    flash(btn, ok ? 'Copied ✓' : 'Select & copy ↑');
+    return ok;
+  }
+
+  function copyPrompt(btn){
+    var pre = btn.closest('.prompt').querySelector('pre');
+    var text = pre.innerText.replace(/\u00a0/g,' ').trim();
+    // Try the modern API, but fall back immediately if it's blocked in this frame.
+    if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext){
+      navigator.clipboard.writeText(text).then(function(){
+        flash(btn, 'Copied ✓');
+      }).catch(function(){
+        legacyCopy(text, btn);
+      });
+    } else {
+      legacyCopy(text, btn);
+    }
+  }
+</script>
+</body>
+</html>
