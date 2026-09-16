@@ -1,0 +1,16 @@
+{
+  "name": "Hyperion FNA",
+  "short_name": "FNA",
+  "description": "Financial Needs Analysis for Hyperion Legacy Builders. Works offline.",
+  "start_url": "fna.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f7f3e9",
+  "theme_color": "#1a2a42",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Financial Needs Analysis — Hyperion Legacy Builders</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1a2a42">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FNA">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1a2a42;
+  --navy-deep:#0f1b2d;
+  --gold:#c9a84c;
+  --gold-soft:#e6d49a;
+  --cream:#f7f3e9;
+  --paper:#ffffff;
+  --ink:#20303f;
+  --muted:#6b7a89;
+  --line:#dfd8c6;
+  --green:#2f6f4f;
+  --red:#a8442e;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+  background:var(--cream);
+  color:var(--ink);
+  font-size:15px;
+  line-height:1.5;
+  -webkit-text-size-adjust:100%;
+}
+a{color:var(--navy)}
+
+/* ---------- masthead ---------- */
+header.mast{
+  background:var(--navy);
+  color:var(--cream);
+  padding:22px 20px 18px;
+}
+.mast-inner{max-width:1080px;margin:0 auto;display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between}
+.mark{display:flex;align-items:center;gap:12px}
+.mark svg{flex:none}
+.mark h1{font-size:19px;font-weight:800;margin:0;letter-spacing:-.01em}
+.mark p{margin:2px 0 0;font-size:12.5px;color:var(--gold-soft);font-weight:500}
+.mast-meta{font-size:12.5px;color:#9fb0c4;text-align:right}
+
+/* ---------- money board ---------- */
+.board{
+  position:sticky;top:0;z-index:50;
+  background:var(--navy-deep);
+  border-bottom:2px solid var(--gold);
+  padding:10px 20px;
+}
+.board-inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.stat{text-align:left;min-width:0}
+.stat span{display:block;font-size:11px;color:#8fa2b8;font-weight:600;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat strong{display:block;font-size:17px;font-weight:700;color:var(--cream);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.stat.key strong{color:var(--gold)}
+.stat strong.neg{color:#e58c74}
+
+/* ---------- jump nav ---------- */
+nav.jump{background:var(--paper);border-bottom:1px solid var(--line);padding:8px 20px;overflow-x:auto;white-space:nowrap}
+nav.jump .in{max-width:1080px;margin:0 auto}
+nav.jump a{
+  display:inline-block;font-size:12.5px;font-weight:600;text-decoration:none;
+  color:var(--muted);padding:5px 11px;border-radius:999px;margin-right:4px;
+}
+nav.jump a:hover,nav.jump a:focus{background:var(--cream);color:var(--navy)}
+
+/* ---------- layout ---------- */
+main{max-width:1080px;margin:0 auto;padding:22px 20px 60px}
+section{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:4px;
+  padding:20px 22px 24px;
+  margin-bottom:18px;
+  scroll-margin-top:104px;
+}
+section > h2{
+  margin:0 0 4px;font-size:17px;font-weight:700;color:var(--navy);letter-spacing:-.01em;
+  display:flex;align-items:baseline;gap:10px;
+}
+section > h2::after{content:"";flex:1;height:2px;background:var(--gold);opacity:.5}
+.hint{margin:0 0 16px;font-size:13px;color:var(--muted)}
+h3{font-size:13.5px;font-weight:700;color:var(--navy);margin:20px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--line)}
+h3:first-of-type{margin-top:10px}
+
+.grid{display:grid;gap:12px 14px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.span2{grid-column:span 2}
+
+label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:3px}
+input[type=text],input[type=date],input[type=number],input[type=email],input[type=tel],select,textarea{
+  width:100%;padding:7px 9px;font-family:inherit;font-size:14px;color:var(--ink);
+  background:#fdfcf8;border:1px solid var(--line);border-radius:3px;
+}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px;background:#fff}
+textarea{min-height:56px;resize:vertical}
+input.money{text-align:right;font-variant-numeric:tabular-nums}
+.yn{display:flex;gap:14px;align-items:center;padding-top:4px}
+.yn label{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--ink);margin:0;cursor:pointer}
+input[type=radio],input[type=checkbox]{accent-color:var(--navy);width:15px;height:15px;margin:0;cursor:pointer}
+
+/* ---------- money tables ---------- */
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{font-size:11.5px;font-weight:700;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+th.num{text-align:right}
+td{padding:3px 8px;border-bottom:1px solid #f0ece0;vertical-align:middle}
+td.lab{font-weight:500;color:var(--ink)}
+td input{padding:5px 8px}
+tr.total td{border-bottom:none;padding-top:10px;font-weight:700;color:var(--navy)}
+tr.total td.amt{text-align:right;font-size:16px;font-variant-numeric:tabular-nums}
+.scroller{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.scroller table{min-width:640px}
+.note-inline{font-size:12px;color:var(--muted);font-style:italic}
+
+/* ---------- goals checkboxes ---------- */
+.goalset{border:1px solid var(--line);border-radius:3px;padding:12px 14px;margin-bottom:12px;background:#fdfcf8}
+.goalset h4{margin:0 0 9px;font-size:13px;font-weight:700;color:var(--navy)}
+.goalgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px 12px;margin-bottom:10px}
+.goalgrid label{display:flex;align-items:flex-start;gap:6px;font-size:13px;font-weight:500;color:var(--ink);margin:0;cursor:pointer;line-height:1.35}
+
+/* ---------- callouts ---------- */
+.callout{border-left:3px solid var(--gold);background:#fdf9ee;padding:11px 14px;margin:0 0 16px;font-size:13px;color:var(--ink);border-radius:0 3px 3px 0}
+.callout strong{color:var(--navy)}
+.readout{
+  display:flex;flex-wrap:wrap;gap:10px 28px;background:var(--navy);color:var(--cream);
+  padding:14px 18px;border-radius:3px;margin-top:14px;
+}
+.readout div{min-width:120px}
+.readout span{display:block;font-size:11.5px;color:#9fb0c4;font-weight:600}
+.readout b{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums}
+.readout b.good{color:var(--gold)}
+.readout b.neg{color:#e58c74}
+
+/* ---------- buttons ---------- */
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
+button{
+  font-family:inherit;font-size:14px;font-weight:700;padding:10px 18px;border-radius:3px;
+  border:1px solid var(--navy);background:var(--navy);color:var(--cream);cursor:pointer;
+}
+button:hover{background:#233a5a}
+button.ghost{background:transparent;color:var(--navy)}
+button.ghost:hover{background:var(--cream)}
+button.gold{background:var(--gold);border-color:var(--gold);color:#2a2109}
+button.gold:hover{background:#d9ba62}
+button.small{font-size:12.5px;padding:6px 12px;font-weight:600}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+#status{margin-top:12px;font-size:13.5px;font-weight:600;min-height:20px}
+#status.ok{color:var(--green)}
+#status.err{color:var(--red)}
+#status.busy{color:var(--muted)}
+
+.saveslots{margin-top:14px;font-size:13px}
+.saveslots ul{list-style:none;margin:8px 0 0;padding:0}
+.saveslots li{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #f0ece0}
+.saveslots li span{flex:1;font-weight:600;color:var(--navy)}
+
+.savepill{
+  position:fixed;right:14px;bottom:14px;z-index:80;
+  display:flex;align-items:center;gap:8px;
+  background:var(--navy);color:var(--cream);
+  padding:8px 13px;border-radius:999px;
+  font-size:12.5px;font-weight:600;
+  box-shadow:0 2px 10px rgba(15,27,45,.25);
+  max-width:calc(100vw - 28px);
+}
+.savepill .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);flex:none}
+.savepill.offline{background:#5c4a1e}
+.savepill.offline .dot{background:#e6d49a}
+.savepill button{
+  font-size:11.5px;padding:3px 9px;font-weight:700;
+  background:var(--gold);border-color:var(--gold);color:#2a2109;border-radius:999px;
+}
+.savepill button[hidden]{display:none}
+
+footer{max-width:1080px;margin:0 auto;padding:0 20px 50px;font-size:12px;color:var(--muted)}
+
+@media (max-width:860px){
+  .board-inner{grid-template-columns:repeat(3,1fr);gap:8px}
+  .stat:nth-child(n+4){display:none}
+  .g3,.g4{grid-template-columns:repeat(2,1fr)}
+  .goalgrid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:560px){
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .span2{grid-column:span 1}
+  .goalgrid{grid-template-columns:1fr}
+  section{padding:16px 14px 20px}
+  main{padding:16px 12px 50px}
+}
+@media print{
+  .board,nav.jump,.actions,.saveslots,#status,.savepill{display:none!important}
+  body{background:#fff}
+  section{break-inside:avoid;border:1px solid #ccc;box-shadow:none}
+  header.mast{background:#fff;color:#000;border-bottom:2px solid #000}
+  .mark p,.mast-meta{color:#444}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="mast-inner">
+    <div class="mark">
+      <svg width="34" height="38" viewBox="0 0 34 38" aria-hidden="true">
+        <path d="M17 2 L30 9 v13 c0 8-6 12-13 14 C10 34 4 30 4 22 V9 Z" fill="none" stroke="#c9a84c" stroke-width="2"/>
+        <path d="M17 10 v18 M17 15 l5-4 M17 20 l-5-4 M17 25 l5-4" stroke="#c9a84c" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <h1>Financial Needs Analysis</h1>
+        <p>Hyperion Legacy Builders · No Family Left Behind</p>
+      </div>
+    </div>
+    <div class="mast-meta">
+      Works offline. Saves to this device as you type.<br>
+      For internal training and field use.
+    </div>
+  </div>
+</header>
+
+<div class="board" role="status" aria-live="polite">
+  <div class="board-inner">
+    <div class="stat"><span>Monthly income</span><strong id="bIncome">$0</strong></div>
+    <div class="stat"><span>Monthly expenses</span><strong id="bExpense">$0</strong></div>
+    <div class="stat key"><span>Discretionary</span><strong id="bDisc">$0</strong></div>
+    <div class="stat"><span>Total debt</span><strong id="bDebt">$0</strong></div>
+    <div class="stat"><span>Total assets</span><strong id="bAssets">$0</strong></div>
+  </div>
+</div>
+
+<nav class="jump"><div class="in">
+  <a href="#s-appt">Appointment</a>
+  <a href="#s-dream">Dream</a>
+  <a href="#s-general">General</a>
+  <a href="#s-goals">Goals</a>
+  <a href="#s-income">Income</a>
+  <a href="#s-expenses">Expenses</a>
+  <a href="#s-insurance">Insurance</a>
+  <a href="#s-debt">Debt</a>
+  <a href="#s-assets">Assets</a>
+  <a href="#s-estate">Estate</a>
+  <a href="#s-education">Education</a>
+  <a href="#s-save">Save</a>
+</div></nav>
+
+<main>
+
+<!-- ============ APPOINTMENT ============ -->
+<section id="s-appt">
+  <h2>Appointment</h2>
+  <div class="grid g4">
+    <div><label for="apptDate">First appointment date</label><input type="date" id="apptDate" name="appt_date"></div>
+    <div><label for="followUp">Follow up</label><input type="date" id="followUp" name="appt_followup"></div>
+    <div><label for="trainer">Trainer</label><input type="text" id="trainer" name="appt_trainer"></div>
+    <div><label for="trainee">Trainee</label><input type="text" id="trainee" name="appt_trainee"></div>
+  </div>
+</section>
+
+<!-- ============ DREAM ============ -->
+<section id="s-dream">
+  <h2>The dream</h2>
+  <p class="hint">Open here. Let them talk before a single number gets written down.</p>
+  <label>What are some of the things that are important to you that cost money?</label>
+  <div class="grid g3" style="margin-bottom:14px">
+    <input type="text" name="dream_1" placeholder="1"><input type="text" name="dream_2" placeholder="2"><input type="text" name="dream_3" placeholder="3">
+    <input type="text" name="dream_4" placeholder="4"><input type="text" name="dream_5" placeholder="5"><input type="text" name="dream_6" placeholder="6">
+  </div>
+  <div class="grid g2">
+    <div><label for="dreamIncome">How much income would it take to live the life you just described?</label><input type="text" id="dreamIncome" name="dream_income"></div>
+    <div><label for="dreamTime">How long before you'll earn that income?</label><input type="text" id="dreamTime" name="dream_timeline"></div>
+  </div>
+  <div style="margin-top:12px">
+    <label for="dreamChoice">If your job won't get you there — what matters more: staying in the job, or leading your ideal life?</label>
+    <textarea id="dreamChoice" name="dream_choice"></textarea>
+  </div>
+</section>
+
+<!-- ============ GENERAL ============ -->
+<section id="s-general">
+  <h2>General information</h2>
+  <div class="callout">
+    <strong>No Social Security numbers here.</strong> Capture the SSN on the carrier's e-application at point of sale, where it belongs. A full SSN sitting in a spreadsheet is a liability you don't need to carry.
+  </div>
+
+  <h3>Client</h3>
+  <div class="grid g4">
+    <div class="span2"><label for="cName">Full name</label><input type="text" id="cName" name="client_name"></div>
+    <div><label for="cSex">M / F</label><select id="cSex" name="client_sex"><option value=""></option><option>M</option><option>F</option></select></div>
+    <div><label for="cDob">Date of birth</label><input type="date" id="cDob" name="client_dob"></div>
+    <div class="span2"><label for="cAddr">Home address</label><input type="text" id="cAddr" name="client_address"></div>
+    <div><label for="cCity">City</label><input type="text" id="cCity" name="client_city"></div>
+    <div><label for="cZip">State / ZIP</label><input type="text" id="cZip" name="client_state_zip"></div>
+    <div><label for="cCell">Cell phone</label><input type="tel" id="cCell" name="client_cell"></div>
+    <div><label for="cHome">Home phone</label><input type="tel" id="cHome" name="client_home_phone"></div>
+    <div class="span2"><label for="cEmail">Email</label><input type="email" id="cEmail" name="client_email"></div>
+    <div class="span2"><label for="cEmployer">Employer</label><input type="text" id="cEmployer" name="client_employer"></div>
+    <div><label for="cYrs">Years there</label><input type="text" id="cYrs" name="client_years"></div>
+    <div><label for="cOcc">Occupation</label><input type="text" id="cOcc" name="client_occupation"></div>
+  </div>
+
+  <h3>Spouse or partner</h3>
+  <div class="grid g4">
+    <div class="span2"><label for="sName">Full name</label><input type="text" id="sName" name="spouse_name"></div>
+    <div><label for="sSex">M / F</label><select id="sSex" name="spouse_sex"><option value=""></option><option>M</option><option>F</option></select></div>
+    <div><label for="sDob">Date of birth</label><input type="date" id="sDob" name="spouse_dob"></div>
+    <div><label for="sCell">Cell phone</label><input type="tel" id="sCell" name="spouse_cell"></div>
+    <div class="span2"><label for="sEmail">Email</label><input type="email" id="sEmail" name="spouse_email"></div>
+    <div><label for="sYrs">Years at employer</label><input type="text" id="sYrs" name="spouse_years"></div>
+    <div class="span2"><label for="sEmployer">Employer</label><input type="text" id="sEmployer" name="spouse_employer"></div>
+    <div class="span2"><label for="sOcc">Occupation</label><input type="text" id="sOcc" name="spouse_occupation"></div>
+  </div>
+
+  <h3>Dependents</h3>
+  <div class="scroller"><table>
+    <thead><tr><th style="width:55%">Name</th><th style="width:15%">M / F</th><th style="width:30%">Date of birth</th></tr></thead>
+    <tbody id="depBody"></tbody>
+  </table></div>
+  <div class="actions"><button type="button" class="ghost small" id="addDep">Add another dependent</button></div>
+
+  <h3>Planning history</h3>
+  <div class="grid g2">
+    <div><label>Do you see yourself retiring at your current employer?</label>
+      <div class="yn">
+        <label><input type="radio" name="retire_there" value="Yes"> Yes</label>
+        <label><input type="radio" name="retire_there" value="No"> No</label>
+      </div>
+    </div>
+    <div><label for="lastReview">When did you last review your family's financial goals?</label><input type="text" id="lastReview" name="last_review"></div>
+    <div><label>Do you have an established monthly budget?</label>
+      <div class="yn">
+        <label><input type="radio" name="has_budget" value="Yes"> Yes</label>
+        <label><input type="radio" name="has_budget" value="No"> No</label>
+      </div>
+    </div>
+    <div><label>Do you have a savings plan?</label>
+      <div class="yn">
+        <label><input type="radio" name="has_savings_plan" value="Yes"> Yes</label>
+        <label><input type="radio" name="has_savings_plan" value="No"> No</label>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GOALS ============ -->
+<section id="s-goals">
+  <h2>Goals and dreams</h2>
+  <p class="hint">If I could help you reach your top financial goals, what would they be?</p>
+  <div id="goalSets"></div>
+  <div class="grid g2" style="margin-top:6px">
+    <div class="span2"><label for="topGoal">Of the goals above, which is most important to you?</label><input type="text" id="topGoal" name="goal_top"></div>
+    <div class="span2"><label for="doingToday">What are you doing today to accomplish these goals?</label><textarea id="doingToday" name="goal_doing_today"></textarea></div>
+    <div><label for="monthlySetAside">How much can you comfortably set aside each month?</label><input type="number" class="money" id="monthlySetAside" name="goal_monthly_set_aside" placeholder="0"></div>
+  </div>
+</section>
+
+<!-- ============ INCOME ============ -->
+<section id="s-income">
+  <h2>Monthly income</h2>
+  <div class="callout">
+    Enter <strong>monthly</strong> figures, and use <strong>net take-home</strong> — that's the money that actually shows up. Gross annual salary is captured for reference only and is not added to the total, so nothing gets counted twice.
+  </div>
+  <div class="scroller"><table>
+    <thead><tr><th style="width:46%">Source</th><th class="num" style="width:27%">Client</th><th class="num" style="width:27%">Spouse</th></tr></thead>
+    <tbody id="incomeBody"></tbody>
+    <tfoot>
+      <tr class="total"><td>Total monthly income</td><td class="amt" id="incClientTotal">$0</td><td class="amt" id="incSpouseTotal">$0</td></tr>
+    </tfoot>
+  </table></div>
+</section>
+
+<!-- ============ EXPENSES ============ -->
+<section id="s-expenses">
+  <h2>Monthly expenses</h2>
+  <p class="hint">Where the money actually goes. Estimates are fine — round numbers beat blank boxes.</p>
+  <div class="grid g2" id="expenseCols"></div>
+
+  <h3>Other expenses</h3>
+  <p class="hint">Whatever the categories above missed — storage unit, union dues, remittance home, the gym they forgot about.</p>
+  <div class="scroller"><table>
+    <thead><tr><th style="width:62%">What is it</th><th class="num" style="width:38%">Monthly amount</th></tr></thead>
+    <tbody id="otherExpBody"></tbody>
+    <tfoot><tr class="total"><td>Other expenses total</td><td class="amt" id="otherExpTotal">$0</td></tr></tfoot>
+  </table></div>
+  <div class="actions"><button type="button" class="ghost small" id="addExp">Add another expense</button></div>
+
+  <div class="readout">
+    <div><span>Monthly income</span><b id="rIncome">$0</b></div>
+    <div><span>Monthly expenses</span><b id="rExpense">$0</b></div>
+    <div><span>Discretionary income</span><b class="good" id="rDisc">$0</b></div>
+    <div><span>Per year</span><b id="rDiscYear">$0</b></div>
+  </div>
+</section>
+
+<!-- ============ INSURANCE ============ -->
+<section id="s-insurance">
+  <h2>Insurance</h2>
+  <div style="margin-bottom:16px">
+    <label for="insTasks">Beyond covering final expenses, what do you want your insurance to accomplish?</label>
+    <textarea id="insTasks" name="insurance_tasks" placeholder="Education savings, fund retirement, surviving spouse income…"></textarea>
+  </div>
+
+  <h3>Life insurance in force</h3>
+  <p class="hint">One line per policy. Most families have more than they remember — group coverage through work counts, and so does the small policy a grandparent started.</p>
+  <div class="scroller"><table>
+    <thead><tr>
+      <th style="width:16%">Insured</th><th style="width:14%">Type</th><th style="width:18%">Carrier</th>
+      <th class="num" style="width:15%">Death benefit</th><th class="num" style="width:13%">Monthly premium</th>
+      <th style="width:12%">Term ends</th><th style="width:12%">Riders</th>
+    </tr></thead>
+    <tbody id="lifeBody"></tbody>
+    <tfoot><tr class="total"><td colspan="3">Totals</td><td class="amt" id="lifeDbTotal">$0</td><td class="amt" id="lifePremTotal">$0</td><td colspan="2"></td></tr></tfoot>
+  </table></div>
+  <div class="actions"><button type="button" class="ghost small" id="addLife">Add another policy</button></div>
+
+  <h3>Health insurance</h3>
+  <div class="grid g4">
+    <div><label>Client covered?</label><div class="yn">
+      <label><input type="radio" name="client_has_health" value="Yes"> Yes</label>
+      <label><input type="radio" name="client_has_health" value="No"> No</label></div></div>
+    <div><label for="cHealthProv">Provider</label><input type="text" id="cHealthProv" name="client_health_provider"></div>
+    <div><label for="cHealthPrem">Monthly premium</label><input type="number" class="money" id="cHealthPrem" name="client_health_premium" placeholder="0"></div>
+    <div><label for="cHealthType">Plan type</label><input type="text" id="cHealthType" name="client_health_type" placeholder="HMO, PPO, group…"></div>
+    <div><label>Spouse covered?</label><div class="yn">
+      <label><input type="radio" name="spouse_has_health" value="Yes"> Yes</label>
+      <label><input type="radio" name="spouse_has_health" value="No"> No</label></div></div>
+    <div><label for="sHealthProv">Provider</label><input type="text" id="sHealthProv" name="spouse_health_provider"></div>
+    <div><label for="sHealthPrem">Monthly premium</label><input type="number" class="money" id="sHealthPrem" name="spouse_health_premium" placeholder="0"></div>
+    <div><label for="sHealthType">Plan type</label><input type="text" id="sHealthType" name="spouse_health_type"></div>
+  </div>
+
+  <div class="readout">
+    <div><span>Death benefit in force</span><b id="rDb">$0</b></div>
+    <div><span>Permanent coverage</span><b id="rDbPerm">$0</b></div>
+    <div><span>Term coverage</span><b id="rDbTerm">$0</b></div>
+    <div><span>Monthly insurance premium</span><b id="rPrem">$0</b></div>
+  </div>
+</section>
+
+<!-- ============ DEBT ============ -->
+<section id="s-debt">
+  <h2>Debt</h2>
+  <p class="hint">Balance and rate are what drive the payoff conversation. Get those two right on every line.</p>
+  <div class="scroller"><table>
+    <thead><tr>
+      <th style="width:22%">Type</th><th style="width:18%">Lender</th><th class="num" style="width:11%">Term (yrs)</th>
+      <th class="num" style="width:16%">Balance</th><th class="num" style="width:13%">Rate %</th><th class="num" style="width:20%">Monthly payment</th>
+    </tr></thead>
+    <tbody id="debtBody"></tbody>
+    <tfoot>
+      <tr class="total"><td colspan="3">Totals</td><td class="amt" id="debtBalTotal">$0</td><td></td><td class="amt" id="debtPayTotal">$0</td></tr>
+    </tfoot>
+  </table></div>
+  <div class="actions"><button type="button" class="ghost small" id="addDebt">Add another debt</button></div>
+  <div class="readout">
+    <div><span>Total balance owed</span><b class="neg" id="rDebtBal">$0</b></div>
+    <div><span>Monthly to debt</span><b id="rDebtPay">$0</b></div>
+    <div><span>Weighted average rate</span><b id="rDebtRate">0%</b></div>
+  </div>
+</section>
+
+<!-- ============ ASSETS ============ -->
+<section id="s-assets">
+  <h2>Asset accumulation — retirement</h2>
+  <div class="grid g2" style="margin-bottom:6px">
+    <div><label for="desiredIncome">Desired retirement income (monthly)</label><input type="number" class="money" id="desiredIncome" name="retire_desired_income" placeholder="0"></div>
+    <div><label for="retireAge">At what age would you like to be in a position to retire?</label><input type="number" id="retireAge" name="retire_age" placeholder="65"></div>
+  </div>
+  <div id="assetBuckets"></div>
+  <div class="readout">
+    <div><span>Taxable</span><b id="rTaxable">$0</b></div>
+    <div><span>Tax deferred</span><b id="rDeferred">$0</b></div>
+    <div><span>Tax exempt</span><b id="rExempt">$0</b></div>
+    <div><span>Total invested</span><b class="good" id="rAssetTotal">$0</b></div>
+    <div><span>Monthly contributions</span><b id="rContrib">$0</b></div>
+  </div>
+  <p class="hint" style="margin-top:14px">Certain events and distributions may be subject to taxation. This is general information about the Internal Revenue Code and does not account for specific state laws. World Financial Group and World Group Securities do not provide tax advice; clients should consult a tax advisor about tax issues relating to their investments.</p>
+</section>
+
+<!-- ============ ESTATE ============ -->
+<section id="s-estate">
+  <h2>Preserve your estate</h2>
+  <div class="grid g4">
+    <div><label>Do you have a will?</label><div class="yn">
+      <label><input type="radio" name="has_will" value="Yes"> Yes</label>
+      <label><input type="radio" name="has_will" value="No"> No</label></div></div>
+    <div><label for="willUpdate">Last updated</label><input type="text" id="willUpdate" name="will_last_update"></div>
+    <div><label>Do you have a trust?</label><div class="yn">
+      <label><input type="radio" name="has_trust" value="Yes"> Yes</label>
+      <label><input type="radio" name="has_trust" value="No"> No</label></div></div>
+    <div><label for="trustKind">Kind and purpose</label><input type="text" id="trustKind" name="trust_kind_purpose"></div>
+    <div class="span2"><label>Do you expect any lump sums of inheritance in the near future?</label><div class="yn">
+      <label><input type="radio" name="expects_inheritance" value="Yes"> Yes</label>
+      <label><input type="radio" name="expects_inheritance" value="No"> No</label></div></div>
+    <div class="span2"><label for="inheritNotes">Details</label><input type="text" id="inheritNotes" name="inheritance_notes"></div>
+  </div>
+
+  <h3>Owned free and clear</h3>
+  <div class="scroller"><table>
+    <thead><tr><th style="width:34%">Category</th><th style="width:26%">Description</th><th class="num" style="width:20%">Market value</th><th class="num" style="width:20%">Cost basis</th></tr></thead>
+    <tbody id="estateBody"></tbody>
+    <tfoot><tr class="total"><td colspan="2">Total market value</td><td class="amt" id="estateTotal">$0</td><td></td></tr></tfoot>
+  </table></div>
+</section>
+
+<!-- ============ EDUCATION ============ -->
+<section id="s-education">
+  <h2>Education goals</h2>
+  <div class="scroller"><table>
+    <thead><tr><th style="width:28%">Plan name</th><th class="num" style="width:18%">Balance</th><th class="num" style="width:18%">Monthly contribution</th><th class="num" style="width:12%">RoR %</th><th style="width:24%">For which dependent</th></tr></thead>
+    <tbody id="eduBody"></tbody>
+    <tfoot><tr class="total"><td>Totals</td><td class="amt" id="eduBalTotal">$0</td><td class="amt" id="eduContribTotal">$0</td><td></td><td></td></tr></tfoot>
+  </table></div>
+  <div class="actions"><button type="button" class="ghost small" id="addEdu">Add another plan</button></div>
+</section>
+
+<!-- ============ SAVE ============ -->
+<section id="s-save">
+  <h2>Save this analysis</h2>
+
+  <div class="readout" style="margin-top:0;margin-bottom:16px">
+    <div><span>Discretionary income</span><b class="good" id="rDisc2">$0</b></div>
+    <div><span>Total assets</span><b id="rAssets2">$0</b></div>
+    <div><span>Total debt</span><b class="neg" id="rDebt2">$0</b></div>
+    <div><span>Net worth</span><b id="rNetWorth">$0</b></div>
+  </div>
+
+  <div class="grid g2">
+    <div class="span2"><label for="advisorNotes">Notes for the follow-up</label><textarea id="advisorNotes" name="advisor_notes" style="min-height:80px"></textarea></div>
+    <div><label for="advisorName">Completed by</label><input type="text" id="advisorName" name="advisor_name"></div>
+    <div><label for="nextStep">Agreed next step</label><input type="text" id="nextStep" name="next_step" placeholder="Follow-up appointment, application, referral…"></div>
+  </div>
+
+  <h3>Send to Google Drive</h3>
+  <div class="grid g2">
+    <div class="span2"><label for="endpoint">Google Apps Script web app URL</label><input type="text" id="endpoint" placeholder="https://script.google.com/macros/s/…/exec"></div>
+  </div>
+  <p class="hint" style="margin-top:6px">Paste this once. It's stored on this device only, never inside the file, so the file is safe to share with your team.</p>
+
+  <div class="actions">
+    <button type="button" class="gold" id="btnSend">Save to Drive</button>
+    <button type="button" id="btnPrint">Print or save as PDF</button>
+    <button type="button" class="ghost" id="btnSaveLocal">Save a copy on this device</button>
+    <button type="button" class="ghost" id="btnDownload">Download backup file</button>
+    <button type="button" class="ghost" id="btnClear">Start a new analysis</button>
+  </div>
+  <div id="status"></div>
+
+  <div class="saveslots">
+    <strong style="color:var(--navy)">Saved on this device</strong>
+    <ul id="slotList"></ul>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Hyperion Legacy Builders · Field tool. Figures entered here are client-reported estimates, not a guarantee of results. Review with your upline before presenting any recommendation.
+</footer>
+
+<div class="savepill" id="savePill" role="status" aria-live="polite">
+  <span class="dot" aria-hidden="true"></span>
+  <span id="pillText">Ready</span>
+  <button type="button" id="pillSend" hidden>Send now</button>
+</div>
+
+<script>
+"use strict";
+
+/* ================= data definitions ================= */
+
+const INCOME_ROWS = [
+  {key:"gross_annual_salary", label:"Gross annual salary (reference only)", nosum:true},
+  {key:"net_take_home",       label:"Net take-home pay"},
+  {key:"bonus_commission",    label:"Bonus, commission"},
+  {key:"rental_income",       label:"Rental income"},
+  {key:"interest_dividends",  label:"Interest, dividends"},
+  {key:"alimony_child",       label:"Alimony, child support"},
+  {key:"annuity_pension",     label:"Annuity, pension income"},
+  {key:"military_retirement", label:"Military or civil retirement"},
+  {key:"social_security",     label:"Social Security"},
+  {key:"other_income",        label:"Other income"},
+  {key:"tax_refund_annual",   label:"Last year's tax refund (annual, reference only)", nosum:true}
+];
+
+const EXPENSE_GROUPS = [
+  {title:"Auto and transport", rows:[
+    ["auto_gas","Gas"],["auto_insurance","Auto insurance"],["auto_payment","Auto payment"],["auto_maint","Maintenance and wash"]
+  ]},
+  {title:"Home", rows:[
+    ["rent_mortgage","Rent or mortgage"],["prop_tax_ins","Property taxes and insurance"],["cable_electric","Cable and electric"],
+    ["gas_internet","Gas and internet"],["mobile_landline","Mobile and landline"],["trash_water","Trash and water"],["landscape","Landscape"]
+  ]},
+  {title:"Living", rows:[
+    ["grocery","Groceries and household"],["dining_out","Dining out and fast food"],["clothing_education","Clothing and education"],
+    ["personal_care","Personal care and salon"],["gifts","Gifts"],["pets","Pets"],["subscriptions","Subscriptions and memberships"],
+    ["entertainment_vacation","Entertainment and vacation"]
+  ]},
+  {title:"Family and obligations", rows:[
+    ["childcare","Childcare"],["sports_lessons","Sports and lessons"],["prescriptions","Prescriptions"],
+    ["health_life_prem","Health and life insurance premiums"],["credit_cards","Credit card payments"],["personal_loans","Personal loans"],
+    ["school_loans","School loans"],["alimony_support","Alimony, child or family support"],["tithe_charity","Tithe and charity"]
+  ]}
+];
+
+const GOAL_OPTIONS = [
+  "Car","Furniture","Boat","Family vacation","Build wealth","Buy a new home",
+  "Alternate income if death or disability","Emergency fund","Reduce or pay off mortgage",
+  "College for children","Pay off credit cards","Help support aging parents"
+];
+const GOAL_TERMS = [
+  {key:"short", label:"Short term — 1 to 3 years"},
+  {key:"mid",   label:"Mid term — 3 to 7 years"},
+  {key:"long",  label:"Long term — 7 years and beyond"}
+];
+
+const DEBT_ROWS = [
+  "Mortgage — 1st","Mortgage — 2nd or HELOC","Mortgage — investment property",
+  "Auto loan","Auto loan","Student loan","Credit card","Credit card","Credit card","Credit card",
+  "Personal or signature loan","Other loan"
+];
+
+const ASSET_BUCKETS = [
+  {key:"taxable", title:"Taxable", blurb:"Positioned for current or short-term needs, held in liquid instruments.",
+   groups:["Mutual funds","Stocks","Bank savings and CDs","Bonds and treasuries"]},
+  {key:"deferred", title:"Tax deferred", blurb:"Earmarked for long-term needs. Growth or interest is ultimately taxable at distribution.",
+   groups:["401(k), 403(b) or other qualified plans","IRA and SEP-IRA","Annuities (fixed and variable)","Savings bonds"]},
+  {key:"exempt", title:"Tax exempt", blurb:"Positioned for the future with preferential tax treatment during accumulation and at distribution.",
+   groups:["Roth IRA","Cash value life insurance"]}
+];
+
+const ESTATE_ROWS = [
+  "Real estate owned free and clear","Unencumbered automobiles, boats","Collectibles, antiques, jewelry"
+];
+
+/* ================= build the dynamic parts ================= */
+
+const $ = id => document.getElementById(id);
+const el = (tag, cls) => { const n = document.createElement(tag); if(cls) n.className = cls; return n; };
+
+function moneyCell(name, extraClass){
+  return '<input type="number" class="money ' + (extraClass||'') + '" name="' + name + '" placeholder="0" step="any">';
+}
+
+/* dependents */
+function depRow(i){
+  const tr = el("tr");
+  tr.innerHTML =
+    '<td><input type="text" name="dependent_'+i+'_name"></td>' +
+    '<td><select name="dependent_'+i+'_sex"><option value=""></option><option>M</option><option>F</option></select></td>' +
+    '<td><input type="date" name="dependent_'+i+'_dob"></td>';
+  return tr;
+}
+let depCount = 0;
+function addDep(){ depCount++; $("depBody").appendChild(depRow(depCount)); }
+for(let i=0;i<4;i++) addDep();
+$("addDep").addEventListener("click", addDep);
+
+/* goals */
+(function buildGoals(){
+  const wrap = $("goalSets");
+  GOAL_TERMS.forEach(term => {
+    const box = el("div","goalset");
+    let html = '<h4>' + term.label + '</h4><div class="goalgrid">';
+    GOAL_OPTIONS.forEach((opt, idx) => {
+      const nm = "goal_" + term.key + "_" + idx;
+      html += '<label><input type="checkbox" name="'+nm+'" value="'+opt.replace(/"/g,'&quot;')+'"> ' + opt + '</label>';
+    });
+    html += '</div><label for="goal_'+term.key+'_notes">In their words</label>' +
+            '<input type="text" id="goal_'+term.key+'_notes" name="goal_'+term.key+'_notes">';
+    box.innerHTML = html;
+    wrap.appendChild(box);
+  });
+})();
+
+/* income */
+(function buildIncome(){
+  const body = $("incomeBody");
+  INCOME_ROWS.forEach(r => {
+    const tr = el("tr");
+    const cls = r.nosum ? "" : "inc";
+    tr.innerHTML =
+      '<td class="lab">' + r.label + '</td>' +
+      '<td>' + moneyCell("income_client_" + r.key, cls + " inc-client") + '</td>' +
+      '<td>' + moneyCell("income_spouse_" + r.key, cls + " inc-spouse") + '</td>';
+    body.appendChild(tr);
+  });
+})();
+
+/* expenses */
+(function buildExpenses(){
+  const wrap = $("expenseCols");
+  EXPENSE_GROUPS.forEach(g => {
+    const col = el("div");
+    let html = '<h3 style="margin-top:0">' + g.title + '</h3><table><tbody>';
+    g.rows.forEach(([key,label]) => {
+      html += '<tr><td class="lab">' + label + '</td><td style="width:38%">' + moneyCell("expense_" + key, "exp") + '</td></tr>';
+    });
+    html += '</tbody></table>';
+    col.innerHTML = html;
+    wrap.appendChild(col);
+  });
+})();
+
+/* other expenses */
+function otherExpRow(i){
+  const tr = el("tr");
+  tr.innerHTML =
+    '<td><input type="text" name="expense_other_'+i+'_label" placeholder="Describe it"></td>' +
+    '<td>' + moneyCell("expense_other_"+i+"_amount","exp exp-other") + '</td>';
+  return tr;
+}
+let otherExpCount = 0;
+function addOtherExp(){
+  otherExpCount++;
+  $("otherExpBody").appendChild(otherExpRow(otherExpCount));
+  bind();
+}
+for(let i=0;i<3;i++) addOtherExp();
+$("addExp").addEventListener("click", addOtherExp);
+
+/* life insurance policies */
+const LIFE_TYPES = ["Term","Whole life","IUL","VUL","Universal","Group / work","Final expense","Other"];
+function lifeRow(i){
+  const tr = el("tr");
+  let types = '<option value=""></option>';
+  LIFE_TYPES.forEach(t => { types += '<option>' + t + '</option>'; });
+  tr.innerHTML =
+    '<td><input type="text" name="life_'+i+'_insured" placeholder="Client, spouse, child"></td>' +
+    '<td><select name="life_'+i+'_type" class="life-type">' + types + '</select></td>' +
+    '<td><input type="text" name="life_'+i+'_carrier"></td>' +
+    '<td>' + moneyCell("life_"+i+"_death_benefit","life-db") + '</td>' +
+    '<td>' + moneyCell("life_"+i+"_premium","life-prem") + '</td>' +
+    '<td><input type="text" name="life_'+i+'_term_ends" placeholder="2031"></td>' +
+    '<td><input type="text" name="life_'+i+'_riders"></td>';
+  return tr;
+}
+let lifeCount = 0;
+function addLife(){
+  lifeCount++;
+  $("lifeBody").appendChild(lifeRow(lifeCount));
+  bind();
+}
+for(let i=0;i<3;i++) addLife();
+$("addLife").addEventListener("click", addLife);
+
+/* debt */
+function debtRow(i, typeLabel){
+  const tr = el("tr");
+  tr.innerHTML =
+    '<td><input type="text" name="debt_'+i+'_type" value="'+(typeLabel||"")+'"></td>' +
+    '<td><input type="text" name="debt_'+i+'_lender"></td>' +
+    '<td><input type="number" class="money" name="debt_'+i+'_term" placeholder="0"></td>' +
+    '<td>' + moneyCell("debt_"+i+"_balance","debt-bal") + '</td>' +
+    '<td><input type="number" class="money debt-rate" name="debt_'+i+'_rate" placeholder="0" step="any"></td>' +
+    '<td>' + moneyCell("debt_"+i+"_payment","debt-pay") + '</td>';
+  return tr;
+}
+let debtCount = 0;
+DEBT_ROWS.forEach(t => { debtCount++; $("debtBody").appendChild(debtRow(debtCount, t)); });
+$("addDebt").addEventListener("click", () => { debtCount++; $("debtBody").appendChild(debtRow(debtCount, "")); bind(); });
+
+/* assets */
+(function buildAssets(){
+  const wrap = $("assetBuckets");
+  ASSET_BUCKETS.forEach(b => {
+    const box = el("div","goalset");
+    let html = '<h4>' + b.title + '</h4><p class="hint" style="margin:-4px 0 10px">' + b.blurb + '</p>' +
+      '<div class="scroller"><table><thead><tr>' +
+      '<th style="width:44%">Investment or asset</th><th class="num" style="width:20%">Balance</th>' +
+      '<th class="num" style="width:22%">Monthly contribution</th><th class="num" style="width:14%">RoR %</th>' +
+      '</tr></thead><tbody>';
+    b.groups.forEach((g, gi) => {
+      html += '<tr><td colspan="4" style="padding-top:9px;font-size:11.5px;font-weight:700;color:var(--muted)">' + g + '</td></tr>';
+      for(let r=1;r<=2;r++){
+        const base = "asset_" + b.key + "_" + gi + "_" + r;
+        html += '<tr>' +
+          '<td><input type="text" name="'+base+'_name"></td>' +
+          '<td>' + moneyCell(base+"_balance","asset-bal asset-"+b.key) + '</td>' +
+          '<td>' + moneyCell(base+"_contrib","asset-contrib") + '</td>' +
+          '<td><input type="number" class="money" name="'+base+'_ror" placeholder="0" step="any"></td>' +
+          '</tr>';
+      }
+    });
+    html += '</tbody>' +
+      '<tbody id="otherAsset_' + b.key + '">' +
+      '<tr><td colspan="4" style="padding-top:9px;font-size:11.5px;font-weight:700;color:var(--muted)">Other ' + b.title.toLowerCase() + ' investments</td></tr>' +
+      '</tbody>' +
+      '<tfoot><tr class="total"><td>' + b.title + ' subtotal</td><td class="amt" id="sub_' + b.key + '">$0</td><td colspan="2"></td></tr></tfoot>' +
+      '</table></div>' +
+      '<div class="actions"><button type="button" class="ghost small" data-addasset="' + b.key + '">Add another line</button></div>';
+    box.innerHTML = html;
+    wrap.appendChild(box);
+  });
+})();
+
+function otherAssetRow(bucketKey, i){
+  const base = "asset_other_" + bucketKey + "_" + i;
+  const tr = el("tr");
+  tr.innerHTML =
+    '<td><input type="text" name="'+base+'_name" placeholder="What is it"></td>' +
+    '<td>' + moneyCell(base+"_balance","asset-bal asset-"+bucketKey) + '</td>' +
+    '<td>' + moneyCell(base+"_contrib","asset-contrib") + '</td>' +
+    '<td><input type="number" class="money" name="'+base+'_ror" placeholder="0" step="any"></td>';
+  return tr;
+}
+const otherAssetCount = {taxable:0, deferred:0, exempt:0};
+function addOtherAsset(key){
+  otherAssetCount[key]++;
+  $("otherAsset_" + key).appendChild(otherAssetRow(key, otherAssetCount[key]));
+  bind();
+}
+ASSET_BUCKETS.forEach(b => { for(let i=0;i<2;i++) addOtherAsset(b.key); });
+document.querySelectorAll("[data-addasset]").forEach(btn => {
+  btn.addEventListener("click", () => addOtherAsset(btn.dataset.addasset));
+});
+
+/* estate */
+(function buildEstate(){
+  const body = $("estateBody");
+  ESTATE_ROWS.forEach((label, i) => {
+    const tr = el("tr");
+    tr.innerHTML =
+      '<td class="lab">' + label + '</td>' +
+      '<td><input type="text" name="estate_'+i+'_description"></td>' +
+      '<td>' + moneyCell("estate_"+i+"_market_value","estate-val") + '</td>' +
+      '<td>' + moneyCell("estate_"+i+"_cost_basis") + '</td>';
+    body.appendChild(tr);
+  });
+})();
+
+/* education */
+function eduRow(i){
+  const tr = el("tr");
+  tr.innerHTML =
+    '<td><input type="text" name="edu_'+i+'_plan"></td>' +
+    '<td>' + moneyCell("edu_"+i+"_balance","edu-bal") + '</td>' +
+    '<td>' + moneyCell("edu_"+i+"_contrib","edu-contrib") + '</td>' +
+    '<td><input type="number" class="money" name="edu_'+i+'_ror" placeholder="0" step="any"></td>' +
+    '<td><input type="text" name="edu_'+i+'_dependent"></td>';
+  return tr;
+}
+let eduCount = 0;
+for(let i=0;i<4;i++){ eduCount++; $("eduBody").appendChild(eduRow(eduCount)); }
+$("addEdu").addEventListener("click", () => { eduCount++; $("eduBody").appendChild(eduRow(eduCount)); bind(); });
+
+/* ================= math ================= */
+
+const num = n => { const v = parseFloat(n); return isFinite(v) ? v : 0; };
+const sum = sel => Array.from(document.querySelectorAll(sel)).reduce((t,i) => t + num(i.value), 0);
+const fmt = n => (n < 0 ? "-$" : "$") + Math.abs(Math.round(n)).toLocaleString("en-US");
+const setText = (id, txt) => { const n = $(id); if(n) n.textContent = txt; };
+const setMoney = (id, v, flagNeg) => {
+  const n = $(id); if(!n) return;
+  n.textContent = fmt(v);
+  if(flagNeg) n.classList.toggle("neg", v < 0);
+};
+
+function recalc(){
+  const incClient = sum(".inc.inc-client");
+  const incSpouse = sum(".inc.inc-spouse");
+  const income = incClient + incSpouse;
+  const expense = sum(".exp");
+  const disc = income - expense;
+
+  const debtBal = sum(".debt-bal");
+  const debtPay = sum(".debt-pay");
+  let weighted = 0;
+  document.querySelectorAll("#debtBody tr").forEach(tr => {
+    const b = num(tr.querySelector(".debt-bal") ? tr.querySelector(".debt-bal").value : 0);
+    const r = num(tr.querySelector(".debt-rate") ? tr.querySelector(".debt-rate").value : 0);
+    weighted += b * r;
+  });
+  const avgRate = debtBal > 0 ? weighted / debtBal : 0;
+
+  const taxable  = sum(".asset-taxable");
+  const deferred = sum(".asset-deferred");
+  const exempt   = sum(".asset-exempt");
+  const eduBal   = sum(".edu-bal");
+  const estate   = sum(".estate-val");
+  const invested = taxable + deferred + exempt;
+  const contrib  = sum(".asset-contrib") + sum(".edu-contrib");
+  const assets   = invested + eduBal + estate;
+
+  const db = sum(".life-db");
+  const lifePrem = sum(".life-prem");
+  const prem = lifePrem + num($("cHealthPrem").value) + num($("sHealthPrem").value);
+
+  // Split coverage by whether it expires. Term and group coverage go away;
+  // that gap is the whole conversation.
+  const TEMPORARY = ["Term", "Group / work"];
+  let dbTerm = 0;
+  document.querySelectorAll("#lifeBody tr").forEach(tr => {
+    const t = tr.querySelector(".life-type");
+    const b = tr.querySelector(".life-db");
+    if(t && b && TEMPORARY.indexOf(t.value) !== -1) dbTerm += num(b.value);
+  });
+  const dbPerm = db - dbTerm;
+
+  setMoney("bIncome", income); setMoney("bExpense", expense);
+  setMoney("bDisc", disc, true); setMoney("bDebt", debtBal); setMoney("bAssets", assets);
+
+  setMoney("incClientTotal", incClient); setMoney("incSpouseTotal", incSpouse);
+  setMoney("rIncome", income); setMoney("rExpense", expense);
+  setMoney("rDisc", disc, true); setMoney("rDiscYear", disc * 12, true);
+
+  setMoney("rDb", db); setMoney("rPrem", prem);
+  setMoney("rDbPerm", dbPerm); setMoney("rDbTerm", dbTerm);
+  setMoney("lifeDbTotal", db); setMoney("lifePremTotal", lifePrem);
+  setMoney("otherExpTotal", sum(".exp-other"));
+  setMoney("sub_taxable", taxable); setMoney("sub_deferred", deferred); setMoney("sub_exempt", exempt);
+
+  setMoney("debtBalTotal", debtBal); setMoney("debtPayTotal", debtPay);
+  setMoney("rDebtBal", debtBal); setMoney("rDebtPay", debtPay);
+  setText("rDebtRate", avgRate.toFixed(2) + "%");
+
+  setMoney("rTaxable", taxable); setMoney("rDeferred", deferred); setMoney("rExempt", exempt);
+  setMoney("rAssetTotal", invested); setMoney("rContrib", contrib);
+
+  setMoney("estateTotal", estate);
+  setMoney("eduBalTotal", eduBal); setMoney("eduContribTotal", sum(".edu-contrib"));
+
+  setMoney("rDisc2", disc, true); setMoney("rAssets2", assets); setMoney("rDebt2", debtBal);
+  setMoney("rNetWorth", assets - debtBal, true);
+
+  return {income, expense, disc, debtBal, debtPay, avgRate, taxable, deferred, exempt,
+          invested, eduBal, estate, assets, contrib,
+          deathBenefit: db, deathBenefitPermanent: dbPerm, deathBenefitTerm: dbTerm,
+          insurancePremium: prem, netWorth: assets - debtBal};
+}
+
+/* ================= serialize, autosave, restore ================= */
+
+const DRAFT_KEY = "hyperion_fna_draft_v1";
+const SLOTS_KEY = "hyperion_fna_slots_v1";
+const ENDPOINT_KEY = "hyperion_fna_endpoint_v1";
+const QUEUE_KEY = "hyperion_fna_queue_v1";
+
+/* ---- save status pill ---- */
+let lastSaved = null;
+function pill(text, offline){
+  $("pillText").textContent = text;
+  $("savePill").classList.toggle("offline", !!offline);
+}
+function savedAgo(){
+  if(!lastSaved) return "Ready";
+  const secs = Math.round((Date.now() - lastSaved) / 1000);
+  if(secs < 5) return "Saved just now";
+  if(secs < 60) return "Saved " + secs + "s ago";
+  const mins = Math.round(secs / 60);
+  return "Saved " + mins + (mins === 1 ? " min ago" : " mins ago");
+}
+function refreshPill(){
+  const pending = readQueue().length;
+  $("pillSend").hidden = pending === 0;
+  if(!navigator.onLine){
+    pill(pending ? "Offline · " + pending + " waiting to send" : "Offline · " + savedAgo().toLowerCase(), true);
+  }else{
+    pill(pending ? pending + " waiting to send" : savedAgo(), false);
+  }
+}
+setInterval(refreshPill, 15000);
+
+function collect(){
+  const data = {};
+  document.querySelectorAll("[name]").forEach(f => {
+    if(f.type === "checkbox"){ if(f.checked) data[f.name] = f.value || "Yes"; }
+    else if(f.type === "radio"){ if(f.checked) data[f.name] = f.value; }
+    else if(f.value !== "") data[f.name] = f.value;
+  });
+  return data;
+}
+
+/**
+ * A saved analysis may hold more rows than the form starts with.
+ * Grow each growable table to fit before filling anything in.
+ */
+function ensureCapacity(data){
+  const keys = Object.keys(data || {});
+  const highest = prefix => {
+    const re = new RegExp("^" + prefix + "_(\\d+)_");
+    let max = 0;
+    keys.forEach(k => { const m = k.match(re); if(m) max = Math.max(max, parseInt(m[1], 10)); });
+    return max;
+  };
+  while(depCount      < highest("dependent"))      addDep();
+  while(otherExpCount < highest("expense_other"))  addOtherExp();
+  while(lifeCount     < highest("life"))           addLife();
+  while(eduCount      < highest("edu"))            { eduCount++; $("eduBody").appendChild(eduRow(eduCount)); }
+  while(debtCount     < highest("debt"))           { debtCount++; $("debtBody").appendChild(debtRow(debtCount, "")); }
+  ASSET_BUCKETS.forEach(b => {
+    while(otherAssetCount[b.key] < highest("asset_other_" + b.key)) addOtherAsset(b.key);
+  });
+  bind();
+}
+
+function apply(data){
+  ensureCapacity(data);
+  document.querySelectorAll("[name]").forEach(f => {
+    if(f.type === "checkbox") f.checked = false;
+    else if(f.type === "radio") f.checked = false;
+    else f.value = "";
+  });
+  Object.keys(data || {}).forEach(k => {
+    const fields = document.querySelectorAll('[name="' + CSS.escape(k) + '"]');
+    fields.forEach(f => {
+      if(f.type === "checkbox") f.checked = true;
+      else if(f.type === "radio") f.checked = (f.value === data[k]);
+      else f.value = data[k];
+    });
+  });
+  recalc();
+}
+
+let saveTimer = null;
+function saveNow(){
+  clearTimeout(saveTimer);
+  try{
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(collect()));
+    lastSaved = Date.now();
+    refreshPill();
+  }catch(err){
+    pill("Can't save — device storage is full", true);
+  }
+}
+function autosave(){
+  clearTimeout(saveTimer);
+  pill("Saving…");
+  saveTimer = setTimeout(saveNow, 300);
+}
+
+// Belt and braces: also write on blur, tab switch, and page close,
+// so a call coming in mid-sentence never costs a field.
+window.addEventListener("blur", saveNow);
+window.addEventListener("pagehide", saveNow);
+document.addEventListener("visibilitychange", () => { if(document.hidden) saveNow(); });
+
+function bind(){
+  document.querySelectorAll("[name]").forEach(f => {
+    if(f.dataset.bound) return;
+    f.dataset.bound = "1";
+    f.addEventListener("input", () => { recalc(); autosave(); });
+    f.addEventListener("change", () => { recalc(); autosave(); });
+  });
+}
+bind();
+
+try{
+  const draft = localStorage.getItem(DRAFT_KEY);
+  if(draft) apply(JSON.parse(draft));
+  const ep = localStorage.getItem(ENDPOINT_KEY);
+  if(ep) $("endpoint").value = ep;
+}catch(e){}
+recalc();
+
+$("endpoint").addEventListener("change", () => {
+  try{ localStorage.setItem(ENDPOINT_KEY, $("endpoint").value.trim()); }catch(e){}
+});
+
+/* ================= saved slots on device ================= */
+
+function readSlots(){
+  try{ return JSON.parse(localStorage.getItem(SLOTS_KEY) || "[]"); }catch(e){ return []; }
+}
+function writeSlots(s){
+  try{ localStorage.setItem(SLOTS_KEY, JSON.stringify(s)); }catch(e){}
+}
+function renderSlots(){
+  const list = $("slotList");
+  const slots = readSlots();
+  list.innerHTML = "";
+  if(!slots.length){
+    list.innerHTML = '<li style="color:var(--muted);font-weight:500;border:none">Nothing saved yet. Finish an analysis, then save a copy here.</li>';
+    return;
+  }
+  slots.forEach((s, i) => {
+    const li = el("li");
+    const label = el("span");
+    label.textContent = s.label;
+    const open = el("button","ghost small"); open.type = "button"; open.textContent = "Open";
+    const del = el("button","ghost small"); del.type = "button"; del.textContent = "Delete";
+    open.addEventListener("click", () => { apply(s.data); autosave(); flash("Opened " + s.label, "ok"); window.scrollTo({top:0}); });
+    del.addEventListener("click", () => { const arr = readSlots(); arr.splice(i,1); writeSlots(arr); renderSlots(); });
+    li.appendChild(label); li.appendChild(open); li.appendChild(del);
+    list.appendChild(li);
+  });
+}
+renderSlots();
+
+function clientLabel(){
+  const n = $("cName").value.trim() || "Unnamed client";
+  const d = $("apptDate").value || new Date().toISOString().slice(0,10);
+  return n + " — " + d;
+}
+
+function flash(msg, kind){
+  const s = $("status");
+  s.textContent = msg;
+  s.className = kind || "";
+}
+
+/* ================= actions ================= */
+
+$("btnSaveLocal").addEventListener("click", () => {
+  const slots = readSlots();
+  const label = clientLabel();
+  const idx = slots.findIndex(s => s.label === label);
+  const entry = {label, saved:new Date().toISOString(), data:collect()};
+  if(idx >= 0) slots[idx] = entry; else slots.unshift(entry);
+  writeSlots(slots.slice(0,40));
+  renderSlots();
+  flash("Saved on this device as " + label, "ok");
+});
+
+$("btnDownload").addEventListener("click", () => {
+  const payload = {label:clientLabel(), saved:new Date().toISOString(), totals:recalc(), fields:collect()};
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"});
+  const a = el("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "FNA " + clientLabel().replace(/[^\w \-]/g,"") + ".json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+  flash("Backup file downloaded.", "ok");
+});
+
+$("btnPrint").addEventListener("click", () => window.print());
+
+$("btnClear").addEventListener("click", () => {
+  if(!confirm("Clear every field and start a new analysis? Save a copy first if you need this one.")) return;
+  apply({});
+  try{ localStorage.removeItem(DRAFT_KEY); }catch(e){}
+  flash("Cleared. Ready for the next family.", "ok");
+  window.scrollTo({top:0});
+});
+
+/* ================= offline send queue ================= */
+
+function readQueue(){
+  try{ return JSON.parse(localStorage.getItem(QUEUE_KEY) || "[]"); }catch(e){ return []; }
+}
+function writeQueue(q){
+  try{ localStorage.setItem(QUEUE_KEY, JSON.stringify(q)); }catch(e){}
+  refreshPill();
+}
+
+async function postOne(url, payload){
+  const res = await fetch(url, {
+    method: "POST",
+    // text/plain keeps this a simple request, so the browser skips the
+    // preflight that Apps Script can't answer. The script still reads JSON.
+    headers: {"Content-Type": "text/plain;charset=utf-8"},
+    body: JSON.stringify(payload)
+  });
+  return await res.json();
+}
+
+let flushing = false;
+async function flushQueue(announce){
+  if(flushing) return;
+  const url = ($("endpoint").value || "").trim();
+  const queue = readQueue();
+  if(!url || !queue.length || !navigator.onLine) { refreshPill(); return; }
+
+  flushing = true;
+  let sent = 0;
+  try{
+    while(readQueue().length){
+      const q = readQueue();
+      const out = await postOne(url, q[0]);
+      if(!out || !out.ok) break;   // leave it queued and try again later
+      q.shift();
+      writeQueue(q);
+      sent++;
+    }
+  }catch(err){
+    // still offline or the script is unreachable — everything stays queued
+  }finally{
+    flushing = false;
+    refreshPill();
+    if(announce && sent) flash(sent + (sent === 1 ? " analysis" : " analyses") + " sent to Drive.", "ok");
+  }
+  return sent;
+}
+
+window.addEventListener("online", () => { refreshPill(); flushQueue(true); });
+window.addEventListener("offline", refreshPill);
+$("pillSend").addEventListener("click", () => flushQueue(true));
+
+$("btnSend").addEventListener("click", async () => {
+  const url = $("endpoint").value.trim();
+  if(!url){
+    flash("Add your Apps Script web app URL above first, then save.", "err");
+    $("endpoint").focus();
+    return;
+  }
+  if(!$("cName").value.trim()){
+    flash("Enter the client's name before saving to Drive.", "err");
+    $("cName").focus();
+    return;
+  }
+  const payload = {
+    label: clientLabel(),
+    submittedAt: new Date().toISOString(),
+    totals: recalc(),
+    fields: collect()
+  };
+
+  // Queue first, then try to send. If anything goes wrong the analysis is
+  // already safe and will go out on its own once there's a signal.
+  const queue = readQueue();
+  queue.push(payload);
+  writeQueue(queue);
+  saveNow();
+
+  if(!navigator.onLine){
+    flash("No signal. Held on this device — it'll send itself the moment you're back online.", "ok");
+    return;
+  }
+
+  flash("Saving to Drive…", "busy");
+  $("btnSend").disabled = true;
+  try{
+    const sent = await flushQueue(false);
+    if(readQueue().length === 0){
+      flash("Saved to Drive.", "ok");
+    }else{
+      flash("Drive didn't accept it. Held on this device — check the web app URL, then tap Send now.", "err");
+    }
+  }finally{
+    $("btnSend").disabled = false;
+  }
+});
+
+/* ================= offline support ================= */
+
+if("serviceWorker" in navigator && location.protocol.indexOf("http") === 0){
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  });
+}
+
+// Ask the browser not to evict the saved analyses when storage gets tight.
+if(navigator.storage && navigator.storage.persist){
+  navigator.storage.persist().catch(() => {});
+}
+
+refreshPill();
+flushQueue(false);
+</script>
+</body>
+</html>
