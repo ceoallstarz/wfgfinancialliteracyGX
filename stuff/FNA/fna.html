@@ -1305,7 +1305,7 @@ async function openFromDrive(item){
   const url = $("endpoint").value.trim();
   flash("Opening " + (item.client || "analysis") + "…", "busy");
   try{
-    const out = await postOne(url, {action:"load", row:item.row});
+    const out = await postOne(url, {action:"load", row:item.row, client:item.client});
     if(out && out.ok){
       apply(out.fields);
       saveNow();
