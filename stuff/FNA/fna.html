@@ -553,12 +553,28 @@ footer{max-width:1080px;margin:0 auto;padding:0 20px 50px;font-size:12px;color:v
 
   <div class="actions">
     <button type="button" class="gold" id="btnSend">Save to Drive</button>
+    <button type="button" id="btnLoad">Open from Drive</button>
     <button type="button" id="btnPrint">Print or save as PDF</button>
     <button type="button" class="ghost" id="btnSaveLocal">Save a copy on this device</button>
     <button type="button" class="ghost" id="btnDownload">Download backup file</button>
+    <button type="button" class="ghost" id="btnImport">Open a backup file</button>
     <button type="button" class="ghost" id="btnClear">Start a new analysis</button>
   </div>
+  <input type="file" id="importFile" accept="application/json,.json" hidden>
   <div id="status"></div>
+
+  <div id="drivePanel" hidden>
+    <h3>Analyses in your Drive sheet</h3>
+    <input type="text" id="driveFilter" placeholder="Filter by name…" style="max-width:320px;margin-bottom:10px">
+    <div class="scroller"><table>
+      <thead><tr>
+        <th style="width:30%">Client</th><th style="width:22%">Spouse</th>
+        <th style="width:15%">Appointment</th><th class="num" style="width:16%">Discretionary</th>
+        <th style="width:17%"></th>
+      </tr></thead>
+      <tbody id="driveList"></tbody>
+    </table></div>
+  </div>
 
   <div class="saveslots">
     <strong style="color:var(--navy)">Saved on this device</strong>
@@ -1243,6 +1259,122 @@ $("btnSend").addEventListener("click", async () => {
   }finally{
     $("btnSend").disabled = false;
   }
+});
+
+/* ================= opening a saved analysis ================= */
+
+// Anything already typed is protected before we overwrite the form.
+function guardUnsaved(what){
+  if(!$("cName").value.trim()) return true;
+  return confirm("This will replace what's on screen with " + what +
+                 ". Save a copy first if you need it. Continue?");
+}
+
+let driveItems = [];
+
+function renderDriveList(){
+  const body = $("driveList");
+  const q = $("driveFilter").value.trim().toLowerCase();
+  const rows = driveItems.filter(it =>
+    !q || (it.client + " " + it.spouse).toLowerCase().indexOf(q) !== -1);
+
+  body.innerHTML = "";
+  if(!rows.length){
+    body.innerHTML = '<tr><td colspan="5" style="color:var(--muted)">Nothing matches.</td></tr>';
+    return;
+  }
+  rows.forEach(it => {
+    const tr = el("tr");
+    tr.innerHTML =
+      '<td class="lab">' + (it.client || "Unnamed") + '</td>' +
+      '<td>' + (it.spouse || "") + '</td>' +
+      '<td>' + (it.apptDate || it.submitted || "") + '</td>' +
+      '<td style="text-align:right;font-variant-numeric:tabular-nums">' + fmt(Number(it.discretionary) || 0) + '</td>' +
+      '<td></td>';
+    const btn = el("button","gold small");
+    btn.type = "button";
+    btn.textContent = "Open";
+    btn.addEventListener("click", () => openFromDrive(it));
+    tr.lastElementChild.appendChild(btn);
+    body.appendChild(tr);
+  });
+}
+
+async function openFromDrive(item){
+  if(!guardUnsaved("the analysis for " + (item.client || "that family"))) return;
+  const url = $("endpoint").value.trim();
+  flash("Opening " + (item.client || "analysis") + "…", "busy");
+  try{
+    const out = await postOne(url, {action:"load", row:item.row});
+    if(out && out.ok){
+      apply(out.fields);
+      saveNow();
+      $("drivePanel").hidden = true;
+      flash("Opened " + (item.client || "analysis") + ". Every total has been recalculated.", "ok");
+      window.scrollTo({top:0, behavior:"smooth"});
+    }else{
+      flash("Couldn't open it: " + ((out && out.error) || "unknown error"), "err");
+    }
+  }catch(err){
+    flash("Couldn't reach Drive. This one needs a connection.", "err");
+  }
+}
+
+$("btnLoad").addEventListener("click", async () => {
+  const url = $("endpoint").value.trim();
+  if(!url){
+    flash("Add your Apps Script web app URL above first.", "err");
+    $("endpoint").focus();
+    return;
+  }
+  if(!navigator.onLine){
+    flash("Opening from Drive needs a connection. Your device copies are listed below.", "err");
+    return;
+  }
+  flash("Fetching your analyses…", "busy");
+  $("btnLoad").disabled = true;
+  try{
+    const out = await postOne(url, {action:"list", limit:100});
+    if(out && out.ok){
+      driveItems = out.items || [];
+      $("drivePanel").hidden = false;
+      renderDriveList();
+      flash(driveItems.length
+        ? driveItems.length + (driveItems.length === 1 ? " analysis" : " analyses") + " in your sheet."
+        : "Your sheet is empty so far.", "ok");
+    }else{
+      flash("Drive said: " + ((out && out.error) || "unknown error"), "err");
+    }
+  }catch(err){
+    flash("Couldn't reach Drive. Check the web app URL.", "err");
+  }finally{
+    $("btnLoad").disabled = false;
+  }
+});
+
+$("driveFilter").addEventListener("input", renderDriveList);
+
+/* open a downloaded backup file */
+$("btnImport").addEventListener("click", () => $("importFile").click());
+$("importFile").addEventListener("change", e => {
+  const file = e.target.files && e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try{
+      const parsed = JSON.parse(reader.result);
+      const fields = parsed.fields || parsed;
+      if(!guardUnsaved("the file you picked")) return;
+      apply(fields);
+      saveNow();
+      flash("Opened " + file.name + ".", "ok");
+      window.scrollTo({top:0, behavior:"smooth"});
+    }catch(err){
+      flash("That file isn't a backup this form can read.", "err");
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = "";
 });
 
 /* ================= offline support ================= */
