@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Favicons & iOS home screen -->
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<meta name="theme-color" content="#1a2a42">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Hyperion">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Builder's Playbook — Action Checklist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1a2a42; --navy-deep:#111d2e; --gold:#c9a84c; --gold-deep:#8a6a1e;
+    --cream:#f7f3e9; --white:#fff; --ink:#1c2430; --muted:#6b7280; --line:#e2ddce;
+    --green:#4a7c3f; --green-bg:#eef3ec;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;padding-bottom:40px}
+  .topbar{background:var(--navy);border-bottom:2px solid var(--gold);padding:14px 20px;text-align:center}
+  .topbar .t{font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
+  .hero{max-width:860px;margin:0 auto;padding:26px 20px 6px}
+  .hero h1{font-size:clamp(1.5rem,4vw,2rem);color:var(--navy);font-weight:800;letter-spacing:-.01em}
+  .hero p{color:var(--muted);font-size:1rem;margin-top:4px}
+  .meta{max-width:860px;margin:0 auto;padding:12px 20px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .meta input{font-family:inherit;font-size:14px;padding:9px 13px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);width:230px}
+  .meta input:focus{outline:none;border-color:var(--gold)}
+  .overall{flex:1;min-width:220px}
+  .bar{height:12px;background:#e7e0cf;border-radius:20px;overflow:hidden;margin-top:6px}
+  .bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-deep));width:0%;transition:width .35s ease;border-radius:20px}
+  .bar-label{font-size:12px;font-weight:700;color:var(--navy)}
+  .wrap{max-width:860px;margin:0 auto;padding:10px 20px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:14px;overflow:hidden;box-shadow:0 1px 3px rgba(26,42,66,.05)}
+  .card.done{border-color:var(--green)}
+  .card-head{display:flex;align-items:center;gap:13px;padding:15px 17px;background:var(--navy);cursor:pointer}
+  .card.done .card-head{background:#20392a}
+  .card-icon{font-size:20px;width:38px;height:38px;background:rgba(201,168,76,.18);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .card-headtext{flex:1;min-width:0}
+  .card-title{font-size:15px;font-weight:700;color:#fff}
+  .card-note{font-size:12px;color:rgba(247,243,233,.65);margin-top:1px}
+  .card-prog{font-size:13px;font-weight:800;color:var(--gold);flex-shrink:0;font-variant-numeric:tabular-nums}
+  .card-body{padding:7px 17px 13px}
+  .card-body.collapsed{display:none}
+  .chk{display:flex;align-items:flex-start;gap:12px;padding:9px 4px;cursor:pointer;border-bottom:1px solid #f1ede1}
+  .chk:last-child{border-bottom:none}
+  .chk input{position:absolute;opacity:0;width:0;height:0}
+  .box{flex-shrink:0;width:21px;height:21px;border:2px solid #cfc7b2;border-radius:6px;margin-top:1px;position:relative;transition:all .15s}
+  .chk:hover .box{border-color:var(--gold)}
+  .chk input:checked ~ .box{background:var(--green);border-color:var(--green)}
+  .chk input:checked ~ .box::after{content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+  .txt{font-size:14.5px;color:var(--ink);transition:all .15s}
+  .chk input:checked ~ .txt{color:var(--muted);text-decoration:line-through;text-decoration-color:#b9b09a}
+  .weekly{background:var(--navy);border-radius:12px;padding:18px 20px;margin:18px 0 4px}
+  .weekly h2{color:var(--gold);font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+  .weekly p{color:rgba(247,243,233,.6);font-size:12.5px;margin-bottom:12px}
+  .weekly ul{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px}
+  .weekly li{color:#fff;font-size:13px;padding:9px 12px;background:rgba(201,168,76,.12);border-radius:7px;border-left:3px solid var(--gold)}
+  .toolbar{max-width:860px;margin:0 auto;padding:4px 20px 0;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+  .btn{font-family:inherit;font-size:12.5px;font-weight:700;padding:8px 15px;border-radius:7px;border:1px solid var(--line);background:#fff;color:var(--navy);cursor:pointer}
+  .btn:hover{border-color:var(--gold)}
+  .btn.reset{color:var(--muted)}
+  .foot{max-width:860px;margin:18px auto 0;padding:14px 20px;text-align:center;font-size:11px;color:#a59c86;border-top:1px solid var(--line)}
+  .saved-tag{font-size:11.5px;color:var(--green);font-weight:700;opacity:0;transition:opacity .3s}
+  .saved-tag.show{opacity:1}
+  @media(max-width:560px){.meta input{width:100%}}
+</style>
+</head>
+<body>
+<div class="topbar"><span class="t"><img src="img/hyperion-logo-shield.svg" alt="Hyperion" style="height:24px;width:auto;vertical-align:middle;margin-right:8px">⚙ Hyperion Legacy Builders · The Builder's Playbook</span></div>
+<div class="hero">
+  <h1>Action Checklist</h1>
+  <p>Your first 90 days, one checkbox at a time</p>
+</div>
+<div class="meta">
+  <input type="text" id="who" placeholder="Your name (saves your progress)">
+  <div class="overall">
+    <div class="bar-label"><span id="pct">0</span>% complete · <span id="donecount">0</span> of <span id="totalcount">0</span> done <span class="saved-tag" id="savedtag">✓ saved</span></div>
+    <div class="bar"><div class="bar-fill" id="barfill"></div></div>
+  </div>
+</div>
+<div class="toolbar">
+  <button class="btn" id="expandall">Expand all</button>
+  <button class="btn" id="collapseall">Collapse all</button>
+  <button class="btn reset" id="resetbtn">Reset</button>
+</div>
+<div class="wrap">
+  <section class="card" data-sec="day1">
+    <div class="card-head">
+      <div class="card-icon">🚀</div>
+      <div class="card-headtext">
+        <div class="card-title">Day 1 Setup (AMA)</div>
+        <div class="card-note">Get set up, started, and booked — don't wait until you “know everything.”</div>
+      </div>
+      <div class="card-prog"><span class="cp-done" data-sec="day1">0</span>/<span>9</span></div>
+    </div>
+    <div class="card-body">
+      <label class="chk" data-id="day1_0">
+        <input type="checkbox" data-id="day1_0">
+        <span class="box"></span>
+        <span class="txt">Complete your AMA and get your associate credentials</span>
+      </label>
+      <label class="chk" data-id="day1_1">
+        <input type="checkbox" data-id="day1_1">
+        <span class="box"></span>
+        <span class="txt">Enroll in the Xcel pre-licensing course</span>
+      </label>
+      <label class="chk" data-id="day1_2">
+        <input type="checkbox" data-id="day1_2">
+        <span class="box"></span>
+        <span class="txt">Book your state exam date (a deadline makes you study)</span>
+      </label>
+      <label class="chk" data-id="day1_3">
+        <input type="checkbox" data-id="day1_3">
+        <span class="box"></span>
+        <span class="txt">Do your own FNA with your trainer</span>
+      </label>
+      <label class="chk" data-id="day1_4">
+        <input type="checkbox" data-id="day1_4">
+        <span class="box"></span>
+        <span class="txt">Join Hyperion Telegram + Team Revolution Telegram</span>
+      </label>
+      <label class="chk" data-id="day1_5">
+        <input type="checkbox" data-id="day1_5">
+        <span class="box"></span>
+        <span class="txt">Register for the next BPM</span>
+      </label>
+      <label class="chk" data-id="day1_6">
+        <input type="checkbox" data-id="day1_6">
+        <span class="box"></span>
+        <span class="txt">Build your first list of names tonight</span>
+      </label>
+      <label class="chk" data-id="day1_7">
+        <input type="checkbox" data-id="day1_7">
+        <span class="box"></span>
+        <span class="txt">Book your first 3 field-training appointments</span>
+      </label>
+      <label class="chk" data-id="day1_8">
+        <input type="checkbox" data-id="day1_8">
+        <span class="box"></span>
+        <span class="txt">Watch the New Associate videos + Ed Mylett welcome</span>
+      </label>
+    </div>
+  </section>
+  <section class="card" data-sec="list">
+    <div class="card-head">
+      <div class="card-icon">📋</div>
+      <div class="card-headtext">
+        <div class="card-title">Stage 1 · The List</div>
+        <div class="card-note">No list, no business. Write first, judge never.</div>
+      </div>
+      <div class="card-prog"><span class="cp-done" data-sec="list">0</span>/<span>5</span></div>
+    </div>
+    <div class="card-body">
+      <label class="chk" data-id="list_0">
+        <input type="checkbox" data-id="list_0">
+        <span class="box"></span>
+        <span class="txt">Write down 100+ names (family, friends, work, service, phone, socials)</span>
+      </label>
+      <label class="chk" data-id="list_1">
+        <input type="checkbox" data-id="list_1">
+        <span class="box"></span>
+        <span class="txt">Add one or two notes next to each name (how you know them, what they do)</span>
+      </label>
+      <label class="chk" data-id="list_2">
+        <input type="checkbox" data-id="list_2">
+        <span class="box"></span>
+        <span class="txt">Identify your Top 25 to approach first</span>
+      </label>
+      <label class="chk" data-id="list_3">
+        <input type="checkbox" data-id="list_3">
+        <span class="box"></span>
+        <span class="txt">Set the 2-Number habit: add 2 new names every day</span>
+      </label>
+      <label class="chk" data-id="list_4">
+        <input type="checkbox" data-id="list_4">
+        <span class="box"></span>
+        <span class="txt">Set the 2-Number habit: start 2 real conversations every day</span>
+      </label>
+    </div>
+  </section>
+  <section class="card" data-sec="invite">
+    <div class="card-head">
+      <div class="card-icon">📞</div>
+      <div class="card-headtext">
+        <div class="card-title">Stage 2 · Contact & Invite</div>
+        <div class="card-note">The call is only the invite — never the presentation.</div>
+      </div>
+      <div class="card-prog"><span class="cp-done" data-sec="invite">0</span>/<span>7</span></div>
+    </div>
+    <div class="card-body">
+      <label class="chk" data-id="invite_0">
+        <input type="checkbox" data-id="invite_0">
+        <span class="box"></span>
+        <span class="txt">Memorize the 3-part invite (Open → Bridge → Ask)</span>
+      </label>
+      <label class="chk" data-id="invite_1">
+        <input type="checkbox" data-id="invite_1">
+        <span class="box"></span>
+        <span class="txt">Run the warm-market script out loud 10+ times</span>
+      </label>
+      <label class="chk" data-id="invite_2">
+        <input type="checkbox" data-id="invite_2">
+        <span class="box"></span>
+        <span class="txt">Learn the two-option close (“Thursday or Saturday?”)</span>
+      </label>
+      <label class="chk" data-id="invite_3">
+        <input type="checkbox" data-id="invite_3">
+        <span class="box"></span>
+        <span class="txt">Know the 4 common objection answers cold</span>
+      </label>
+      <label class="chk" data-id="invite_4">
+        <input type="checkbox" data-id="invite_4">
+        <span class="box"></span>
+        <span class="txt">Make your first invite</span>
+      </label>
+      <label class="chk" data-id="invite_5">
+        <input type="checkbox" data-id="invite_5">
+        <span class="box"></span>
+        <span class="txt">Text the Zoom link while still on the phone</span>
+      </label>
+      <label class="chk" data-id="invite_6">
+        <input type="checkbox" data-id="invite_6">
+        <span class="box"></span>
+        <span class="txt">Text a reminder the morning of the session</span>
+      </label>
+    </div>
+  </section>
+  <section class="card" data-sec="present">
+    <div class="card-head">
+      <div class="card-icon">🖥</div>
+      <div class="card-headtext">
+        <div class="card-title">Stage 3 · Present</div>
+        <div class="card-note">You're not the presenter yet — you edify, sit, and watch.</div>
+      </div>
+      <div class="card-prog"><span class="cp-done" data-sec="present">0</span>/<span>6</span></div>
+    </div>
+    <div class="card-body">
+      <label class="chk" data-id="present_0">
+        <input type="checkbox" data-id="present_0">
+        <span class="box"></span>
+        <span class="txt">Learn the D.E.T.E. Hook (Dream → Excited → Takeaway → Edification)</span>
+      </label>
+      <label class="chk" data-id="present_1">
+        <input type="checkbox" data-id="present_1">
+        <span class="box"></span>
+        <span class="txt">Bring your first guest to a BPM</span>
+      </label>
+      <label class="chk" data-id="present_2">
+        <input type="checkbox" data-id="present_2">
+        <span class="box"></span>
+        <span class="txt">Sit next to your guest and take notes</span>
+      </label>
+      <label class="chk" data-id="present_3">
+        <input type="checkbox" data-id="present_3">
+        <span class="box"></span>
+        <span class="txt">Edify the presenter before it starts</span>
+      </label>
+      <label class="chk" data-id="present_4">
+        <input type="checkbox" data-id="present_4">
+        <span class="box"></span>
+        <span class="txt">Shadow your trainer on a full one-on-one sit-down</span>
+      </label>
+      <label class="chk" data-id="present_5">
+        <input type="checkbox" data-id="present_5">
+        <span class="box"></span>
+        <span class="txt">Watch the presentation enough times to duplicate it</span>
+      </label>
+    </div>
+  </section>
+  <section class="card" data-sec="ama">
+    <div class="card-head">
+      <div class="card-icon">🤝</div>
+      <div class="card-headtext">
+        <div class="card-title">Stage 4 · AMA / The Close</div>
+        <div class="card-note">Closing is giving. Open both doors — partner AND client.</div>
+      </div>
+      <div class="card-prog"><span class="cp-done" data-sec="ama">0</span>/<span>6</span></div>
+    </div>
+    <div class="card-body">
+      <label class="chk" data-id="ama_0">
+        <input type="checkbox" data-id="ama_0">
+        <span class="box"></span>
+        <span class="txt">Learn the recruit close (Emotional Discovery → Cost of Inaction → Readiness)</span>
+      </label>
+      <label class="chk" data-id="ama_1">
+        <input type="checkbox" data-id="ama_1">
+        <span class="box"></span>
+        <span class="txt">Learn the FNA client close (open → roadmap → clarity → book)</span>
+      </label>
+      <label class="chk" data-id="ama_2">
+        <input type="checkbox" data-id="ama_2">
+        <span class="box"></span>
+        <span class="txt">Co-run your first recruit close with your trainer</span>
+      </label>
+      <label class="chk" data-id="ama_3">
+        <input type="checkbox" data-id="ama_3">
+        <span class="box"></span>
+        <span class="txt">Co-run your first client FNA with your trainer</span>
+      </label>
+      <label class="chk" data-id="ama_4">
+        <input type="checkbox" data-id="ama_4">
+        <span class="box"></span>
+        <span class="txt">Help your first family</span>
+      </label>
+      <label class="chk" data-id="ama_5">
+        <input type="checkbox" data-id="ama_5">
+        <span class="box"></span>
+        <span class="txt">Recruit your first business partner</span>
+      </label>
+    </div>
+  </section>
+  <section class="card" data-sec="loop">
+    <div class="card-head">
+      <div class="card-icon">🔁</div>
+      <div class="card-headtext">
+        <div class="card-title">Stage 5 · Back to the List</div>
+        <div class="card-note">Every appointment should refill your list and start someone else's loop.</div>
+      </div>
+      <div class="card-prog"><span class="cp-done" data-sec="loop">0</span>/<span>5</span></div>
+    </div>
+    <div class="card-body">
+      <label class="chk" data-id="loop_0">
+        <input type="checkbox" data-id="loop_0">
+        <span class="box"></span>
+        <span class="txt">Ask the Three Sets of Eyes at every sit-down (referrals / their family / the business)</span>
+      </label>
+      <label class="chk" data-id="loop_1">
+        <input type="checkbox" data-id="loop_1">
+        <span class="box"></span>
+        <span class="txt">Add every “no” to a follow-up list to revisit later</span>
+      </label>
+      <label class="chk" data-id="loop_2">
+        <input type="checkbox" data-id="loop_2">
+        <span class="box"></span>
+        <span class="txt">Teach your first recruit to build their own list</span>
+      </label>
+      <label class="chk" data-id="loop_3">
+        <input type="checkbox" data-id="loop_3">
+        <span class="box"></span>
+        <span class="txt">Sit in on your first recruit's first invites and BPM guest</span>
+      </label>
+      <label class="chk" data-id="loop_4">
+        <input type="checkbox" data-id="loop_4">
+        <span class="box"></span>
+        <span class="txt">Co-run your first recruit's first close (duplication)</span>
+      </label>
+    </div>
+  </section>
+  <section class="card" data-sec="license">
+    <div class="card-head">
+      <div class="card-icon">◆</div>
+      <div class="card-headtext">
+        <div class="card-title">Track A · Licensing</div>
+        <div class="card-note">Runs alongside the loop — not before it.</div>
+      </div>
+      <div class="card-prog"><span class="cp-done" data-sec="license">0</span>/<span>6</span></div>
+    </div>
+    <div class="card-body">
+      <label class="chk" data-id="license_0">
+        <input type="checkbox" data-id="license_0">
+        <span class="box"></span>
+        <span class="txt">Complete the Xcel pre-licensing course</span>
+      </label>
+      <label class="chk" data-id="license_1">
+        <input type="checkbox" data-id="license_1">
+        <span class="box"></span>
+        <span class="txt">Watch the licensing crash course</span>
+      </label>
+      <label class="chk" data-id="license_2">
+        <input type="checkbox" data-id="license_2">
+        <span class="box"></span>
+        <span class="txt">Pass your state Life & Health exam</span>
+      </label>
+      <label class="chk" data-id="license_3">
+        <input type="checkbox" data-id="license_3">
+        <span class="box"></span>
+        <span class="txt">Apply for your license</span>
+      </label>
+      <label class="chk" data-id="license_4">
+        <input type="checkbox" data-id="license_4">
+        <span class="box"></span>
+        <span class="txt">Complete the AML course and save your certificate</span>
+      </label>
+      <label class="chk" data-id="license_5">
+        <input type="checkbox" data-id="license_5">
+        <span class="box"></span>
+        <span class="txt">Get appointed with carriers</span>
+      </label>
+    </div>
+  </section>
+  <section class="card" data-sec="training">
+    <div class="card-head">
+      <div class="card-icon">◆</div>
+      <div class="card-headtext">
+        <div class="card-title">Track B · Training</div>
+        <div class="card-note">You learn this business by seeing it done.</div>
+      </div>
+      <div class="card-prog"><span class="cp-done" data-sec="training">0</span>/<span>4</span></div>
+    </div>
+    <div class="card-body">
+      <label class="chk" data-id="training_0">
+        <input type="checkbox" data-id="training_0">
+        <span class="box"></span>
+        <span class="txt">Attend every BPM</span>
+      </label>
+      <label class="chk" data-id="training_1">
+        <input type="checkbox" data-id="training_1">
+        <span class="box"></span>
+        <span class="txt">Attend every weekly team call</span>
+      </label>
+      <label class="chk" data-id="training_2">
+        <input type="checkbox" data-id="training_2">
+        <span class="box"></span>
+        <span class="txt">Get into the breakout-room training</span>
+      </label>
+      <label class="chk" data-id="training_3">
+        <input type="checkbox" data-id="training_3">
+        <span class="box"></span>
+        <span class="txt">Qualify for Fast Start School (Top-25 list + own FNA + 3 appts or 1 partner)</span>
+      </label>
+    </div>
+  </section>
+  <section class="card" data-sec="skill">
+    <div class="card-head">
+      <div class="card-icon">◆</div>
+      <div class="card-headtext">
+        <div class="card-title">Track C · Skill-building</div>
+        <div class="card-note">Reps, not perfection.</div>
+      </div>
+      <div class="card-prog"><span class="cp-done" data-sec="skill">0</span>/<span>4</span></div>
+    </div>
+    <div class="card-body">
+      <label class="chk" data-id="skill_0">
+        <input type="checkbox" data-id="skill_0">
+        <span class="box"></span>
+        <span class="txt">Master the 2-Number Rule and in-person “Lost Art” prospecting</span>
+      </label>
+      <label class="chk" data-id="skill_1">
+        <input type="checkbox" data-id="skill_1">
+        <span class="box"></span>
+        <span class="txt">Run your invite script until it's natural</span>
+      </label>
+      <label class="chk" data-id="skill_2">
+        <input type="checkbox" data-id="skill_2">
+        <span class="box"></span>
+        <span class="txt">Learn to close a business partner (co-run first)</span>
+      </label>
+      <label class="chk" data-id="skill_3">
+        <input type="checkbox" data-id="skill_3">
+        <span class="box"></span>
+        <span class="txt">Learn to close a sale with a licensed partner</span>
+      </label>
+    </div>
+  </section>
+  <section class="card" data-sec="product">
+    <div class="card-head">
+      <div class="card-icon">◆</div>
+      <div class="card-headtext">
+        <div class="card-title">Track D · Product Knowledge</div>
+        <div class="card-note">Start with the FNA, then one product at a time.</div>
+      </div>
+      <div class="card-prog"><span class="cp-done" data-sec="product">0</span>/<span>6</span></div>
+    </div>
+    <div class="card-body">
+      <label class="chk" data-id="product_0">
+        <input type="checkbox" data-id="product_0">
+        <span class="box"></span>
+        <span class="txt">Understand the full FNA process first</span>
+      </label>
+      <label class="chk" data-id="product_1">
+        <input type="checkbox" data-id="product_1">
+        <span class="box"></span>
+        <span class="txt">Learn IUL (use the IUL course / cert)</span>
+      </label>
+      <label class="chk" data-id="product_2">
+        <input type="checkbox" data-id="product_2">
+        <span class="box"></span>
+        <span class="txt">Learn term life</span>
+      </label>
+      <label class="chk" data-id="product_3">
+        <input type="checkbox" data-id="product_3">
+        <span class="box"></span>
+        <span class="txt">Learn FIA / annuities</span>
+      </label>
+      <label class="chk" data-id="product_4">
+        <input type="checkbox" data-id="product_4">
+        <span class="box"></span>
+        <span class="txt">Learn LTC</span>
+      </label>
+      <label class="chk" data-id="product_5">
+        <input type="checkbox" data-id="product_5">
+        <span class="box"></span>
+        <span class="txt">Know the 3 concepts: Risk Mitigation, Tax Efficiency, Generational Wealth</span>
+      </label>
+    </div>
+  </section>
+
+  <div class="weekly">
+    <h2>⭐ The Weekly Scoreboard</h2>
+    <p>Track activity, not outcomes — these are the numbers you control. Screenshot your week in the team chat every Sunday.</p>
+    <ul>
+      <li>New contacts added to list — 2/day</li>
+      <li>Real conversations started — 2/day</li>
+      <li>Invites made — 10/week</li>
+      <li>Guests at the BPM — 2–3/week</li>
+      <li>Appointments / sit-downs — 3–5/week</li>
+      <li>Follow-ups sent (incl. old no's) — 5/week</li>
+    </ul>
+  </div>
+</div>
+<div class="foot">
+  For internal team training use · Not financial, legal, or tax advice · Rooted. Rising. Unstoppable.<br>
+  Your progress saves automatically in this browser.
+</div>
+<script>
+(function(){
+  var KEY = 'hyperion_playbook_checklist';
+  var boxes = document.querySelectorAll('.chk input[type=checkbox]');
+  var totalcount = boxes.length;
+  document.getElementById('totalcount').textContent = totalcount;
+
+  function keyFor(){
+    var who = (document.getElementById('who').value || '').trim().toLowerCase();
+    return KEY + (who ? '_' + who : '');
+  }
+  function load(){
+    var raw;
+    try { raw = localStorage.getItem(keyFor()); } catch(e){ raw = null; }
+    var state = {};
+    if(raw){ try { state = JSON.parse(raw); } catch(e){ state = {}; } }
+    boxes.forEach(function(b){ b.checked = !!state[b.dataset.id]; });
+    // load saved name
+    update(false);
+  }
+  function save(){
+    var state = {};
+    boxes.forEach(function(b){ if(b.checked) state[b.dataset.id] = 1; });
+    try { localStorage.setItem(keyFor(), JSON.stringify(state)); } catch(e){}
+    flashSaved();
+  }
+  var savedTimer;
+  function flashSaved(){
+    var t = document.getElementById('savedtag');
+    t.classList.add('show');
+    clearTimeout(savedTimer);
+    savedTimer = setTimeout(function(){ t.classList.remove('show'); }, 1200);
+  }
+  function update(doSave){
+    var done = 0;
+    boxes.forEach(function(b){ if(b.checked) done++; });
+    var pct = totalcount ? Math.round(done/totalcount*100) : 0;
+    document.getElementById('pct').textContent = pct;
+    document.getElementById('donecount').textContent = done;
+    document.getElementById('barfill').style.width = pct + '%';
+    // per-section
+    document.querySelectorAll('.card').forEach(function(card){
+      var secBoxes = card.querySelectorAll('input[type=checkbox]');
+      var d = 0; secBoxes.forEach(function(b){ if(b.checked) d++; });
+      var cp = card.querySelector('.cp-done');
+      if(cp) cp.textContent = d;
+      card.classList.toggle('done', d === secBoxes.length && secBoxes.length > 0);
+    });
+    if(doSave) save();
+  }
+  boxes.forEach(function(b){
+    b.addEventListener('change', function(){ update(true); });
+  });
+  // collapse/expand on header click
+  document.querySelectorAll('.card-head').forEach(function(h){
+    h.addEventListener('click', function(){
+      h.nextElementSibling.classList.toggle('collapsed');
+    });
+  });
+  document.getElementById('expandall').addEventListener('click', function(){
+    document.querySelectorAll('.card-body').forEach(function(b){ b.classList.remove('collapsed'); });
+  });
+  document.getElementById('collapseall').addEventListener('click', function(){
+    document.querySelectorAll('.card-body').forEach(function(b){ b.classList.add('collapsed'); });
+  });
+  document.getElementById('resetbtn').addEventListener('click', function(){
+    if(!confirm('Reset all checkboxes for this name?')) return;
+    boxes.forEach(function(b){ b.checked = false; });
+    update(true);
+  });
+  // name change reloads that person's progress
+  document.getElementById('who').addEventListener('input', function(){
+    try { localStorage.setItem(KEY + '_lastname', this.value); } catch(e){}
+    load();
+  });
+  // restore last name
+  try {
+    var last = localStorage.getItem(KEY + '_lastname');
+    if(last) document.getElementById('who').value = last;
+  } catch(e){}
+  load();
+})();
+</script>
+</body>
+</html>
