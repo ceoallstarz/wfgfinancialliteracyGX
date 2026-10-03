@@ -149,6 +149,21 @@
 .od-banner:active{opacity:.9}
 .od-banner .od-arrow{margin-left:auto;font-size:18px}
 .od-banner.clear{background:#2e7d51}
+.nl-card{border-left:4px solid var(--gold)}
+.nl-row{display:flex;gap:8px;flex-wrap:wrap}
+.nl-row input{flex:1;min-width:200px;padding:11px 13px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:14px}
+.nl-pick{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.nl-pick button{background:#eef2f8;border:1px solid #d8e2f0;color:#1a2a42;border-radius:16px;padding:6px 12px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.nl-pick button:active{background:#1a2a42;color:#c9a84c}
+.nl-ok{background:#ecf7f0;border:1px solid #bfe3cd;border-radius:8px;padding:10px 12px;margin-top:8px;font-size:13px;color:#1c5f3a}
+.fst-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border:1px solid var(--line);border-radius:8px;margin-bottom:6px;background:#fff}
+.fst-item.done{background:#ecf7f0;border-color:#bfe3cd}
+.fst-item input[type=checkbox]{width:20px;height:20px;flex:none}
+.fst-item .fst-label{font-size:14px;font-weight:600;color:var(--navy)}
+.fst-item .fst-label.done{text-decoration:line-through;color:var(--muted)}
+.fst-item input[type=date]{margin-left:auto;padding:5px 8px;border:1px solid var(--line);border-radius:6px;font-family:inherit;font-size:12px;max-width:150px}
+.fst-prog{font-size:12px;color:var(--muted);margin:2px 0 8px}
+.chip.fs{background:#eaf3ec;color:#1c5f3a;border-color:#bfe3cd;font-weight:700}
 .dna-head{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 .dna-pre{
   white-space:pre-wrap;word-break:break-word;font-family:inherit;font-size:13px;line-height:1.55;
@@ -251,6 +266,16 @@
   <!-- DASHBOARD -->
   <section id="tab-dash">
     <div id="overdueBanner" style="display:none" onclick="gotoToday()"></div>
+    <div class="card nl-card" style="margin-bottom:14px">
+      <h3>Just tell me what happened</h3>
+      <div class="nl-row">
+        <input type="text" id="nlInput" placeholder="e.g. Met Suzie today, went great — book FNA next Friday"
+          onkeydown="if(event.key==='Enter')nlParse()">
+        <button class="btn gold" onclick="nlParse()">Log it</button>
+      </div>
+      <div id="nlHint" style="font-size:12px;color:var(--muted);margin-top:6px">Tip: on your phone, tap the mic on your keyboard and just say it.</div>
+      <div id="nlConfirm" style="display:none"></div>
+    </div>
     <div class="card" id="fastStartCard" style="display:none;margin-bottom:14px;border-left:4px solid var(--gold)">
       <h3>Your Fast Start — first steps</h3>
       <div id="fastStartList"></div>
@@ -414,6 +439,9 @@
         </div>
         <div class="log-list" id="logList"></div>
       </div>
+    </div>
+    <div class="frow" id="fsTrackRow" style="display:none">
+      <div><label>Fast Start Tracker — where they're at</label><div id="fsTrackBox"></div></div>
     </div>
     <div class="frow" id="dnaRow" style="display:none">
       <div><label>Leadership DNA Profile</label><div id="dnaBox"></div></div>
@@ -829,6 +857,151 @@ function stopSync(){
   syncing = false; me = null; scopeUid = 'all';
   db = { contacts: [], power: {}, dna: [] };
 }
+/* ---------- Fast Start Tracker (per recruit) ---------- */
+// key = stored field; label = shown; date = true means it also holds a date
+const FST_ITEMS = [
+  { key:'businessPlan', label:'Business Plan' },
+  { key:'callsMade',    label:'Calls Made' },
+  { key:'client',       label:'Client' },
+  { key:'fieldTrain1',  label:'Field Training 1' },
+  { key:'fieldTrain2',  label:'Field Training 2' },
+  { key:'fieldTrain3',  label:'Field Training 3' },
+  { key:'licenseTest',  label:'License Test Date', date:true },
+  { key:'fastStartSchool', label:'Fast Start School', date:true },
+  { key:'top25',        label:'Top 25' }
+];
+let currentFST = {}; // working copy while editing: { key: true } and { key_date: 'YYYY-MM-DD' }
+
+function renderFSTracker(){
+  const box = $('fsTrackBox'); if(!box) return;
+  const doneCount = FST_ITEMS.filter(it => currentFST[it.key]).length;
+  let html = '<div class="fst-prog">'+doneCount+' of '+FST_ITEMS.length+' complete</div>';
+  html += FST_ITEMS.map(it => {
+    const on = !!currentFST[it.key];
+    const dateVal = currentFST[it.key+'_date'] || '';
+    return '<div class="fst-item'+(on?' done':'')+'">'+
+      '<input type="checkbox" '+(on?'checked':'')+' onchange="toggleFST(\''+it.key+'\')">'+
+      '<span class="fst-label'+(on?' done':'')+'">'+esc(it.label)+'</span>'+
+      (it.date ? '<input type="date" value="'+esc(dateVal)+'" onchange="setFSTDate(\''+it.key+'\',this.value)">' : '')+
+      '</div>';
+  }).join('');
+  box.innerHTML = html;
+}
+window.toggleFST = function(key){
+  currentFST[key] = !currentFST[key];
+  renderFSTracker();
+};
+window.setFSTDate = function(key, val){
+  currentFST[key+'_date'] = val;
+  // setting a date also checks the item
+  if(val && !currentFST[key]) currentFST[key] = true;
+  renderFSTracker();
+};
+
+/* ---------- Natural-language quick log ---------- */
+let nlPending = null; // holds parsed {type, result, nextDate} while awaiting person pick
+
+function nlDetectType(text){
+  const t = text.toLowerCase();
+  if(/\bmet\b|\bmeeting\b|\bsat down\b|\bsat with\b|\bin person\b|\bcoffee\b|\blunch\b|\bfna\b|\bappointment\b/.test(t)) return 'Met in person';
+  if(/\btext(ed)?\b|\bsms\b|\bmessag/.test(t)) return 'Texted';
+  if(/\bemail(ed)?\b/.test(t)) return 'Emailed';
+  if(/\bvoicemail\b|\bvm\b|\bleft a message\b|\bleft msg\b/.test(t)) return 'Left voicemail';
+  if(/\bno answer\b|\bdidn'?t pick up\b|\bno pickup\b|\bmissed\b/.test(t)) return 'No answer';
+  if(/\bcall(ed)?\b|\bphone(d)?\b|\brang\b|\bspoke\b|\btalked\b/.test(t)) return 'Called';
+  return 'Called';
+}
+function nlDetectDate(text){
+  const t = text.toLowerCase();
+  const now = new Date();
+  const iso = d => d.toISOString().slice(0,10);
+  const days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+  // Specific future references first (so "book FNA next Friday" wins over a stray "today")
+  if(/\btomorrow\b/.test(t)){ const d=new Date(now); d.setDate(d.getDate()+1); return iso(d); }
+  let m = t.match(/in (\d+) (day|days|week|weeks|month|months)/);
+  if(m){ const n=parseInt(m[1]); const d=new Date(now);
+    if(m[2].startsWith('day')) d.setDate(d.getDate()+n);
+    else if(m[2].startsWith('week')) d.setDate(d.getDate()+n*7);
+    else d.setMonth(d.getMonth()+n);
+    return iso(d);
+  }
+  if(/next week/.test(t)){ const d=new Date(now); d.setDate(d.getDate()+7); return iso(d); }
+  if(/next month/.test(t)){ const d=new Date(now); d.setMonth(d.getMonth()+1); return iso(d); }
+  // day of week (this coming one)
+  for(let i=0;i<7;i++){
+    if(new RegExp('\\b(next )?'+days[i]+'\\b').test(t)){
+      const d=new Date(now); const cur=d.getDay();
+      let add=(i-cur+7)%7; if(add===0) add=7; // always a future day
+      d.setDate(d.getDate()+add); return iso(d);
+    }
+  }
+  // only fall back to "today" if no specific future date was mentioned
+  if(/\btoday\b/.test(t) && /follow|call back|book|next step/.test(t)){ return iso(now); }
+  return null;
+}
+function nlFindContact(text){
+  const t = text.toLowerCase();
+  // match against visible contacts by first name or full name
+  const cands = pool().filter(c => {
+    const name = (c.name||'').toLowerCase(); if(!name) return false;
+    const first = name.split(/\s+/)[0];
+    return t.includes(name) || (first.length>=3 && new RegExp('\\b'+first.replace(/[^a-z]/g,'')+'\\b').test(t));
+  });
+  // prefer the longest name match (most specific)
+  cands.sort((a,b)=> (b.name||'').length - (a.name||'').length);
+  return cands;
+}
+function nlCleanResult(text){
+  // trim leading verb/name noise into a tidy result line; keep it simple — store the sentence
+  return text.trim().replace(/\s+/g,' ');
+}
+
+window.nlParse = function(){
+  const raw = ($('nlInput').value||'').trim();
+  $('nlConfirm').style.display='none'; $('nlConfirm').innerHTML='';
+  if(!raw){ return; }
+  const type = nlDetectType(raw);
+  const nextDate = nlDetectDate(raw);
+  const result = nlCleanResult(raw);
+  nlPending = { type, result, nextDate };
+  const matches = nlFindContact(raw);
+  if(matches.length === 1){
+    nlCommit(matches[0].id);
+  } else if(matches.length > 1){
+    nlAskPerson(matches);
+  } else {
+    // no name found — let them pick from all their contacts
+    nlAskPerson(pool().slice().sort((a,b)=>(a.name||'').localeCompare(b.name||'')));
+  }
+};
+function nlAskPerson(list){
+  const box = $('nlConfirm');
+  box.style.display='block';
+  const top = list.slice(0,12);
+  box.innerHTML = '<div style="font-size:13px;margin-bottom:6px">Who was this with?</div>' +
+    '<div class="nl-pick">' +
+    top.map(c=>'<button onclick="nlCommit(\''+c.id+'\')">'+esc(c.name||'(no name)')+'</button>').join('') +
+    '</div>';
+}
+window.nlCommit = async function(id){
+  const c = db.contacts.find(x=>x.id===id);
+  if(!c || !nlPending){ return; }
+  const entry = { id: uid(), type: nlPending.type, result: nlPending.result,
+                  at: new Date().toISOString(), by: (user && user.email) || '' };
+  c.log = Array.isArray(c.log) ? c.log : [];
+  c.log.push(entry);
+  c.last = todayStr();
+  if(nlPending.nextDate) c.next = nlPending.nextDate;
+  c.updatedBy = (user && user.email) || ''; c.updatedAt = new Date().toISOString();
+  const box = $('nlConfirm');
+  box.style.display='block';
+  const nextTxt = nlPending.nextDate ? (' · follow-up set for ' + new Date(nlPending.nextDate+'T12:00').toLocaleDateString(undefined,{month:'short',day:'numeric'})) : '';
+  box.innerHTML = '<div class="nl-ok">\u2713 Logged for <b>'+esc(c.name)+'</b> — '+esc(nlPending.type)+nextTxt+'</div>';
+  $('nlInput').value=''; nlPending=null;
+  renderAll();
+  try{ await pushContact(c); }catch(e){ setDot('Save failed — check connection'); }
+};
+
 async function pushContact(c){
   setDot('Saving…');
   const {id, ...data} = c;
@@ -929,10 +1102,15 @@ function contactCard(c){
   }
   const stalledTag = isStalled(c)
     ? '<span class="chip stalled">Stalled ' + daysSinceTouch(c) + 'd</span>' : '';
+  let fsTag = '';
+  if(c.type==='recruit' && c.fastStartTracker){
+    const n = FST_ITEMS.filter(it => c.fastStartTracker[it.key]).length;
+    if(n>0) fsTag = '<span class="chip fs">FS '+n+'/'+FST_ITEMS.length+'</span>';
+  }
   return '<div class="contact '+cardClass(c)+'" onclick="editContact(\''+c.id+'\')">'+
     '<div class="c-main"><div class="c-name">'+(hot?'<span class="star">⭐ </span>':'')+esc(c.name)+'</div>'+
     '<div class="c-sub">'+sub+'</div>'+lastTouch+
-    ((tags||dnaFor(c.id)||ownerTag||stalledTag)?'<div class="tags">'+stalledTag+ownerTag+(dnaFor(c.id)?'<span class="chip dna">DNA</span>':'')+tags+'</div>':'')+'</div>'+
+    ((tags||dnaFor(c.id)||ownerTag||stalledTag||fsTag)?'<div class="tags">'+fsTag+stalledTag+ownerTag+(dnaFor(c.id)?'<span class="chip dna">DNA</span>':'')+tags+'</div>':'')+'</div>'+
     '<div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">'+
     '<span class="c-stage">'+esc(c.stage)+'</span>'+followLabel(c)+reachRow(c,false)+'</div></div>';
 }
@@ -1425,6 +1603,8 @@ window.openModal = function(type){
   $('reachBar').innerHTML = '';
   $('mDelete').style.display='none';
   $('dnaRow').style.display='none';
+  currentFST = {};
+  $('fsTrackRow').style.display='none';
   currentLog = [];
   $('logRow').style.display='none';
   $('overlay').classList.add('open');
@@ -1448,6 +1628,9 @@ window.editContact = function(id){
   buildOwnerPick(c.ownerId || user.uid);
   $('mDelete').style.display='inline-block';
   $('dnaRow').style.display = c.type==='recruit' ? 'block' : 'none';
+  currentFST = (c.fastStartTracker && typeof c.fastStartTracker==='object') ? {...c.fastStartTracker} : {};
+  $('fsTrackRow').style.display = c.type==='recruit' ? 'block' : 'none';
+  if(c.type==='recruit') renderFSTracker();
   $('reachBar').innerHTML = reachRow(c, true);
   currentLog = Array.isArray(c.log) ? c.log.slice() : [];
   $('logRow').style.display='block';
@@ -1483,6 +1666,7 @@ window.saveContact = async function(keepOpen){
     next, tags,
     notes: $('fNotes').value.trim(),
     log: currentLog || [],
+    fastStartTracker: currentFST || {},
     updatedBy: user.email || '', updatedAt: new Date().toISOString()
   };
   const id = editingId || uid();
