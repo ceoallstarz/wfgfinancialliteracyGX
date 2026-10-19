@@ -654,7 +654,167 @@ body {
 
 <div class="page">
 
-<!-- ── HERO ── -->
+<!-- ══════════ NEW ASSOCIATE START (shown only for LEGACY / new_associate) ══════════ -->
+<div id="na-start" style="display:none">
+<style>
+  #na-start{--na-navy:#1a2a42;--na-navy2:#243d5c;--na-gold:#c9a84c;--na-gold-d:#8a6a1e;--na-gold-bg:#fdf6e3;--na-green:#1a6644;--na-green-bg:#e8f5ef;--na-ink:#1a2332;--na-gray:#6b7280;--na-border:#e2e6ea;--na-cream:#f7f3e9;}
+  #na-start .na-hero{background:linear-gradient(155deg,#1a2a42 0%,#111d2e 100%);margin:0 -24px 0;padding:48px 24px 40px;position:relative;overflow:hidden}
+  #na-start .na-hero::before{content:'';position:absolute;top:-80px;right:-60px;width:320px;height:320px;background:radial-gradient(circle,rgba(201,168,76,.12),transparent 70%);pointer-events:none}
+  #na-start .na-hero-in{max-width:900px;margin:0 auto;position:relative;z-index:1}
+  #na-start .na-eyebrow{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--na-gold);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+  #na-start .na-eyebrow::before{content:'';width:26px;height:1.5px;background:var(--na-gold)}
+  #na-start .na-hero h1{font-size:clamp(28px,4.5vw,42px);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.02em;margin-bottom:14px}
+  #na-start .na-hero h1 span{color:var(--na-gold)}
+  #na-start .na-hero p{font-size:15.5px;color:rgba(255,255,255,.8);line-height:1.7;max-width:620px}
+  #na-start .na-wrap{max-width:900px;margin:0 auto;padding:0 0 60px}
+  /* the two-track banner */
+  #na-start .na-secret{background:var(--na-gold-bg);border:1px solid rgba(201,168,76,.35);border-left:4px solid var(--na-gold);border-radius:0 12px 12px 0;padding:18px 22px;margin:-20px 0 28px;position:relative;z-index:2;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+  #na-start .na-secret strong{color:var(--na-navy);font-size:15px;display:block;margin-bottom:4px}
+  #na-start .na-secret p{color:#5a4a1e;font-size:13.5px;line-height:1.6;margin:0}
+  /* next action */
+  #na-start .na-next{background:var(--na-navy);border-radius:14px;padding:22px 24px;margin-bottom:32px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  #na-start .na-next-badge{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--na-navy);background:var(--na-gold);padding:4px 11px;border-radius:20px;flex-shrink:0}
+  #na-start .na-next-txt{flex:1;min-width:200px}
+  #na-start .na-next-txt h3{color:#fff;font-size:17px;font-weight:700;margin:0 0 3px}
+  #na-start .na-next-txt p{color:rgba(255,255,255,.65);font-size:13px;margin:0;line-height:1.5}
+  #na-start .na-next a{background:var(--na-gold);color:var(--na-navy);text-decoration:none;font-weight:700;font-size:13.5px;padding:11px 22px;border-radius:8px;white-space:nowrap;transition:.15s}
+  #na-start .na-next a:hover{background:#e0c880}
+  /* tracks */
+  #na-start .na-tracks{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:34px}
+  @media(max-width:720px){#na-start .na-tracks{grid-template-columns:1fr}}
+  #na-start .na-track{background:#fff;border:1px solid var(--na-border);border-radius:14px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+  #na-start .na-track-head{padding:16px 20px;display:flex;align-items:center;gap:12px}
+  #na-start .na-track.build .na-track-head{background:linear-gradient(135deg,#1a2a42,#243d5c)}
+  #na-start .na-track.license .na-track-head{background:linear-gradient(135deg,#1a6644,#0d4d33)}
+  #na-start .na-track-icon{font-size:22px;width:42px;height:42px;background:rgba(255,255,255,.14);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  #na-start .na-track-head h3{color:#fff;font-size:16px;font-weight:800;margin:0;line-height:1.2}
+  #na-start .na-track-head .na-sub{color:rgba(255,255,255,.7);font-size:11.5px;font-weight:500;margin-top:2px}
+  #na-start .na-track-prog{margin-left:auto;font-size:12px;font-weight:800;color:#fff;background:rgba(255,255,255,.15);padding:3px 10px;border-radius:20px;flex-shrink:0}
+  #na-start .na-track-body{padding:8px 20px 16px}
+  #na-start .na-item{display:flex;align-items:flex-start;gap:12px;padding:11px 2px;cursor:pointer;border-bottom:1px solid #f1ede1}
+  #na-start .na-item:last-child{border-bottom:none}
+  #na-start .na-box{flex-shrink:0;width:21px;height:21px;border:2px solid #cfc7b2;border-radius:6px;margin-top:1px;position:relative;transition:.15s}
+  #na-start .na-item:hover .na-box{border-color:var(--na-gold)}
+  #na-start .na-track.license .na-item:hover .na-box{border-color:var(--na-green)}
+  #na-start .na-item.done .na-box{background:var(--na-green);border-color:var(--na-green)}
+  #na-start .na-item.done .na-box::after{content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+  #na-start .na-item-txt{font-size:14px;color:var(--na-ink);line-height:1.5;transition:.15s}
+  #na-start .na-item-txt small{display:block;font-size:11.5px;color:var(--na-gray);margin-top:1px;line-height:1.45}
+  #na-start .na-item.done .na-item-txt{color:var(--na-gray);text-decoration:line-through;text-decoration-color:#c9c2b0}
+  #na-start .na-item.done .na-item-txt small{text-decoration:none}
+  /* loop strip */
+  #na-start .na-loop{background:#fff;border:1px solid var(--na-border);border-radius:14px;padding:20px 22px;margin-bottom:34px}
+  #na-start .na-loop h4{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--na-gold-d);margin:0 0 14px}
+  #na-start .na-loop-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  #na-start .na-loop-node{background:var(--na-navy);color:#fff;font-size:11.5px;font-weight:700;padding:9px 14px;border-radius:8px;flex:1;min-width:92px;text-align:center}
+  #na-start .na-loop-arrow{color:var(--na-gold-d);font-weight:800;font-size:14px}
+  #na-start .na-loop-note{font-size:12px;color:var(--na-gray);margin-top:12px;line-height:1.5}
+  /* resource cards */
+  #na-start .na-sec-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--na-gold-d);margin:0 0 14px;display:flex;align-items:center;gap:10px}
+  #na-start .na-sec-label::before{content:'';width:20px;height:1.5px;background:var(--na-gold)}
+  #na-start .na-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+  #na-start .na-rcard{background:#fff;border:1px solid var(--na-border);border-radius:12px;padding:18px 20px;text-decoration:none;display:flex;align-items:flex-start;gap:13px;box-shadow:0 1px 3px rgba(0,0,0,.05);transition:.16s}
+  #na-start .na-rcard:hover{box-shadow:0 6px 20px rgba(0,0,0,.1);transform:translateY(-2px);border-color:var(--na-gold)}
+  #na-start .na-rcard-icon{font-size:24px;flex-shrink:0;margin-top:1px}
+  #na-start .na-rcard-t{font-size:14px;font-weight:700;color:var(--na-navy);margin-bottom:3px}
+  #na-start .na-rcard-d{font-size:12px;color:var(--na-gray);line-height:1.5}
+  #na-start .na-rcard-arr{margin-left:auto;color:var(--na-gold);font-size:16px;align-self:center;flex-shrink:0}
+</style>
+
+<div class="na-hero">
+  <div class="na-hero-in">
+    <div class="na-eyebrow">Welcome to Hyperion · Your Start Page</div>
+    <h1>Let's build something<br/><span>that lasts.</span></h1>
+    <p>You just joined a movement, not a job. This page is your home base — it keeps you on track while everything's new. Don't try to learn it all today. Just take the next step, every day.</p>
+  </div>
+</div>
+
+<div class="na-wrap">
+
+  <!-- The secret -->
+  <div class="na-secret">
+    <strong>⚡ The one secret most people get wrong</strong>
+    <p>You do <b>not</b> wait until you're licensed to start building. You run <b>both tracks at the same time, from day one.</b> The people who build while they study are the ones who explode the day their license posts. The people who wait... stall out.</p>
+  </div>
+
+  <!-- Next action -->
+  <div class="na-next">
+    <span class="na-next-badge">Start here</span>
+    <div class="na-next-txt">
+      <h3>Your First 7 Days — the exact checklist</h3>
+      <p>Not sure what to do first? Open this. It walks you through your opening moves, one at a time.</p>
+    </div>
+    <a href="fast-start-onboarding.html">Open First 7 Days →</a>
+  </div>
+
+  <!-- The two tracks -->
+  <div class="na-sec-label">Run both of these at the same time</div>
+  <div class="na-tracks">
+
+    <!-- BUILD TRACK -->
+    <div class="na-track build">
+      <div class="na-track-head">
+        <div class="na-track-icon">🔨</div>
+        <div><h3>Build Track</h3><div class="na-sub">Start TODAY — no license needed</div></div>
+        <div class="na-track-prog"><span data-prog="build">0</span>/6</div>
+      </div>
+      <div class="na-track-body">
+        <label class="na-item" data-id="b0"><span class="na-box"></span><span class="na-item-txt">Build your list of 100+ names<small>Everyone you know. Write first, judge never.</small></span></label>
+        <label class="na-item" data-id="b1"><span class="na-box"></span><span class="na-item-txt">Learn the invite script cold<small>The call is only the invite — get them to the Zoom.</small></span></label>
+        <label class="na-item" data-id="b2"><span class="na-box"></span><span class="na-item-txt">Make your first invites this week<small>2 new contacts + 2 real conversations a day.</small></span></label>
+        <label class="na-item" data-id="b3"><span class="na-box"></span><span class="na-item-txt">Bring your first guest to a BPM<small>They see the full picture. You just get them there.</small></span></label>
+        <label class="na-item" data-id="b4"><span class="na-box"></span><span class="na-item-txt">Shadow your trainer on real closes<small>Watch it done 10 times before you do one.</small></span></label>
+        <label class="na-item" data-id="b5"><span class="na-box"></span><span class="na-item-txt">Recruit your first business partner<small>Then teach them this exact page.</small></span></label>
+      </div>
+    </div>
+
+    <!-- LICENSE TRACK -->
+    <div class="na-track license">
+      <div class="na-track-head">
+        <div class="na-track-icon">📜</div>
+        <div><h3>License Track</h3><div class="na-sub">Start TODAY — runs alongside</div></div>
+        <div class="na-track-prog"><span data-prog="license">0</span>/6</div>
+      </div>
+      <div class="na-track-body">
+        <label class="na-item" data-id="l0"><span class="na-box"></span><span class="na-item-txt">Enroll in the Xcel pre-licensing course<small>Do it the first week. Don't drift.</small></span></label>
+        <label class="na-item" data-id="l1"><span class="na-box"></span><span class="na-item-txt">Book your state exam date<small>A deadline is what makes you actually study.</small></span></label>
+        <label class="na-item" data-id="l2"><span class="na-box"></span><span class="na-item-txt">Study a little every day<small>Small daily reps beat cramming. Use the crash course.</small></span></label>
+        <label class="na-item" data-id="l3"><span class="na-box"></span><span class="na-item-txt">Pass your Life &amp; Health exam<small>Then apply for your license right away.</small></span></label>
+        <label class="na-item" data-id="l4"><span class="na-box"></span><span class="na-item-txt">Complete your AML course<small>Save the certificate — you'll need it.</small></span></label>
+        <label class="na-item" data-id="l5"><span class="na-box"></span><span class="na-item-txt">Get appointed with carriers<small>So you can write business the day you're licensed.</small></span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- The loop -->
+  <div class="na-loop">
+    <h4>The one loop your whole business runs on</h4>
+    <div class="na-loop-row">
+      <div class="na-loop-node">THE LIST</div><span class="na-loop-arrow">→</span>
+      <div class="na-loop-node">INVITE</div><span class="na-loop-arrow">→</span>
+      <div class="na-loop-node">PRESENT</div><span class="na-loop-arrow">→</span>
+      <div class="na-loop-node">AMA / CLOSE</div><span class="na-loop-arrow">→</span>
+      <div class="na-loop-node">REFERRALS</div>
+    </div>
+    <p class="na-loop-note">Every appointment feeds the list again. Master this one loop and you have a business for life. Everything in the portal is just a tool that helps you run it better.</p>
+  </div>
+
+  <!-- Go deeper -->
+  <div class="na-sec-label">Go deeper when you're ready</div>
+  <div class="na-cards">
+    <a class="na-rcard" href="prospecting.html"><span class="na-rcard-icon">📋</span><div><div class="na-rcard-t">Prospecting</div><div class="na-rcard-d">Build your list &amp; the Lost Art of in-person prospecting</div></div><span class="na-rcard-arr">→</span></a>
+    <a class="na-rcard" href="contact-scripts.html"><span class="na-rcard-icon">📞</span><div><div class="na-rcard-t">Call Guide &amp; Scripts</div><div class="na-rcard-d">Exactly what to say on every call</div></div><span class="na-rcard-arr">→</span></a>
+    <a class="na-rcard" href="objections.html"><span class="na-rcard-icon">🛡️</span><div><div class="na-rcard-t">Objections</div><div class="na-rcard-d">Calm answers to everything they'll ask</div></div><span class="na-rcard-arr">→</span></a>
+    <a class="na-rcard" href="presentations.html"><span class="na-rcard-icon">🎞</span><div><div class="na-rcard-t">Presentations</div><div class="na-rcard-d">The BPM, flip chart &amp; how to present</div></div><span class="na-rcard-arr">→</span></a>
+    <a class="na-rcard" href="identity-shift.html"><span class="na-rcard-icon">💡</span><div><div class="na-rcard-t">Identity Shift</div><div class="na-rcard-d">Think bigger — become who this requires</div></div><span class="na-rcard-arr">→</span></a>
+    <a class="na-rcard" href="fast-start-onboarding.html"><span class="na-rcard-icon">🚀</span><div><div class="na-rcard-t">Fast Start</div><div class="na-rcard-d">Your full onboarding &amp; licensing hub</div></div><span class="na-rcard-arr">→</span></a>
+  </div>
+
+</div>
+</div>
+
+
+<div id="na-exp-content"><!-- ── HERO ── -->
 <div class="hero">
   <div class="hero-inner">
     <div class="hero-eyebrow">Hyperion Legacy Builders · Revolution Financial Management</div>
@@ -853,6 +1013,8 @@ body {
   <div class="conviction-attr">— Hyperion Legacy Builders · South Bay Los Angeles · SMD in 90 days. EMD in 6 months.</div>
 </div>
 
+</div><!-- end na-exp-content -->
+
 <!-- ── FOOTER ── -->
 <div class="page-footer">
   <span class="footer-label">For Training Purposes Only</span>
@@ -881,8 +1043,53 @@ body {
   var ce = document.getElementById('chip-exp');
   if(r === 'new_associate'){ if(cn) cn.style.display = 'inline-block'; }
   else { if(ce) ce.style.display = 'inline-block'; }
+
+  var naStart = document.getElementById('na-start');
+  var expContent = document.getElementById('na-exp-content');
+
   if(r === 'new_associate'){
     document.querySelectorAll('#sys-nav a[data-roles="experienced"]').forEach(function(a){ a.style.display='none'; });
+    // Show the guided start page, hide the full Mission HQ hero/content
+    if(naStart) naStart.style.display = 'block';
+    if(expContent) expContent.style.display = 'none';
+    initNAStart();
+  } else {
+    // Experienced: full Mission HQ untouched
+    if(naStart) naStart.style.display = 'none';
+    if(expContent) expContent.style.display = 'block';
+  }
+
+  // ── New Associate start page: saved-progress checkboxes ──
+  function initNAStart(){
+    if(!naStart) return;
+    var KEY = 'hyperion_na_tracks';
+    var state = {};
+    try { var raw = sessionStorage.getItem(KEY) || localStorage.getItem(KEY); if(raw) state = JSON.parse(raw); } catch(e){}
+
+    var items = naStart.querySelectorAll('.na-item');
+    function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} }
+    function refresh(){
+      ['build','license'].forEach(function(tr){
+        var done = 0, total = 0;
+        naStart.querySelectorAll('.na-track.'+tr+' .na-item').forEach(function(it){
+          total++; if(it.classList.contains('done')) done++;
+        });
+        var out = naStart.querySelector('[data-prog="'+tr+'"]');
+        if(out) out.textContent = done;
+      });
+    }
+    items.forEach(function(it){
+      var id = it.getAttribute('data-id');
+      if(state[id]) it.classList.add('done');
+      it.addEventListener('click', function(e){
+        e.preventDefault();
+        it.classList.toggle('done');
+        state[id] = it.classList.contains('done');
+        if(!state[id]) delete state[id];
+        save(); refresh();
+      });
+    });
+    refresh();
   }
 })();
 
@@ -913,5 +1120,6 @@ function swSubmit(){
 document.addEventListener('keydown',function(e){ if(e.key==='Escape') document.getElementById('sw-overlay').style.display='none'; });
 </script>
 <script src="hyperion-search.js"></script>
+</div><!-- end na-exp-content -->
 </body>
 </html>
