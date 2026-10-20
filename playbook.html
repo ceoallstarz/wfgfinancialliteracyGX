@@ -353,9 +353,9 @@ footer b{font-family:var(--serif);color:var(--navy);font-size:1.15rem;letter-spa
 <nav class="tabs" aria-label="Playbook sections">
   <div class="wrap">
     <a href="#today">Today</a>
-    <a href="#top25">Top 25</a>
     <a href="#plan">90 days</a>
     <a href="#gx">GX</a>
+    <a href="#top25">Top 25</a>
     <a href="#scripts">Scripts</a>
     <a href="#duplicate">Duplicate</a>
     <a href="#library">Library</a>
@@ -1006,7 +1006,7 @@ onAuthStateChanged(fbAuth, async u=>{
 window.addEventListener("pageshow",()=>{ try{ sessionStorage.removeItem("pb-reloaded"); }catch(e){} });
 
 /* ===== Tabs ===== */
-const TABS=["today","top25","plan","gx","scripts","duplicate","library"];
+const TABS=["today","plan","gx","top25","scripts","duplicate","library"];
 function showTab(id,scroll){
   if(!TABS.includes(id)) id="today";
   TABS.forEach(t=>$(t).hidden=(t!==id));
