@@ -990,23 +990,19 @@ $("gateBtn").addEventListener("click",doSignIn);
 $("gatePw").addEventListener("keydown",e=>{ if(e.key==="Enter") doSignIn(); });
 $("gateEmail").addEventListener("keydown",e=>{ if(e.key==="Enter") doSignIn(); });
 
+let authHandled = false; // run cloud load once per page load
 onAuthStateChanged(fbAuth, async u=>{
   fbUser = u;
   if(u){
-    const before = localStorage.getItem(KEY) || "";
-    await loadCloud();   // pull this user's saved progress
-    const after = localStorage.getItem(KEY) || "";
     unlock();
-    // if cloud had newer/different data than what this page rendered with, reload once so every view reflects it
-    if(after && after !== before && !sessionStorage.getItem("pb-reloaded")){
-      try{ sessionStorage.setItem("pb-reloaded","1"); }catch(e){}
-      location.reload();
-    }
+    if(authHandled) return;   // never loop
+    authHandled = true;
+    await loadCloud();        // pull this user's saved progress into `state`
+    renderEverything();       // re-draw all views from the loaded state (no page reload)
   } else {
     $("gate").hidden=false;
   }
 });
-window.addEventListener("pageshow",()=>{ try{ sessionStorage.removeItem("pb-reloaded"); }catch(e){} });
 
 /* ===== Tabs ===== */
 const TABS=["today","plan","gx","top25","scripts","duplicate","library"];
@@ -1361,9 +1357,23 @@ document.querySelectorAll("[data-field]").forEach(el=>{
 });
 
 /* ===== Init ===== */
-renderT25(); renderPlan(); kitPcts(); openKit(); renderMark(); renderLadder(); renderLog(); updateLicFlag(); checkFss(); renderWho(); renderGx();
-let first="today"; try{ first=location.hash.slice(1)||"today"; }catch(e){}
-showTab(first,false);
+function renderEverything(){
+  // re-apply saved field values to inputs
+  try{
+    document.querySelectorAll("[data-field]").forEach(el=>{
+      const k=el.dataset.field; if(state.fields[k]!==undefined) el.value=state.fields[k];
+    });
+  }catch(e){}
+  try{ renderT25(); renderPlan(); kitPcts(); openKit(); renderMark(); renderLadder(); renderLog(); updateLicFlag(); checkFss(); renderWho(); renderGx(); }catch(e){}
+  // re-sync any visible checkboxes with loaded state
+  try{
+    document.querySelectorAll('input[type=checkbox][data-id]').forEach(x=>{ x.checked=!!state.checks[x.dataset.id]; });
+    document.querySelectorAll('input[type=checkbox][data-bring]').forEach(x=>{ x.checked=!!state.fssBring[x.dataset.bring]; });
+  }catch(e){}
+  let first="today"; try{ first=location.hash.slice(1)||"today"; }catch(e){}
+  try{ showTab(first,false); }catch(e){}
+}
+renderEverything();
 </script>
 </body>
 </html>
