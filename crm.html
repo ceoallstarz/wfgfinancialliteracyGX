@@ -347,6 +347,11 @@
       <button class="btn gold sm" style="margin-top:10px" onclick="copyDigest(this)">Copy digest</button>
     </div>
     <div class="card" style="margin-top:14px">
+      <h3>Playbook progress</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:10px">How far each person is through their 90-day playbook.</p>
+      <div id="playbookProgress"></div>
+    </div>
+    <div class="card" style="margin-top:14px">
       <h3>Waiting for approval</h3>
       <div id="teamPending"></div>
     </div>
@@ -568,7 +573,7 @@ PROFILE:
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, enableIndexedDbPersistence, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, doc, getDoc, getDocs, setDoc, deleteDoc, onSnapshot, enableIndexedDbPersistence, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const STAGES = {
   client: ['New Referral','Contacted','Appointment Set','FNA Done','Solutions Presented','App Submitted','Policy Issued','Annual Review'],
@@ -582,8 +587,8 @@ const PH_TARGETS = [
   {key:'refs', label:'Referral requests', target:2}
 ];
 
-let db = { contacts: [], power: {}, dna: [], members: [] };
-let me = null, scopeUid = 'all', unsubMembers = null;
+let db = { contacts: [], power: {}, dna: [], members: [], playbook: {} };
+let me = null, scopeUid = 'all', unsubMembers = null, unsubPlaybook = null;
 let editingId = null, modalType = 'client';
 let currentLog = [];
 let filters = { clients:'All', recruits:'All' };
@@ -742,11 +747,42 @@ function renderTeam(){
 
   $('promptText').textContent = BRIEF_PROMPT;
   renderDigest();
+  renderPlaybookProgress();
   const orphans = db.contacts.filter(c => !c.ownerId);
   $('teamOrphans').innerHTML = orphans.length
     ? '<p style="font-size:14px;margin-bottom:10px"><b>' + orphans.length + '</b> contacts have no owner yet.</p>' +
       '<button class="btn gold sm" onclick="claimOrphans()">Claim all as mine</button>'
     : '<p style="color:var(--muted);font-size:13px">All contacts are assigned.</p>';
+}
+
+function playbookPct(pb){
+  // progress = how many checklist items are checked, normalized to a sensible denominator
+  if(!pb || !pb.state) return null;
+  const checks = pb.state.checks || {};
+  const doneChecks = Object.values(checks).filter(Boolean).length;
+  // named Top 25 count toward progress too
+  const t25 = Array.isArray(pb.state.t25) ? pb.state.t25.filter(r=>r && r.name && r.name.trim()).length : 0;
+  const done = doneChecks + t25;
+  // denominator ~ a full first-90-days load; keep it stable so % is meaningful
+  const DENOM = 90;
+  return Math.min(100, Math.round(done / DENOM * 100));
+}
+function renderPlaybookProgress(){
+  const el = $('playbookProgress'); if(!el) return;
+  const active = db.members.filter(m => m.status === 'active');
+  // match a member to their playbook doc by uid
+  const rows = active.map(m => ({ m, pct: playbookPct(db.playbook[m.uid]), has: !!db.playbook[m.uid] }))
+    .sort((a,b) => (b.pct||0) - (a.pct||0));
+  el.innerHTML = rows.length ? rows.map(r => {
+    if(!r.has) return '<div class="ref-row"><div><b>'+esc(r.m.name||r.m.email)+'</b></div>'+
+      '<div style="font-size:13px;color:var(--muted)">Not started</div></div>';
+    const pct = r.pct||0;
+    return '<div style="padding:8px 0;border-bottom:1px solid var(--line)">'+
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">'+
+      '<b>'+esc(r.m.name||r.m.email)+'</b><span style="font-size:13px;font-weight:700;color:var(--navy)">'+pct+'%</span></div>'+
+      '<div style="height:8px;background:var(--line);border-radius:5px;overflow:hidden">'+
+      '<div style="height:100%;width:'+pct+'%;background:'+(pct>=66?'#2e7d51':pct>=33?'#c9a84c':'#c0392b')+';border-radius:5px"></div></div></div>';
+  }).join('') : '<p style="color:var(--muted);font-size:13px">No active team members yet.</p>';
 }
 
 window.copyPrompt = function(btn){ copyish(BRIEF_PROMPT, btn, 'Copied \u2713', null); };
@@ -835,6 +871,12 @@ function startSync(){
       renderAll();
       if(editingId) renderDnaBox(editingId);
     }, err => setDot('Sync error'));
+    // Playbook progress (leaders only)
+    unsubPlaybook = onSnapshot(collection(fs,'teams',TEAM,'playbook'), snap => {
+      db.playbook = {};
+      snap.docs.forEach(d => { db.playbook[d.id] = d.data(); });
+      renderTeam();
+    }, err => {/* ignore */});
   } else {
     // Associates: read only the needs summaries (name + six needs), never full profiles
     unsubDna = onSnapshot(collection(fs,'teams',TEAM,'dnaNeeds'), snap => {
@@ -854,8 +896,9 @@ function startSync(){
 }
 function stopSync(){
   if(unsubContacts) unsubContacts(); if(unsubPower) unsubPower(); if(unsubDna) unsubDna();
+  if(unsubPlaybook) unsubPlaybook();
   syncing = false; me = null; scopeUid = 'all';
-  db = { contacts: [], power: {}, dna: [] };
+  db = { contacts: [], power: {}, dna: [], members: [], playbook: {} };
 }
 /* ---------- Fast Start Tracker (per recruit) ---------- */
 // key = stored field; label = shown; date = true means it also holds a date

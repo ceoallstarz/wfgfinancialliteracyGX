@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>The Hyperion Playbook | Hyperion Legacy Builders</title>
+<link rel="icon" href="https://hyperionlegacy.com/hyperion-favicon.png">
+<link rel="apple-touch-icon" href="https://hyperionlegacy.com/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1a2a42; --navy-2:#22365a; --gold:#c9a84c; --gold-2:#e3bc4b;
+  --cream:#f7f3e9; --paper:#fffdf7; --ink:#1d2533; --muted:#5d6676; --line:#e2d9c3;
+  --ok:#3d7a4f; --warn:#a23b2a; --p1:#7d8fb0; --p2:#c9a84c; --p3:#e8d29a;
+  --serif:"Cormorant Garamond",Georgia,serif;
+  --sans:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);line-height:1.55;font-size:16px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:20;background:var(--navy)}
+.wrap{max-width:1020px;margin:0 auto;padding:0 18px}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+button{font:inherit;font-weight:700;border-radius:10px;padding:9px 15px;cursor:pointer;border:2px solid var(--navy);background:transparent;color:var(--navy)}
+button.solid{background:var(--navy);color:var(--cream)}
+button.gold{border-color:var(--gold);color:var(--gold)}
+input,textarea{font:inherit;color:var(--ink)}
+a{color:var(--navy)}
+[hidden]{display:none!important}
+
+#gate{position:fixed;inset:0;z-index:50;background:var(--navy);display:flex;align-items:center;justify-content:center;padding:24px}
+#gate .box{max-width:380px;width:100%;text-align:center;color:var(--cream)}
+#gate h1{font-family:var(--serif);font-size:2.6rem;margin:6px 0 8px;line-height:1}
+#gate p{color:#c9d0dc;margin:0 0 18px}
+#gate input{width:100%;padding:13px 14px;border-radius:10px;border:1px solid rgba(201,168,76,.5);background:rgba(255,255,255,.07);color:var(--cream);text-align:center;font-size:1.1rem;letter-spacing:.08em}
+#gate button{width:100%;margin-top:10px;background:var(--gold);border-color:var(--gold);color:var(--navy);padding:12px}
+#gateErr{color:#f0b9ab;font-weight:600;min-height:1.4em;margin-top:8px}
+
+.hero{background:var(--navy);color:var(--cream);padding:30px 0 22px}
+.hero-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{color:var(--gold);font-weight:700;font-size:.9rem;letter-spacing:.04em}
+.who-line{font-size:.88rem;color:#c9d0dc}
+.who-line button{padding:4px 10px;font-size:.82rem;border-color:rgba(201,168,76,.6);color:var(--gold);margin-left:6px}
+.hero h1{font-family:var(--serif);font-size:clamp(2.3rem,6vw,3.8rem);line-height:1;margin:14px 0 6px}
+.hero .sub{color:#c9d0dc;margin:0;max-width:62ch}
+.setup-panel{margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.setup-panel label{display:block;font-size:.78rem;font-weight:600;color:#aeb7c6;margin-bottom:5px}
+.setup-panel input{width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(201,168,76,.45);background:rgba(255,255,255,.07);color:var(--cream)}
+.setup-panel input::-webkit-calendar-picker-indicator{filter:invert(1)}
+
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:15;background:var(--navy);border-top:1px solid rgba(255,255,255,.08)}
+nav.tabs .wrap{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+nav.tabs .wrap::-webkit-scrollbar{display:none}
+nav.tabs a{flex:none;color:#c9d0dc;text-decoration:none;font-weight:700;font-size:.9rem;padding:13px 12px 11px;border-bottom:3px solid transparent;white-space:nowrap}
+nav.tabs a[aria-current="page"]{color:var(--gold);border-bottom-color:var(--gold)}
+
+section.tab{padding:28px 0 16px}
+h2.sec{font-family:var(--serif);font-size:clamp(2rem,4.5vw,2.6rem);color:var(--navy);margin:0 0 6px;line-height:1.05}
+h3.sh{font-family:var(--serif);font-size:1.75rem;color:var(--navy);margin:34px 0 6px;line-height:1.1}
+p.lead{color:var(--muted);margin:0 0 18px;max-width:64ch}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.dark{background:var(--navy);color:var(--cream);border-radius:16px;padding:22px 24px}
+.dark h3{font-family:var(--serif);font-size:1.8rem;color:var(--gold);margin:0 0 6px;line-height:1.1}
+.dark p{color:#d9dde6}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.rule h3{font-family:var(--serif);font-size:1.5rem;margin:0 0 8px}
+.rule ul{margin:0;padding-left:20px}.rule li{margin:5px 0}
+.dark li::marker{color:var(--gold)}
+.dark a{color:var(--gold)}
+.mt{margin-top:18px}
+.small{font-size:.86rem;color:var(--muted)}
+
+/* Today: three clocks */
+.today-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.today-head .day{font-family:var(--serif);font-size:clamp(2.4rem,6vw,3.4rem);color:var(--navy);line-height:1}
+.today-head .meta{color:var(--muted);font-weight:600}
+.clocks{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.clock{background:var(--navy);color:var(--cream);border-radius:18px;padding:18px 18px 14px}
+.clock .lab{font-weight:800;color:var(--gold);font-size:.95rem}
+.clock .q{font-size:.84rem;color:#aeb7c6;margin:2px 0 12px;min-height:2.6em}
+.dial{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.dial svg{flex:none;transform:rotate(-90deg)}
+.dial .big{font-family:var(--serif);font-size:2.4rem;line-height:1;color:var(--cream)}
+.dial .big small{font-family:var(--sans);font-size:.85rem;color:#aeb7c6;font-weight:600}
+.dial .state{font-size:.82rem;font-weight:700;color:#aeb7c6}
+.dial .state.hit{color:var(--gold-2)}
+.ctr{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-top:1px solid rgba(255,255,255,.1)}
+.ctr span{font-size:.9rem}
+.ctr b{color:var(--gold);font-size:1.05rem;margin:0 4px;min-width:1.4em;text-align:center}
+.ctr .btns{display:flex;gap:6px;align-items:center}
+.ctr button{padding:0;width:36px;height:36px;border-color:rgba(201,168,76,.55);color:var(--gold);font-size:1.15rem;line-height:1}
+.ctr input{width:104px;padding:7px 9px;border-radius:8px;border:1px solid rgba(201,168,76,.45);background:rgba(255,255,255,.07);color:var(--cream);text-align:right}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;padding:9px 14px;border-radius:30px;background:var(--paper);border:1px solid var(--line);text-decoration:none;font-weight:700;font-size:.9rem;color:var(--navy)}
+.pill:hover{border-color:var(--gold)}
+.pill.primary{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+
+.item{display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-top:1px dashed var(--line);cursor:pointer}
+.item:first-child{border-top:0}
+.item input{flex:none;width:20px;height:20px;margin-top:2px;accent-color:var(--navy)}
+.item input:checked + span{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--gold)}
+.item a{font-weight:700}
+.item .from{display:block;font-size:.76rem;color:var(--muted);font-weight:600;text-decoration:none}
+
+.lic-head{display:grid;grid-template-columns:1.2fr 1fr;gap:16px;align-items:center}
+.lic-fast{display:flex;gap:10px;flex-wrap:wrap}
+.lic-fast div{background:rgba(255,255,255,.07);border:1px solid rgba(201,168,76,.35);border-radius:12px;padding:12px 14px;flex:1;min-width:120px}
+.lic-fast b{display:block;font-family:var(--serif);font-size:2rem;color:var(--gold);line-height:1}
+.lic-fast span{font-size:.82rem;color:#d9dde6}
+.steps{counter-reset:s}
+.steps .item{counter-increment:s}
+.steps .item > span::before{content:counter(s) ". ";font-weight:800;color:var(--gold)}
+.inline-field{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:.9rem;font-weight:600;color:var(--muted);margin-top:12px}
+.inline-field input{padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.flag{font-weight:700;color:var(--warn)}.flag.ok{color:var(--ok)}
+.bar{height:8px;background:#e8e1cf;border-radius:5px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--gold);width:0;transition:width .3s}
+.dark .bar{background:rgba(255,255,255,.12)}
+.row-stat{margin:12px 0}
+.row-stat .top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.mini{padding:2px 10px;font-size:.9rem;margin-left:4px}
+
+.journey-wrap{overflow-x:auto;margin:0 0 14px;padding-bottom:4px}
+.journey{display:flex;gap:4px;min-width:560px}
+.jst{flex:1;height:30px;border-radius:6px;border:2px solid transparent;background:#e8e1cf;padding:0;cursor:pointer;position:relative}
+.jst.done{background:var(--gold)}
+.jst.late{background:#f3d9d2;border-color:var(--warn)}
+.jst.cur{background:var(--navy);border-color:var(--navy)}
+.jst.cur::after{content:"You";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:.68rem;font-weight:800}
+.jst.cal{box-shadow:0 0 0 2px var(--cream),0 0 0 4px var(--p1)}
+.jlegend{display:flex;gap:14px;flex-wrap:wrap;font-size:.8rem;color:var(--muted);margin:-6px 0 14px}
+.jlegend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.where{display:grid;grid-template-columns:1.5fr 1fr;gap:14px;align-items:start}
+.where-side{display:grid;gap:14px}
+.where-main .stage-tag{font-size:.8rem;font-weight:700;color:var(--muted)}
+.where-main h4{font-family:var(--serif);font-size:1.9rem;color:var(--navy);margin:2px 0 4px;line-height:1.05}
+.where-main .due{font-weight:700;font-size:.9rem;margin:0 0 10px}
+.due.ok{color:var(--ok)}.due.late{color:var(--warn)}.due.soon{color:var(--navy)}
+.where-main .bar{margin-bottom:6px}
+.where-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;font-size:.88rem}
+.where-foot a{font-weight:700}
+.side-h{font-weight:800;color:var(--navy);margin:0 0 4px}
+.side-sub{font-size:.88rem;color:var(--muted);margin:0 0 8px}
+.late-list a{display:block;padding:7px 0;border-top:1px dashed var(--line);font-weight:700;text-decoration:none}
+.late-list a:first-child{border-top:0}
+.late-list a span{display:block;font-weight:600;font-size:.8rem;color:var(--warn)}
+@media (max-width:860px){.where{grid-template-columns:1fr}}
+.kit-h{font-family:var(--serif);font-size:1.5rem;color:var(--navy);margin:0 0 10px}
+.f30-wrap{margin:16px 0 14px}
+.kit{border-left:4px solid var(--gold)}
+.kit-body{padding:0 20px 18px}
+.kit-body h4{margin:6px 0 6px;font-size:.84rem;color:var(--muted)}
+.sub-label{font-weight:800;color:var(--muted);font-size:.84rem;margin:18px 0 8px}
+details.kit-inline summary{cursor:pointer;font-weight:700;color:var(--navy)}
+.f30-row{padding:14px 0;border-top:1px dashed var(--line)}
+.f30-row:first-child{padding-top:0;border-top:0}
+.f30-row:last-child{padding-bottom:0}
+.f30-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:8px}
+.f30-head b{color:var(--navy)}
+.f30-num{font-weight:800;color:var(--navy);white-space:nowrap}
+.f30-num.ok{color:var(--ok)}.f30-num.warn{color:var(--warn)}
+.f30-next{display:block;font-size:.88rem;color:var(--muted);margin-top:8px}
+.f30-next a{font-weight:700}
+.f30-act{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.f30-act .f30-next{margin-top:8px;flex:1;min-width:180px}
+.f30-btns{display:flex;gap:8px;margin-top:8px}
+.f30-btns button{padding:7px 14px}
+.f30-date input{margin-top:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.whys{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;counter-reset:w}
+.whys label{display:flex;align-items:center;gap:8px;counter-increment:w}
+.whys label::before{content:counter(w);font-weight:800;color:var(--gold);min-width:1.4em;text-align:right}
+.whys input,.ta{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.ta{min-height:80px;resize:vertical}
+
+.t25-tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.84rem;color:var(--muted);margin-bottom:14px}
+.legend b{color:var(--navy)}
+.t25{display:grid;gap:10px}
+.prow{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;grid-template-columns:34px 1.3fr 1fr 1fr;gap:10px;align-items:center}
+.prow.met{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.prow .n{font-weight:800;color:var(--gold);font-size:1.05rem}
+.prow input{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.prow .prof{grid-column:2 / -1;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chip{width:34px;height:34px;padding:0;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--muted);font-size:.85rem}
+.chip.on{background:var(--navy);border-color:var(--navy);color:var(--gold)}
+.score{font-weight:800;color:var(--navy);margin-left:4px;font-size:.88rem}
+.mtg{margin-left:auto;padding:6px 12px;font-size:.85rem}
+.mtg.on{background:var(--ok);border-color:var(--ok);color:#fff}
+.prow .cm{grid-column:2 / -1}
+
+.band-wrap{padding-bottom:30px}
+.band{position:relative;display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px}
+.seg{padding:12px 14px;border-radius:6px}
+.seg b{display:block;font-family:var(--serif);font-size:1.55rem;line-height:1}
+.seg span{font-size:.8rem;font-weight:600}
+.seg.s1{background:var(--p1);color:#0f1b2d}.seg.s2{background:var(--p2);color:var(--navy)}.seg.s3{background:var(--p3);color:var(--navy)}
+.todaymark{position:absolute;top:-8px;bottom:-8px;width:3px;background:var(--navy);border-radius:2px;display:none}
+.todaymark::after{content:attr(data-label);position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:6px;white-space:nowrap;font-size:.8rem;font-weight:700;color:var(--gold);background:var(--navy);padding:3px 9px;border-radius:20px}
+.phase-head{display:flex;align-items:center;gap:14px;margin:30px 0 12px}
+.phase-head .bar-v{width:12px;height:42px;border-radius:4px;flex:none}
+.phase-head h3{font-family:var(--serif);font-size:2rem;margin:0;color:var(--navy);line-height:1}
+.phase-head p{margin:2px 0 0;color:var(--muted);font-size:.9rem}
+details.mod{background:var(--paper);border:1px solid var(--line);border-radius:12px;margin-bottom:10px}
+details.mod[open]{border-color:var(--gold)}
+details.mod summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:96px 1fr auto;gap:14px;align-items:center;padding:14px 16px}
+details.mod summary::-webkit-details-marker{display:none}
+.mlabel{font-weight:800;color:var(--navy);font-size:.92rem;line-height:1.2}
+.mlabel small{display:block;font-weight:600;color:var(--muted);font-size:.74rem}
+.mtitle b{display:block;color:var(--navy)}
+.mtitle span{font-size:.87rem;color:var(--muted)}
+.pct{font-weight:800;color:var(--muted);font-size:.92rem;min-width:44px;text-align:right}
+.pct.done{color:var(--ok)}
+.mod-body{padding:0 20px 18px;display:grid;grid-template-columns:1.5fr 1fr;gap:20px}
+.mod-body h4{margin:8px 0 6px;font-size:.84rem;color:var(--muted)}
+.res a{display:block;padding:8px 12px;margin-bottom:8px;border:1px solid var(--line);border-radius:8px;text-decoration:none;font-weight:600;font-size:.9rem;background:#fff}
+.res a:hover{border-color:var(--gold)}
+.check{border:2px solid var(--navy);border-radius:14px;padding:16px 18px;margin:12px 0 0;background:#fff}
+.check h4{font-family:var(--serif);font-size:1.5rem;margin:0 0 4px;color:var(--navy)}
+.check p{margin:0 0 6px;font-size:.9rem;color:var(--muted)}
+
+.gx-now{display:grid;grid-template-columns:230px 1fr;gap:22px;align-items:center}
+.ring{position:relative;width:200px;height:200px;margin:0 auto}
+.ring svg{transform:rotate(-90deg)}
+.ring .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.ring .center b{font-size:2.5rem;color:var(--gold);line-height:1}
+.ring .center span{font-size:.82rem;color:#c9d0dc}
+.gx-level{font-family:var(--serif);font-size:2.4rem;color:var(--gold);line-height:1;margin:0 0 4px}
+.gx-ladder{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.gx-ladder div{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px}
+.gx-ladder div.now{border:2px solid var(--gold)}
+.gx-ladder b{display:block;font-family:var(--serif);font-size:1.7rem;color:var(--navy);line-height:1.1}
+.gx-ladder span{font-size:.86rem;color:var(--muted)}
+.months{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.mo{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px}
+.mo b{display:block;color:var(--navy)}
+.mo span{font-size:.82rem;color:var(--muted)}
+.mo em{font-style:normal;font-weight:800;font-size:.82rem;color:var(--warn)}
+.mo.hit{border-color:var(--ok)}.mo.hit em{color:var(--ok)}
+.mo.cur em{color:var(--navy)}
+
+.sgroup > p{color:var(--muted);margin:0 0 12px;max-width:64ch}
+details.scr{background:var(--paper);border:1px solid var(--line);border-radius:12px;margin-bottom:10px}
+details.scr[open]{border-color:var(--gold)}
+details.scr summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+details.scr summary::-webkit-details-marker{display:none}
+details.scr summary b{display:block;color:var(--navy)}
+details.scr summary small{color:var(--muted);font-size:.8rem;font-weight:600}
+.scr-body{padding:0 18px 16px}
+.part{margin:12px 0}
+.part h5{margin:0 0 4px;font-size:.84rem;color:var(--muted)}
+.part blockquote{margin:0;padding:12px 14px;background:var(--cream);border-left:4px solid var(--gold);border-radius:8px}
+.part .tip{font-size:.85rem;color:var(--muted);margin-top:6px}
+.copy{padding:6px 12px;font-size:.84rem;flex:none}
+
+.ladder-key{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.ladder-key div{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.ladder-key b{display:block;color:var(--navy)}
+.ladder-key span{font-size:.84rem;color:var(--muted)}
+.table-scroll{overflow-x:auto}
+table.ladder{width:100%;border-collapse:separate;border-spacing:0 6px;min-width:600px}
+.ladder th{font-size:.8rem;color:var(--muted);font-weight:700;text-align:center;padding:4px}
+.ladder th:first-child{text-align:left}
+.ladder td{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 8px;text-align:center}
+.ladder td:first-child{text-align:left;border-left:1px solid var(--line);border-radius:10px 0 0 10px;font-weight:600;color:var(--navy)}
+.ladder td:last-child{border-right:1px solid var(--line);border-radius:0 10px 10px 0}
+.rung{width:38px;height:38px;border-radius:50%;border:2px solid var(--line);background:#fff;padding:0;color:transparent}
+.rung.on{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.rung.on::after{content:"✓"}
+
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.wd{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px;font-size:.84rem}
+.wd b{display:block;color:var(--navy);margin-bottom:4px}
+.wd.rest{background:transparent;border-style:dashed;color:var(--muted)}
+
+.review label{display:block;font-weight:600;margin:14px 0 6px}
+.review textarea{width:100%;min-height:60px;border-radius:10px;border:1px solid rgba(201,168,76,.45);background:rgba(255,255,255,.06);color:var(--cream);padding:10px 12px;resize:vertical}
+.review .row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.log{margin-top:16px;font-size:.88rem;color:#c9d0dc}
+.log div{border-top:1px solid rgba(255,255,255,.12);padding:10px 0}
+.log b{color:var(--gold)}
+
+.honor{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.honor div{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:12px 14px}
+.honor b{display:block;color:var(--navy)}
+.honor span{font-size:.88rem;color:var(--muted)}
+.links{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.links a{display:block;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px;text-decoration:none}
+.links a:hover{border-color:var(--gold)}
+.links b{display:block;color:var(--navy);font-size:.95rem}
+.links span{font-size:.82rem;color:var(--muted)}
+.books{columns:2;column-gap:28px;padding-left:20px;margin:0}
+.books li{margin:4px 0;break-inside:avoid}
+
+footer{text-align:center;padding:30px 0 44px;color:var(--muted);font-size:.85rem}
+footer b{font-family:var(--serif);color:var(--navy);font-size:1.15rem;letter-spacing:.06em}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--navy);color:var(--gold);font-weight:700;padding:10px 18px;border-radius:30px;z-index:40;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+
+@media (max-width:860px){
+  .clocks{grid-template-columns:1fr}
+  .setup-panel,.two,.mod-body,.gx-now,.lic-head,.whys,.honor{grid-template-columns:1fr}
+  .links,.ladder-key,.gx-ladder{grid-template-columns:1fr 1fr}
+  .week{grid-template-columns:repeat(2,1fr)}
+  .prow{grid-template-columns:30px 1fr}
+  .prow .prof,.prow .cm{grid-column:1 / -1}
+  .prow input.ph,.prow input.ln{grid-column:2}
+  details.mod summary{grid-template-columns:72px 1fr auto}
+  .books{columns:1}
+  .clock .q{min-height:0}
+}
+@media (max-width:480px){.links,.gx-ladder{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{#gate,nav.tabs,button,.toast{display:none!important}section.tab[hidden]{display:block!important}body{background:#fff}details{break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<div id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+  <div class="box">
+    <div class="brand">Hyperion Legacy Builders</div>
+    <h1 id="gateTitle">The Hyperion Playbook</h1>
+    <p>Sign in with your Hyperion account — same login as the Hopper (CRM).</p>
+    <input id="gateEmail" type="email" autocomplete="username" placeholder="Email" aria-label="Email">
+    <input id="gatePw" type="password" autocomplete="current-password" placeholder="Password" aria-label="Password">
+    <button type="button" id="gateBtn">Sign in</button>
+    <div id="gateErr" aria-live="polite"></div>
+    <p style="font-size:12px;margin-top:10px;opacity:.75">No account yet? Create one in the <a href="https://hyperionlegacy.com/crm.html" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">Hopper</a>, then come back.</p>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-top">
+      <div class="brand">Hyperion Legacy Builders · Revolution Financial Management</div>
+      <div class="who-line" id="whoLine"></div>
+    </div>
+    <h1>The Hyperion Playbook</h1>
+    <p class="sub">Your first 90 days and beyond, in one place. License fast, build while you study, hit GX1 in your first month and GX2 in your second, then teach the next person to do the same.</p>
+    <div class="setup-panel" id="setupPanel">
+      <div><label for="fName">Your name</label><input id="fName" data-field="name" autocomplete="name"></div>
+      <div><label for="fLeader">Your leader</label><input id="fLeader" data-field="leader"></div>
+      <div><label for="fStart">Your Day 1</label><input id="fStart" type="date" data-field="start"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Playbook sections">
+  <div class="wrap">
+    <a href="#today">Today</a>
+    <a href="#top25">Top 25</a>
+    <a href="#plan">90 days</a>
+    <a href="#gx">GX</a>
+    <a href="#scripts">Scripts</a>
+    <a href="#duplicate">Duplicate</a>
+    <a href="#library">Library</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<section class="tab" id="today">
+  <div class="today-head">
+    <div><div class="day" id="tdDay">Set your Day 1</div><div class="meta" id="tdMeta">Enter your Day 1 date at the top to start the clock.</div></div>
+    <div class="pills">
+      <a class="pill primary" href="#scripts" data-open="bpm">BPM invite script</a>
+      <a class="pill" href="https://hyperionlegacy.com/crm.html" target="_blank" rel="noopener">Open Hopper</a>
+    </div>
+  </div>
+
+  <div class="clocks">
+    <div class="clock">
+      <div class="lab">Every day</div>
+      <div class="q">2 calls, 6 days a week. +2 names to your hopper, 5 days a week.</div>
+      <div class="dial" id="dialDay"></div>
+      <div class="ctr"><span>Calls today</span><div class="btns"><button type="button" data-d="calls" data-v="-1" aria-label="One less call">−</button><b id="cCalls">0</b><button type="button" data-d="calls" data-v="1" aria-label="One more call">+</button></div></div>
+      <div class="ctr"><span>Added to hopper</span><div class="btns"><button type="button" data-d="hop" data-v="-1" aria-label="One less name">−</button><b id="cHop">0</b><button type="button" data-d="hop" data-v="1" aria-label="One more name">+</button></div></div>
+    </div>
+    <div class="clock">
+      <div class="lab">Every week</div>
+      <div class="q">10 booked appointments or BPM guests. Personal sits and BPM guests both count.</div>
+      <div class="dial" id="dialWeek"></div>
+      <div class="ctr"><span>Appointments or guests</span><div class="btns"><button type="button" data-w="appts" data-v="-1" aria-label="One less">−</button><b id="cAppts">0</b><button type="button" data-w="appts" data-v="1" aria-label="One more">+</button></div></div>
+      <div class="ctr"><span>Call days · hopper days</span><div class="btns"><b id="cWkDays" style="min-width:0">0/6 · 0/5</b></div></div>
+    </div>
+    <div class="clock">
+      <div class="lab">Every month</div>
+      <div class="q" id="gxQ">GX1: 3 recruits + 15,000 points this calendar month.</div>
+      <div class="dial" id="dialMonth"></div>
+      <div class="ctr"><span>Recruits this month</span><div class="btns"><button type="button" data-m="recruits" data-v="-1" aria-label="One less recruit">−</button><b id="cRec">0</b><button type="button" data-m="recruits" data-v="1" aria-label="One more recruit">+</button></div></div>
+      <div class="ctr"><label for="cPts">Points this month</label><input type="number" inputmode="numeric" min="0" step="100" id="cPts" placeholder="0"></div>
+    </div>
+  </div>
+
+  <h3 class="sh">Where you are</h3>
+  <p class="lead" id="whereLead">Today follows your checklist. Finish what's in front of you and the next step moves up on its own.</p>
+  <div class="journey-wrap"><div class="journey" id="journey" role="list" aria-label="Your progress through the 90 days"></div></div>
+  <div class="where">
+    <div class="card where-main" id="whereMain"></div>
+    <div class="where-side">
+      <div class="card" id="whereLic"></div>
+      <div class="card" id="whereLate" hidden></div>
+    </div>
+  </div>
+
+  <h3 class="sh">Your why</h3>
+  <div class="card">
+    <p id="whyShow" style="margin:0 0 10px;font-family:var(--serif);font-size:1.45rem;line-height:1.3;color:var(--navy)"></p>
+    <details class="kit-inline">
+      <summary>Write or edit my top 10 reasons why</summary>
+      <p class="small" style="margin:10px 0">Dig past "extra money." Ask yourself why five times until you hit the real reason. That one goes first.</p>
+      <div class="whys" id="whyInputs"></div>
+      <label class="small" for="ftPlan" style="display:block;margin:16px 0 6px;font-weight:700">Date and plan to go full-time</label>
+      <textarea class="ta" id="ftPlan" data-field="ftPlan"></textarea>
+      <label class="small" for="vision" style="display:block;margin:16px 0 6px;font-weight:700">What will your life look like 1 year from now?</label>
+      <textarea class="ta" id="vision" data-field="vision"></textarea>
+    </details>
+  </div>
+</section>
+
+
+<section class="tab" id="top25" hidden>
+  <h2 class="sec">Top 25 Start-Up</h2>
+  <p class="lead">Your share list. Write 25 people, tap the profile numbers that fit each one, and mark who's booked. Sort by score to see who to call first. It stays on this phone only.</p>
+  <div class="legend"><span><b>1</b> 25+ years old</span><span><b>2</b> Married</span><span><b>3</b> Dependent children</span><span><b>4</b> Homeowner</span><span><b>5</b> Solid business or career</span><span><b>6</b> $70,000+ income</span><span><b>7</b> Dissatisfied with situation</span><span><b>8</b> Entrepreneurial</span></div>
+  <div class="t25-tools">
+    <button type="button" id="sortT25" class="solid">Sort by score</button>
+    <span class="small" id="t25Sum"></span>
+  </div>
+  <div class="t25" id="t25"></div>
+  <p class="small mt">When your list is done, have your trainer approve it, then move these names into <a href="https://hyperionlegacy.com/crm.html" target="_blank" rel="noopener">Hopper</a>.</p>
+</section>
+
+<section class="tab" id="plan" hidden>
+  <h2 class="sec">Your first 90 days</h2>
+  <p class="lead">Everything for your first 90 days in one place: the Fast Start Kit, your First 30 days scoreboard, and every week of the plan. Your current week opens automatically, and each 30-day phase ends with a checkpoint you complete with your leader.</p>
+  <div class="band-wrap"><div class="band">
+    <div class="seg s1"><b>Rooted</b><span>Days 1–30 · GX1</span></div>
+    <div class="seg s2"><b>Rising</b><span>Days 31–60 · GX2</span></div>
+    <div class="seg s3"><b>Unstoppable</b><span>Days 61–90 · GX1 every month</span></div>
+    <div class="todaymark" id="todayMark"></div>
+  </div></div>
+  <div id="plan90"></div>
+
+  <div id="kitHold" hidden>
+   <div id="kitRooted">
+    <div class="dark lic-head">
+      <div>
+        <h3>Licensing and business at the same time</h3>
+        <p style="margin:0">This is the Revolution Fast Start Kit, working. Most people are licensed in 14 to 21 days. Focused people do it in days. Don't let licensing become the reason you aren't building: make your 2 calls and add to your hopper every day while you study.</p>
+      </div>
+      <div class="lic-fast">
+        <div><b>2 days</b><span>As fast as it can be done</span></div>
+        <div><b>14–21</b><span>Normal days to licensed</span></div>
+      </div>
+    </div>
+
+    <div class="f30-wrap">
+      <h4 class="kit-h">First 30 days scoreboard</h4>
+    <div class="card f30">
+      <div class="f30-row">
+        <div class="f30-head"><b>Licensed and appointed</b><span class="f30-num"><span id="licSum">0</span> of 8 steps</span></div>
+        <div class="bar"><i id="licBar"></i></div>
+        <div class="f30-next" id="licNext"></div>
+      </div>
+      <div class="f30-row">
+        <div class="f30-head"><b>Field trainings</b><span class="f30-num"><span id="ftSum">0</span> of 10</span></div>
+        <div class="bar"><i id="ftBar"></i></div>
+        <div class="f30-act"><span class="f30-next" id="ftNext">Goal: 10 in your first month. Tap + after each one.</span>
+          <span class="f30-btns"><button type="button" data-ft="-1" aria-label="One less field training">−</button><button type="button" class="solid" data-ft="1" aria-label="One more field training">+ 1 done</button></span></div>
+      </div>
+      <div class="f30-row">
+        <div class="f30-head"><b>Fast Start School</b><span class="f30-num" id="fssSum">Not booked</span></div>
+        <div class="f30-act"><span class="f30-next" id="fssNext">Book it inside your first 2 weeks.</span>
+          <label class="f30-date"><span class="sr">Fast Start School date</span><input type="date" data-field="fss" aria-label="Fast Start School date"></label></div>
+      </div>
+    </div>
+    </div>
+
+    <details class="mod kit" data-kit="lic" id="kit-lic"><summary><div class="mlabel">Licensing<small>Days 1–21</small></div><div class="mtitle"><b>Licensed and appointed</b><span>8 steps, as fast as 2 days, normally 14–21.</span></div><div class="pct" data-kitpct="licList">0%</div></summary>
+      <div class="kit-body">
+        <div class="steps" id="licList"></div>
+        <div class="inline-field"><label for="licDate">Date I was licensed</label><input id="licDate" type="date" data-field="licDate"><span class="flag" id="licFlag"></span></div>
+        <p class="small">Some states don't require a pre-licensing course or fingerprints. California requires both.</p>
+      </div></details>
+
+    <details class="mod kit" data-kit="w1" id="kit-w1"><summary><div class="mlabel">Launch<small>Days 1–7</small></div><div class="mtitle"><b>Week 1: let's launch</b><span>About 6 to 8 focused hours. Chip away daily.</span></div><div class="pct" data-kitpct="w1List">0%</div></summary>
+      <div class="kit-body"><div id="w1List"></div></div></details>
+
+    <details class="mod kit" data-kit="fss" id="kit-fss"><summary><div class="mlabel">Fast Start School<small>By Day 14</small></div><div class="mtitle"><b>Qualify and attend</b><span>Your top priority inside your first 2 weeks.</span></div><div class="pct" data-kitpct="fssQual">0%</div></summary>
+      <div class="kit-body">
+        <div class="two">
+          <div><h4>Qualify</h4><div id="fssQual"></div></div>
+          <div><h4>Bring at least one of these</h4><div id="fssBring"></div></div>
+        </div>
+        <div class="inline-field"><label for="fssDate">Fast Start School date</label><input id="fssDate" type="date" data-field="fss"><span class="flag" id="fssFlag"></span></div>
+      </div></details>
+
+    <details class="mod kit" data-kit="act" id="kit-act"><summary><div class="mlabel">Activity<small>Days 1–30</small></div><div class="mtitle"><b>Scripts, plan, trainings, share list</b><span>The habits that build while you study.</span></div><div class="pct" data-kitpct="actList">0%</div></summary>
+      <div class="kit-body"><div id="actList"></div></div></details>
+   </div>
+
+   <div id="kitRising">
+    <details class="mod kit" data-kit="train" id="kit-train"><summary><div class="mlabel">After licensed<small>Days 31–60</small></div><div class="mtitle"><b>Training and expansion</b><span>Become competent and confident running appointments on your own.</span></div><div class="pct" data-kitpct="trainList">0%</div></summary>
+      <div class="kit-body"><div id="trainList"></div></div></details>
+   </div>
+  </div>
+</section>
+
+<section class="tab" id="gx" hidden>
+  <h2 class="sec">GX</h2>
+  <p class="lead">GX counts by calendar month, and recruits and points have to land in the same month. Your first month's target is GX1. Your second month's is GX2. After that, GX1 is the minimum every month.</p>
+  <div class="gx-ladder" id="gxLadder"></div>
+
+  <div class="dark gx-now mt">
+    <div class="ring">
+      <svg width="200" height="200" viewBox="0 0 200 200" aria-hidden="true">
+        <circle cx="100" cy="100" r="84" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="14"/>
+        <circle id="gxArc" cx="100" cy="100" r="84" fill="none" stroke="#c9a84c" stroke-width="14" stroke-linecap="round" stroke-dasharray="527.79" stroke-dashoffset="527.79"/>
+      </svg>
+      <div class="center"><b id="gxPct">0%</b><span id="gxOf">to GX1</span></div>
+    </div>
+    <div>
+      <div class="gx-level" id="gxMonthName">This month</div>
+      <p style="margin:0 0 6px" id="gxPace"></p>
+      <div class="row-stat"><div class="top"><span>Recruits</span><span><b id="gxRec">0</b> of <span id="gxRecGoal">3</span></span></div><div class="bar"><i id="gxRecBar"></i></div></div>
+      <div class="row-stat"><div class="top"><span>Points</span><span><b id="gxPts">0</b> of <span id="gxPtsGoal">15,000</span></span></div><div class="bar"><i id="gxPtsBar"></i></div></div>
+      <p class="small" style="color:#aeb7c6;margin:10px 0 0">Update recruits and points on the <a href="#today">Today</a> tab.</p>
+    </div>
+  </div>
+
+  <h3 class="sh">Your months</h3>
+  <div class="months" id="gxMonths"></div>
+
+  <h3 class="sh">GX tools</h3>
+  <div class="pills">
+    <a class="pill primary" href="https://hyperionlegacy.com/gx-game.html" target="_blank" rel="noopener">GX game</a>
+    <a class="pill" href="https://hyperionlegacy.com/wfg-gx-financial-literacy.html" target="_blank" rel="noopener">GX Builder campaign</a>
+    <a class="pill" href="https://jaime-s-site-a2ce.thinkific.com/products/courses/new-course-8" target="_blank" rel="noopener">RFM GX course</a>
+  </div>
+  <p class="small mt">Next goal: promote to MD trainer in 3 to 5 months. Confirm current GX and promotion rules with your leader before you plan around them.</p>
+</section>
+
+<section class="tab" id="scripts" hidden>
+  <h2 class="sec">Scripts</h2>
+  <p class="lead">The goal of every call is only the meeting. Never pitch. Lead with curiosity and care. Tap a script to open it. Copy pastes it straight into a text.</p>
+  <div id="scriptGroups"></div>
+  <p class="small">Reconnect sequences, the call guide, and more live on the full <a href="https://hyperionlegacy.com/system/contact-scripts.html" target="_blank" rel="noopener">contact scripts page</a>.</p>
+</section>
+
+<section class="tab" id="duplicate" hidden>
+  <h2 class="sec">Duplicate</h2>
+  <p class="lead">If you're the only one who can do it, you have a job, not a team. Every skill climbs four rungs, and you're not done with a skill until you've taught it.</p>
+  <div class="ladder-key">
+    <div><b>1. Watch</b><span>See your leader do it live</span></div>
+    <div><b>2. Do with</b><span>Do it with your leader beside you</span></div>
+    <div><b>3. Do alone</b><span>Do it on your own, and it works</span></div>
+    <div><b>4. Teach</b><span>Someone you trained can do it</span></div>
+  </div>
+  <div class="table-scroll"><table class="ladder" id="ladder"></table></div>
+  <p class="small" id="ladderSum"></p>
+
+  <h3 class="sh">When you bring someone on: the first 48 hours</h3>
+  <p class="lead">Start your recruit the way you started. Send them this playbook and do these yourself.</p>
+  <div class="card" id="first48"></div>
+
+  <h3 class="sh">Run it yourself</h3>
+  <div class="two">
+    <div class="card rule"><h3>Find the answer first</h3><ul>
+      <li>"What do I say?" The <a href="#scripts">Scripts</a> tab.</li>
+      <li>"What do I do today?" The <a href="#today">Today</a> tab.</li>
+      <li>"How do I handle this objection?" The <a href="https://hyperionlegacy.com/system/objections.html" target="_blank" rel="noopener">objection bank</a>.</li>
+      <li>"Am I on track?" Your three clocks.</li>
+      <li>Still stuck? Ask a teammate one rank ahead first.</li></ul></div>
+    <div class="dark rule"><h3>Call your leader when</h3><ul>
+      <li>An appointment needs a licensed trainer</li>
+      <li>A recruit is ready to join</li>
+      <li>Anything touches compliance or you're not sure it's allowed</li>
+      <li>You're behind on GX two weeks in a row</li>
+      <li>You're about to quit. Call before you decide.</li></ul></div>
+  </div>
+
+  <h3 class="sh">Your week</h3>
+  <div class="week">
+    <div class="wd"><b>Mon</b>2 calls · +2 hopper · book the week</div>
+    <div class="wd"><b>Tue</b>2 calls · +2 hopper · field training</div>
+    <div class="wd"><b>Wed</b>2 calls · +2 hopper · leader's weekly training</div>
+    <div class="wd"><b>Thu</b>2 calls · +2 hopper · BPM Zoom 6 PM with guests</div>
+    <div class="wd"><b>Fri</b>2 calls · +2 hopper · field training</div>
+    <div class="wd"><b>Sat</b>2 calls · BPM 9 AM · RFM Saturday training</div>
+    <div class="wd rest"><b>Sun</b>Rest · church · family · Sunday review</div>
+  </div>
+
+  <h3 class="sh">The rules</h3>
+  <div class="two">
+    <div class="card rule"><h3>Always</h3><ul>
+      <li>Someone watches every time you do a skill</li>
+      <li>Send people to this playbook before you answer it yourself</li>
+      <li>Three-way your recruit's first calls, then step back</li>
+      <li>Recognize wins in front of the team</li></ul></div>
+    <div class="dark rule"><h3>Never</h3><ul>
+      <li>Do something for a recruit that you haven't shown them</li>
+      <li>Let a new person go a day without a Day 1 and a Fast Start School date</li>
+      <li>Carry someone who isn't making their 2 calls</li>
+      <li>Skip a 30-day checkpoint</li></ul></div>
+  </div>
+
+  <div class="dark review mt">
+    <h3>Sunday review</h3>
+    <p style="margin:0">Ten minutes on your own. Update your clocks first, then answer honestly and send it to your leader.</p>
+    <label for="r1">What did I actually do this week? Numbers, not feelings.</label>
+    <textarea id="r1"></textarea>
+    <label for="r2">Where did I fall short: a reason or an excuse?</label>
+    <textarea id="r2"></textarea>
+    <label for="r3">The one move that matters most next week:</label>
+    <textarea id="r3"></textarea>
+    <div class="row">
+      <button type="button" class="gold" id="saveReview">Save this week</button>
+      <button type="button" class="gold" id="copyReview">Copy to send my leader</button>
+    </div>
+    <div class="log" id="reviewLog"></div>
+  </div>
+</section>
+
+<section class="tab" id="library" hidden>
+  <h2 class="sec">Library</h2>
+  <p class="lead">Faith, family, business. We leave no family behind, starting with your family.</p>
+
+  <h3 class="sh">Code of Honor</h3>
+  <div class="honor" id="honor"></div>
+
+  <h3 class="sh">Hyperion team pages</h3>
+  <div class="links" id="teamLinks"></div>
+
+  <h3 class="sh">RFM and WFG</h3>
+  <div class="links" id="rfmLinks"></div>
+  <p class="small">The RFM agent toolbox needs the site PIN. Get it from your leader.</p>
+
+  <h3 class="sh">Reading</h3>
+  <div class="card">
+    <ul class="books" id="books"></ul>
+    <p class="small" style="margin:12px 0 0">Podcast: <a href="https://www.straightlinethinkers.com/" target="_blank" rel="noopener">Straight Line Thinkers</a> with Rich Thawley.</p>
+  </div>
+
+  <p class="small mt">This playbook builds activity and skills and makes no income promises. Until you're licensed and appointed, don't recommend products, quote premiums, or give financial advice. Your progress is saved to your Hyperion account and syncs across your devices.</p>
+  <div class="pills mt">
+    <button type="button" id="exportBtn">Copy my progress summary</button>
+    <button type="button" id="resetBtn">Reset everything on this device</button>
+  </div>
+</section>
+
+</main>
+
+<footer><b>ROOTED. RISING. UNSTOPPABLE.</b><br>One team. One mission. No family left behind.</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script type="module">
+/* ===== Firebase (same project as the CRM) ===== */
+const firebaseConfig = {
+  apiKey: "AIzaSyC5jXI140Z9f618dFk8JwGhHyOzU6Q6Jek",
+  authDomain: "hyperion-crm-ea994.firebaseapp.com",
+  projectId: "hyperion-crm-ea994",
+  storageBucket: "hyperion-crm-ea994.firebasestorage.app",
+  messagingSenderId: "651443980689",
+  appId: "1:651443980689:web:eaed1f15d21c306616b230"
+};
+const TEAM = "hyperion";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const fbApp = initializeApp(firebaseConfig);
+const fbAuth = getAuth(fbApp);
+const fbDb = getFirestore(fbApp);
+let fbUser = null;
+/* ===== Links: Glenn, update here if a page moves ===== */
+const H = "https://hyperionlegacy.com/";
+const L = {
+  hopper:H+"crm.html", hopperStart:H+"hopper-start.html", dna:H+"dna.html", gxGame:H+"gx-game.html",
+  gxCampaign:H+"wfg-gx-financial-literacy.html", scripts:H+"system/contact-scripts.html",
+  objections:H+"system/objections.html", presentations:H+"system/presentations.html", closing:H+"system/closing.html",
+  prospecting:H+"system/prospecting.html", identity:H+"system/identity-shift.html",
+  missionHq:H+"system/mission-hq.html", iulCourse:H+"stuff/iul-course.html", iulStory:H+"stuff/iul-story.html", fna:H+"stuff/FNA/fna.html",
+  codeHonor:"https://drive.google.com/file/d/1IKg30YMhK8XYRq2YPy1c6sOhqlMQuuE9/view?usp=sharing",
+  xcel:"https://partners.xcelsolutions.com/revolution1",
+  stateReq:"https://www.xcelsolutions.com/insurance-license/requirements",
+  welcome:"https://www.youtube.com/watch?v=t7dg5KfAlrQ",
+  orientation:"https://event.webinarjam.com/register/15/7vppvav",
+  abcs:"https://event.webinarjam.com/register/84/6vrrva7p",
+  telegram:"https://t.me/+X1V-lowtG4MyMWE5",
+  satZoom:"https://us02web.zoom.us/j/85732463617?pwd=eC80VWVIek03c2RBOWZHbGMzWk1pZz09",
+  shareList:"https://drive.google.com/file/d/1FW9SvyR2uMvohDeq1qvQjlBujzctaHSf/view?usp=sharing",
+  crash:"https://event.webinarjam.com/register/55/k6nn6hzq",
+  aml:"https://www.webce.com/catalog/insurance-ce",
+  playbookBook:"https://online.fliphtml5.com/buildersplaybook/sefm/",
+  flipchart:"https://drive.google.com/drive/folders/1vIMjsyuu-M2qBHTfUNED8A90eeKu6wAd?usp=drive_link",
+  rfmVideos:"https://jaime-s-site-a2ce.thinkific.com/",
+  atm:"https://us02web.zoom.us/j/89621347831?pwd=QU9xdW0vVWdwelY4ZzNOeGwyemRIdz09",
+  gxCourse:"https://jaime-s-site-a2ce.thinkific.com/products/courses/new-course-8",
+  toolbox:"https://www.financialrevolution.com/agent-toolbox", mywfg:"https://www.mywfg.com/",
+  bfsBook:"https://www.printinghouse.net/team-revolution/bfs-book",
+  happyStrong:"https://www.amazon.com/Happy-Strong-Create-Enjoying-Journey/dp/1637630824"
+};
+
+const a=(k,t)=>`<a href="${L[k]}" target="_blank" rel="noopener">${t}</a>`;
+
+/* ===== Content ===== */
+const LIC=[
+  {id:"enroll",t:`Enroll in the ${a("xcel","Xcel pre-licensing course")} today`},
+  {id:"book",t:`Book your license test date (${a("stateReq","state requirements")})`},
+  {id:"crash",t:`Watch the ${a("crash","crash course")} to study for the exam`},
+  {id:"score",t:"Score 85–90% on the Xcel final and all 3 exam simulator tests"},
+  {id:"pass",t:"Pass the license test and complete fingerprints"},
+  {id:"apply",t:"Apply for your license"},
+  {id:"aml",t:`Complete the ${a("aml","AML course")} and download the certificate`},
+  {id:"appoint",t:"Get appointed with product providers"}
+];
+const W1=[
+  {id:"w1-welcome",t:`Watch the ${a("welcome","Welcome Video")} (8 min)`},
+  {id:"w1-fna",t:`Complete your personal ${a("fna","Financial Needs Analysis")}`},
+  {id:"w1-orient",t:`Watch ${a("orientation","Orientation Class")}`},
+  {id:"w1-abcs",t:`Watch the ${a("abcs","ABCs Class")} (basics of financial planning)`},
+  {id:"w1-ft",t:"Start field training: real appointments with your trainer"},
+  {id:"w1-tg",t:`${a("telegram","Join Telegram")}: Team Revolution chat and your leader's group chat`},
+  {id:"w1-hopper",t:`Set up ${a("hopper","Hopper")} on your phone (${a("hopperStart","how")}) and load your first 10 names`},
+  {id:"w1-dna",t:`Complete your ${a("dna","Leadership DNA Profile")}`}
+];
+const FSS_Q=[
+  {id:"q-list",t:'Complete your share list (your <a href="#top25">Top 25</a>)'},
+  {id:"q-ft",t:"Observe 3–5 field training appointments"},
+  {id:"q-fna",t:"Complete your FNA"}
+];
+const FSS_B=["A client","3 booked appointments","Your top 5","A result: a business partner or a client"];
+const ACT=[
+  {id:"act-scripts",t:'Learn the basic scripts (<a href="#scripts">Scripts</a>)'},
+  {id:"act-plan",t:"Meet your trainer to start a Business Plan and Market Expansion Plan"},
+  {id:"act-train",t:`Attend your leader's weekly training and the ${a("satZoom","Saturday Zoom trainings")} with Jaime Villalovos and the Team Revolution CEOs`},
+  {id:"act-list",t:`Create your ${a("shareList","prospect and share list")} for your growth as an entrepreneur`}
+];
+const TRAIN=[
+  {id:"tr-read",t:'Self-development and recommended reading (<a href="#library">Library</a>)'},
+  {id:"tr-bp",t:`Study ${a("playbookBook","The Builders Playbook")}`},
+  {id:"tr-flip",t:`Download the ${a("flipchart","Flipchart Presentations, Steps 1–5")}`},
+  {id:"tr-vid",t:`Watch the ${a("rfmVideos","RFM Training Video Series")}`},
+  {id:"tr-atm",t:`Plug into the weekly ${a("atm","ATM Club")} (product training)`},
+  {id:"tr-iul",t:`Pass the ${a("iulCourse","IUL field certification")} before presenting IUL on your own`},
+  {id:"tr-ft",t:"Ask your SMD to help you build a plan to replace your income and go full-time"},
+  {id:"tr-events",t:"Attend big events and company conventions"},
+  {id:"tr-1k",t:"Goal: earn your first $1,000 in your first 30 days licensed"},
+  {id:"tr-md",t:"Goal: qualify for GX1 quickly and promote to MD trainer in 3–5 months"}
+];
+
+const P90=[
+ {name:"Rooted",days:"Days 1–30",color:"var(--p1)",desc:"Licensed in 14–21 days or faster. GX1 in your first month.",
+  mods:[
+   {lab:"Week 1",d:"1–7",t:"Launch both tracks",g:"Licensing started, business started, same day.",
+    tasks:["Enroll in Xcel and book your test date on Day 1","Finish the Week 1 launch list in Fast Start","Write your Top 25 and score each name","Book Fast Start School inside your first 2 weeks","2 calls a day and +2 to your hopper, starting today","Book 10 appointments or BPM guests this week"],
+    res:[["Week 1: let's launch","#plan|w1"],["Top 25","#top25"],["Scripts","#scripts"]]},
+   {lab:"Week 2",d:"8–14",t:"Fast Start School",g:"Qualified, attended, licensed or close.",
+    tasks:["Qualify: share list done, 3–5 field trainings observed, FNA done","Attend Fast Start School with a client, 3 appointments, your top 5, or a result","Score 85–90% on the Xcel final and simulators, then test","Have your trainer call your Top 25 with you","Book 10 appointments or BPM guests this week"],
+    res:[["Fast Start School","#plan|fss"],["Trainer scripts","#scripts"],["Hopper",L.hopper]]},
+   {lab:"Week 3",d:"15–21",t:"Licensed and recruiting",g:"License done, first recruits in.",
+    tasks:["Pass your test, apply, finish AML, and get appointed with carriers","Bring on your first recruit toward GX1 (3 this month)","Field trainings at 6 or more","Book 10 appointments or BPM guests this week"],
+    res:[["Licensing steps","#plan|lic"],["GX","#gx"],["Objection bank",L.objections]]},
+   {lab:"Week 4",d:"22–30",t:"Close GX1",g:"3 recruits and 15,000 points this calendar month.",
+    tasks:["Count exactly what's left for GX1 this month","Write your first cases with your trainer","10 field trainings done in your first month","Start each recruit on this playbook and run their first 48 hours","Book 10 appointments or BPM guests this week"],
+    res:[["GX","#gx"],["First 48 hours","#duplicate"],["Closing",L.closing]]}
+  ],
+  check:{day:30,items:["Licensed and appointed with carriers","GX1 in your first month, or a dated finish plan in your leader's hands","10 field trainings done","Fast Start School attended inside 2 weeks","10 appointments or BPM guests every week","2 calls a day, 6 days, and +2 to the hopper, 5 days, every week"]}},
+ {name:"Rising",days:"Days 31–60",color:"var(--p2)",desc:"GX2 in your second month: 6 recruits and 30,000 points.",
+  mods:[
+   {lab:"Week 5",d:"31–37",t:"Learn the presentation",g:"Get competent in the room.",
+    tasks:["Study The Builders Playbook","Download the Flipchart Presentations, Steps 1–5","Plug into the weekly ATM Club","Run part of every presentation with your trainer","Book 10 appointments or BPM guests this week"],
+    res:[["Training and expansion","#plan|train"],["Presentations",L.presentations]]},
+   {lab:"Week 6",d:"38–44",t:"Duplicate",g:"Your recruits start the way you did.",
+    tasks:["Every recruit has a Day 1, a Top 25, and a Fast Start School date","Three-way your recruits' first calls, then step back","Get trainer calls set from each recruit's Top 25","Book 10 appointments or BPM guests this week"],
+    res:[["First 48 hours","#duplicate"],["3-way text","#scripts"]]},
+   {lab:"Week 7",d:"45–51",t:"Field and build",g:"Families and recruits every week.",
+    tasks:["Sit with families every week and ask every one for introductions","Keep bringing on recruits toward 6 this month","Move one skill to Do alone on your ladder","Book 10 appointments or BPM guests this week"],
+    res:[["The ladder","#duplicate"],["Objection bank",L.objections]]},
+   {lab:"Week 8",d:"52–60",t:"Close GX2",g:"6 recruits and 30,000 points this calendar month.",
+    tasks:["Count exactly what's left for GX2","Revisit old no's from your Hopper","Help your recruits push their own GX1","Book 10 appointments or BPM guests this week"],
+    res:[["GX","#gx"],["Hopper",L.hopper]]}
+  ],
+  check:{day:60,items:["GX2 in your second month, or a dated finish plan in your leader's hands","Every recruit working this playbook","10 appointments or BPM guests every week","Running parts of presentations yourself"]}},
+ {name:"Unstoppable",days:"Days 61–90",color:"var(--p3)",desc:"GX1 minimum every month. Run it yourself and train your first.",
+  mods:[
+   {lab:"Week 9",d:"61–67",t:"Own the appointment",g:"Your trainer stays quiet.",
+    tasks:["Pass the IUL field certification","Run 2 appointments with your trainer silent","Set this month's GX1 plan in its first week"],
+    res:[["IUL certification",L.iulCourse],["Closing",L.closing]]},
+   {lab:"Week 10",d:"68–74",t:"Train your first",g:"Teach what you just learned.",
+    tasks:["Field-train a recruit on 2 appointments","Walk a recruit through their Week 1 and Week 2","Move one skill to Teach on your ladder"],
+    res:[["The ladder","#duplicate"],["Presentations",L.presentations]]},
+   {lab:"Week 11",d:"75–81",t:"Build the rhythm",g:"Your people move without you calling them.",
+    tasks:["Start a weekly 20-minute huddle with your recruits","Read your recruits' Sunday reviews every week","Book 10 appointments or BPM guests this week"],
+    res:[["Sunday review","#duplicate"],["Hopper",L.hopper]]},
+   {lab:"Week 12",d:"82–90",t:"Day 90",g:"Look back, plan forward.",
+    tasks:["Run your recruits' 30-day checkpoints with them","Ask your SMD to build your full-time plan with you","Write your next 90 days and present it to your leader","Set your path to MD trainer in 3–5 months"],
+    res:[["Your whys","#today"],["GX","#gx"]]}
+  ],
+  check:{day:90,items:["GX1 or better every month since you started","Running appointments on your own","At least one recruit has hit GX1","Full-time plan built with your SMD"]}}
+];
+
+const GXL={1:{rec:3,pts:15000},2:{rec:6,pts:30000}};
+
+const SCRIPTS=[
+ {title:"Invite to the BPM",intro:"One script for everyone: get them to the free Zoom, Thursday 6 PM or Saturday 9 AM Pacific. Built on Trustworthy Selling.",items:[
+  {id:"bpm",tag:"Full call: open, ask, close",title:"GX BPM invite, complete script",parts:[
+   {h:"Open: always personal first",q:"Hey [Name]! It's [you]. How are you doing?",tip:"Let them talk for 30–60 seconds. Actually listen. That's trust being built in real time."},
+   {h:"Bridge: personal hook",q:"Hey, I'm actually really glad I caught you. I was thinking about you and I wanted to personally reach out. I have something going on this week and you were one of the first people I thought of.",tip:"It's personal, not mass. Mean it when you say it."},
+   {h:"The ask: clear and confident",q:"My team is hosting a free Zoom session this week, Thursday at 6PM or Saturday at 9AM Pacific. It covers financial topics most people were never taught. Really practical stuff on money, protecting yourself and your family, and planning for the future. Most people who come walk away saying they wish they'd learned this sooner. I'd love for you to be there. Which works better for you, Thursday or Saturday?",tip:"Then stop talking. The silence belongs to them."},
+   {h:"They say yes",q:"Perfect. I'm sending you the link right now. I'm really glad you're coming. I think you're going to get a lot out of it.",tip:"Send the link within 5 minutes while they're still engaged."}]},
+  {id:"bpm-obj",tag:"Every answer ends with Thursday or Saturday",title:"BPM objections, what to say",parts:[
+   {h:"\"What is it exactly?\"",q:"It's a free educational session on financial stuff, like how to protect your income, how to think about money, and how to plan for the future. Practical, no fluff. Most people come in skeptical and leave saying they wish they'd done it sooner. It's only 45 minutes. Thursday or Saturday?"},
+   {h:"\"Is this a sales thing / MLM?\"",q:"I get why you'd ask that, and I respect it. No, it's genuinely educational. There's no pitch during the session. Come and form your own opinion. It's 45 minutes free on Zoom. I wouldn't call you personally if I didn't think it was worth your time."},
+   {h:"\"I'm really busy right now.\"",q:"I hear you. It's only 45 minutes and it's on Zoom so you don't have to go anywhere. Thursday at 6 or Saturday at 9, which is the less crazy one for you?"},
+   {h:"\"Can you just send me the info?\"",q:"Of course, but honestly reading about it doesn't do it justice. It's one of those things you have to experience. Can I just send you the Zoom link and you block 45 minutes Thursday or Saturday? If it's not for you, no hard feelings at all."},
+   {h:"\"Let me think about it.\"",q:"Totally. Let me send you the link now and you can decide closer to the time. Thursday at 6 or Saturday at 9, which one should I put you down for tentatively?"},
+   {h:"\"I'm not really into financial stuff.\"",q:"Most people feel that way, honestly because it was never explained in a way that made sense. That's kind of the whole point of this session. It's not complicated or dry. I think it'd surprise you. Just 45 minutes, Thursday or Saturday?"}]},
+  {id:"bpm-vm",tag:"No answer",title:"Voicemail (18 seconds) and follow-up text",parts:[
+   {h:"Voicemail",q:"Hey [Name], it's [you]. I was thinking about you and wanted to personally reach out. I have something going on this week I think you'd genuinely get a lot out of. Nothing heavy. Give me a call back when you get a sec, or I'll shoot you a text.",tip:"Under 20 seconds. Never pitch on a voicemail."},
+   {h:"Text within 2 minutes",q:"Hey [Name], just left you a voicemail. Short version: my team is hosting a free Zoom on financial education this Thursday at 6PM or Saturday at 9AM Pacific. Thought of you personally. Want me to send the link?"}]},
+  {id:"bpm-drop",tag:"Text or call",title:"The webinar drop",parts:[
+   {q:"Hey [Name], working on a project with a friend of mine and I want to share it with you. We've got a free webinar this Saturday at 9am Pacific. Are you free to tune in?"},
+   {h:"Not available? Book a Zoom instead",q:"All good! How's your schedule Monday or Tuesday for a quick Zoom?"}]}
+ ]},
+ {title:"Book the appointment",intro:"Keep it simple. Set the appointment. Get their email.",items:[
+  {id:"proj",tag:"James Schwartz, RFM",title:"Simple project script",parts:[
+   {h:"Run something by you",q:"I'm excited about a project I'm working on with a friend of mine and want to run it by you. When can we jump on a quick Zoom call in the next day or two?"},
+   {h:"Get their thoughts",q:"The reason I'm calling is because I'm working on an exciting project and want to get your thoughts on it. Can you hop on a quick Zoom in the next day or two?"}]},
+  {id:"hot",tag:"New associate, hot market",title:"Partnered up",parts:[
+   {q:"Hey [Name]! Hope you're doing well! So I just partnered with a new company and I'm really excited about it. It's been helping me [2–3 personal goals, like spend more time with my family, create extra income, actually learn how money works]. I wanted to reach out because I'd love to share with you what we're doing. No pressure, so if you know anyone who could benefit, you can send them my way and I can earn your referrals. It's just a quick 20–30 minutes on Zoom. What does your schedule look like today or tomorrow? Perfect, what's your email? That's it."}]},
+  {id:"program",tag:"New associate, they answer",title:"The program script",parts:[
+   {q:"Hey what's new? [small talk, listen] I'm working on a program with a friend of mine. I want to show you what we're doing. When's a good time to jump on a quick Zoom for 20–30 minutes?"},
+   {h:"If they ask \"What is it?\"",q:"It's an educational platform about money. So does Tuesday or Thursday work better?"},
+   {h:"If hesitant",q:"It's not one of those things. I'm not here to sell you anything or sign you up for anything. I'm not going to waste your time. I just want to share what we're doing so I can earn your referrals if you know anyone who could benefit. What's your schedule like today or tomorrow? Quick Zoom, that's it."}]},
+  {id:"txt",tag:"James Schwartz, RFM · text",title:"Simple text for new people",parts:[
+   {q:"I'm working on a project with a friend on some SUPER EXCITING stuff. If you find value in it, you decide what you want to do. I'm a no-pressure kinda [girl / guy]! Honestly, my goal is simple: LOVE and HELP families. Is there a day and time you are available? It will be 20–30 min. Let me know. Have the most amazing day!"}]},
+  {id:"nail",tag:"James Schwartz, RFM",title:"Nail down a time",parts:[
+   {q:"Sounds like evenings and weekends would probably work best for you, right? Tuesday evening or Saturday afternoon? What's best for you to meet over Zoom, morning or afternoon? Tuesday or Wednesday?"},
+   {h:"Then",q:"Awesome, what time is best? [__] o'clock or [__] o'clock? Great, what is the best email address to send the Zoom link? Alright, I look forward to seeing you on [day / time].",tip:"Always offer two choices, day then time. Never end the call without the email."}]}
+ ]},
+ {title:"Your trainer on your list",intro:"The setup is 90% of the work. You introduce, your trainer books the Zoom.",items:[
+  {id:"3way",tag:"James Schwartz, RFM · text",title:"3-way text: intro and trainer follow-up",parts:[
+   {h:"You send",q:"Hey [Prospect], I have added [Trainer] to this text thread. I just started working at [his/her] firm. [Trainer] is amazing. [edify] [He/She] may reach out to let you know some basics about what I'll be doing. That way you may be able to send me some referrals if anyone ever pops in your mind. If you could please do me a favor and take [his/her] call. Hey [Trainer], this is my friend [Prospect]. We go back a long way, [how you know them]. [He/She] works at [company]. I'll let you guys take it from here."},
+   {h:"Trainer responds",q:"Hi [Associate], thanks for introducing me to [Prospect]. Hi [Prospect], great to meet you. When might you have a quick minute so we can hop on a call? I promise I'll be brief. And just a heads up, I'm not trying to get you to buy anything or join anything. I simply want to talk with you about what [Associate] will be doing with our firm."},
+   {h:"On the call",q:"It's really important for [Associate] to get off to a quick start here at our firm. Do you think you could spare 20 or 30 minutes to maybe do a Zoom so you know what [he/she]'ll be doing?",tip:"Keep it brief. Just set the Zoom."}]},
+  {id:"friend",tag:"Trainer calls the associate's list",title:"Call script: friend of the associate",parts:[
+   {q:"Hi [Prospect], my name is [Trainer]. I'm a friend of [Associate]. I don't know if you know, but [Associate] just started working with us here at our firm, and I told [him/her] it would be important for as many people as [he/she] knows and trusts to find out what [he/she]'s doing. That way, if the need ever came up, you could refer [his/her] services. Do you think highly enough of [Associate] to spend maybe 20–30 minutes finding out what it is [he/she]'ll be doing?"},
+   {h:"If they ask \"What is it about?\"",q:"Well, it's about 20 or 30 minutes or so. We can just hop on a Zoom and show you what [he/she] will be doing. Then maybe in the future, if you know of someone, you could give [Associate] a referral. If nothing else, [he/she] gets [his/her] training out of the way. What day is usually best for you and your spouse?"}]},
+  {id:"3hot",tag:"New associate, text intro",title:"3-way text, hot market",parts:[
+   {q:"Hey [Name], I wanted to introduce you to my friend and mentor [Mentor Name]. She/He is a very successful business owner that I respect and have learned a lot from. [Mentor Name], this is my friend [Prospect Name], the one I told you about. She/He is such a hard worker and is always open to new opportunities. I just knew you two needed to connect."}]},
+  {id:"3good",tag:"Referral call",title:"Three Good Qualities",parts:[
+   {q:"Hello [Prospect]. Hi, this is [Your Name]. I was actually referred to you by [Referrer]. I was speaking with [Referrer] and told [him/her] we are expanding and I was looking for some sharp people. [He/She] said some great things about you. [He/She] said you were [quality 1], [quality 2], and great with [quality 3]. I don't know too much about you. What exactly do you do?"},
+   {h:"Then",q:"Wow, that's great. From what [Referrer] said about you, I thought it made sense to give you a call. I would love to introduce our firm to you, to show you who we are, what we do, and give you a chance to introduce yourself to us and see if there is a fit. What's your schedule like over there?",tip:"They'll give you their work hours. Go to Nail down a time."}]}
+ ]},
+ {title:"When they hesitate",intro:"Never push. Acknowledge, reassure, then redirect to the meeting, not the pitch.",items:[
+  {id:"reassure",tag:"Calm confidence",title:"Reassurance script",parts:[
+   {q:"It's not one of those things. I'm not going to ask you to buy anything or sign up for anything. I wouldn't disrespect our relationship like that. I just want to share some information I think is genuinely valuable. If it resonates, great. If not, no hard feelings at all. I just want to earn your referrals. Sound fair? We can do a quick 20–30 minutes on Zoom. What's your email?"},
+   {h:"Still hesitant",q:"Totally understand. A lot of people feel the same way at first. What would need to be true for you to even be curious about something like this?"},
+   {h:"Clean no",q:"No problem whatsoever. I'm genuinely glad we reconnected either way. Let's keep in touch.",tip:"Never push past a clean no. Your integrity is your brand."}]},
+  {id:"retake",tag:"They stall",title:"The soft re-take",parts:[
+   {h:"\"I'll check my schedule and let you know.\"",q:"Hey, you know what, I don't even know if it'll resonate with you, but it's valuable. And you might know someone who could benefit, so you could always just refer me. Want to do this evening after dinner, or tomorrow after church?"}]}
+ ]},
+ {title:"Your why",intro:"A weak why quits after the first rejection. A powerful why talks to 10 more people.",items:[
+  {id:"why5",tag:"Do this with every new person",title:"5 levels deep",parts:[
+   {h:"Level 1",q:"Why did you join?"},
+   {h:"Level 2",q:"Why do you need that?"},
+   {h:"Level 3",q:"What does that look like specifically?"},
+   {h:"Level 4",q:"What would that mean to you?"},
+   {h:"Level 5",q:"So when things get hard, what are you really fighting for?",tip:"That answer goes first on your list of whys. Write it on your mirror."}]}
+ ]}
+];
+
+const SKILLS=["2 calls a day","Inviting to the BPM","Booking appointments","Introducing your trainer (3-way)","The presentation","Recruiting conversation","Handling objections","First 48 hours for a recruit","Running a huddle"];
+const LEVELS=["Watch","Do with","Do alone","Teach"];
+const FIRST48=["Send them this playbook and get their Day 1 entered","Enroll them in Xcel and book their test date the same day","Get them into Telegram and Hopper","Have them write their Top 25 and score it","Book their Fast Start School date inside 2 weeks","Do the 5-levels-deep why with them","Three-way their first 2 calls, then let them make the next ones alone","Get their first 3-way texts out to their Top 25"];
+const HONOR=[
+ ["Your value is determined by your service to others.","Be humble and selfless. Mission first, team second, self last."],
+ ["Healthy relationships thrive on open lines of communication.","Constant personal communication with leaders, teammates, and clients."],
+ ["Maintain professionalism at all times.","Keep all time commitments and dress appropriately."],
+ ["Be responsible and dependable.","No blaming others and no excuses."],
+ ["Be resourceful and solution oriented.","No whining."],
+ ["Commit to personal development.","Be a student of the business. Attend all meetings and events and always take notes."],
+ ["Seek first to understand before trying to be understood.","Respect brings respect."],
+ ["Deal direct.","If you have a challenge with someone, deal directly with that person, or let it go."],
+ ["Strive to find reasons to praise.","Encourage and recognize at all times. Celebrate all wins."],
+ ["All decisions should be win-win for all.","Right over wrong, ethics over convenience, truth over popularity."],
+ ["We don't participate in negative talk.","Speak supportively with the intention to create a positive impact."],
+ ["Field training is a privilege.","Treat every appointment like gold and do your best with each one."],
+ ["Be a coachable, grateful, positive, upbeat you.",""]
+];
+const TEAM_LINKS=[
+ ["hopper","Hopper","Your pipeline and contact list"],["hopperStart","Hopper setup","First 10 minutes on your phone"],
+ ["gxGame","GX game","Your three clocks, synced"],["scripts","Contact scripts","Every script and the call guide"],
+ ["objections","Objection bank","What to say when they push back"],["presentations","Presentations","BPM and flip chart guide"],
+ ["closing","Closing","Closing language and tools"],["prospecting","Prospecting","Finding people to talk to"],
+ ["identity","Identity shift","Think like a business owner"],["dna","Leadership DNA","Your Day 1 profile"],
+ ["fna","FNA","Digital Financial Needs Analysis"],["iulCourse","IUL certification","Required before IUL solo"],
+ ["iulStory","IUL story","The Widow's Chain and more"],["missionHq","Mission HQ","The original command center"],
+ ["gxCampaign","GX Builder campaign","Our markets and the path to GX1"]
+];
+const RFM_LINKS=[
+ ["toolbox","RFM agent toolbox","Scripts, flyers, and tools (PIN required)"],["mywfg","MyWFG","Your WFG agent site"],
+ ["rfmVideos","RFM training videos","The full video series"],["satZoom","Saturday Zoom training","Jaime Villalovos and the CEOs"],
+ ["atm","ATM Club","Weekly product training"],["telegram","Team Revolution Telegram","Team chat"],
+ ["codeHonor","Code of Honor","The official document"],["flipchart","Flipchart Steps 1–5","Presentation downloads"],
+ ["playbookBook","The Builders Playbook","Read online"]
+];
+const BOOKS=[
+ ["The Builders Playbook","RFM","bfsBook"],["Happy & Strong","Jaime Villalovos","happyStrong"],["Think & Grow Rich","Napoleon Hill"],
+ ["How to Win Friends and Influence People","Dale Carnegie"],["The Dream Giver","Bruce Wilkinson"],["Tax-Free Retirement","Patrick Kelly"],
+ ["Rich Dad, Poor Dad","Robert Kiyosaki"],["The Cashflow Quadrant","Robert Kiyosaki"],["All You Can Do Is All You Can Do","Art Williams"],
+ ["The Magic of Thinking Big","David Schwartz"],["Building People","Xuan Nguyen"],["The 17 Indisputable Laws of Teamwork","John Maxwell"],
+ ["Dare to Dream, Work to Win","Dr. Tom Barrett"],["Atomic Habits","James Clear"],["The Power of One","Ed Mylett"]
+];
+
+/* ===== State ===== */
+const KEY="hyperion-playbook-v2";
+const blank=()=>({fields:{},checks:{},daily:{},weekly:{},gx:{},whys:[],t25:[],ladder:{},notes:{},reviews:[],ft:0,fssBring:{}});
+let state=blank();
+try{const s=localStorage.getItem(KEY); if(s) state=Object.assign(blank(),JSON.parse(s));}catch(e){}
+let cloudTimer=null;
+function save(){
+  try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}
+  // debounced cloud save (only once signed in)
+  if(fbUser){
+    clearTimeout(cloudTimer);
+    cloudTimer=setTimeout(async()=>{
+      try{
+        await setDoc(doc(fbDb,"teams",TEAM,"playbook",fbUser.uid),{
+          state, name: (state.fields&&state.fields.name)||"", email: fbUser.email||"",
+          updatedAt: new Date().toISOString()
+        });
+      }catch(e){ /* keep local copy; will retry on next save */ }
+    },800);
+  }
+}
+async function loadCloud(){
+  if(!fbUser) return;
+  try{
+    const snap=await getDoc(doc(fbDb,"teams",TEAM,"playbook",fbUser.uid));
+    if(snap.exists() && snap.data().state){
+      state=Object.assign(blank(), snap.data().state);
+      try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}
+    }
+  }catch(e){ /* fall back to whatever is in localStorage */ }
+}
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt=n=>Number(n||0).toLocaleString();
+function toast(m){const t=$("toast"); t.textContent=m; t.classList.add("show"); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("show"),1700);}
+
+/* ===== Dates ===== */
+const pad=n=>String(n).padStart(2,"0");
+const iso=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const parse=s=>{const [y,m,d]=s.split("-").map(Number); return new Date(y,m-1,d);};
+const TODAY=new Date(); TODAY.setHours(0,0,0,0);
+const todayKey=iso(TODAY);
+function dayNum(){ if(!state.fields.start) return null; return Math.round((TODAY-parse(state.fields.start))/86400000)+1; }
+function weekNum(){ const n=dayNum(); return (n&&n>=1)?Math.floor((n-1)/7)+1:0; }
+function weekDates(){
+  const n=dayNum(); let s;
+  if(n&&n>=1){ s=parse(state.fields.start); s.setDate(s.getDate()+(weekNum()-1)*7); }
+  else { s=new Date(TODAY); s.setDate(s.getDate()-((s.getDay()+6)%7)); }
+  return Array.from({length:7},(_,i)=>{const d=new Date(s); d.setDate(d.getDate()+i); return iso(d);});
+}
+const monthKey=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}`;
+const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+function monthIndex(mk){ if(!state.fields.start) return 0; const s=parse(state.fields.start); const [y,m]=mk.split("-").map(Number); return (y*12+m-1)-(s.getFullYear()*12+s.getMonth()); }
+function gxTarget(mk){ return monthIndex(mk)===1?2:1; }
+
+/* ===== Gate (Firebase login) ===== */
+function unlock(){ $("gate").hidden=true; }
+async function doSignIn(){
+  $("gateErr").textContent="";
+  const email=$("gateEmail").value.trim(), pw=$("gatePw").value;
+  if(!email||!pw){ $("gateErr").textContent="Enter your email and password."; return; }
+  try{ await signInWithEmailAndPassword(fbAuth, email, pw); }
+  catch(e){ $("gateErr").textContent="Sign-in failed. Check your email and password, or create an account in the Hopper first."; }
+}
+$("gateBtn").addEventListener("click",doSignIn);
+$("gatePw").addEventListener("keydown",e=>{ if(e.key==="Enter") doSignIn(); });
+$("gateEmail").addEventListener("keydown",e=>{ if(e.key==="Enter") doSignIn(); });
+
+onAuthStateChanged(fbAuth, async u=>{
+  fbUser = u;
+  if(u){
+    const before = localStorage.getItem(KEY) || "";
+    await loadCloud();   // pull this user's saved progress
+    const after = localStorage.getItem(KEY) || "";
+    unlock();
+    // if cloud had newer/different data than what this page rendered with, reload once so every view reflects it
+    if(after && after !== before && !sessionStorage.getItem("pb-reloaded")){
+      try{ sessionStorage.setItem("pb-reloaded","1"); }catch(e){}
+      location.reload();
+    }
+  } else {
+    $("gate").hidden=false;
+  }
+});
+window.addEventListener("pageshow",()=>{ try{ sessionStorage.removeItem("pb-reloaded"); }catch(e){} });
+
+/* ===== Tabs ===== */
+const TABS=["today","top25","plan","gx","scripts","duplicate","library"];
+function showTab(id,scroll){
+  if(!TABS.includes(id)) id="today";
+  TABS.forEach(t=>$(t).hidden=(t!==id));
+  document.querySelectorAll("nav.tabs a").forEach(x=>x.setAttribute("aria-current",x.getAttribute("href")==="#"+id?"page":"false"));
+  const cur=document.querySelector('nav.tabs a[aria-current="page"]');
+  try{ cur.parentElement.scrollLeft=cur.offsetLeft-cur.parentElement.clientWidth/2+cur.clientWidth/2; }catch(e){}
+  try{ history.replaceState(null,"","#"+id); }catch(e){}
+  if(id==="today") renderToday();
+  if(id==="gx") renderGx();
+  if(scroll){ try{ window.scrollTo(0,document.querySelector("nav.tabs").offsetTop-1); }catch(e){} }
+}
+document.addEventListener("click",e=>{
+  const x=e.target.closest('a[href^="#"]'); if(!x) return;
+  const id=x.getAttribute("href").slice(1); if(!TABS.includes(id)) return;
+  e.preventDefault(); showTab(id,true);
+  const jump=x.dataset.jump||(x.dataset.kitOpen?"kit-"+x.dataset.kitOpen:null);
+  if(jump){ const d=$(jump); if(d){ if(d.tagName==="DETAILS") d.open=true; setTimeout(()=>{try{d.scrollIntoView({block:"start"});}catch(err){}},30); } }
+  if(x.dataset.open){ const d=document.querySelector(`details.scr[data-id="${x.dataset.open}"]`); if(d){ d.open=true; setTimeout(()=>{try{d.scrollIntoView({block:"start"});}catch(err){}},30); } }
+});
+window.addEventListener("hashchange",()=>{ const id=location.hash.slice(1); if(TABS.includes(id)) showTab(id,true); });
+
+/* ===== Checklists ===== */
+const checkHTML=list=>list.map(i=>`<label class="item"><input type="checkbox" data-id="${i.id}" ${state.checks[i.id]?"checked":""}><span>${i.t}</span></label>`).join("");
+$("licList").innerHTML=checkHTML(LIC);
+$("w1List").innerHTML=checkHTML(W1);
+$("fssQual").innerHTML=checkHTML(FSS_Q);
+$("actList").innerHTML=checkHTML(ACT);
+$("trainList").innerHTML=checkHTML(TRAIN);
+$("fssBring").innerHTML=FSS_B.map((t,i)=>`<label class="item"><input type="checkbox" data-bring="${i}" ${state.fssBring[i]?"checked":""}><span>${t}</span></label>`).join("");
+
+document.addEventListener("change",e=>{
+  const el=e.target;
+  if(el.type==="checkbox"&&el.dataset.id){
+    state.checks[el.dataset.id]=el.checked; save();
+    document.querySelectorAll(`input[data-id="${el.dataset.id}"]`).forEach(x=>{ if(x!==el) x.checked=el.checked; });
+    if(el.dataset.g) modPct(el.dataset.g);
+    kitPcts();
+    if(el.closest("#whereMain")) setTimeout(renderNext,450); else renderNext();
+    renderFirst30();
+  }
+  if(el.dataset.bring!==undefined){ state.fssBring[el.dataset.bring]=el.checked; save(); }
+});
+
+function updateLicFlag(){
+  const f=$("licFlag"),s=state.fields.start,l=state.fields.licDate;
+  if(!s||!l){ f.textContent=""; return; }
+  const d=Math.round((parse(l)-parse(s))/86400000)+1;
+  f.textContent=d<=21?`Licensed on Day ${d}. Well done.`:`Licensed on Day ${d}.`; f.className="flag ok";
+}
+function checkFss(){
+  const w=$("fssFlag"),s=state.fields.start,f=state.fields.fss;
+  if(!s||!f){ w.textContent=""; return; }
+  const d=Math.round((parse(f)-parse(s))/86400000)+1;
+  if(d<=14){ w.textContent=`Day ${d}: inside 2 weeks`; w.className="flag ok"; }
+  else { w.textContent=`Day ${d}: past 2 weeks. Book an earlier date.`; w.className="flag"; }
+}
+
+$("whyInputs").innerHTML=Array.from({length:10},(_,i)=>`<label><input data-why="${i}" value="${esc(state.whys[i])}" aria-label="Reason ${i+1}"></label>`).join("");
+$("whyInputs").addEventListener("input",e=>{ const i=e.target.dataset.why; if(i===undefined) return; state.whys[i]=e.target.value; save(); });
+
+/* ===== Top 25 ===== */
+if(!state.t25.length) state.t25=Array.from({length:25},()=>({name:"",last:"",phone:"",p:[],mtg:false,note:""}));
+const t25Score=r=>(r.p||[]).length;
+function renderT25(){
+  $("t25").innerHTML=state.t25.map((r,i)=>`
+   <div class="prow ${r.mtg?"met":""}">
+    <div class="n">${i+1}</div>
+    <input data-t="${i}" data-k="name" value="${esc(r.name)}" placeholder="Name & spouse" aria-label="Name and spouse, row ${i+1}">
+    <input class="ln" data-t="${i}" data-k="last" value="${esc(r.last)}" placeholder="Last name" aria-label="Last name, row ${i+1}">
+    <input class="ph" data-t="${i}" data-k="phone" type="tel" value="${esc(r.phone)}" placeholder="Phone" aria-label="Phone, row ${i+1}">
+    <div class="prof">${[1,2,3,4,5,6,7,8].map(n=>`<button type="button" class="chip ${(r.p||[]).includes(n)?"on":""}" data-chip="${i}" data-n="${n}" aria-pressed="${(r.p||[]).includes(n)}" aria-label="Profile ${n}">${n}</button>`).join("")}
+     <span class="score">${t25Score(r)}/8</span>
+     <button type="button" class="mtg ${r.mtg?"on":""}" data-mtg="${i}" aria-pressed="${!!r.mtg}">${r.mtg?"Meeting set":"Meeting?"}</button></div>
+    <input class="cm" data-t="${i}" data-k="note" value="${esc(r.note)}" placeholder="Comments" aria-label="Comments, row ${i+1}">
+   </div>`).join("");
+  t25Sum();
+}
+function t25Sum(){ $("t25Sum").textContent=`${state.t25.filter(r=>r.name.trim()).length} of 25 named · ${state.t25.filter(r=>r.mtg).length} meetings set`; }
+$("t25").addEventListener("input",e=>{ const i=e.target.dataset.t; if(i===undefined) return; state.t25[i][e.target.dataset.k]=e.target.value; save(); t25Sum(); });
+$("t25").addEventListener("click",e=>{
+  const c=e.target.closest("[data-chip]"),m=e.target.closest("[data-mtg]");
+  if(c){ const r=state.t25[c.dataset.chip],n=+c.dataset.n; r.p=r.p||[]; r.p=r.p.includes(n)?r.p.filter(x=>x!==n):[...r.p,n]; save(); renderT25(); }
+  else if(m){ const r=state.t25[m.dataset.mtg]; r.mtg=!r.mtg; save(); renderT25(); }
+});
+$("sortT25").addEventListener("click",()=>{ state.t25.sort((x,y)=>(y.name.trim()?1:0)-(x.name.trim()?1:0)||t25Score(y)-t25Score(x)); save(); renderT25(); toast("Sorted by score"); });
+
+/* ===== 90-day plan ===== */
+function renderPlan(){
+  let h="";
+  P90.forEach((p,pi)=>{
+    h+=`<div class="phase-head"><i class="bar-v" style="background:${p.color}"></i><div><h3>${p.name}</h3><p>${p.days}: ${p.desc}</p></div></div>`;
+    if(pi===0) h+=`<div id="slotRooted"></div><div class="sub-label">The plan, week by week</div>`;
+    if(pi===1) h+=`<div id="slotRising"></div><div class="sub-label">The plan, week by week</div>`;
+    p.mods.forEach((m,mi)=>{
+      const g=`m${pi}-${mi}`;
+      h+=`<details class="mod" id="mod-${g}" data-mod="${g}" data-range="${m.d}"><summary><div class="mlabel">${m.lab}<small>Days ${m.d}</small></div><div class="mtitle"><b>${m.t}</b><span>${m.g}</span></div><div class="pct" id="pct-${g}">0%</div></summary>
+       <div class="mod-body"><div><h4>Do this</h4>${m.tasks.map((t,i)=>`<label class="item"><input type="checkbox" data-id="${g}t${i}" data-g="${g}" ${state.checks[g+"t"+i]?"checked":""}><span>${t}</span></label>`).join("")}</div>
+       <div class="res"><h4>Use these</h4>${m.res.map(([t,u])=>u.startsWith("#")?(u.includes("|")?`<a href="${u.split("|")[0]}" data-kit-open="${u.split("|")[1]}">${t}</a>`:`<a href="${u}">${t}</a>`):`<a href="${u}" target="_blank" rel="noopener">${t}</a>`).join("")}</div></div></details>`;
+    });
+    const c=`c${p.check.day}`;
+    h+=`<div class="check" id="chk-${c}"><h4>Day ${p.check.day} checkpoint</h4><p>Complete it with your leader. Every box checked before you move on.</p>
+     ${p.check.items.map((t,i)=>`<label class="item"><input type="checkbox" data-id="${c}i${i}" data-g="${c}" ${state.checks[c+"i"+i]?"checked":""}><span>${t}</span></label>`).join("")}
+     <textarea class="ta" data-note="${c}" placeholder="What I learned, and what I'm changing for the next 30 days" style="margin-top:8px">${esc(state.notes[c])}</textarea></div>`;
+  });
+  $("plan90").innerHTML=h;
+  $("slotRooted").appendChild($("kitRooted")); $("slotRising").appendChild($("kitRising"));
+  document.querySelectorAll("#plan90 details.mod:not(.kit)").forEach(d=>modPct(d.dataset.mod));
+  openCurrent();
+}
+function kitPcts(){ document.querySelectorAll("[data-kitpct]").forEach(el=>{ const b=[...$(el.dataset.kitpct).querySelectorAll('input[type=checkbox]')]; const p=b.length?Math.round(b.filter(x=>x.checked).length/b.length*100):0; el.textContent=p+"%"; el.classList.toggle("done",p===100); }); }
+function modPct(g){ const el=$("pct-"+g); if(!el) return; const b=[...document.querySelectorAll(`#plan90 input[data-g="${g}"]`)]; const p=Math.round(b.filter(x=>x.checked).length/b.length*100); el.textContent=p+"%"; el.classList.toggle("done",p===100); }
+function currentMod(){
+  const n=dayNum(), mods=[...document.querySelectorAll("#plan90 details.mod:not(.kit)")];
+  let t=null; if(n&&n>=1&&n<=90) t=mods.find(d=>{const [x,y]=d.dataset.range.split("–").map(Number); return n>=x&&n<=y;});
+  if(!t) t=mods.find(d=>!$("pct-"+d.dataset.mod).classList.contains("done"));
+  return t;
+}
+function openKit(){ const n=dayNum(); const lic=LIC.every(i=>state.checks[i.id]); $("kit-lic").open=!lic; }
+function openCurrent(){ const t=currentMod(); document.querySelectorAll("#plan90 details.mod:not(.kit)").forEach(d=>d.open=(d===t)); }
+document.addEventListener("input",e=>{ const el=e.target; if(el.dataset&&el.dataset.note){ state.notes[el.dataset.note]=el.value; save(); } });
+function renderMark(){ const n=dayNum(),m=$("todayMark"); if(n&&n>=1&&n<=90){ m.style.display="block"; m.style.left=`calc(${(n-.5)/90*100}% - 1px)`; m.dataset.label=`Day ${n}`; } else m.style.display="none"; }
+
+/* ===== Today ===== */
+const dayRec=k=>state.daily[k]||{calls:0,hop:0};
+function wkRec(){ const w="w"+(weekNum()||weekDates()[0]); return state.weekly[w]||(state.weekly[w]={appts:0}); }
+function gxRec(mk){ return state.gx[mk]||(state.gx[mk]={recruits:0,points:0}); }
+const gxPct=(g,lvl)=>(Math.min(1,g.recruits/GXL[lvl].rec)+Math.min(1,g.points/GXL[lvl].pts))/2;
+function dial(el,pct,big,small,label,hit){
+  const C=2*Math.PI*30, off=C*(1-Math.min(1,Math.max(0,pct)));
+  $(el).innerHTML=`<svg width="74" height="74" viewBox="0 0 74 74" aria-hidden="true"><circle cx="37" cy="37" r="30" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="8"/><circle cx="37" cy="37" r="30" fill="none" stroke="${hit?"#e3bc4b":"#c9a84c"}" stroke-width="8" stroke-linecap="round" stroke-dasharray="${C.toFixed(2)}" stroke-dashoffset="${off.toFixed(2)}"/></svg><div><div class="big">${big} <small>${small}</small></div><div class="state ${hit?"hit":""}">${label}</div></div>`;
+}
+function renderToday(){
+  const n=dayNum(), mk=monthKey(TODAY), lvl=gxTarget(mk), goal=GXL[lvl];
+  if(n&&n>=1){ $("tdDay").textContent=`Day ${n}`; $("tdMeta").textContent=`${MONTHS[TODAY.getMonth()]} target: GX${lvl}`; }
+  else if(n&&n<1){ $("tdDay").textContent="Starting soon"; $("tdMeta").textContent=`Your Day 1 is ${state.fields.start}.`; }
+  else { $("tdDay").textContent="Set your Day 1"; $("tdMeta").textContent="Enter your Day 1 date at the top to start the clock."; }
+
+  const d=dayRec(todayKey); $("cCalls").textContent=d.calls; $("cHop").textContent=d.hop;
+  const dp=(Math.min(d.calls,2)+Math.min(d.hop,2))/4;
+  dial("dialDay",dp,Math.min(d.calls,2)+Math.min(d.hop,2),"of 4",dp>=1?"Today is done":`${Math.max(0,2-d.calls)} calls, ${Math.max(0,2-d.hop)} names to go`,dp>=1);
+
+  let cd=0,hd=0; weekDates().forEach(k=>{const r=dayRec(k); if(r.calls>=2) cd++; if(r.hop>=2) hd++;});
+  const w=wkRec(); $("cAppts").textContent=w.appts; $("cWkDays").textContent=`${cd}/6 · ${hd}/5`;
+  dial("dialWeek",w.appts/10,w.appts,"of 10",w.appts>=10?"This week is booked":`${10-w.appts} more to book`,w.appts>=10);
+
+  const g=gxRec(mk), idx=monthIndex(mk);
+  $("gxQ").textContent=`GX${lvl}${idx>1?" minimum":""}: ${goal.rec} recruits + ${fmt(goal.pts)} points in ${MONTHS[TODAY.getMonth()]}.`;
+  $("cRec").textContent=g.recruits;
+  if(document.activeElement!==$("cPts")) $("cPts").value=g.points||"";
+  const mp=gxPct(g,lvl);
+  dial("dialMonth",mp,Math.round(mp*100)+"%","to GX"+lvl,mp>=1?`GX${lvl} hit`:`${Math.max(0,goal.rec-g.recruits)} recruits, ${fmt(Math.max(0,goal.pts-g.points))} pts left`,mp>=1);
+
+  const why=(state.whys||[]).find(x=>x&&x.trim());
+  $("whyShow").textContent=why?`“${why}”`:"Write your reasons why in Fast Start. Your first one shows here every day.";
+  renderNext(); renderFirst30();
+}
+document.querySelector(".clocks").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return; const v=+b.dataset.v;
+  if(b.dataset.d){ const r=state.daily[todayKey]||(state.daily[todayKey]={calls:0,hop:0}); r[b.dataset.d]=Math.max(0,r[b.dataset.d]+v); }
+  else if(b.dataset.w){ const r=wkRec(); r.appts=Math.max(0,r.appts+v); }
+  else if(b.dataset.m){ const r=gxRec(monthKey(TODAY)); r.recruits=Math.max(0,r.recruits+v); }
+  else return;
+  save(); renderToday();
+});
+$("cPts").addEventListener("input",e=>{ gxRec(monthKey(TODAY)).points=Math.max(0,parseInt(e.target.value,10)||0); save(); renderToday(); });
+
+/* ===== Where you are: stages in checklist order ===== */
+function buildStages(){
+  const st=[];
+  const kit=(key,title,tag,due,list,jump)=>st.push({key,title,tag,due,jump,items:list.map(i=>({id:i.id,t:i.t}))});
+  const mod=(pi,mi,due)=>{ const m=P90[pi].mods[mi], g=`m${pi}-${mi}`; st.push({key:g,title:`${m.lab}: ${m.t}`,tag:m.g,due,jump:"mod-"+g,g,items:m.tasks.map((t,i)=>({id:`${g}t${i}`,t}))}); };
+  const chk=(pi,due)=>{ const c=`c${P90[pi].check.day}`; st.push({key:c,title:`Day ${P90[pi].check.day} checkpoint`,tag:"Complete it with your leader.",due,jump:"chk-"+c,g:c,items:P90[pi].check.items.map((t,i)=>({id:`${c}i${i}`,t}))}); };
+  kit("w1","Week 1: let's launch","Fast Start Kit · about 6 to 8 focused hours",7,W1,"kit-w1");
+  mod(0,0,7);
+  kit("fss","Qualify for Fast Start School","Fast Start Kit · your top priority",14,FSS_Q,"kit-fss");
+  mod(0,1,14); mod(0,2,21);
+  kit("act","Activity","Fast Start Kit · the habits that build while you study",30,ACT,"kit-act");
+  mod(0,3,30); chk(0,30);
+  mod(1,0,37); mod(1,1,44); mod(1,2,51);
+  kit("train","Training and expansion","Fast Start Kit · after you're licensed",60,TRAIN,"kit-train");
+  mod(1,3,60); chk(1,60);
+  mod(2,0,67); mod(2,1,74); mod(2,2,81); mod(2,3,90); chk(2,90);
+  st.forEach(x=>{ x.done=x.items.filter(i=>state.checks[i.id]).length; x.complete=x.done===x.items.length; });
+  return st;
+}
+function dueText(due,n){
+  if(!n||n<1) return {t:`Due by Day ${due}`,c:"soon"};
+  const d=due-n;
+  if(d<0) return {t:`${-d} day${d===-1?"":"s"} past due (Day ${due})`,c:"late"};
+  if(d===0) return {t:`Due today (Day ${due})`,c:"soon"};
+  return {t:`Due by Day ${due} · ${d} day${d===1?"":"s"} left`,c:"ok"};
+}
+function renderNext(){
+  const n=dayNum(), st=buildStages(), curIdx=st.findIndex(x=>!x.complete);
+  const calIdx=n&&n>=1 ? st.findIndex(x=>x.due>=n) : -1;
+  const late=n? st.filter(x=>!x.complete&&x.due<n) : [];
+
+  /* journey strip */
+  $("journey").innerHTML=st.map((x,i)=>{
+    const cls=x.complete?"done":(i===curIdx?"cur":(n&&x.due<n?"late":""));
+    return `<button type="button" role="listitem" class="jst ${cls} ${i===calIdx&&i!==curIdx?"cal":""}" data-jump-btn="${x.jump}" title="${esc(x.title)}${x.complete?" · done":""}" aria-label="${esc(x.title)}: ${x.complete?"done":x.done+" of "+x.items.length}"></button>`;
+  }).join("");
+  if(!$("jlegend")){ $("journey").parentElement.insertAdjacentHTML("afterend",`<div class="jlegend" id="jlegend"><span><i style="background:var(--gold)"></i>Done</span><span><i style="background:var(--navy)"></i>You are here</span><span><i style="background:#f3d9d2;outline:2px solid var(--warn)"></i>Past due</span><span><i style="background:#e8e1cf;outline:2px solid var(--p1)"></i>Where the calendar says</span></div>`); }
+
+  /* main stage */
+  if(curIdx<0){
+    $("whereMain").innerHTML=`<div class="stage-tag">All 90 days</div><h4>Every box is checked.</h4><p class="small">You've finished the first 90 days. Keep GX1 every month, and run this playbook with your recruits.</p>`;
+  } else {
+    const x=st[curIdx], dt=dueText(x.due,n), open=x.items.filter(i=>!state.checks[i.id]);
+    $("whereMain").innerHTML=`<div class="stage-tag">Step ${curIdx+1} of ${st.length} · ${esc(x.tag)}</div>
+      <h4>${x.title}</h4>
+      <p class="due ${dt.c}">${dt.t}</p>
+      <div class="bar"><i style="width:${x.done/x.items.length*100}%"></i></div>
+      <div class="small" style="margin-bottom:6px">${x.done} of ${x.items.length} done</div>
+      <div id="nextList">${open.map(i=>`<label class="item"><input type="checkbox" data-id="${i.id}" ${x.g?`data-g="${x.g}"`:""}><span>${i.t}</span></label>`).join("")}</div>
+      <div class="where-foot"><a href="#plan" data-jump="${x.jump}">Open this in 90 days</a>${curIdx+1<st.length?`<span class="small">Up next: ${esc(st[curIdx+1].title)}</span>`:""}</div>`;
+  }
+
+  /* licensing track */
+  const ld=LIC.filter(i=>state.checks[i.id]).length, nl=LIC.find(i=>!state.checks[i.id]);
+  let lstat="";
+  if(!nl) lstat=`<p class="due ok" style="margin:0">Licensed and appointed.</p>`;
+  else { const dt=dueText(21,n); lstat=`<p class="due ${dt.c}" style="margin:0 0 8px">${dt.t.replace("Due","Licensed")}</p><label class="item" style="padding-top:0"><input type="checkbox" data-id="${nl.id}"><span>${nl.t}</span></label>`; }
+  $("whereLic").innerHTML=`<p class="side-h">Licensing track</p><p class="side-sub">${ld} of ${LIC.length} steps · runs alongside everything else</p><div class="bar" style="margin-bottom:10px"><i style="width:${ld/LIC.length*100}%"></i></div>${lstat}<div class="where-foot" style="margin-top:6px"><a href="#plan" data-jump="kit-lic">All licensing steps</a></div>`;
+
+  /* past due */
+  const others=late.filter(x=>st.indexOf(x)!==curIdx);
+  $("whereLate").hidden=!others.length;
+  if(others.length) $("whereLate").innerHTML=`<p class="side-h">Also past due</p><p class="side-sub">Catch these up so you don't fall further behind.</p><div class="late-list">${others.slice(0,4).map(x=>`<a href="#plan" data-jump="${x.jump}">${x.title}<span>${x.items.length-x.done} left · was due Day ${x.due}</span></a>`).join("")}${others.length>4?`<p class="small" style="margin:6px 0 0">and ${others.length-4} more</p>`:""}</div>`;
+
+  /* header + lead */
+  if(n&&n>=1&&curIdx>=0){
+    const cur=st[curIdx], behind=cur.due<n;
+    const calName = calIdx>=0 ? st[calIdx].title.split(":")[0] : "past Day 90";
+    $("whereLead").textContent = behind
+      ? `By the calendar you'd be on ${calName}. You're still on ${cur.title}. Finish these to catch up.`
+      : `You're on track. Finish what's in front of you and the next step moves up on its own.`;
+    $("tdMeta").textContent=`You're on ${cur.title}${behind?" · behind the calendar":" · on track"} · ${MONTHS[TODAY.getMonth()]} target: GX${gxTarget(monthKey(TODAY))}`;
+  }
+}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-jump-btn]"); if(!b) return;
+  showTab("plan",true); const d=$(b.dataset.jumpBtn); if(d){ if(d.tagName==="DETAILS") d.open=true; setTimeout(()=>{try{d.scrollIntoView({block:"start"});}catch(err){}},30); }
+});
+function renderFirst30(){
+  const done=LIC.filter(i=>state.checks[i.id]).length, nextLic=LIC.find(i=>!state.checks[i.id]);
+  $("licSum").textContent=done; $("licBar").style.width=(done/LIC.length*100)+"%";
+  $("licSum").parentElement.className="f30-num"+(done===LIC.length?" ok":"");
+  $("licNext").innerHTML = nextLic ? `Next: ${nextLic.t} · <a href="#plan" data-kit-open="lic">All steps</a>` : "Licensed and appointed. Done.";
+
+  const ft=state.ft||0, n=dayNum();
+  $("ftSum").textContent=ft; $("ftBar").style.width=Math.min(100,ft*10)+"%";
+  $("ftSum").parentElement.className="f30-num"+(ft>=10?" ok":"");
+  if(ft>=10) $("ftNext").textContent="10 done. That's your first-month goal.";
+  else if(n&&n>=1&&n<=30){ const left=31-n; $("ftNext").textContent=`${10-ft} to go, ${left} day${left===1?"":"s"} left in your first month.`; }
+  else $("ftNext").textContent="Goal: 10 in your first month. Tap + after each one.";
+
+  const s=state.fields.start, f=state.fields.fss, num=$("fssSum");
+  if(f&&s){
+    const d=Math.round((parse(f)-parse(s))/86400000)+1, past=parse(f)<TODAY;
+    num.textContent=`Day ${d}`; num.className="f30-num "+(d<=14?"ok":"warn");
+    $("fssNext").textContent = d>14 ? "That's past 2 weeks. Book an earlier date." : past ? "Attended. Check off what you brought in Fast Start." : `Booked inside 2 weeks. Bring a client, 3 appointments, your top 5, or a result.`;
+  } else if(f){ num.textContent=f; num.className="f30-num"; $("fssNext").textContent="Set your Day 1 at the top to check the 2-week window."; }
+  else { num.textContent="Not booked"; num.className="f30-num warn"; $("fssNext").textContent="Book it inside your first 2 weeks. Pick the date here."; }
+}
+document.addEventListener("click",e=>{ const b=e.target.closest("[data-ft]"); if(!b) return; state.ft=Math.max(0,(state.ft||0)+Number(b.dataset.ft)); save(); renderFirst30(); });
+
+/* ===== GX ===== */
+function renderGx(){
+  const mk=monthKey(TODAY), lvl=gxTarget(mk), goal=GXL[lvl], g=gxRec(mk), idx=monthIndex(mk), set=!!state.fields.start;
+  $("gxLadder").innerHTML=[["Month 1","GX1","3 recruits + 15,000 points",idx===0],["Month 2","GX2","6 recruits + 30,000 points",idx===1],["Every month after","GX1 minimum","3 recruits + 15,000 points",idx>1]]
+    .map(([m,l,r,now])=>`<div class="${now&&set?"now":""}"><span>${m}${now&&set?" · now":""}</span><b>${l}</b><span>${r}</span></div>`).join("");
+  const p=gxPct(g,lvl);
+  $("gxPct").textContent=Math.round(p*100)+"%"; $("gxOf").textContent="to GX"+lvl;
+  $("gxArc").setAttribute("stroke-dashoffset",(527.79*(1-p)).toFixed(2));
+  $("gxMonthName").textContent=`${MONTHS[TODAY.getMonth()]}: GX${lvl}`;
+  const last=new Date(TODAY.getFullYear(),TODAY.getMonth()+1,0).getDate(), left=last-TODAY.getDate(), elapsed=TODAY.getDate()/last;
+  $("gxPace").textContent=p>=1?`GX${lvl} hit for ${MONTHS[TODAY.getMonth()]}.`:`${left} day${left===1?"":"s"} left this month. ${p>=elapsed?"On pace.":"Behind pace: book more this week."}`;
+  $("gxRec").textContent=g.recruits; $("gxRecGoal").textContent=goal.rec; $("gxRecBar").style.width=Math.min(100,g.recruits/goal.rec*100)+"%";
+  $("gxPts").textContent=fmt(g.points); $("gxPtsGoal").textContent=fmt(goal.pts); $("gxPtsBar").style.width=Math.min(100,g.points/goal.pts*100)+"%";
+  const keys=Object.keys(state.gx).filter(k=>state.gx[k].recruits||state.gx[k].points||k===mk).sort();
+  $("gxMonths").innerHTML=keys.map(k=>{ const r=state.gx[k],l=gxTarget(k),hit=gxPct(r,l)>=1,[y,m]=k.split("-").map(Number),cur=k===mk;
+    return `<div class="mo ${hit?"hit":""} ${cur?"cur":""}"><b>${MONTHS[m-1].slice(0,3)} ${y}</b><span>GX${l} target · ${r.recruits} recruits · ${fmt(r.points)} pts</span><br><em>${hit?"Hit":(cur?"In progress":"Missed")}</em></div>`; }).join("");
+}
+
+/* ===== Scripts ===== */
+$("scriptGroups").innerHTML=SCRIPTS.map(g=>`<div class="sgroup"><h3 class="sh" style="margin-top:14px">${g.title}</h3><p>${g.intro}</p>
+ ${g.items.map(it=>`<details class="scr" data-id="${it.id}"><summary><div><small>${it.tag}</small><b>${it.title}</b></div><button type="button" class="copy" data-copy="${it.id}">Copy</button></summary>
+  <div class="scr-body">${it.parts.map(p=>`<div class="part">${p.h?`<h5>${esc(p.h)}</h5>`:""}<blockquote>“${esc(p.q)}”</blockquote>${p.tip?`<div class="tip">${p.tip}</div>`:""}</div>`).join("")}</div></details>`).join("")}</div>`).join("");
+$("scriptGroups").addEventListener("click",async e=>{
+  const b=e.target.closest("[data-copy]"); if(!b) return; e.preventDefault(); e.stopPropagation();
+  const it=SCRIPTS.flatMap(g=>g.items).find(x=>x.id===b.dataset.copy);
+  try{ await navigator.clipboard.writeText(it.parts.map(p=>p.q).join("\n\n")); toast("Script copied"); }catch(err){ toast("Copy didn't work. Press and hold the text to select it."); }
+});
+
+/* ===== Duplicate ===== */
+function renderLadder(){
+  $("ladder").innerHTML=`<thead><tr><th>Skill</th>${LEVELS.map(l=>`<th>${l}</th>`).join("")}</tr></thead><tbody>`+
+    SKILLS.map((s,si)=>{ const lv=state.ladder[si]||0; return `<tr><td>${s}</td>${LEVELS.map((l,li)=>`<td><button type="button" class="rung ${lv>li?"on":""}" data-s="${si}" data-l="${li+1}" aria-label="${s}: ${l}" aria-pressed="${lv>li}"></button></td>`).join("")}</tr>`; }).join("")+"</tbody>";
+  const alone=SKILLS.filter((s,i)=>(state.ladder[i]||0)>=3).length, taught=SKILLS.filter((s,i)=>(state.ladder[i]||0)>=4).length;
+  $("ladderSum").textContent=`${alone} of ${SKILLS.length} skills you can do alone · ${taught} you've taught. Tap a rung to set your level. Tap it again to step back.`;
+}
+$("ladder").addEventListener("click",e=>{ const b=e.target.closest(".rung"); if(!b) return; const s=b.dataset.s,l=+b.dataset.l; state.ladder[s]=(state.ladder[s]===l)?l-1:l; save(); renderLadder(); });
+$("first48").innerHTML=FIRST48.map((t,i)=>`<label class="item"><input type="checkbox" data-id="f48-${i}" ${state.checks["f48-"+i]?"checked":""}><span>${t}</span></label>`).join("")+`<div style="margin-top:12px"><button type="button" id="clear48">Clear for my next recruit</button></div>`;
+$("first48").addEventListener("click",e=>{ if(e.target.id!=="clear48") return; FIRST48.forEach((t,i)=>delete state.checks["f48-"+i]); save(); document.querySelectorAll("#first48 input").forEach(x=>x.checked=false); toast("Cleared for your next recruit"); });
+
+function summary(){
+  const n=dayNum(), mk=monthKey(TODAY), g=gxRec(mk), lvl=gxTarget(mk), w=wkRec();
+  let cd=0,hd=0; weekDates().forEach(k=>{const r=dayRec(k); if(r.calls>=2) cd++; if(r.hop>=2) hd++;});
+  return `${state.fields.name||"Associate"}${n&&n>=1?`, Day ${n}`:""}
+Licensing: ${LIC.filter(i=>state.checks[i.id]).length}/${LIC.length} steps${state.fields.licDate?`, licensed ${state.fields.licDate}`:""}
+This week: ${w.appts}/10 appointments or BPM guests · call days ${cd}/6 · hopper days ${hd}/5
+${MONTHS[TODAY.getMonth()]} GX${lvl}: ${g.recruits}/${GXL[lvl].rec} recruits · ${fmt(g.points)}/${fmt(GXL[lvl].pts)} points
+Field trainings: ${state.ft||0}/10 · Top 25: ${state.t25.filter(r=>r.name.trim()).length} named, ${state.t25.filter(r=>r.mtg).length} meetings`;
+}
+function renderLog(){ $("reviewLog").innerHTML=state.reviews.slice(-6).reverse().map(r=>`<div><b>${esc(r.date)}</b><br>Did: ${esc(r.a)}<br>Short: ${esc(r.b)}<br>Next: ${esc(r.c)}</div>`).join(""); }
+$("saveReview").addEventListener("click",()=>{ if(!r1.value.trim()&&!r3.value.trim()){ toast("Answer the first and last questions"); return; } state.reviews.push({date:TODAY.toLocaleDateString(),a:r1.value,b:r2.value,c:r3.value}); save(); renderLog(); r1.value=r2.value=r3.value=""; toast("Week saved"); });
+$("copyReview").addEventListener("click",async()=>{
+  const t=`Sunday review\n${summary()}\n\nDid: ${r1.value}\nFell short: ${r2.value}\nNext week's one move: ${r3.value}`;
+  try{ await navigator.clipboard.writeText(t); toast("Copied. Paste it to your leader."); }catch(e){ toast("Copy didn't work on this device"); }
+});
+
+/* ===== Library ===== */
+$("honor").innerHTML=HONOR.map(([b,s])=>`<div><b>${b}</b>${s?`<span>${s}</span>`:""}</div>`).join("");
+$("teamLinks").innerHTML=TEAM_LINKS.map(([k,t,s])=>`<a href="${L[k]}" target="_blank" rel="noopener"><b>${t}</b><span>${s}</span></a>`).join("");
+$("rfmLinks").innerHTML=RFM_LINKS.map(([k,t,s])=>`<a href="${L[k]}" target="_blank" rel="noopener"><b>${t}</b><span>${s}</span></a>`).join("");
+$("books").innerHTML=BOOKS.map(([t,au,k])=>`<li>${k?`<a href="${L[k]}" target="_blank" rel="noopener"><i>${t}</i></a>`:`<i>${t}</i>`}, ${au}</li>`).join("");
+$("exportBtn").addEventListener("click",async()=>{ try{ await navigator.clipboard.writeText(summary()); toast("Summary copied"); }catch(e){ toast("Copy didn't work on this device"); } });
+$("resetBtn").addEventListener("click",()=>{ if(!confirm("Clear all your progress on this device? This can't be undone.")) return; state=blank(); save(); location.reload(); });
+
+/* ===== Profile ===== */
+function renderWho(){
+  if(state.fields.name&&state.fields.start){
+    $("setupPanel").hidden=true;
+    $("whoLine").innerHTML=`${esc(state.fields.name)}${state.fields.leader?` · leader ${esc(state.fields.leader)}`:""}<button type="button" id="editWho">Edit</button>`;
+  } else { $("setupPanel").hidden=false; $("whoLine").textContent=""; }
+}
+document.addEventListener("click",e=>{ if(e.target.id==="editWho"){ $("setupPanel").hidden=false; $("fName").focus(); } });
+document.querySelectorAll("[data-field]").forEach(el=>{
+  const k=el.dataset.field; if(state.fields[k]!==undefined) el.value=state.fields[k];
+  el.addEventListener("input",()=>{
+    state.fields[k]=el.value; save();
+    document.querySelectorAll(`[data-field="${k}"]`).forEach(x=>{ if(x!==el) x.value=el.value; });
+    if(k==="start"){ renderMark(); openCurrent(); renderToday(); renderGx(); }
+    if(k==="start"||k==="fss"){ checkFss(); renderFirst30(); }
+    if(k==="start"||k==="licDate") updateLicFlag();
+  });
+  if(k==="name"||k==="start") el.addEventListener("change",renderWho);
+});
+
+/* ===== Init ===== */
+renderT25(); renderPlan(); kitPcts(); openKit(); renderMark(); renderLadder(); renderLog(); updateLicFlag(); checkFss(); renderWho(); renderGx();
+let first="today"; try{ first=location.hash.slice(1)||"today"; }catch(e){}
+showTab(first,false);
+</script>
+</body>
+</html>
