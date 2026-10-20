@@ -932,8 +932,11 @@ function save(){
     clearTimeout(cloudTimer);
     cloudTimer=setTimeout(async()=>{
       try{
+        let summaryText = "";
+        try{ summaryText = (typeof summary === "function") ? summary() : ""; }catch(_){}
         await setDoc(doc(fbDb,"teams",TEAM,"playbook",fbUser.uid),{
-          state, name: (state.fields&&state.fields.name)||"", email: fbUser.email||"",
+          state, summaryText,
+          name: (state.fields&&state.fields.name)||"", email: fbUser.email||"",
           updatedAt: new Date().toISOString()
         });
       }catch(e){ /* keep local copy; will retry on next save */ }

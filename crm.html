@@ -780,11 +780,20 @@ function renderPlaybookProgress(){
     if(!r.has) return '<div class="ref-row"><div><b>'+esc(r.m.name||r.m.email)+'</b></div>'+
       '<div style="font-size:13px;color:var(--muted)">Not started</div></div>';
     const pct = r.pct||0;
-    return '<div style="padding:8px 0;border-bottom:1px solid var(--line)">'+
+    const pb = db.playbook[r.m.uid] || {};
+    const summary = pb.summaryText || '';
+    const when = pb.updatedAt ? new Date(pb.updatedAt).toLocaleDateString(undefined,{month:'short',day:'numeric'}) : '';
+    const detail = summary
+      ? '<pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;color:var(--ink);margin:8px 0 2px;background:var(--cream);border-radius:8px;padding:10px 12px">'+esc(summary)+'</pre>'+
+        (when?'<div style="font-size:11px;color:var(--muted)">Updated '+when+'</div>':'')
+      : '<div style="font-size:13px;color:var(--muted);margin-top:6px">No detail saved yet — they\u2019ll appear once they check items off.</div>';
+    return '<details style="padding:8px 0;border-bottom:1px solid var(--line)">'+
+      '<summary style="cursor:pointer;list-style:none">'+
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">'+
-      '<b>'+esc(r.m.name||r.m.email)+'</b><span style="font-size:13px;font-weight:700;color:var(--navy)">'+pct+'%</span></div>'+
+      '<b>'+esc(r.m.name||r.m.email)+'</b><span style="font-size:13px;font-weight:700;color:var(--navy)">'+pct+'% \u203a</span></div>'+
       '<div style="height:8px;background:var(--line);border-radius:5px;overflow:hidden">'+
-      '<div style="height:100%;width:'+pct+'%;background:'+(pct>=66?'#2e7d51':pct>=33?'#c9a84c':'#c0392b')+';border-radius:5px"></div></div></div>';
+      '<div style="height:100%;width:'+pct+'%;background:'+(pct>=66?'#2e7d51':pct>=33?'#c9a84c':'#c0392b')+';border-radius:5px"></div></div>'+
+      '</summary>'+detail+'</details>';
   }).join('') : '<p style="color:var(--muted);font-size:13px">No active team members yet.</p>';
 }
 
