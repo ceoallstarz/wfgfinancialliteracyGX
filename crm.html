@@ -35,6 +35,8 @@
   nav button.active{color:var(--navy);border-bottom-color:var(--gold)}
   nav button .cnt{background:var(--cream);border-radius:10px;padding:1px 7px;font-size:11px;margin-left:5px;color:var(--muted)}
   nav button.alert .cnt{background:var(--red-bg);color:var(--red)}
+  nav a.nav-link{display:inline-flex;align-items:center;font-family:inherit;font-size:13px;font-weight:600;color:var(--gold);text-decoration:none;padding:13px 16px;border-bottom:3px solid transparent;white-space:nowrap}
+  nav a.nav-link:hover{color:var(--navy)}
 
   main{max-width:1100px;margin:0 auto;padding:20px 16px 60px}
   .grid{display:grid;gap:14px}
@@ -260,6 +262,7 @@
   <button data-tab="today" id="navToday">Contact Today <span class="cnt" id="cntToday">0</span></button>
   <button data-tab="power">Power Hour</button>
   <button data-tab="team" id="navTeam" style="display:none">Team</button>
+  <a class="nav-link" href="https://hyperionlegacy.com/playbook.html" target="_blank" rel="noopener">Playbook ↗</a>
 </nav>
 
 <main>
