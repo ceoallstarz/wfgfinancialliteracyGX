@@ -925,7 +925,9 @@ const blank=()=>({fields:{},checks:{},daily:{},weekly:{},gx:{},whys:[],t25:[],la
 let state=blank();
 try{const s=localStorage.getItem(KEY); if(s) state=Object.assign(blank(),JSON.parse(s));}catch(e){}
 let cloudTimer=null;
+let READONLY = false; // true when a leader is viewing someone else's progress
 function save(){
+  if(READONLY) return;  // never write in view mode
   try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}
   // debounced cloud save (only once signed in)
   if(fbUser){
@@ -943,8 +945,37 @@ function save(){
     },800);
   }
 }
+let VIEW_UID = null;      // if set, we're viewing someone else's progress (read-only)
+let viewName = "";
+try{ VIEW_UID = new URLSearchParams(location.search).get("view"); }catch(e){}
+
+async function viewerIsLeader(){
+  if(!fbUser) return false;
+  try{
+    const snap=await getDoc(doc(fbDb,"teams",TEAM,"members",fbUser.uid));
+    return snap.exists() && snap.data().role==="leader" && snap.data().status==="active";
+  }catch(e){ return false; }
+}
 async function loadCloud(){
   if(!fbUser) return;
+  // Read-only mode: a leader viewing another associate's playbook
+  if(VIEW_UID && VIEW_UID !== fbUser.uid){
+    const ok = await viewerIsLeader();
+    if(!ok){ VIEW_UID=null; /* not allowed — fall through to own data */ }
+    else {
+      try{
+        const snap=await getDoc(doc(fbDb,"teams",TEAM,"playbook",VIEW_UID));
+        if(snap.exists() && snap.data().state){
+          state=Object.assign(blank(), snap.data().state);
+          viewName = snap.data().name || snap.data().email || "this associate";
+        } else {
+          state=blank(); viewName="this associate";
+        }
+      }catch(e){ state=blank(); }
+      enterReadOnly();
+      return; // do NOT touch localStorage or load own data in view mode
+    }
+  }
   try{
     const snap=await getDoc(doc(fbDb,"teams",TEAM,"playbook",fbUser.uid));
     if(snap.exists() && snap.data().state){
@@ -952,6 +983,24 @@ async function loadCloud(){
       try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}
     }
   }catch(e){ /* fall back to whatever is in localStorage */ }
+}
+function enterReadOnly(){
+  READONLY = true;  // save() checks this and does nothing
+  const banner=document.createElement("div");
+  banner.id="roBanner";
+  banner.innerHTML="👁 Viewing <b>"+esc(viewName)+"</b>'s progress — read only. "+
+    "<a href='playbook.html' style='color:#c9a84c;text-decoration:underline'>Back to mine</a>";
+  banner.style.cssText="position:sticky;top:0;z-index:50;background:#1a2a42;color:#f4efe2;"+
+    "padding:10px 14px;font-size:14px;text-align:center";
+  document.body.insertBefore(banner, document.body.firstChild);
+  // lock interactions: disable inputs, stop clicks from toggling
+  setTimeout(()=>{
+    document.querySelectorAll("#app input, #app textarea, #app button, main input, main textarea, main button, main select")
+      .forEach(el=>{ try{ el.disabled=true; }catch(e){} });
+    const style=document.createElement("style");
+    style.textContent="main .item input{opacity:1} main{pointer-events:auto}";
+    document.head.appendChild(style);
+  },60);
 }
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));

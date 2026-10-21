@@ -783,10 +783,12 @@ function renderPlaybookProgress(){
     const pb = db.playbook[r.m.uid] || {};
     const summary = pb.summaryText || '';
     const when = pb.updatedAt ? new Date(pb.updatedAt).toLocaleDateString(undefined,{month:'short',day:'numeric'}) : '';
-    const detail = summary
+    const viewLink = '<a href="https://hyperionlegacy.com/playbook.html?view='+encodeURIComponent(r.m.uid)+'" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;font-size:13px;font-weight:700;color:var(--gold);text-decoration:none">View their full checklist \u2197</a>';
+    const detail = (summary
       ? '<pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;color:var(--ink);margin:8px 0 2px;background:var(--cream);border-radius:8px;padding:10px 12px">'+esc(summary)+'</pre>'+
         (when?'<div style="font-size:11px;color:var(--muted)">Updated '+when+'</div>':'')
-      : '<div style="font-size:13px;color:var(--muted);margin-top:6px">No detail saved yet — they\u2019ll appear once they check items off.</div>';
+      : '<div style="font-size:13px;color:var(--muted);margin-top:6px">No detail saved yet — they\u2019ll appear once they check items off.</div>')
+      + '<div>'+viewLink+'</div>';
     return '<details style="padding:8px 0;border-bottom:1px solid var(--line)">'+
       '<summary style="cursor:pointer;list-style:none">'+
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">'+
