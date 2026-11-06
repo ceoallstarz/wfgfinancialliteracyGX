@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mojave Mayhem — Match Scorer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E4E0D6; --panel:#F6F5F1; --ink:#1E2327; --muted:#5B6166; --line:#C8C1B3;
+  --sign:#0E5A3A; --signink:#FFFFFF; --hi:#F2B705; --hiink:#1E2327;
+  --miss:#B3261E; --hit:#1F7A4A;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#15191C; --panel:#20262A; --ink:#ECE8DF; --muted:#9AA1A5; --line:#353D42;
+    --sign:#0F6B45; --signink:#FFFFFF; --hi:#F2B705; --hiink:#15191C;
+    --miss:#FF7468; --hit:#5BD08F;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#15191C; --panel:#20262A; --ink:#ECE8DF; --muted:#9AA1A5; --line:#353D42;
+  --sign:#0F6B45; --signink:#FFFFFF; --hi:#F2B705; --hiink:#15191C;
+  --miss:#FF7468; --hit:#5BD08F;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 Barlow,"Helvetica Neue",Arial,sans-serif;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 96px}
+.cond{font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif}
+header{padding:22px 0 8px}
+.sign{background:var(--sign);color:var(--signink);border:3px solid #fff;box-shadow:0 0 0 4px var(--sign);border-radius:12px;padding:14px 18px;margin:4px}
+.sign h1{margin:0;font:800 clamp(38px,11vw,64px)/.95 "Barlow Condensed","Arial Narrow",sans-serif;letter-spacing:.5px}
+.sign p{margin:6px 0 0;font-weight:500;opacity:.92}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:6px;padding:12px 0 10px;border-bottom:1px solid var(--line)}
+nav button{flex:1;font:700 18px/1 "Barlow Condensed",sans-serif;padding:11px 4px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+nav button[aria-selected="true"]{background:var(--hi);color:var(--hiink);border-color:var(--hi)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--hi);outline-offset:2px}
+section[hidden]{display:none}
+h2{font:700 28px/1.1 "Barlow Condensed",sans-serif;margin:22px 0 8px}
+h3{font:700 21px/1.15 "Barlow Condensed",sans-serif;margin:18px 0 6px}
+.muted{color:var(--muted)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:14px 0 6px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;min-width:46px;font:700 17px/1 "Barlow Condensed",sans-serif;padding:10px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;position:relative}
+.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip.done::after{content:"";position:absolute;top:4px;right:4px;width:6px;height:6px;border-radius:50%;background:var(--hit)}
+.stage{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-top:8px}
+.stage .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.stage .num{font:800 20px/1 "Barlow Condensed",sans-serif;color:var(--muted)}
+.stage h2{margin:2px 0 6px}
+.tag{display:inline-block;font:700 15px/1 "Barlow Condensed",sans-serif;padding:5px 8px;border-radius:6px;background:var(--bg);border:1px solid var(--line);margin-right:4px}
+.stage p{margin:8px 0 0}
+.row{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-top:10px}
+.row .head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.row .name{font:700 22px/1 "Barlow Condensed",sans-serif}
+.adj{text-align:right}
+.adj b{font:800 30px/1 "Barlow Condensed",sans-serif;display:block}
+.adj small{color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:1.2fr repeat(auto-fit,minmax(78px,1fr));gap:8px;margin-top:10px;align-items:end}
+label.f{display:block;font-size:13px;color:var(--muted);font-weight:600}
+input.time{width:100%;font:700 26px/1 "Barlow Condensed",sans-serif;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.step{display:flex;align-items:center;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--bg)}
+.step button{width:30px;height:42px;border:0;background:transparent;color:var(--ink);font:700 20px/1 Barlow,sans-serif;cursor:pointer}
+.step span{flex:1;text-align:center;font:700 20px/1 "Barlow Condensed",sans-serif}
+.step.bad span{color:var(--miss)}
+.board{margin-top:16px}
+.board .sign{padding:10px 14px}
+.lb{width:100%;border-collapse:collapse}
+.lb td{padding:9px 4px;border-bottom:1px solid rgba(255,255,255,.28);font-weight:500}
+.lb tr:last-child td{border-bottom:0}
+.lb .rk{font:800 26px/1 "Barlow Condensed",sans-serif;width:36px}
+.lb .nm{font:700 24px/1 "Barlow Condensed",sans-serif}
+.lb .pt{text-align:right;font:800 26px/1 "Barlow Condensed",sans-serif}
+.lb .sub{display:block;font:500 13px/1.3 Barlow,sans-serif;opacity:.85}
+.awards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}
+.award{background:var(--panel);border:1px solid var(--line);border-left:6px solid var(--hi);border-radius:8px;padding:10px 12px}
+.award b{display:block;font:700 19px/1.1 "Barlow Condensed",sans-serif}
+.award span{font:800 24px/1.1 "Barlow Condensed",sans-serif}
+.award small{display:block;color:var(--muted)}
+.tablewrap{overflow-x:auto;margin-top:14px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+.st{border-collapse:collapse;min-width:100%;font-size:14px}
+.st th,.st td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.st th:first-child,.st td:first-child{text-align:left;position:sticky;left:0;background:var(--panel)}
+.st th{font:700 16px/1 "Barlow Condensed",sans-serif}
+.roster{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.roster div{display:flex;gap:8px}
+.roster input{flex:1;font:600 18px/1 Barlow,sans-serif;padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink)}
+.btn{font:700 18px/1 "Barlow Condensed",sans-serif;padding:11px 14px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.btn.primary{background:var(--hi);color:var(--hiink);border-color:var(--hi)}
+.btn.danger{color:var(--miss)}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.rules p,.rules li{max-width:68ch}
+.rules ul{padding-left:20px}
+.pen{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.pen td{padding:9px 12px;border-bottom:1px solid var(--line)}
+.pen td:last-child{text-align:right;font:800 20px/1 "Barlow Condensed",sans-serif}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-weight:600;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="sign">
+      <h1>Mojave Mayhem</h1>
+      <p>8 stages of rifle and pistol in the Barstow desert. Fastest adjusted time takes 100 on each stage.</p>
+    </div>
+  </header>
+  <nav role="tablist">
+    <button role="tab" data-tab="score" aria-selected="true">Score</button>
+    <button role="tab" data-tab="board" aria-selected="false">Leaderboard</button>
+    <button role="tab" data-tab="squad" aria-selected="false">Squad</button>
+    <button role="tab" data-tab="rules" aria-selected="false">Rules</button>
+  </nav>
+
+  <section id="score">
+    <div class="chips" id="chips"></div>
+    <div id="stageCard"></div>
+    <div id="rows"></div>
+    <div class="btns">
+      <button class="btn" id="prevStage">Previous stage</button>
+      <button class="btn primary" id="nextStage">Next stage</button>
+    </div>
+  </section>
+
+  <section id="board" hidden>
+    <div class="board"><div class="sign"><table class="lb" id="lb"></table></div></div>
+    <div class="awards" id="awards"></div>
+    <h3>Stage by stage</h3>
+    <p class="muted" style="margin:0">Stage points, with adjusted time underneath.</p>
+    <div class="tablewrap"><table class="st" id="st"></table></div>
+    <div class="btns"><button class="btn" id="copyResults">Copy results to share</button></div>
+  </section>
+
+  <section id="squad" hidden>
+    <h2>Squad</h2>
+    <p class="muted">Up to 7 shooters. Scores stay on this phone.</p>
+    <div class="roster" id="roster"></div>
+    <div class="btns">
+      <button class="btn primary" id="addShooter">Add shooter</button>
+      <button class="btn danger" id="resetScores">Clear all scores</button>
+    </div>
+  </section>
+
+  <section id="rules" class="rules" hidden>
+    <h2>How scoring works</h2>
+    <p>Adjusted time is raw time plus penalties. On each stage, the fastest adjusted time earns 100 points. Everyone else earns 100 × (best time ÷ their time). Highest total points wins the match, so a long stage counts the same as a short one.</p>
+    <table class="pen">
+      <tr><td>Steel miss, or paper miss</td><td>+2.0</td></tr>
+      <tr><td>Paper C-zone hit</td><td>+0.5</td></tr>
+      <tr><td>Paper D-zone hit</td><td>+1.0</td></tr>
+      <tr><td>Procedural (wrong order, safety off while moving, wrong position)</td><td>+3.0</td></tr>
+      <tr><td>Skipped target</td><td>+2 per required hit</td></tr>
+    </table>
+    <p>Head shots count only in the head box. A body shot on a head-required target scores as a miss. Steel in the Steel Sprint is hit-to-continue, so only its paper takes penalties.</p>
+
+    <h3>Range layout</h3>
+    <p>Four targets stay put all day. Shooters move between four cones instead.</p>
+    <ul>
+      <li><b>Paper A and Paper B:</b> side by side on the paper line, about 2 yards apart.</li>
+      <li><b>Steel 2 (pistol only):</b> 5 yards past the paper line, off to the left.</li>
+      <li><b>Steel 1 (rifle and long pistol):</b> 40 yards past the paper line, center-right.</li>
+      <li><b>Cone 1:</b> 10 yards from the paper. That’s 15 yards to Steel 2 and 50 to Steel 1.</li>
+      <li><b>Cone 2:</b> 15 yards from the paper, straight back from Cone 1.</li>
+      <li><b>Cone 3:</b> 25 yards from the paper, the sprint start.</li>
+      <li><b>Cone 4:</b> 10 yards from the paper, 10 yards left of Cone 1.</li>
+    </ul>
+    <p>Paste both papers after every shooter. Bring plenty of pasters and a spare set of paper.</p>
+
+    <h3>Safety is the whole game</h3>
+    <ul>
+      <li>One shooter at a time. A range officer runs the timer and walks behind the shooter.</li>
+      <li>The muzzle never breaks the 180 toward the line. Turn drills start facing uprange with the pistol holstered, or the rifle staged on a barrel, muzzle downrange.</li>
+      <li>Finger off the trigger while moving, reloading, or clearing a malfunction. Rifle safety goes on before every movement and every transition.</li>
+      <li>Rifles only ever shoot Steel 1, at 50 yards or more. Steel 2 is pistol only, never rifle. AR500 or better, no dents or craters. No steel-core or green-tip ammo.</li>
+      <li>Disqualified for the day: negligent discharge, breaking the 180, sweeping anyone, or dropping a loaded gun.</li>
+      <li>Eyes and ears on everyone. A trauma kit is on the table, and someone knows where it is.</li>
+    </ul>
+
+    <h3>Desert Duel (optional finale)</h3>
+    <p>Set two identical steel plates side by side, with a stop plate between them. Seed the bracket from the final leaderboard. Two shooters go at once from low ready. Clear your plates, then hit the stop plate first to win the round. Best of three. The top seeds get byes with 5 or 6 shooters. The winner takes the Duel title, separate from the match champ.</p>
+
+    <h3>Round count per shooter</h3>
+    <p>Scored runs need about 15 rifle and 37 or more pistol rounds. Bring 30 rifle and 75 pistol for a cushion and a practice run.</p>
+  </section>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const STAGES=[
+ {n:"Rifle: The Ladder",g:"Rifle",r:"R6",k:"mixed",d:"Start at Cone 2, low ready. 2 on Paper A. Move to Cone 1. 2 on Paper B, then 2 on Steel 1."},
+ {n:"Rifle: Sidestep",g:"Rifle",r:"R7",k:"steel",d:"Start at Cone 1, low ready. 2 on Steel 1, safety on, move to Cone 4, then 5 on Steel 1."},
+ {n:"Pistol: Turn and Burn",g:"Pistol",r:"P4",k:"paper",d:"At Cone 1, facing uprange, holstered. On the beep, turn, draw, and put 2 in the A-zone of each paper."},
+ {n:"Pistol: Back and Forth",g:"Pistol",r:"P5",k:"mixed",d:"Start at Cone 1. 1 on Paper A, reload, back up to Cone 2 for 2 on Paper B, then return to Cone 1 for 2 on Steel 2."},
+ {n:"Pistol: Steel Sprint",g:"Pistol",r:"P9+",k:"mixed",d:"Start at Cone 3. 5 hits on Steel 2, shooting until each one rings. Run to Cone 1, then 2 on each paper. Steel is hit-to-continue, so only the paper takes penalties."},
+ {n:"Pistol: Long Ball",g:"Pistol",r:"P10",k:"steel",d:"At Cone 1. 10 shots on Steel 1 at 50 yards. Every miss costs 2 seconds."},
+ {n:"Pistol: Grand Finale",g:"Pistol",r:"P7",k:"mixed",d:"Start at Cone 1. 2 to the body and 1 to the head on Paper A. Move to Cone 4, 2 on Steel 2, reload, then 2 on Paper B."},
+ {n:"Rifle + Pistol: The Switch",g:"Rifle + pistol",r:"R2 P2",k:"steel",d:"The closer. At Cone 1, low ready. 2 rifle hits on Steel 1, safety on, rifle to the sling or barrel, draw, and put 2 pistol hits on Steel 2."}
+];
+const FIELDS={paper:["m","c","d","p"],mixed:["m","c","d","p"],steel:["m","p"],time:["p"]};
+const LBL={m:"Miss",c:"C hit",d:"D hit",p:"Proc"};
+const PEN={m:2,c:.5,d:1,p:3};
+const KEY="mojaveMayhem.v2";
+let S={shooters:[{id:1,name:"Tristan"},{id:2,name:"Glenn"}],next:3,scores:{},cur:0};
+try{const raw=localStorage.getItem(KEY);if(raw){const p=JSON.parse(raw);if(p&&p.shooters)S=Object.assign(S,p);}}catch(e){}
+if(!(S.cur>=0&&S.cur<STAGES.length))S.cur=0;
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function rec(si,id){return (S.scores[si]&&S.scores[si][id])||{t:"",m:0,c:0,d:0,p:0};}
+function setRec(si,id,r){S.scores[si]=S.scores[si]||{};S.scores[si][id]=r;save();}
+function raw(r){const t=parseFloat(r.t);return isFinite(t)&&t>0?t:null;}
+function pen(r){return r.m*PEN.m+r.c*PEN.c+r.d*PEN.d+r.p*PEN.p;}
+function adj(r){const t=raw(r);return t===null?null:t+pen(r);}
+function stagePts(si){
+  const out={};let best=null;
+  S.shooters.forEach(s=>{const a=adj(rec(si,s.id));if(a!==null&&(best===null||a<best))best=a;});
+  S.shooters.forEach(s=>{const a=adj(rec(si,s.id));out[s.id]=a===null?null:best/a*100;});
+  return out;
+}
+function totals(){
+  const T={};S.shooters.forEach(s=>T[s.id]={pts:0,raw:0,pen:0,miss:0,done:0,name:s.name,id:s.id});
+  STAGES.forEach((st,si)=>{const P=stagePts(si);S.shooters.forEach(s=>{const r=rec(si,s.id);if(raw(r)!==null){const t=T[s.id];t.pts+=P[s.id];t.raw+=raw(r);t.pen+=pen(r);t.miss+=r.m;t.done++;}});});
+  return Object.values(T);
+}
+const f2=n=>n.toFixed(2);
+
+function renderChips(){
+  $("#chips").innerHTML=STAGES.map((st,i)=>{
+    const done=S.shooters.length&&S.shooters.every(s=>raw(rec(i,s.id))!==null);
+    return `<button class="chip${i===S.cur?" on":""}${done?" done":""}" data-stage="${i}" aria-label="Stage ${i+1}: ${esc(st.n)}">${i+1}</button>`;
+  }).join("");
+  const on=$("#chips .on");if(on)on.scrollIntoView({block:"nearest",inline:"center"});
+}
+function renderStage(){
+  const st=STAGES[S.cur];
+  $("#stageCard").innerHTML=`<div class="stage"><div class="top"><span class="num">Stage ${S.cur+1} of ${STAGES.length}</span><span><span class="tag">${esc(st.g)}</span><span class="tag">${esc(st.r)}</span></span></div><h2>${esc(st.n)}</h2><p>${esc(st.d)}</p></div>`;
+  const P=stagePts(S.cur);
+  if(!S.shooters.length){$("#rows").innerHTML=`<div class="row"><p style="margin:0">Add shooters on the Squad tab to start scoring.</p></div>`;return;}
+  $("#rows").innerHTML=S.shooters.map(s=>{
+    const r=rec(S.cur,s.id);const a=adj(r);
+    const steps=FIELDS[st.k].map(k=>`<div><label class="f">${LBL[k]} +${PEN[k]}</label><div class="step${r[k]>0?" bad":""}"><button data-act="dec" data-k="${k}" data-id="${s.id}" aria-label="Fewer ${LBL[k]}">−</button><span>${r[k]}</span><button data-act="inc" data-k="${k}" data-id="${s.id}" aria-label="More ${LBL[k]}">+</button></div></div>`).join("");
+    return `<div class="row" data-row="${s.id}"><div class="head"><span class="name">${esc(s.name)}</span><span class="adj"><b>${a===null?"—":f2(a)}</b><small>${a===null?"no time yet":`${f2(P[s.id])} pts, +${f2(pen(r))} pen`}</small></span></div>
+    <div class="grid"><div><label class="f" for="t${s.id}">Raw time</label><input class="time" id="t${s.id}" inputmode="decimal" placeholder="0.00" value="${esc(r.t)}" data-id="${s.id}"></div>${steps}</div></div>`;
+  }).join("");
+}
+function refreshRowNumbers(){
+  const P=stagePts(S.cur);
+  S.shooters.forEach(s=>{
+    const r=rec(S.cur,s.id),a=adj(r),row=document.querySelector(`[data-row="${s.id}"] .adj`);
+    if(row)row.innerHTML=`<b>${a===null?"—":f2(a)}</b><small>${a===null?"no time yet":`${f2(P[s.id])} pts, +${f2(pen(r))} pen`}</small>`;
+  });
+  renderChips();
+}
+function renderBoard(){
+  const T=totals().sort((a,b)=>b.pts-a.pts||a.raw-b.raw);
+  $("#lb").innerHTML=T.length?T.map((t,i)=>`<tr><td class="rk">${i+1}</td><td class="nm">${esc(t.name)}<span class="sub">${t.done}/${STAGES.length} stages, ${f2(t.raw)}s raw, +${f2(t.pen)} pen</span></td><td class="pt">${f2(t.pts)}</td></tr>`).join(""):`<tr><td>Add shooters to see standings.</td></tr>`;
+  const scored=T.filter(t=>t.done>0);
+  const pick=(fn,cmp)=>scored.length?scored.slice().sort(cmp)[0]:null;
+  const champ=scored.length?T[0]:null;
+  const sniper=pick(0,(a,b)=>a.miss-b.miss||b.pts-a.pts);
+  const clean=pick(0,(a,b)=>a.pen-b.pen||b.pts-a.pts);
+  const fast=pick(0,(a,b)=>(b.done-a.done)||a.raw-b.raw);
+  const dog=scored.length>1?T[T.length-1]:null;
+  const card=(title,who,why)=>`<div class="award"><b>${title}</b><span>${who?esc(who.name):"—"}</span><small>${why}</small></div>`;
+  $("#awards").innerHTML=card("Match Champ",champ,"Most stage points")+card("Steel Sniper",sniper,sniper?`${sniper.miss} misses all day`:"Fewest misses")+card("Clean Machine",clean,clean?`+${f2(clean.pen)} in penalties`:"Fewest penalty seconds")+card("Fastest Raw",fast,fast?`${f2(fast.raw)}s before penalties`:"Lowest raw time")+card("Desert Dog",dog,"Last place buys dinner");
+  let h=`<tr><th>Stage</th>${S.shooters.map(s=>`<th>${esc(s.name)}</th>`).join("")}</tr>`;
+  STAGES.forEach((st,si)=>{const P=stagePts(si);h+=`<tr><td>${si+1}. ${esc(st.n)}</td>${S.shooters.map(s=>{const a=adj(rec(si,s.id));return `<td>${a===null?"—":`<b>${f2(P[s.id])}</b><br><span class="muted">${f2(a)}</span>`}</td>`;}).join("")}</tr>`;});
+  $("#st").innerHTML=h;
+}
+function renderRoster(){
+  $("#roster").innerHTML=S.shooters.map(s=>`<div><input value="${esc(s.name)}" data-name="${s.id}" aria-label="Shooter name"><button class="btn danger" data-remove="${s.id}">Remove</button></div>`).join("");
+  $("#addShooter").disabled=S.shooters.length>=7;
+}
+function renderAll(){renderChips();renderStage();renderBoard();renderRoster();}
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove("show"),1800);}
+
+document.querySelector("nav").addEventListener("click",e=>{
+  const b=e.target.closest("[data-tab]");if(!b)return;
+  document.querySelectorAll("nav button").forEach(x=>x.setAttribute("aria-selected",x===b?"true":"false"));
+  document.querySelectorAll("section").forEach(sec=>sec.hidden=sec.id!==b.dataset.tab);
+  if(b.dataset.tab==="board")renderBoard();
+  window.scrollTo(0,0);
+});
+$("#chips").addEventListener("click",e=>{const b=e.target.closest("[data-stage]");if(!b)return;S.cur=+b.dataset.stage;save();renderChips();renderStage();});
+$("#prevStage").onclick=()=>{S.cur=Math.max(0,S.cur-1);save();renderChips();renderStage();window.scrollTo(0,0);};
+$("#nextStage").onclick=()=>{S.cur=Math.min(STAGES.length-1,S.cur+1);save();renderChips();renderStage();window.scrollTo(0,0);};
+$("#rows").addEventListener("click",e=>{
+  const b=e.target.closest("[data-act]");if(!b)return;
+  const id=+b.dataset.id,k=b.dataset.k,r=Object.assign({},rec(S.cur,id));
+  r[k]=Math.max(0,r[k]+(b.dataset.act==="inc"?1:-1));setRec(S.cur,id,r);
+  const span=b.parentElement.querySelector("span");span.textContent=r[k];b.parentElement.classList.toggle("bad",r[k]>0);
+  refreshRowNumbers();
+});
+$("#rows").addEventListener("input",e=>{
+  const i=e.target.closest("input.time");if(!i)return;
+  const id=+i.dataset.id,r=Object.assign({},rec(S.cur,id));r.t=i.value.replace(/[^0-9.]/g,"");setRec(S.cur,id,r);refreshRowNumbers();
+});
+$("#roster").addEventListener("input",e=>{const i=e.target.closest("[data-name]");if(!i)return;const s=S.shooters.find(x=>x.id===+i.dataset.name);if(s){s.name=i.value||"Shooter";save();renderChips();renderStage();}});
+$("#roster").addEventListener("click",e=>{const b=e.target.closest("[data-remove]");if(!b)return;const s=S.shooters.find(x=>x.id===+b.dataset.remove);if(s&&confirm(`Remove ${s.name} and their scores?`)){S.shooters=S.shooters.filter(x=>x!==s);save();renderAll();}});
+$("#addShooter").onclick=()=>{if(S.shooters.length>=7)return;S.shooters.push({id:S.next++,name:`Shooter ${S.shooters.length+1}`});save();renderAll();const ins=document.querySelectorAll("#roster input");ins[ins.length-1].select();};
+$("#resetScores").onclick=()=>{if(confirm("Clear every score for every stage? Names stay.")){S.scores={};S.cur=0;save();renderAll();toast("Scores cleared");}};
+$("#copyResults").onclick=async()=>{
+  const T=totals().sort((a,b)=>b.pts-a.pts||a.raw-b.raw);
+  const txt="Mojave Mayhem results\n"+T.map((t,i)=>`${i+1}. ${t.name}: ${f2(t.pts)} pts (${f2(t.raw)}s raw, +${f2(t.pen)} pen, ${t.miss} misses)`).join("\n");
+  try{await navigator.clipboard.writeText(txt);toast("Results copied");}catch(e){prompt("Copy these results:",txt);}
+};
+renderAll();
+</script>
+</body>
+</html>
